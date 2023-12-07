@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/layouts/head.jsp"%>
-<body>
 	<script>
 	$(function (){
 		$('input[name=chk-prd1]').change(function () {
@@ -154,6 +153,4 @@
 			</div>
 		</div>
 	</div>
-<%-- 	<%@ include file="/WEB-INF/views/ui/modal.jsp"%> --%>
-</body>
 </html>
