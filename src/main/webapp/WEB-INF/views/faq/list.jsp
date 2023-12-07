@@ -12,7 +12,7 @@
 		<div class="list-head" style="margin-bottom: 0; text-align: right;">
 			<u:isLogin>
           		<c:if test="${ auth.getName() == 'admin'}">
-          			<div><a href="/forum/faq/write.do">FAQ등록</a></div>
+          			<div><a href="/forum/faq/write">FAQ등록</a></div>
           		</c:if>  
           	</u:isLogin>
         </div>
@@ -33,31 +33,31 @@
 				<ul class="nav nav-tabs" role="tablist">
 
 					<li>
-						<a href="/forum/faq/list.do">TOP 10</a>
+						<a href="/forum/faq/list">TOP 10</a>
 					</li>
 					
 						<li>
-							<a href="/forum/faq/list.do?category=1">회원</a>
+							<a href="/forum/faq/list?category=1">회원</a>
 						</li>
 					
 						<li>
-							<a href="/forum/faq/list.do?category=2" class="">혜택</a>
+							<a href="/forum/faq/list?category=2" class="">혜택</a>
 						</li>
 					
 						<li>
-							<a href="/forum/faq/list.do?category=3" class="">주문/배송</a>
+							<a href="/forum/faq/list?category=3" class="">주문/배송</a>
 						</li>
 					
 						<li>
-							<a href="/forum/faq/list.do?category=4" >상품</a>
+							<a href="/forum/faq/list?category=4" >상품</a>
 						</li>
 					
 						<li>
-							<a href="/forum/faq/list.do?category=5" class="">음용</a>
+							<a href="/forum/faq/list?category=5" class="">음용</a>
 						</li>
 					
 						<li>
-							<a href="/forum/faq/list.do?category=6" class="">기타</a>
+							<a href="/forum/faq/list?category=6" class="">기타</a>
 						</li>
 				</ul>
 			</div>
@@ -159,7 +159,7 @@
 		
 		$pageItem.each(function(i, el) {
 			let aparam = $(this).data("param");
-			$(this).attr("href", `/forum/faq/list.do?category=${ param.category }&pageNo=\${aparam}`)
+			$(this).attr("href", `/forum/faq/list?category=${ param.category }&pageNo=\${aparam}`)
 		})
 		
 		// faq delete 
@@ -169,7 +169,7 @@
 			let params = `seq=\${seq}&category=${ param.category }`
 			 
 			$.ajax({
-				url: "/forum/faq/delete.do",
+				url: "/forum/faq/delete",
 				dataType: "json",	
 				type: "POST",
 				data: params,

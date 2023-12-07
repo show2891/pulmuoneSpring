@@ -5,16 +5,16 @@
 	<h2 class="title">고객기쁨센터</h2>
 	<ul class="lnb-style">
 		<li data-page="faq">
-			<a href="/forum/faq/list.do">FAQ</a>
+			<a href="/forum/faq/list">FAQ</a>
 		</li>
 		<li data-page="inquiry">
-			<a href="/forum/inquiry/write.do">1:1 문의</a>
+			<a href="/forum/inquiry/write">1:1 문의</a>
 		</li>
 		<li data-page="notice">
-			<a href="/forum/notice/list.do">공지사항</a>
+			<a href="/forum/notice/list">공지사항</a>
 		</li>
 		<li data-page="franchise">
-			<a href="/forum/franchise/search.do">배송가능지역 검색</a>
+			<a href="/forum/franchise/search">배송가능지역 검색</a>
 		</li>
 	</ul>
 </div>

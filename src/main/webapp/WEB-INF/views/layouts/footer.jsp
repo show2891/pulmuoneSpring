@@ -10,7 +10,7 @@
 			<li><a href="/info/business">사업소개</a></li>
 			<li><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#emailPolicy">이메일무단수집거부</a></li>
 			<li><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#tosPolicy">이용약관</a></li>
-			<li><a href="/etc/alliance/view.do" class="btn btn-primary">제휴문의</a></li>
+			<li><a href="/etc/alliance/view" class="btn btn-primary">제휴문의</a></li>
 		</ul>
 		<div class="row" style="padding-top: 10px">
 			<div class="address-area">
@@ -33,7 +33,7 @@
 						</li>
 						<li>
 							<span>사업자등록번호</span>
-							301-81-98406 <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=3018198406" id="ftc_link" style="text-decoration: underline;">사업자정보확인</a>
+							301-81-98406 <a href="https://www.ftc.go.kr/bizCommPop?wrkr_no=3018198406" id="ftc_link" style="text-decoration: underline;">사업자정보확인</a>
 						</li>
 						<li>
 							<span>호스팅제공자</span>
@@ -65,18 +65,18 @@
 						FAMILY SITE
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="https://www.pulmuone-lohas.com/pc/brand/index.do" target="_blank" rel="noopener noreferrer">풀무원로하스</a>
+						<a class="dropdown-item" href="https://www.pulmuone-lohas.com/pc/brand/index" target="_blank" rel="noopener noreferrer">풀무원로하스</a>
 						<a class="dropdown-item" href="https://dm.pulmuone.com/" target="_blank" rel="noopener noreferrer">풀무원디자인밀</a>
 						<a class="dropdown-item" href="https://www.pulmuoneamio.com" target="_blank" rel="noopener noreferrer">풀무원아미오</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="http://www.pulmuone.kr/pulmuone/main/Index.do" target="_blank" rel="noopener noreferrer">풀무원홀딩스</a>
+						<a class="dropdown-item" href="http://www.pulmuone.kr/pulmuone/main/Index" target="_blank" rel="noopener noreferrer">풀무원홀딩스</a>
 						<a class="dropdown-item" href="https://shop.pulmuone.co.kr/" target="_blank" rel="noopener noreferrer">#풀무원</a>
 						<a class="dropdown-item" href="https://www.kimchikan.com/" target="_blank" rel="noopener noreferrer">뮤지엄김치간</a>
 						<div class="dropdown-divider"></div>
 
 						<a class="dropdown-item" href="https://www.pulmuonewater.com" target="_blank" rel="noopener noreferrer">풀무원샘물</a>
 						<a class="dropdown-item" href="https://shop.pulmuone.co.kr/orga" target="_blank" rel="noopener noreferrer">올가홀푸드</a>
-						<a class="dropdown-item" href="https://www.pulmuonefnc.com/main/main_contents.do" target="_blank" rel="noopener noreferrer">풀무원푸드앤컬처</a>
+						<a class="dropdown-item" href="https://www.pulmuonefnc.com/main/main_contents" target="_blank" rel="noopener noreferrer">풀무원푸드앤컬처</a>
 						<a class="dropdown-item" href="https://pulstory.pulmuone.com" target="_blank" rel="noopener noreferrer">풀무원푸드머스</a>
 						<a class="dropdown-item" href="http://www.exofresh.co.kr/main/" target="_blank" rel="noopener noreferrer">엑소후레쉬</a>
 					</div>
