@@ -30,4 +30,24 @@ public class NoticeServiceImpl implements NoticeService {
 		return this.noticeMapper.getTotalPages(numberPerPage);
 	}
 
+	@Override
+	public NoticeDTO getDetailView(int seq) throws SQLException {
+		return this.noticeMapper.view(seq);
+	}
+
+	@Override
+	public int write(NoticeDTO vo) throws SQLException {
+		return this.noticeMapper.write(vo);
+	}
+
+	@Override
+	public int edit(NoticeDTO dto) throws SQLException {
+		return this.noticeMapper.edit(dto);
+	}
+
+	@Override
+	public int delete(int seq) throws SQLException {
+		return this.noticeMapper.delete(seq);
+	}
+
 }

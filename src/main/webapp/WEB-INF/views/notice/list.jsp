@@ -13,7 +13,7 @@
         	<em class="count">총 <span>${ totalRows }</span>건</em>
         	<u:isLogin>
         		<c:if test="${ auth.getName() == 'admin'}">
-        			<div><a href="/forum/notice/write.do">글쓰기</a></div>
+        			<div><a href="/forum/notice/write">글쓰기</a></div>
         		</c:if>  
         	</u:isLogin>
         </div>
@@ -23,7 +23,7 @@
 	             	<c:forEach items="${ list }" var="item">
 	             		<tr>
 	                       <td class="al">
-	                           <a class="link-ellipsis" href="/forum/notice/view.do?seq=${ item.notice_no }">
+	                           <a class="link-ellipsis" href="/forum/notice/view?seq=${ item.notice_no }">
 	                                   ${ item.title }
 	                               <span><fmt:formatDate value="${item.regdate}" pattern="yyyy.MM.dd" /> </span>
 	                           </a>
@@ -61,7 +61,7 @@
 	
 	$pageItem.each(function(i, el) {
 		let aparam = $(this).data("param");
-		$(this).attr("href", `/forum/notice/list.do?pageNo=\${ aparam }`);
+		$(this).attr("href", `/forum/notice/list?pageNo=\${ aparam }`);
 	})
 
 </script>
