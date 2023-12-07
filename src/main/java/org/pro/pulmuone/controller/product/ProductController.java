@@ -67,11 +67,22 @@ public class ProductController {
 	public String box(ProductsDTO dto, Model model
 			, @RequestParam(value = "category" ,required = false  ) String category_no
 			, @RequestParam(value = "tags",required = false  ) String tags
-			,HttpServletRequest request) throws ClassNotFoundException, SQLException {
+			, @RequestParam(value = "pageNo", defaultValue = "1" ) String num) throws ClassNotFoundException, SQLException {
 		log.info("box");
+		int begin = Integer.parseInt(num);
+		if(begin==2) {
+			begin = 13;
+		}else if(begin==3) {
+			begin = 25;
+		}else if(begin==4) {
+			begin = 37;
+		}
+		int end = begin+11;		
 		dto.setCategory_no(category_no);
 		dto.setDelivery_type("box");
 		dto.setTags(tags);	
+		dto.setPageNo(Integer.toString(begin));
+		dto.setPageNo2(Integer.toString(end));
 		List<ProductsDTO> searchlist = this.mapper.search(dto);
 		List<ProductsDTO> searchcountlist = this.mapper.searchcount(dto);
 		List<ProductsDTO> bestlist = this.mapper.best(dto);
