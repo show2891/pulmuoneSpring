@@ -31,6 +31,7 @@ tmp/
 /build
 /bin/
 
+.springBeans
 
 # Tern plugin
 .tern-project
