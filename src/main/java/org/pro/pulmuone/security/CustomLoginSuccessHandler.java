@@ -44,7 +44,11 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
         } else if (referer != null && !referer.equals("")) {
         	// intercept가 아닌 경우, 컨트롤러에서 request에 담은 referer 사용
         	// 예시) 비회원 상태로 이용가능한 화면에서, 헤더 로그인 버튼 클릭을 통한 로그인 시도
-            location = referer;
+            if (referer.contains("/member/login")) {
+            	location = "/";
+            } else {
+            	location = referer;
+            }
         }
 		
 		response.sendRedirect(location);

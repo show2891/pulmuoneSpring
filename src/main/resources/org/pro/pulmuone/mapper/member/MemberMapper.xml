@@ -24,11 +24,12 @@
 	<!-- 	public MemberVO read(String userid); -->
 	<resultMap type="org.pro.pulmuone.domain.member.MemberDTO" id="memberMap">
 		<id property="memberId" column="member_id" />
+		<result property="memberNo" column="member_no" />
 		<result property="memberId" column="member_id" />
 		<result property="pwd" column="pwd" />
 		<result property="name" column="name" />
-		<result property="regDate" column="reg_date" />
-		<result property="tel" column="tel" />
+<!-- 		<result property="regDate" column="reg_date" /> -->
+<!-- 		<result property="tel" column="tel" /> -->
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	<resultMap type="org.pro.pulmuone.domain.auth.AuthVO" id="authMap"> 
@@ -38,7 +39,7 @@
 		
 		
 	<select id="read" resultMap="memberMap">
-	 SELECT m.member_id, pwd, name, tel, enabled, reg_date, authority
+	 SELECT member_no, m.member_id, pwd, name, authority
 	 FROM member m LEFT JOIN member_authorities auth ON m.member_id = auth.member_id
 	 WHERE m.member_id = #{userid}
 	</select>
