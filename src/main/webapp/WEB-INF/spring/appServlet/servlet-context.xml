@@ -38,5 +38,4 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>
 	
-	
 </beans:beans>
