@@ -1,0 +1,392 @@
+@charset "utf-8";
+/*
+ * 파일정의 :plugin.override.css
+ * 파일설명 :플러그인 override 공통
+ * 작성자 :glim
+ * 주의사항 :주석표기는 페이지 접근방법을 알수 있도록 표시
+ * 최초작성일:2019/10/11
+ * 최종수정일: 2020/03/16
+ */
+
+
+/**********************************************************************************
+* dialog
+***********************************************************************************/
+.ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button{
+    font-family:inherit;
+}
+
+.ui-widget.ui-widget-content[role=dialog]{
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+    /*padding:24px 30px 30px;*/
+    padding:0;
+    background-color:#fff;
+    border:1px solid #000;
+    box-sizing:border-box;
+    /*z-index:1001 !important;;*/
+}
+.ui-dialog[role=dialog] .ui-dialog-titlebar {
+    text-align:left;
+    margin:0 30px 20px;
+    font-size:15px;
+    padding:23px 0 0;
+    color:#000;
+    font-weight:bold;
+    border:0;
+    border-image:initial;
+    background:transparent;
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+
+}
+.ui-dialog[role=dialog] .ui-dialog-title {
+    display: block;
+    width:100%;
+    margin:0;
+    padding:0 0 15px;
+    border-bottom:1px solid #000;
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:-1.75px;
+    font-family:'Montserrat', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Helvetica, sans-serif;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+    right:-6px;
+    top:34px;
+    padding:5px;
+    width:29px;
+    height:29px;
+    border:0;
+    border-radius:0;
+    background:url("../images/common/ico_sprite_pc.png") no-repeat -37px -45px;
+}
+.ui-dialog .ui-dialog-content {
+    padding:0 30px;
+}
+.ui-dialog .ui-dialog-content .p-cont {
+    /*max-height:556px;*/
+    padding:0 0 30px;
+    /*background:#eee;*/
+}
+.ui-dialog .ui-dialog-content .p-foot {
+    text-align:center;
+    padding:0 0 30px;
+}
+.ui-dialog .ui-dialog-content .p-foot .btn-list-group{
+    margin-top:0;
+}
+.ui-dialog .ui-dialog-content .p-cont + .p-foot{margin-bottom:0 !important;}
+.ui-dialog .ui-dialog-content .p-foot + .p-foot {margin-top:14px;}
+.ui-widget-overlay {
+    background:#000;
+    opacity:0.6;
+    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity= 60);/* // for IE8 */
+    filter:alpha(opacity= 60);/* //for IE5-7 */
+}
+
+.ui-dialog .ui-dialog-content.is-alert{padding:40px 0 0}
+.ui-dialog .ui-dialog-content.is-alert .p-cont{padding:0 25px}
+.ui-dialog .ui-dialog-content.is-alert .p-cont + .p-foot{display: flex;margin-top:40px;padding:0}
+.ui-dialog .ui-dialog-content.is-alert .p-cont + .p-foot [class*=btn]:first-child:last-child{width:100%}
+.ui-dialog .ui-dialog-content.is-alert .p-cont + .p-foot [class*=btn]{width:50%;border-left:0;border-bottom:0;}
+.ui-dialog .ui-dialog-buttonpane {text-align:center;border-top:0;margin:0;padding:0 16px 14px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {display:flex;position:relative;font-size:0;width:100%;}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button{margin:auto;line-height:1;font-weight:bold;}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button + .ui-button{margin-left:4px;}
+.ui-dialog .ui-dialog-content + .ui-dialog-buttonpane {margin-top:-22px;}
+
+.ui-dialog.ptitle-noline .ui-dialog-titlebar{margin-bottom: 0;}
+.ui-dialog.ptitle-noline .ui-dialog-titlebar .ui-dialog-title{border-bottom: none;}
+.ui-dialog.ui-widget-content.pop-main-wrap{width: 1px !important;height: 1px !important;top: 0 !important;left: 0 !important;border:0;}
+.ui-dialog.ui-widget-content.pop-main-wrap .is-pop-main{border:1px solid #000;background:#fff;box-sizing: content-box}
+.ui-dialog.ui-widget-content.pop-main-wrap .ui-dialog-titlebar{display:none;}
+.ui-dialog.ui-widget-content.pop-main-wrap .ui-dialog-content{padding:0;}
+.ui-dialog.ui-widget-content.pop-main-wrap .ui-dialog-content .p-cont{max-height:calc(100% - 42px);padding:0;overflow-x:auto}
+.ui-dialog.ui-widget-content.pop-main-wrap .ui-dialog-content .p-foot{position:absolute;bottom:0;left:0;width:100%;height:42px;padding:0 20px;display: flex;justify-content: space-between;align-items:center}
+.ui-dialog.ui-widget-content.pop-main-wrap .ui-dialog-content .p-foot .btn-pop-close{color:#777;}
+/**********************************************************************************
+* //dialog
+***********************************************************************************/
+
+
+/**********************************************************************************
+** datepicker
+***********************************************************************************/
+
+input.ip-datepicker[disabled] + button,
+input.ip-datepicker[readonly] + button {
+    opacity:0.4;
+    pointer-events:none;
+    cursor:default;
+}
+
+.ui-datepicker {
+    /*z-index:150 !important;*/
+    display:none;
+    width:240px;
+    margin-top:5px;
+    padding:5px 14px 3px 11px;
+    font-family:'Montserrat', sans-serif !important;
+    border:1px solid #111 !important;
+    background:#fff !important;
+    -webkit-border-radius:3px !important;
+    -moz-border-radius:3px !important;
+    border-radius:3px !important;
+    box-sizing:border-box;
+}
+/*.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
+    height:26px;
+    padding:2px 24px 3px 10px;
+    background:url("/resources/images/pc/ui/ui_datepicker_select_arr.png") no-repeat right center;
+}*/
+.ui-datepicker .ui-datepicker-header {
+    padding:16px 0 10px;
+    background:#fff;
+    border:0;
+    font-size:14px;
+    color:#2f313d;
+}
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+    position:absolute;
+    top:15px;
+    width:15px;
+    height:15px;
+    cursor:pointer;
+}
+
+.ui-datepicker .ui-datepicker-prev {
+    left:15px;
+    background:url(/resources/images/ui/btn_calendar_prev.png) no-repeat left top;
+}
+.ui-datepicker .ui-datepicker-next {
+    right:12px;
+    background:url(/resources/images/ui/btn_calendar_next.png) no-repeat right top;
+}
+.ui-datepicker .ui-datepicker-prev.ui-state-hover,
+.ui-datepicker .ui-datepicker-next.ui-state-hover {
+    /*background:0;*/
+    border:0;
+}r .ui-datepicker-prev span,
+ .ui-datepicker .ui-datepicker-next span {
+     display:block;
+     position:absolute;
+     left:50%;
+     margin-left:-9px;
+     top:50%;
+     margin-top:-9px;
+ }
+.ui-datepicker .ui-datepicker-title {
+    margin:0 30px;
+    line-height:12px;
+    text-align:center;
+    color:#000;
+    font-size:14px;
+
+}
+
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
+    width:auto;
+    font-family:'Montserrat', sans-serif !important;
+    font-size:14px;
+    color:#000;
+    font-weight:bold;
+}
+.ui-datepicker select.ui-datepicker-year{margin-left:4px;}
+
+.ui-datepicker table {
+    width:100%;
+    font-size:0.9em;
+    border-collapse:collapse;
+    margin:0 auto 12px;
+}
+.ui-datepicker th {
+    font-size:13px;
+    color:#4d4d4d;
+    padding:7px 0 6px;
+    text-align:center;
+    border:0;
+    line-height:1;
+    vertical-align:middle;
+}
+.ui-datepicker td {
+    border:0;
+    padding:0;
+}
+.ui-datepicker td span,
+.ui-datepicker td a.ui-state-default,
+.ui-datepicker .ui-state-default,
+.ui-datepicker td .ui-state-default{
+    display:block;
+    width:30px;
+    height:30px;
+    margin:0 auto;
+    padding:0;
+    color:#555;
+    text-align:center;
+    line-height:28px;
+    text-decoration:none;
+    background:none !important;
+    border:1px solid transparent;
+    border-radius:3px;
+    font-size:13px !important;
+    box-sizing:border-box;
+}
+.ui-state-disabled,
+.ui-widget-content .ui-state-disabled{opacity: .5}
+
+.ui-datepicker th.ui-datepicker-week-end:nth-child(1),
+.ui-datepicker td.sunday .ui-state-default,
+.ui-datepicker td.date-sunday .ui-state-default{ color:#ee1c25;}
+
+.ui-datepicker .ui-state-highlight,
+.ui-datepicker.ui-widget-content td a.ui-state-highlight,
+.ui-datepicker.ui-widget-header td a.ui-state-highlight{
+    color:#000;
+    border:1px solid #47ad1a;
+}
+
+.ui-datepicker .ui-widget-header .ui-datepicker-prev .ui-icon,
+.ui-datepicker .ui-widget-header .ui-datepicker-next .ui-icon {
+    position:absolute;
+    display:block;
+    overflow:hidden;
+    height:1px;
+    width:1px;
+    clip:rect(1px, 1px, 1px, 1px);
+}
+
+.ui-datepicker.ui-widget-content td a.ui-state-active {
+    /* .ui-datepicker .ui-datepicker td a.ui-state-active */
+    border-color:#3fa015 !important;
+    background-color:#3fa015 !important;
+    color:#fff !important;
+}
+
+.ui-datepicker .ui-datepicker-buttonpane {
+    background-image:none;
+    margin:.7em 0 0 0;
+    padding:0 .2em;
+    border-left:0;
+    border-right:0;
+    border-bottom:0;
+}
+.ui-datepicker .ui-datepicker-buttonpane button {
+    float:right;
+    margin:.5em .2em .4em;
+    cursor:pointer;
+    padding:.2em .6em .3em .6em;
+    width:auto;
+    overflow:visible;
+}
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
+    float:left;
+}
+
+
+
+/**********************************************************************************
+** 별점
+***********************************************************************************/
+.rating-container {position:relative;text-align:center;font-size:0;}
+.rating-container .empty-stars{display:block;height:25px;vertical-align:top;}
+.rating-container .star{height:25px;margin:0;vertical-align:top;}
+.rating-container .star + .star{margin-left:2px;}
+.rating-disabled .rating-input,
+.rating-disabled .rating-stars {cursor:default;}
+.rating-container .glyphicon {display:block;overflow:hidden;line-height:0;height:100%;}
+.rating-container .glyphicon-star-empty:before,
+.rating-container .glyphicon-star:before {content:'';display:inline-block;width:25px;height:25px;background-repeat:no-repeat;vertical-align:top;text-shadow:0;font-size:0;}
+.rating-container .glyphicon-star-empty:before {background-image:url(/resources/images/ui/ui_star_off.png);}
+.rating-container .glyphicon-star:before {background-image:url(/resources/images/ui/ui_star_on.png);}
+.rating-container .clear-rating {display:none;}
+.rating-container .rating-input {display:none;}
+
+.rating-container.rating-sm .empty-stars{height:17px}
+.rating-container.rating-sm .star{width:18px;height:17px;}
+.rating-container.rating-sm .glyphicon-star:before{width:18px;height:17px;}
+.rating-container.rating-sm .glyphicon-star-empty:before {background-image:url(/resources/images/ui/ui_star_sm_off.png);}
+.rating-container.rating-sm .glyphicon-star:before {background-image:url(/resources/images/ui/ui_star_sm_on.png);}
+
+/**********************************************************************************
+** 툴팁 레이어 팝업
+***********************************************************************************/
+.bic-dropdown .bic-dropdown{z-index:0;}
+
+.tooltip-wrap{display:inline-block;margin:2px 0 0 3px;vertical-align:top;}
+.tooltip-wrap .tooltip-container {z-index:99;position:absolute;top:100%;left:-1px;display:none;width:300px;background:#fff;border:1px solid #000;margin-top:5px;padding:11px 15px; text-align: left;} /*191210 수정*/
+.tooltip-wrap .tooltip-container:before {content:'';position:absolute;top:-7px;left:5px;display:block;width:11px;height:7px;}
+
+.tooltip-wrap .tooltip-container.center {left:50%;-webkit-transform:translateX(-50%);-moz-transform:translateX(-50%);-o-transform:translateX(-50%);transform:translateX(-50%);}
+.tooltip-wrap .tooltip-container.right{left:auto;right:0;}
+
+.tooltip-wrap .bic-sm-help ~ .tooltip-container{left:-4px;}
+.tooltip-wrap .bic-sm-help ~ .tooltip-container.right{left:auto;right:-4px;}
+
+.tooltip-wrap .bic-sm-dropdown ~ .tooltip-container{left:-3px;}
+.tooltip-wrap .bic-sm-dropdown ~ .tooltip-container.right{left:auto;right:-3px;}
+
+.tooltip-wrap .tico.bic-order ~ .tooltip-container{margin-top:21px;}
+
+.tooltip-wrap.select .tooltip-container{overflow-y:auto;width:100% !important;height:154px;padding:0;margin-top:-1px;border-color:#ddd;}
+.tooltip-wrap.select .tooltip-container:before{display:none;}
+
+.tooltip-wrap .btn-tooltip-close {position:absolute;top:14px;right:14px;display:block;overflow:hidden;padding:1px;}
+
+
+.ui-widget.ui-widget-content[role=dialog] .p-foot .btn-pos{min-width:150px;height:46px;line-height:44px;padding:0 15px;font-size:15px;}
+.ui-widget.ui-widget-content[role=dialog] .btn-pos{min-width:116px;height:36px;line-height:34px;padding:0 15px;font-size:14px !important;}
+.ui-widget.ui-widget-content[role=dialog] .btn-mid{min-width:116px;height:36px;line-height:34px;padding:0 15px;font-size:14px !important;}
+.ui-widget.ui-widget-content[role=dialog] .btn-lg{min-width:240px;height:50px;line-height:48px;font-size:15px !important}
+
+
+.btn-pos{display:inline-block;min-width:120px;height:36px;padding:0 15px;line-height:34px;text-align:center;font-size:14px !important;color:#333;border:1px solid #333;background:#fff;vertical-align:top;transition: all 0.1s;}
+.btn-mid{display:inline-block;min-width:150px;height:50px;padding:0 20px;line-height:48px;text-align:center;font-size:15px !important;;color:#333;border:1px solid #333;background:#fff;vertical-align:top;transition: all 0.1s;}
+.btn-lg{display:inline-block;min-width:240px;height:60px;padding:0 20px;line-height:58px;text-align:center;font-size:16px !important;;color:#333;border:1px solid #333;background:#fff;vertical-align:top;transition: all 0.1s;}
+.btn-sm{display:inline-block;/*min-width:110px;*/height:30px;padding:0 15px;line-height:28px;text-align:center;font-size:13px !important;;color:#777;border:1px solid #ccc;background:#fff;vertical-align:top;}
+
+.btn-ico-sm{display:inline-block;height:30px;padding:0 10px;line-height:28px;text-align:center;font-size:13px !important;;color:#777;border:1px solid #ccc;backgorund:#fff;vertical-align:top;}
+.btn-ico-sm .ico{margin: 7px 4px 0 0;} /* 191217 추가 */
+
+[class*=btn-].black{border-color:#333;background:#333;color:#fff;}
+[class*=btn-].green{border-color:#47ad1a;background:#47ad1a;color:#fff;}
+[class*=btn-].orange{border-color:#e37821;background:#e37821;color:#fff;} /* 191217 추가 */
+[class*=btn-].lngray{min-width:auto;border-color:#ccc;background:#fff;color:#777;}
+[class*=btn-].ln-black{border-color:#333;background:#fff;color:#333;}
+[class*=btn-].kakao {border-color:#fae100;background:#fae100;color:#333;}
+
+[class*=btn-].round-16{padding-right:15px;padding-left:15px;border-radius:16px;}
+
+.btn-pos:active,
+.btn-mid:active,
+.btn-lg:active,
+.btn-sm:active{color:#222;background:#f5f5f5;border-color:#333;}
+
+.btn-pos:disabled,
+.btn-mid:disabled,
+.btn-lg:disabled,
+.btn-sm:disabled,
+.btn-pos.disabled,
+.btn-mid.disabled,
+.btn-lg.disabled
+.btn-sm.disabled,
+.btn-pos:active.disabled,
+.btn-mid:active.disabled,
+.btn-lg:active.disabled,
+.btn-sm:active.disabled,
+.btn-pos:active:disabled,
+.btn-mid:active:disabled,
+.btn-lg:active:disabled,
+.btn-sm:active:disabled{color:#999;border-color:#999;background:#fff;text-decoration:none;cursor: default;}
