@@ -46,7 +46,7 @@
 	var days = ["A", "B", "C", "D", "E"];
 
 	var itemType = "box";
-	var itemCode = "${dto.products_no}";
+	var itemCode = "${list[0].products_no}";
 	var eventIdx = "";
 
 	$(document).ready(function () {
@@ -255,13 +255,13 @@
 			data: {
 				mobilehost: "http://localhost",
 				webhost: "http://localhost/",
-				detailImage1: location.origin+ "/file/download"+'/product/${dto.system_name}',			
-				weight: "${dto.products_size}",
-				path: "product/daily/${dto.products_tag}",
-				productName: "${dto.products_name}",
+				detailImage1: location.origin+ "/file/download"+'/product/${list[0].system_name}',			
+				weight: "${list[0].products_size}",
+				path: "product/box/${list[0].products_tag}",
+				productName: "${list[0].products_name}",
 				slogan: "${dto.products_sub_name}",
-				thumbnail: location.origin+ "/file/download"+'/product/${dto.system_name}',
-				price: "<fmt:formatNumber value="${dto.price }" pattern="#,###" />",
+				thumbnail: location.origin+ "/file/download"+'/product/${list[0].system_name}',
+				price: "<fmt:formatNumber value="${list[0].price }" pattern="#,###" />",
 			}	
 		};
 
@@ -288,7 +288,7 @@
 
 	function calculateBoxPrice() {
 		const qty = $('.box-qty').text()
-		const price = '${dto.price}'
+		const price = '${list[0].price}'
 		$('#totalPrice b').text(formatter.format(qty * price))
 
 	}
@@ -301,7 +301,7 @@
                     $('input[name=c1]').removeAttr('disabled');
                     $('.check-list').find('input[type=checkbox]:not(:checked)').click()
                     const cnt = $('input[name=c1]:checked').length
-                    const price = '${dto.price}'
+                    const price = '${list[0].price}'
                     totalPrice = cnt * price * 4;
 
                 } else {
@@ -315,7 +315,7 @@
         $('input[name=c1]').change(function () {
             if ($("input[name=r1]:checked").hasClass('none-package')) {
                 const cnt = $('input[name=c1]:checked').length
-                const price = '${dto.price}'
+                const price = '${list[0].price}'
                 $("#totalPrice b").text(formatter.format(cnt * price * 4));
             }
         })

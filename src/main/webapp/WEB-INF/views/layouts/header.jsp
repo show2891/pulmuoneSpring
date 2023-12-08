@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %> --%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!-- header -->
 <header id="header">
 
@@ -48,13 +49,17 @@
             </ul>
          </nav>
       </div>
+
       <div class="member-search-area">
          <div class="head-util-area">
-            <u:isLogin>
-               <p class="welcome">
-                  <b style="margin: 0;"><c:out value="${ auth.getName() }" /> <a href="/member/logout" type="button" class="logout-btn">로그아웃</a></b>님, 건강한 습관 풀무원녹즙입니다.
-               </p>
-            </u:isLogin>
+            <sec:authorize access="isAuthenticated()">
+	            <p class="welcome">
+	                <b style="margin: 0;"><sec:authentication property="principal.member.name"/> <a href="" type="button" class="logout-btn">로그아웃</a></b>님, 건강한 습관 풀무원녹즙입니다.
+		            <form action="/member/logout" method="post" id="logout">
+		            	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	            	</form>
+	            </p>
+            </sec:authorize>
             <a href="/mypage" data-require-login="true"> 
                <i class="ico ico-myIcon"></i>
                <span class="hide">로그인 페이지 / 마이 페이지로 가기</span>
@@ -233,11 +238,14 @@
       </div>
    </div>
 </header>
+
 <script type="text/javascript">
    $('.logout-btn').click(function (){
 //        if(confirm('로그아웃 하시겠습니까?')){
    			
 //        }
+		event.preventDefault();
+		$("#logout").submit();
    })
    $(document).ready(function(){
        $('.welcome b').hover(function() {
@@ -245,5 +253,6 @@
        }, function(){
            $('.logout-btn').stop().fadeOut('500');
        });
+
    });
 </script>
