@@ -46,7 +46,7 @@
 		WHERE member_id = #{param1}		
 		<if test="category != 'all' ">
 			AND inquiry_cate = #{param2}
-		</if>		
+		</if>
 	</select>
 	
 	<!-- // 문의 상세보기

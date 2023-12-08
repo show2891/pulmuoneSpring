@@ -23,7 +23,7 @@
                          <dd>
                              <div class="dropdown">
                                  <a class="btn dropdown-toggle category" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-expanded="false">주문확인/변경</a>
-                                 <input type="hidden" name="cate1" id="cate1" value="주문확인/변경">
+                                 <input type="hidden" name="inquiry_cate" id="cate1" value="주문확인/변경">
                                  <div class="dropdown-menu" id="dropdown-menu" style="">
                                      
                                          <a id="dropdown-item" class="dropdown-item dropdown-item-category category CONSULT_001" data-value="주문확인/변경" href="javascript:void(0)">주문확인/변경</a>
@@ -50,7 +50,7 @@
                     <div class="form-input select returnOrder" style="display: none;">
                         <dl>
                             <dt style="padding-left:20px; padding-bottom:3px;"><label>주문번호 선택</label></dt>
-                            <input type="hidden" id="cate5" name="orderNum">
+                            <input type="hidden" id="cate5" name="orderNum" />
                             <dd>
                                 <div class="dropdown">
                                     <a class="btn dropdown-toggle orderNum" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="padding:0 19px 4px;">
@@ -109,8 +109,8 @@
                                 <label for="email">이메일주소</label>
                             </dt>
                             <dd>
-                                <input type="hidden" id="emailAddHost" name="emailAddHost" value="">
-                                <input type="text" id="email" value="" name="email">
+                                <input type="hidden" id="emailAddHost" name="email" value="">
+                                <input type="text" id="email" value="" name="email_first">
                                 @
                                 <input type="text" id="host" readonly="" name="host" value="">
                                 <div class="dropdown" style="min-width:251px; flex:0;">
@@ -148,7 +148,7 @@
 				</div>
 				<div class="form-input editor">
 							
-							<textarea maxlength="500" data-max="500" id="content" name="contents" placeholder="내용을 입력하세요."></textarea>
+							<textarea maxlength="500" data-max="500" id="content" name="content" placeholder="내용을 입력하세요."></textarea>
 							<!-- <input type="hidden" id="contents" name="contents"> -->
 		
 					<div class="count" id="word-count" ><span class="current-char">0</span> / <span class="maxtext">500</span></div>
@@ -162,185 +162,190 @@
 			</div>
 			
 		</div>
+		
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
 	</form>
 </div>
 
 
 
 <script>
-	// editor 
-	const $wc = $("#word-count");
-	let maxtext = 2000;
-	$(".maxtext").text(maxtext);
-	let currentChar = 0;
-	let editor;
-	ClassicEditor
-       .create( document.querySelector( '#content' ), {
-				language: "ko",
-       	wordCount: {
-               onUpdate: stats => {
-                       
-                       const isLimit = maxtext < stats.characters;
-                       
-                       if( isLimit ) {
-                           $wc.find(".current-char").text(`-${stats.characters - maxtext}`);	
-                           $("#noticeWriteBtn").prop("disabled", true);
-                           $wc.find(".current-char").addClass("over");
-                       }else {
-                           $wc.find(".current-char").text( stats.characters );
-                           currentChar = stats.characters;
-                           $("#noticeWriteBtn").prop("disabled", false);
-                           $wc.find(".current-char").removeClass("over");
-                       }
-               },
-       	},
-           ckfinder: {
-                   uploadUrl : "/forum/inquiry/upload.do",
-                   withCredentials: true
-               }	
-           })
-           .then(edt => {
-               editor = edt;
-           })
-       .catch( error => {
-           console.error( error );
-       } );
-	
-
-
-       // inquiry select click
-       $(".dropdown-item-category").on("click", function(e){
-           e.preventDefault();
-           let val = $(this).data("value");
-           $(".dropdown-toggle.category").text(val);
-           $(":input[name=cate1]").val(val);
-       })
-
-       $(".dropdown-item.email").on("click", function(e){
-           e.preventDefault();
-           let val = $(this).data("value");
-           $("#email").trigger("emailtrg");
-           if( val == 1) {
-               $(":input[name=host]").prop("readonly", false);
-               $(".dropdown-toggle.email").text($(this).text());
-               $(":input[name=host]").val("");
-               $(":input[name=host]").focus();
-               return
-           }
-           $(":input[name=host]").prop("readonly", true);
-           $(".dropdown-toggle.email").text(val);
-           $(":input[name=host]").val(val);
-           
-       })
-       
-
-	// title valid check
-	$("#title").on("blur", function(){
-		if( $(this).val() == "" ) {
-			$("#titleError").css("visibility", "visible");
-		}else {
-			$("#titleError").css("visibility", "hidden");
-		}
-	})
-
-       $("#email").on("blur input emailtrg", function(){
-           if( emailIdCheck($(this)) == 1 ) {
-               $("#emailError .txt").text("이메일을 입력해 주세요.")
-               $("#emailError").css("visibility", "visible");
-           } else if( emailIdCheck($(this)) == 2 ) {
-               $("#emailError .txt").text("이메일을 정확히 입력해 주세요.")
-               $("#emailError").css("visibility", "visible");
-           } else {
-               $("#emailError").css("visibility", "hidden");
-           } 
-	})
-
-       $(":input[name=host]").on("blur input", function(){
-           if( !emailAddrCheck($(this)) ) {
-               $("#emailError .txt").text("이메일을 정확히 입력해 주세요.")
-               $("#emailError").css("visibility", "visible");
-           }else {
-               $("#emailError").css("visibility", "hidden");
-           }
-       })
-       
-
-       function emailIdCheck ($id) {
-           // 1: 공백 체크, 2: 아이디체크
-           // /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-           let val = $($id).val();
-           let reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*/i;
-           let emailValid = reg.test(val);
-           if( val == "" ){
-               return 1;
-           }else if( !emailValid ) {
-               return 2
-           }
-       }
-       function emailAddrCheck ($id) {
-           // /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-           let val = $($id).val();
-           let reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-           let emailValid = reg.test(val);
-           if( val == "" || !emailValid ) return false;
-
-           return true;
-       }
+	$(function(){
 		
-       
-       // inquiry write btn
-       let submitOk = false;
-       $("#inquiryWriteBtn").on("click", function(){
-           if( emailIdCheck($("#email")) == 1 ) {
-               
-               $(".modal-body").text("이메일을 입력해 주세요.");
-               $("#alertModal").modal();
-               $("#email").focus();
-               return false;
-           } else if( emailIdCheck($("#email")) == 2 ) {
-               $(".modal-body").text("이메일을 정확히 입력해 주세요.");
-               $("#alertModal").modal();
-               $("#email").focus();
-               return false;
-           } else if( !emailAddrCheck( $("#host") ) ) {
-               $(".modal-body").text("이메일을 확인해 주세요.");
-               $("#alertModal").modal();
-               $("#host").focus();
-               return false;
-           } else if( $("#title").val() == "" ) {
-               console.log("aa")
-               $(".modal-body").text("제목을 입력해주세요.");
-               $("#alertModal").modal();
-               $("#title").focus();
-               
-               return false;
-           }else if( currentChar < 1 ) {
-               console.log("bb")
-               $(".modal-body").text("내용을 입력해주세요.");
-               $("#alertModal").modal();
-               editor.focus();
-               
-               return false;
-           }
-			let emailId = $(":input[name=email]").val();
-			let emailHost = $(":input[name=host]").val();
-			$(":input[name=emailAddHost]").val(emailId +'@' + emailHost);
+	
+		// editor 
+		const $wc = $("#word-count");
+		let maxtext = 2000;
+		$(".maxtext").text(maxtext);
+		let currentChar = 0;
+		let editor;
+		ClassicEditor
+	       .create( document.querySelector( '#content' ), {
+					language: "ko",
+	       	wordCount: {
+	               onUpdate: stats => {
+	                       
+	                       const isLimit = maxtext < stats.characters;
+	                       
+	                       if( isLimit ) {
+	                           $wc.find(".current-char").text(`-${stats.characters - maxtext}`);	
+	                           $("#noticeWriteBtn").prop("disabled", true);
+	                           $wc.find(".current-char").addClass("over");
+	                       }else {
+	                           $wc.find(".current-char").text( stats.characters );
+	                           currentChar = stats.characters;
+	                           $("#noticeWriteBtn").prop("disabled", false);
+	                           $wc.find(".current-char").removeClass("over");
+	                       }
+	               },
+	       	},
+	           ckfinder: {
+	                   uploadUrl : "/forum/inquiry/upload" + `?${_csrf.parameterName}=${_csrf.token}`,
+	                   withCredentials: true
+	               }	
+	           })
+	           .then(edt => {
+	               editor = edt;
+	           })
+	       .catch( error => {
+	           console.error( error );
+	       } );
+		
+	
+	
+	       // inquiry select click
+	       $(".dropdown-item-category").on("click", function(e){
+	           e.preventDefault();
+	           let val = $(this).data("value");
+	           $(".dropdown-toggle.category").text(val);
+	           $(":input[name=inquiry_cate]").val(val);
+	       })
+	
+	       $(".dropdown-item.email").on("click", function(e){
+	           e.preventDefault();
+	           let val = $(this).data("value");
+	           $("#email").trigger("emailtrg");
+	           if( val == 1) {
+	               $(":input[name=host]").prop("readonly", false);
+	               $(".dropdown-toggle.email").text($(this).text());
+	               $(":input[name=host]").val("");
+	               $(":input[name=host]").focus();
+	               return
+	           }
+	           $(":input[name=host]").prop("readonly", true);
+	           $(".dropdown-toggle.email").text(val);
+	           $(":input[name=host]").val(val);
+	           
+	       })
+	       
+	
+		// title valid check
+		$("#title").on("blur", function(){
+			if( $(this).val() == "" ) {
+				$("#titleError").css("visibility", "visible");
+			}else {
+				$("#titleError").css("visibility", "hidden");
+			}
+		})
+	
+	       $("#email").on("blur input emailtrg", function(){
+	           if( emailIdCheck($(this)) == 1 ) {
+	               $("#emailError .txt").text("이메일을 입력해 주세요.")
+	               $("#emailError").css("visibility", "visible");
+	           } else if( emailIdCheck($(this)) == 2 ) {
+	               $("#emailError .txt").text("이메일을 정확히 입력해 주세요.")
+	               $("#emailError").css("visibility", "visible");
+	           } else {
+	               $("#emailError").css("visibility", "hidden");
+	           } 
+		})
+	
+	       $(":input[name=host]").on("blur input", function(){
+	           if( !emailAddrCheck($(this)) ) {
+	               $("#emailError .txt").text("이메일을 정확히 입력해 주세요.")
+	               $("#emailError").css("visibility", "visible");
+	           }else {
+	               $("#emailError").css("visibility", "hidden");
+	           }
+	       })
+	       
+	
+	       function emailIdCheck ($id) {
+	           // 1: 공백 체크, 2: 아이디체크
+	           // /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+	           let val = $($id).val();
+	           let reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*/i;
+	           let emailValid = reg.test(val);
+	           if( val == "" ){
+	               return 1;
+	           }else if( !emailValid ) {
+	               return 2
+	           }
+	       }
+	       function emailAddrCheck ($id) {
+	           // /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+	           let val = $($id).val();
+	           let reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	           let emailValid = reg.test(val);
+	           if( val == "" || !emailValid ) return false;
+	
+	           return true;
+	       }
 			
-			$(".modal-body").html(`
-        		   1:1상담이 등록되었습니다.<br>
-                   빠른 시일내에 답변 드리겠습니다	   
-           `);
-			submitOk = true;
-       })
-       
-       $("#alertModal .modal-footer").on("click", function(){
-    	   if ( submitOk ) {
-    		   $("#inquiryForm").submit();
-    	   }else {
-    		   console.log("요청 실패.");
-    	   }
-       })
-
+	       
+	       // inquiry write btn
+	       let submitOk = false;
+	       $("#inquiryWriteBtn").on("click", function(){
+	           if( emailIdCheck($("#email")) == 1 ) {
+	               
+	               $(".modal-body").text("이메일을 입력해 주세요.");
+	               $("#alertModal").modal();
+	               $("#email").focus();
+	               return false;
+	           } else if( emailIdCheck($("#email")) == 2 ) {
+	               $(".modal-body").text("이메일을 정확히 입력해 주세요.");
+	               $("#alertModal").modal();
+	               $("#email").focus();
+	               return false;
+	           } else if( !emailAddrCheck( $("#host") ) ) {
+	               $(".modal-body").text("이메일을 확인해 주세요.");
+	               $("#alertModal").modal();
+	               $("#host").focus();
+	               return false;
+	           } else if( $("#title").val() == "" ) {
+	               console.log("aa")
+	               $(".modal-body").text("제목을 입력해주세요.");
+	               $("#alertModal").modal();
+	               $("#title").focus();
+	               
+	               return false;
+	           }else if( currentChar < 1 ) {
+	               console.log("bb")
+	               $(".modal-body").text("내용을 입력해주세요.");
+	               $("#alertModal").modal();
+	               editor.focus();
+	               
+	               return false;
+	           }
+				let emailId = $(":input[name=email_first]").val();
+				let emailHost = $(":input[name=host]").val();
+				$(":input[name=email]").val(emailId +'@' + emailHost);
+				
+				$(".modal-body").html(`
+	        		   1:1상담이 등록되었습니다.<br>
+	                   빠른 시일내에 답변 드리겠습니다	   
+	           `);
+				submitOk = true;
+	       })
+	       
+	       $("#alertModal .modal-footer").on("click", function(){
+	    	   if ( submitOk ) {
+	    		   $("#inquiryForm").submit();
+	    	   }else {
+	    		   console.log("요청 실패.");
+	    	   }
+	       })
+	});
 </script>
 
 </body>
