@@ -18,4 +18,11 @@
      	ORDER BY p.products_no
      </select>
      
+     <!-- String getMemberInfo(String username); -->
+     <select id="getMemberInfo" resultType="org.pro.pulmuone.domain.member.MemberDTO">
+     	SELECT name, tel, member_no
+     	FROM member
+     	WHERE member_id = #{username}
+     </select>
+     
 </mapper>

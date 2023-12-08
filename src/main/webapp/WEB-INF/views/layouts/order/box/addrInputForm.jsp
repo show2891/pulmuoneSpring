@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div class="checkout-input-area">
 	<div class="checkout-input-title-area">
 		<h3 class="checkout-input-title">배송정보</h3>
@@ -23,7 +24,7 @@
 				<label for="receiver">받으시는분</label>
 			</dt>
 			<dd>
-				<input type="text" id="receiver" name="orderName" placeholder="이름을 입력하세요" value="${ miDto.name }" maxlength="10">
+				<input type="text" id="receiver" name="orderName" placeholder="이름을 입력하세요" value="${ member.name }" maxlength="10">
 			</dd>
 		</dl>
 	</div>
@@ -34,7 +35,7 @@
 				<label for="phone">휴대폰번호</label>
 			</dt>
 			<dd>
-				<input type="tel" id="tel" name="tel" maxlength="13" placeholder="휴대폰번호를 입력하세요" value="${ miDto.tel }">
+				<input type="tel" id="tel" name="tel" maxlength="13" placeholder="휴대폰번호를 입력하세요" value="${ member.tel }">
 			</dd>
 		</dl>
 	</div>

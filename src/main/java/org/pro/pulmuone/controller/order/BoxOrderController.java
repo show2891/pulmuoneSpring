@@ -4,10 +4,14 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pro.pulmuone.domain.member.MemberDTO;
 import org.pro.pulmuone.domain.order.box.BoxItemInfoDTO;
 import org.pro.pulmuone.domain.order.box.BoxOrderItemDTO;
 import org.pro.pulmuone.service.order.BoxOrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +33,15 @@ public class BoxOrderController {
 	private BoxOrderServiceImpl boxOrderServiceImpl;
 	
 	@GetMapping("step1")
-	public String step1(@RequestParam(name = "item") String itemsStr , Model model) {
+	public String step1(@RequestParam(name = "item") String itemsStr, Model model) {
 		log.info("> BoxOrderController.step1 ...");
 		
+		// 1. 파라미터로 넘어온 상품 정보 출력
 		ObjectMapper objectMapper = new ObjectMapper();
 		
+		// 파라미터로 넘어온 json String 변환
 		// {"item":[{"itemCode":"0073561","qty":1}]} -> [{"itemCode":"0073561","qty":1}]
 		itemsStr = itemsStr.substring(8, itemsStr.length()-1);
-		System.out.println(itemsStr);
-		System.out.println(itemsStr);
 		
 		try {
 			// 장바구니 정보 json -> 객체로 가져오기
@@ -64,6 +68,23 @@ public class BoxOrderController {
 			e.printStackTrace();
 		} // try
 		
+
+		// 2. 사용자 정보 출력
+		// 현재 사용자의 인증 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+        
+        // 전화번호 전달
+        MemberDTO member = boxOrderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+		
+        
 		return "order/box/step1.tiles";
 	}
 

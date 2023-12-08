@@ -43,8 +43,8 @@
 			searchPostcode();
 			
 			// 고객 정보와 동일 체크박스
-			let name = "name";
-			let tel = "010-1234-1234";
+			let name = $("#receiver").val();
+			let tel = $("#tel").val();
 			chkCheck(name, tel);
 		});
 </script>
