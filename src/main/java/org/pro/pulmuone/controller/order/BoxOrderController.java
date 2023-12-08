@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/order/box/*")
+@RequestMapping("/box/order/*")
 @Log4j
 public class BoxOrderController {
 	
@@ -36,6 +36,8 @@ public class BoxOrderController {
 		
 		// {"item":[{"itemCode":"0073561","qty":1}]} -> [{"itemCode":"0073561","qty":1}]
 		itemsStr = itemsStr.substring(8, itemsStr.length()-1);
+		System.out.println(itemsStr);
+		System.out.println(itemsStr);
 		
 		try {
 			// 장바구니 정보 json -> 객체로 가져오기

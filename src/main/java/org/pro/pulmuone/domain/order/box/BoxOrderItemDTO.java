@@ -11,5 +11,6 @@ public class BoxOrderItemDTO {
 	
 	private String itemCode;
 	private int qty;
+	private int eventIdx;
 	
 }
