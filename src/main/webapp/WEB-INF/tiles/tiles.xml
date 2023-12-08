@@ -27,14 +27,10 @@
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
 	    <put-attribute name="aside" value="/WEB-INF/views/layouts/forum/aside.jsp" /> 
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />    
-<<<<<<< HEAD
 		
 		<put-attribute name="page" value="{1}"></put-attribute>
    </definition>
 
-=======
-    </definition>	
->>>>>>> f19daf85d8225668087b1ea53e1ea810099e0b6b
      
     
     <!-- customer.notice -->  
