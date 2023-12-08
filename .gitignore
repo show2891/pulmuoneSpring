@@ -26,6 +26,15 @@ replay_pid*
 
 # Eclipse Core       
 .project 
+target/
+tmp/
+/build
+/bin/
+
+.springBeans
+
+# Tern plugin
+.tern-project
 
 # JDT-specific (Eclipse Java Development Tools)      
 .classpath
@@ -38,6 +47,5 @@ replay_pid*
 .AppleDouble
 .LSOverride
 
-/build
-/bin/
+
 
