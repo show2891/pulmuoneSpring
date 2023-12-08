@@ -22,7 +22,7 @@ function openWindowPop(url, name){
 }
 $(function(){
 
-  axios.get('/mypage.do').then(function (response) {
+  axios.get('/mypage').then(function (response) {
 
     const {info, customerVo} = response.data.RESULT_MSG;
 
