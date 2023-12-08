@@ -15,11 +15,12 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 
-<button id="allOrderBtn">버튼</button>
+<button id="boxOrderBtn">boxOrder</button>
+<button id="dailyOrderBtn">dailyOrder</button>
 
 
 <script>
-$("#allOrderBtn").click(function () {
+$("#boxOrderBtn").click(function () {
 	let order = { item: [] };
 	
 	let item = {
@@ -35,6 +36,25 @@ $("#allOrderBtn").click(function () {
 	order.item.push(item);
 
 	location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(order));
+});
+</script>
+<script>
+$("#dailyOrderBtn").click(function () {
+	let order = { item: [] };
+	
+	let item = {
+		itemCode: "0071654"
+	}
+	item.dayQty = [1,0,1,0,1];
+	order.item.push(item);
+	
+	item = {
+			itemCode: "0070776"
+	}
+	item.dayQty = [0,1,0,1,0];
+	order.item.push(item);
+
+	location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(order));
 });
 </script>
 </body>

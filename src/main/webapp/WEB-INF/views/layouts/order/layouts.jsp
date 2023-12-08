@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html>
 	<tiles:insertAttribute name="head" />
+	<script src="/resources/assets/js/order/dailyOrder.js"></script>
+	<script src="/resources/assets/js/order/order.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 
 <div class="wrapper">
@@ -34,5 +37,16 @@
   	<tiles:insertAttribute name="footer" />
 </div>
 
+<script>
+		$(function () {
+			// 다음 주소 api
+			searchPostcode();
+			
+			// 고객 정보와 동일 체크박스
+			let name = "name";
+			let tel = "010-1234-1234";
+			chkCheck(name, tel);
+		});
+</script>
 </body>
 </html>

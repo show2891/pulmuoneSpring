@@ -1,4 +1,4 @@
-package org.pro.pulmuone.domain.order;
+package org.pro.pulmuone.domain.order.box;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

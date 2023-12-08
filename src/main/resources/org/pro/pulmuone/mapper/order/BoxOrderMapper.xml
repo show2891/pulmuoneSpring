@@ -5,8 +5,8 @@
     
 <mapper namespace="org.pro.pulmuone.mapper.order.BoxOrderMapper">
 
-     <!--  List<BoxItemInfoDTO> selectItems( List<BoxOrderItemDTO> items) throws SQLException; -->
-     <select id="selectItems" resultType="org.pro.pulmuone.domain.order.BoxItemInfoDTO">
+     <!--  List<BoxItemInfoDTO> selectItems( List<BoxOrderItemDTO> items) -->
+     <select id="selectItems" resultType="org.pro.pulmuone.domain.order.box.BoxItemInfoDTO">
      	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name
      	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
      	<where>
