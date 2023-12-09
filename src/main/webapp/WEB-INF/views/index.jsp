@@ -95,7 +95,7 @@
 											<img src="/resources/assets/images/common/ico_member02.png"
 												alt=""> <strong> <b>로그인</b>하시고 <br> <span>맞춤
 													서비스</span>를 누리세요!
-											</strong> <a href="/mypage.do" class="btn-login" title="로그인하기">
+											</strong> <a href="/member/login" class="btn-login" title="로그인하기">
 												로그인하기 <i class="ico ico-arr-right6"></i>
 											</a>
 										</div>
