@@ -17,6 +17,7 @@
 
 		<security:form-login 
 			login-page="/member/login"
+			login-processing-url="/member/login"
 			authentication-success-handler-ref="customLoginSuccessHandler"
 		/>  
 		
