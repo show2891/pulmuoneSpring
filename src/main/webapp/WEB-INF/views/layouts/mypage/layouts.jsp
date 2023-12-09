@@ -11,13 +11,13 @@
 <div class="wrapper">
 
 	<!-- header -->
-<%-- 	<tiles:insertAttribute name="header" /> --%>
+	<tiles:insertAttribute name="header" />
 	
 		<div class="container aside-layout main" style="padding-bottom:100px; ">
 			<tiles:insertAttribute name="aside" />
 			
 			<!-- main -->
-<%-- 		  	<tiles:insertAttribute name="content" /> --%>
+		  	<tiles:insertAttribute name="content" />
 	  	</div>
 	  	
   	<!-- footer -->

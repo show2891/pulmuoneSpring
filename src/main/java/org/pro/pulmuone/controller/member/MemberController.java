@@ -4,10 +4,14 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.pro.pulmuone.domain.member.MemberDTO;
 import org.pro.pulmuone.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,21 +27,34 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	private final RequestCache requestCache = new HttpSessionRequestCache();
 	
 	@GetMapping("login")
-	public String login(HttpServletRequest request) {
+	public String login(HttpServletRequest request, HttpServletResponse response) {
 		log.warn("> MemberController login()...");
 		
+		SavedRequest savedRequest = requestCache.getRequest(request, response);
+		log.info(savedRequest.getRedirectUrl());
+		
 		// referer - 이전 경로를 가지고 있는 속성
-		String referer = request.getRequestURI();
-		String queryString = null;
-		queryString = request.getQueryString();
-		
-		if ( queryString != null ) {
-			referer += "?" + queryString;
-		}
-		request.getSession().setAttribute("referer", referer);
-		
+//		String referer = request.getRequestURI();
+		String referer = request.getHeader("Referer");
+	    if (referer != null && !referer.contains("/member/login")) {
+	        request.getSession().setAttribute("referer", referer);
+	    }
+	    log.info(">>" + referer);
+//		
+//		String queryString = null;
+//		queryString = request.getQueryString();
+//		
+//		if ( queryString != null ) {
+//			referer += "?" + queryString;
+//		}
+//		System.out.println(referer);
+//		request.getSession().setAttribute("referer", referer);
+	    
+	    request.setAttribute("redirectUrl", referer);
+	    
 		return "member/login.tiles";
 	}
 	

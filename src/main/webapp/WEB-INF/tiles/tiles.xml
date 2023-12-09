@@ -30,23 +30,19 @@
 		<put-attribute name="page" value="{1}"></put-attribute>
    </definition>
 
-    <!-- mypage -->
+	<!-- mypage -->
     <definition name="mypage" template="/WEB-INF/views/layouts/mypage/layouts.jsp">
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+    	<put-attribute name="aside" value="/WEB-INF/views/layouts/mypage/aside.jsp" />    
    </definition>
     
 	<!-- mypage -->
-    <definition name="mypage/*.tiles" extends="mypage">
-		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}.jsp" />    
-	      <put-attribute name="aside" value="/WEB-INF/views/layouts/mypage/aside.jsp" />
+    <definition name="mypage/*/*.tiles" extends="mypage">
+		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}/{2}.jsp" />    
    </definition>
    
-<!--     mypage -->
-<!--     <definition name="mypage/*/*.tiles" extends="mypage"> -->
-<!-- 		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}/{2}.jsp" />     -->
-<!--    </definition> -->
    
    
    

@@ -15,9 +15,9 @@ public class MypageController {
 
 	@GetMapping("mypage")
 	public String login(HttpServletRequest request) {
-		log.info("> MypageController mypage()...");
+		log.warn("> MypageController mypage()...");
 			
-		return "mypage/mypage.tiles";
+		return "mypage/home/userSummmary.tiles";
 	}
 	
 

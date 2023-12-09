@@ -3,6 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".visual-area").fddCarousel({
@@ -88,56 +90,61 @@
 						<!--S:개인화 영역 -->
 						<div class="personal-area">
 							<!-- 비로그인 (https://zpl.io/6NeDXpW) -->
-							<c:choose>
-								<c:when test="${ auth.getName() eq null }">
-									<div class="member-area">
-										<div class="personal-login">
-											<img src="/resources/assets/images/common/ico_member02.png"
-												alt=""> <strong> <b>로그인</b>하시고 <br> <span>맞춤
-													서비스</span>를 누리세요!
-											</strong> <a href="/member/login" class="btn-login" title="로그인하기">
-												로그인하기 <i class="ico ico-arr-right6"></i>
-											</a>
-										</div>
+							<sec:authorize access="isAnonymous()">
+								<div class="member-area">
+									<div class="personal-login">
+										<img src="/resources/assets/images/common/ico_member02.png"
+											alt=""> <strong> <b>로그인</b>하시고 <br> <span>맞춤
+												서비스</span>를 누리세요!
+										</strong> <a href="/member/login" class="btn-login" title="로그인하기">
+											로그인하기 <i class="ico ico-arr-right6"></i>
+										</a>
 									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="member-area"
-										style="position: relative; overflow: visible"
-										data-summary-view="#member_info">
-										<div class="personal-info">
-											<div class="user-info">
-												<strong><span>${auth.getName()}</span>님 안녕하세요!</strong>
-												<div class="pmenu-coupon">
-													<a href="/mypage/benefit/coupon" title="해당페이지로 가기"> <span>0</span>
-														<i class="ico"></i>
-													</a>
-												</div>
+								</div>
+							</sec:authorize>
+							<sec:authorize access="isAuthenticated()">
+								<div class="member-area" style="position: relative; overflow: visible" data-summary-view="#member_info">
+									<div class="personal-info">
+										<div class="user-info">
+											<strong><span><sec:authentication property="principal.member.name"/></span>님 안녕하세요!</strong>
+											<div class="pmenu-coupon">
+												<a href="/mypage/benefit/coupon" title="해당페이지로 가기"> <span>0</span>
+													<i class="ico"></i>
+												</a>
 											</div>
-											<div class="billing-area">
-												<div class="billing-prd">
-													<b>음용1</b>
-													<div class="prd-link">
-														<button type="button"
-															data-toggle-view="#customer-num-view">
-															<i class="ico"></i> <span class="hide">고객번호 확인하기</span>
-														</button>
-														<div id="customer-num-view" class="customer-info"
-															style="display: none;">
-															<em>고객번호</em> <span>230000234094</span> <a
-																href="/mypage/drink/drink" class="button" type="button">변경</a>
-														</div>
+										</div>
+										<div class="billing-area">
+											<div class="billing-prd">
+												<b>음용1</b>
+												<div class="prd-link">
+													<button type="button"
+														data-toggle-view="#customer-num-view">
+														<i class="ico"></i> <span class="hide">고객번호 확인하기</span>
+													</button>
+													<div id="customer-num-view" class="customer-info"
+														style="display: none;">
+														<em>고객번호</em> <span>230000234094</span> <a
+															href="/mypage/drink/drink" class="button" type="button">변경</a>
 													</div>
 												</div>
-												<ul>
-													<li><span>11월 청구예정 금액</span> <b class="now-price">62,100<span>
-																원</span></b></li>
-													<li><span>실시간 금액</span> <b class="now-price">32,700<span>
-																원</span></b></li>
-												</ul>
 											</div>
+											<ul>
+												<li><span>11월 청구예정 금액</span> <b class="now-price">62,100<span>
+															원</span></b></li>
+												<li><span>실시간 금액</span> <b class="now-price">32,700<span>
+															원</span></b></li>
+											</ul>
 										</div>
 									</div>
+								</div>
+							</sec:authorize>
+							
+							<c:choose>
+								<c:when test="${ auth.getName() eq null }">
+
+								</c:when>
+								<c:otherwise>
+									
 								</c:otherwise>
 							</c:choose>
 							<!-- <div class="member-area" style="position:relative;overflow: visible" data-summary-view="#member_info"> -->
