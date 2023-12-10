@@ -35,7 +35,7 @@
                   <a href="/product/box">택배배송</a>
                </li>
                <li>
-                  <a href="/customer/product/product">맞춤큐레이션</a>
+                  <a href="/customer/product">맞춤큐레이션</a>
                </li>
                <li>
                   <a href="/taste/taste">시음선물</a>

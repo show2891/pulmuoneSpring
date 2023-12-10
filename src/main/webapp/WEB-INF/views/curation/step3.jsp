@@ -109,43 +109,38 @@
 				const req1 = JSON.parse(sessionStorage.getItem('req1'))
 				const req2 = JSON.parse(sessionStorage.getItem('req2'))
 				const req3 = JSON.parse(sessionStorage.getItem('req3'))
-				let params = `program_no={param.program_no}`
-
-				location.href = '/customer/product/result/' 
-			//	+ {param.program_no}
-				+ '?singleYn=' + singleYn 
-// 				+ '&bmi=' + bmi + '&questions='
-// 				+ data.RESULT_MSG.questions.join(',');
+				let param = "${list[0].program_no}";
+				let params = "${param.program_no}";
+				console.log(param);
+				console.log(params);
 				
 				const data = {...req1, ...req2, ...req3}
+				// console.log(data)
 				const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
 						v => ({idx: v[0], answer: v[1]}));
-				newPost({ data: {singleYn, answerList: body} 	},
-				function (data) {
+				newPost({
+					url: '/customer/product/result/',
+					data: {singleYn, answerList: body}
+				}, function (data) {
 					var bmi = data.RESULT_MSG.bmi || 0;
 					if (bmi == 0 && req1.weight && req1.tallness) {
 						bmi = getBmi(req1.weight, req1.tallness)
 					}
-			
-// 					location.href +=  data.RESULT_MSG.execution.idx
-// 					+ '&bmi=' + bmi + '&questions='
-// 					+ data.RESULT_MSG.questions.join(',');
-					
-// 					if (singleYn=='Y') {
-// 						location.href='/customer/product/result/'  + '?singleYn=' + singleYn ;
-// 					}	else { 
-// 						location.href="/customer/product/result/"  + '?singleYn=' + singleYn ;
-// 					}
+						
+					location.href = '/customer/product/result/' 
+					+ param
+					+ '?singleYn=' + singleYn 
+					+ '&bmi=' + bmi + '&questions='
+					+ data.RESULT_MSG.questions.join(',');
+				});
+			}
 					
 // 					if (singleYn=='Y') {
 // 						location.href='result/products?' + data.RESULT_MSG.execution.idx + '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');
 // 					}	else { 
 // 						location.href="result/programs?" + data.RESULT_MSG.execution.idx +'?singleYn=' + singleYn+ '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');;
 // 					}
-					
-				
-			})
-		}
+
             if (currentPage <= totalCnt) {
 				const data = {}
 				$('.question-section').children().each((i, v) => {
