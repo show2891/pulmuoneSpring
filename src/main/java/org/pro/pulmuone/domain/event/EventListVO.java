@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventVO {
+public class EventListVO {
 
 	private int event_no;
 	private String event_name;

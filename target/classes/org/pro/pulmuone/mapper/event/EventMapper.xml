@@ -1,81 +1,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.pro.pulmuone.mapper.EventMapper">
+<mapper namespace="org.pro.pulmuone.mapper.event.EventMapper">
 
-    <insert id="createEvent">
-    	INSERT INTO event (event_no, event_name, event_start, event_end, event_notice, event_cmt)
-    	VALUES (#{event_no}, #{event_name}, #{event_start}, #{event_end}, #{event_notice}, #{event_cmt})
-    </insert>
-    
-    <select id="viewEvent" resultType="org.pro.pulmuone.domain.EventVO">
-    	 SELECT * FROM event WHERE event_no = #{event_no}
-    </select>
-    
-    <update id="updateEvent">
-		UPDATE event SET event_name = #{event_name}, event_start = #{event_start}, event_end = #{event_end}, event_notice = #{event_notice}, event_cmt = #{event_cmt}
-		WHERE event_no = #{event_no}
-    </update>
+	<resultMap id="EventListResultMap"
+		type="org.pro.pulmuone.domain.event.EventListVO">
+		<id property="event_no" column="event_no" />
+		<result property="event_name" column="event_name" />
+		<result property="event_start" column="event_start" />
+		<result property="event_end" column="event_end" />
+		<result property="event_notice" column="event_notice" />
+		<association property="thumbnail"
+			javaType="org.pro.pulmuone.domain.event.EventThumbnailVO">
+			<id property="img_no" column="img_no" />
+			<result property="system_name" column="system_name" />
+			<result property="origin_name" column="origin_name" />
+			<result property="img_size" column="img_size" />
+			<result property="img_type" column="img_type" />
+			<result property="img_path" column="img_path" />
+		</association>
+	</resultMap>
 
-    <delete id="deleteEvent">
-        DELETE FROM event
-        WHERE event_no = #{event_no}
-    </delete>
-    
-    <select id="select" resultType="servlets.event.domain.EventVO">
-        <choose>
-            <when test="BEvent">
-                SELECT * 
-                FROM (
-                    SELECT ROWNUM no, t.* 
-                    FROM (
-                        SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
-                        et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
-                        FROM event e LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
-                        WHERE e.event_end >= SYSDATE 
-                        ORDER BY e.event_no DESC
-                    ) t
-                ) 
-                WHERE no BETWEEN #{begin} AND #{end}
-            </when>
-            <otherwise>
-            <![CDATA[
-                SELECT * 
-                FROM (
-                    SELECT ROWNUM no, t.* 
-                    FROM (
-                        SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
-                        et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
-                        FROM event e LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
-                        WHERE event_end < SYSDATE 
-                        ORDER BY e.event_end DESC, e.event_no DESC 
-                    ) t
-                ) 
-                WHERE no BETWEEN #{begin} AND #{end}
-            ]]> 
-            </otherwise>
-        </choose>
-    </select>
-    
-    <select id="getTotalRecords" resultType="int">
-        SELECT COUNT(*) FROM event
-    </select>
-    
-    <select id="getTotalPages" resultType="int">
+	<select id="eventList" resultMap="EventListResultMap">
+    <![CDATA[
+        SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
+               et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
+        FROM event e 
+        LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
+        WHERE e.event_end >= SYSDATE 
+        ORDER BY e.event_no DESC
+    ]]>
+	</select>
+
+	<select id="endedEventList" resultMap="EventListResultMap">
+    <![CDATA[
+        SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
+               et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
+        FROM event e 
+        LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
+        WHERE e.event_end < SYSDATE 
+        ORDER BY e.event_end DESC, e.event_no DESC 
+    ]]>
+	</select>
+
+	<select id="getTotalRecords" resultType="int">
+		SELECT COUNT(*) FROM event
+	</select>
+
+	<select id="getTotalPages" resultType="int">
 		<choose>
-        	<when test="BEvent">
-                SELECT CEIL(COUNT(*)/#{numberPerPage})
-                FROM event
-                WHERE event_end >= SYSDATE
-            </when>
-            <otherwise>
+			<when test="BEvent">
+				SELECT CEIL(COUNT(*)/#{numberPerPage})
+				FROM event
+				WHERE event_end >= SYSDATE
+			</when>
+			<otherwise>
             <![CDATA[
                 SELECT CEIL(COUNT(*)/#{numberPerPage})
                 FROM event
                 WHERE event_end < SYSDATE
-			]]>
-            </otherwise>
-        </choose>
-    </select>
-    
-</mapper>
+            ]]>
+			</otherwise>
+		</choose>
+	</select>
 
+</mapper>
