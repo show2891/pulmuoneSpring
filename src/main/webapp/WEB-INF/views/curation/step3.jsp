@@ -118,21 +118,23 @@
 				// console.log(data)
 				const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
 						v => ({idx: v[0], answer: v[1]}));
-				newPost({
-					url: '/customer/product/result/',
-					data: {singleYn, answerList: body}
-				}, function (data) {
-					var bmi = data.RESULT_MSG.bmi || 0;
-					if (bmi == 0 && req1.weight && req1.tallness) {
-						bmi = getBmi(req1.weight, req1.tallness)
-					}
+// 				newPost({
+// 					url: '/customer/product/result/',
+// 					data: {singleYn, answerList: body}
+// 				}, function (data) {
+// 					var bmi = data.RESULT_MSG.bmi || 0;
+// 					if (bmi == 0 && req1.weight && req1.tallness) {
+// 						bmi = getBmi(req1.weight, req1.tallness)
+// 					}
 						
-					location.href = '/customer/product/result/' 
+				
+// 				});
+				location.href = '/customer/product/result/' 
 					+ param
 					+ '?singleYn=' + singleYn 
-					+ '&bmi=' + bmi + '&questions='
-					+ data.RESULT_MSG.questions.join(',');
-				});
+// 					+ '&bmi=' + bmi + '&questions='
+// 					+ data.RESULT_MSG.questions.join(',');
+
 			}
 					
 // 					if (singleYn=='Y') {

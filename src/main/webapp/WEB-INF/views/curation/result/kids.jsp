@@ -371,7 +371,7 @@
 						</div>
 						<div class="button-set sm" style="margin: 20px 0px">
 
-								<form action="/cart/kidcart">
+								<form action="/cart/daily">
 								<button id="cartBtn" class="button-basic black">장바구니</button>
 								</form>
 

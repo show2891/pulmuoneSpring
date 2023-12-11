@@ -20,11 +20,5 @@ public interface CurationMapper {
    
    // 모달창
    public List<KidsVO> modal( KidsVO vo )  throws ClassNotFoundException, SQLException;
-   
-   // 장바구니
-   // int cartadd(Connection con, int tag) throws SQLException;
-   
-   public List<CurationVO> addcart ( int num)  throws ClassNotFoundException, SQLException;
-   public List<CurationVO> dailyadd(CurationVO dto) throws ClassNotFoundException, SQLException;
-   //ArrayList<CurationDTO> addcart(Connection con, ArrayList<String> products_tag) throws SQLException;
+
 }

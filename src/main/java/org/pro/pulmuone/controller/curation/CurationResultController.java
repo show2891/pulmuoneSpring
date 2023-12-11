@@ -1,21 +1,17 @@
 package org.pro.pulmuone.controller.curation;
 
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.pro.pulmuone.domain.curation.CurationVO;
-import org.pro.pulmuone.domain.curation.KidsVO;
 import org.pro.pulmuone.mapper.curation.CurationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,7 +53,7 @@ public class CurationResultController {
 	//	}
 
 	// 큐레이션 결과
-	@PostMapping("/result")
+	@RequestMapping("/result/{program_no}")
 	public String products(CurationVO vo, Model model
 			, @PathVariable String program_no
 			, @RequestParam(value = "singleYn") String  singleYn
@@ -68,20 +64,16 @@ public class CurationResultController {
 
 		//6?singleYn=N&bmi=0&questions=7,11,13,14,20
 
+		// 점수..
 		int score = 0;		
-	// 점수..
 		if(0< score && score <=6 ) { program_no = "1";	}
 		else if(7<= score && score <=12 ) {	program_no = "2";	}
 		else if( 13<= score && score <=18 ) { program_no = "3"; 	}
 		else if( 19<= score && score <=24) { program_no = "4";	}
 		else if( 25<= score && score <=30) { program_no = "5";	}
-		else if( 31<= score && score <=36) {
-			program_no = "6";
-		}else if( 37<= score && score <=41) {
-			program_no = "7";
-		}else if( 42<= score && score <=45) {
-			program_no = "8";
-		}
+		else if( 31<= score && score <=36) { program_no = "6"; }
+		else if( 37<= score && score <=41) { program_no = "7";	}
+		else if( 42<= score && score <=45) { program_no = "8";	}
 
 
 		vo.setProgram_no(Integer.parseInt(program_no));

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.pro.pulmuone.domain.curation.CurationVO;
 import org.pro.pulmuone.domain.curation.KidsVO;
-import org.pro.pulmuone.mapper.curation.CurationMapper;
+import org.pro.pulmuone.mapper.cart.CartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +26,7 @@ public class CurationController {
 //	/customer/product/step3.do = servlets.curation.command.Step3	
 	
 	@Autowired
-	private CurationMapper curationMapper;
+	private CartMapper curationMapper;
 
 	// 시작 페이지
 	@RequestMapping("product")
