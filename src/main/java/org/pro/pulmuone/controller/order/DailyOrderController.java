@@ -1,5 +1,6 @@
 package org.pro.pulmuone.controller.order;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -70,6 +71,8 @@ public class DailyOrderController {
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		} // try
 
