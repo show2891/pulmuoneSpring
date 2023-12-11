@@ -1,41 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script type="text/javascript">
-    $().ready(function () {
-        $('#removeBanner').click(function (){
-                var setCookie = function(name, value, exp) {
-                    var date = new Date();
-                    var midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
-                    document.cookie = name + '=' + value + ';expires=' + midnight + ';path=/';
-                };
-                setCookie('dontShowTopBanner', 'Y', 1);
-            $(this).closest('.highlight-bn').remove();
-        })
-    });
-    function toggleMenu() {
-      if ($("#gnb-item").css("display") == "block") {
-        $("#gnb-item").slideUp();
-      }
-      else {
-        $("#gnb-item").slideDown();
-      }
-    }
-    $('.logout-btn').click(function (){
-        if(confirm('로그아웃 하시겠습니까?')){
-        }
-    })
-    $(document).ready(function(){
-        $('.welcome b').hover(function() {
-            $('.logout-btn').stop().fadeIn('500');
-        }, function(){
-            $('.logout-btn').stop().fadeOut('500');
-        });
-    });
-</script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="wrapper page-screen">
 	<!--S:container-wrapper -->
 	<div id="container-wrapper" class="container-wrapper">
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
-		<script type="text/javascript" src="/resources/js/common.ui.js"></script>
+		<script type="text/javascript" src="/resources/assets/js/common.ui.js"></script>
 		<script>
 	$(document).ready(function () {
 		if (!location.href.includes("pageNo=")) return;
@@ -63,8 +32,6 @@
 						</div>
 					</div>
 				</div>
-				<!--E:cheader-->
-				<!--S:cbody-->
 				<div class="cbody-wrap">
 					<div class="section">
 						<div class="cbody-cont">
@@ -86,7 +53,7 @@
 												</p>
 											</div>
 											<div class="brand-info-img">
-												<img src="/resources/images/contents/img_brand_info01.png">
+												<img src="/resources/assets/images/contents/img_brand_info01.png">
 											</div>
 										</div>
 										<div class="brand-info-box">
@@ -97,7 +64,7 @@
 												</p>
 											</div>
 											<div class="brand-info-img">
-												<img src="/resources/images/contents/img_brand_info02.png">
+												<img src="/resources/assets/images/contents/img_brand_info02.png">
 											</div>
 										</div>
 										<div class="brand-info-box">
@@ -110,7 +77,7 @@
 												</p>
 											</div>
 											<div class="brand-info-img">
-												<img src="/resources/images/contents/img_brand_info03.png">
+												<img src="/resources/assets/images/contents/img_brand_info03.png">
 											</div>
 										</div>
 									</div>
@@ -142,7 +109,7 @@
 													<ul class="board-list">
 														<li>
 															<div class="thumb-box">
-																<a href="/info/greenStory/72"> <img alt="돌미나리-미나리, 그 이상의 미나리" src="/file/download/tour/20200302/9e2288d0-c986-470f-b434-2e9a85e58dc1.jpg" onerror="this.src='/resources/images/common/no_img.png'">
+																<a href="/info/greenStory/72"> <img alt="돌미나리-미나리, 그 이상의 미나리" src="/file/download/tour/9e2288d0-c986-470f-b434-2e9a85e58dc1.jpg" onerror="this.src='/resources/assets/images/common/no_img.png'">
 																</a>
 															</div>
 															<p class="board-title">
@@ -151,38 +118,38 @@
 														</li>
 														<li>
 															<div class="thumb-box">
-																<a href="/info/greenStory/71"> <img alt="당근-제주 당근 숲에서 갓 캔-그 당근 맛" src="/file/download/tour/20200226/7de04c29-82c9-499b-be2c-78575b204aef.jpg" onerror="this.src='/resources/images/common/no_img.png'">
+																<a href="/info/greenStory/71"> <img alt="당근-제주 당근 숲에서 갓 캔-그 당근 맛" src="/file/download/tour/7de04c29-82c9-499b-be2c-78575b204aef.jpg" onerror="this.src='/resources/assets/images/common/no_img.png'">
 																</a>
 															</div>
 															<p class="board-title">
-																<a href="/info/greenStory/72">당근-제주 당근 숲에서 갓 캔-그 당근 맛</a>
+																<a href="/info/greenStory/71">당근-제주 당근 숲에서 갓 캔-그 당근 맛</a>
 															</p>
 														</li>
 														<li>
 															<div class="thumb-box">
-																<a href="/info/greenStory/70"> <img alt="케일-풀무원녹즙 유기농 케일녹즙" src="/file/download/tour/20200302/6d9acf7f-bc18-4040-b195-47cf151a6ebe.jpg" onerror="this.src='/resources/images/common/no_img.png'">
+																<a href="/info/greenStory/70"> <img alt="케일-풀무원녹즙 유기농 케일녹즙" src="/file/download/tour/6d9acf7f-bc18-4040-b195-47cf151a6ebe.jpg" onerror="this.src='/resources/assets/images/common/no_img.png'">
 																</a>
 															</div>
 															<p class="board-title">
-																<a href="/info/greenStory/72">케일-풀무원녹즙 유기농 케일녹즙</a>
+																<a href="/info/greenStory/70">케일-풀무원녹즙 유기농 케일녹즙</a>
 															</p>
 														</li>
 														<li>
 															<div class="thumb-box">
-																<a href="/info/greenStory/69"> <img alt="브로콜리-브로콜리의 비밀" src="/file/download/tour/20200302/92ba975b-c29e-47e6-a2da-bb293052e4cd.jpg" onerror="this.src='/resources/images/common/no_img.png'">
+																<a href="/info/greenStory/69"> <img alt="브로콜리-브로콜리의 비밀" src="/file/download/tour/92ba975b-c29e-47e6-a2da-bb293052e4cd.jpg" onerror="this.src='/resources/assets/images/common/no_img.png'">
 																</a>
 															</div>
 															<p class="board-title">
-																<a href="/info/greenStory/72">브로콜리-브로콜리의 비밀</a>
+																<a href="/info/greenStory/69">브로콜리-브로콜리의 비밀</a>
 															</p>
 														</li>
 														<li>
 															<div class="thumb-box">
-																<a href="/info/greenStory/68"> <img alt="명일엽-원주 농장에서 도안 공장까지" src="/file/download/tour/20200302/67421fc8-efb3-4a9d-955d-82a8ab5f717a.jpg" onerror="this.src='/resources/images/common/no_img.png'">
+																<a href="/info/greenStory/68"> <img alt="명일엽-원주 농장에서 도안 공장까지" src="/file/download/tour/67421fc8-efb3-4a9d-955d-82a8ab5f717a.jpg" onerror="this.src='/resources/assets/images/common/no_img.png'">
 																</a>
 															</div>
 															<p class="board-title">
-																<a href="/info/greenStory/72">명일엽-원주 농장에서 도안 공장까지</a>
+																<a href="/info/greenStory/68">명일엽-원주 농장에서 도안 공장까지</a>
 															</p>
 														</li>
 													</ul>
@@ -202,7 +169,7 @@
 								<div class="tab-cont js-tab-cont js-tab-cont-1" style="display: none;">
 									<h3 class="offscreen">걸어온 길</h3>
 									<p>
-										<img src="/resources/images/contents/bn_history_top.png" class="history-visual-image">
+										<img src="/resources/assets/images/contents/bn_history_top.png" class="history-visual-image">
 									</p>
 									<ul class="company-history-list">
 										<li>
@@ -466,12 +433,9 @@
 
   })
 </script>
-		<div style="" id="mini-side-nav">
-			<a href="/mypage/drink/drink"><img src="/resources/images/ui/quick1.png" alt=""></a> <a id="quickChangeDrink" href="/mypage/drink/drink/change/230000234094/23812"><img src="/resources/images/ui/quick2.png" alt=""></a> <a id="quickChangeSchedule" href="/mypage/drink/drink/pause/230000234094/23812"><img src="/resources/images/ui/quick3.png" alt=""></a> <a href="/mypage/drink/bill"><img src="/resources/images/ui/quick4.png" alt=""></a> <a href="#"><img src="/resources/images/ui/quickTop.png" alt=""></a>
-		</div>
 	</div>
 	<button id="top_move_pointer" class="top-nav">
-		<img src="/resources/images/ui/left_short_arrow.png">
+		<img src="/resources/assets/images/ui/left_short_arrow.png">
 		<p>TOP</p>
 	</button>
 	<script>
