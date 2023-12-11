@@ -52,18 +52,21 @@
 				showAddress(member_no, 1);
 			})
 			
-			// 영수증 계산
-			let salePrice = calculateReceipt();
+			// 카드 인증
+			$("#validCardBtn").on("click", function () {
+				validCard();
+			})
 			
-			// 쿠폰 선택 시
-			$("#coupon-selector").on("change", function() {
-				couponSelect(salePrice);
+			$(".numberOnly").on("keyup", function() {
+				$(this).val($(this).val().replace(/[^0-9]/g,""));
 			});
 			
-			// 쿠폰 삭제 시
-			$(document).on("click", "button.coupon-remove", function() {
-				couponDelete($(this), salePrice);
-			});
+			
+			// 계좌 인증
+			$("#callCms").on("click", function () {
+				callCms($(this));
+			})
+			
 		});
 </script>
 </body>

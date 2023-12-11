@@ -38,7 +38,7 @@
 								<label for="input01">카드번호</label>
 							</dt>
 							<dd>
-								<input type="text" name="cardNumber" id="card_number" class="numberOnly" maxlength="19" title="카드번호 입력" placeholder="카드번호 입력">
+								<input type="text" name="cardNumber" id="cardNumber" class="numberOnly" maxlength="19" title="카드번호 입력" placeholder="카드번호 입력">
 							</dd>
 						</dl>
 					</div>
@@ -60,7 +60,7 @@
 								<label for="input01">유효기간</label>
 							</dt>
 							<dd>
-								<input type="text" id="validYYMM" name="validYYMM" title="유효기간 입력" placeholder="유효기간 입력 (MM/YY)" maxlength="5" value="">
+								<input type="text" id="validYYMM" name="validYYMM" title="유효기간 입력" placeholder="유효기간 입력 (MM/YY)" maxlength="5" value="" onKeyup="inputValidThru(this);">
 								<button type="button" id="validCardBtn" class="btn-square btn-black">카드인증</button>
 							</dd>
 						</dl>
@@ -76,7 +76,7 @@
 								<label for="input01">예금주</label>
 							</dt>
 							<dd>
-								<input type="text" id="input01" name="input01" title="예금주 입력" placeholder="" readonly="" value="이지현">
+								<input type="text" id="input01" name="input01" title="예금주 입력" placeholder="" readonly value="${ member.name }">
 							</dd>
 						</dl>
 					</div>
@@ -124,11 +124,11 @@
 							</dt>
 							<dd>
 								<input type="text" id="accountNumber" name="accountNumber" title="계좌번호 입력" placeholder="계좌번호 입력">
-								<button id="callCms" data-isnew="true" data-phone1="010" data-phone2="4090" type="button" class="btn-square btn-black">ARS인증</button>
+								<button id="callCms" data-isnew="true" data-phone="${member.tel}" type="button" class="btn-square btn-black">ARS인증</button>
 								<input id="hasRequest" value="false" type="hidden">
 							</dd>
 						</dl>
-						<p id="afterArs" style="margin-left: 137px; margin-top: 5px;">인증이 완료되었습니다.</p>
+						<p id="afterArs" style="margin-left: 137px; margin-top: 5px; display: none;">인증이 완료되었습니다.</p>
 					</div>
 				</div>
 			</div>
