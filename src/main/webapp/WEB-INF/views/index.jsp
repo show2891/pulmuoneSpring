@@ -59,7 +59,7 @@
 							src="/file/download/banner/e637a24e-8db2-47f2-8f0d-68b3d62529b9.png"
 							alt="">
 						</a> <a class="item"
-							href="/product/daily/view.do?tag=743"
+							href="/product/daily/743"
 							title="비타맥스 엑스투" style="background-color: #ffffff"> <img
 							src="/file/download/banner/846fc1e1-4818-4eef-80ff-94b7f47daca1.png"
 							alt="">
@@ -74,7 +74,7 @@
 							src="/file/download/banner/39447d58-8d60-4a85-b4b6-c3622ca41825.png"
 							alt="">
 						</a> <a class="item"
-							href="/taste/taste.do" title="시음선물"
+							href="/taste/taste" title="시음선물"
 							style="background-color: #ffffff"> <img
 							src="/file/download/banner/cf57865c-d559-4193-bce1-075b28c60a61.png"
 							alt="">
@@ -139,27 +139,7 @@
 										</div>
 									</div>
 								</c:otherwise>
-							</c:choose>
-							<!-- <div class="member-area" style="position:relative;overflow: visible" data-summary-view="#member_info"> -->
-							<!--         <div class="personal-info"> -->
-							<!--             <div class="user-info"> -->
-							<%--                 <strong><span>${auth.getName()}</span>님 안녕하세요!</strong> --%>
-							<!--                 <div class="pmenu-coupon"> -->
-							<!--                     <a href="/mypage/benefit/coupon" title="해당페이지로 가기"> -->
-							<!--                         <span>1</span> -->
-							<!--                         <i class="ico"></i> -->
-							<!--                     </a> -->
-							<!--                 </div> -->
-							<!--             </div> -->
-							<!--             <div class="billing-area">                 -->
-							<!--                     <div class="billing-prd" style="min-height: 40px; margin-bottom: 15px"></div> -->
-							<!--                         <div class="tasting-btn"> -->
-							<!--                             <span>시음 선물로 풀무원녹즙을 경험해 보세요.</span> -->
-							<!--                             <a href="/taste/taste" class="button btn-default">시음 선물하기</a> -->
-							<!--                         </div>                                     -->
-							<!--             </div> -->
-							<!--         </div> -->
-							<!--     </div> -->
+							</c:choose>						
 							<!--S:개인화 메뉴-->
 							<ul class="personal-menu" data-summary-view="#member_menu">
 								<li class="item"><a href="/mypage/drink/drink"
@@ -201,7 +181,7 @@
 										<c:forEach items="${mainbestlist }" var="dto" varStatus="status">
 											<div class="owl-item active" style="width: 308.5px;">
 												<div class="prd-area">
-													<a href="/product/daily/${dto.products_tag }?eventIdx=" title="제품 상세페이지로 가기">
+													<a href="/product/${dto.delivery_type}/${dto.products_tag }?eventIdx=" title="제품 상세페이지로 가기">
 														<div class="badges">
 															<c:choose>
 																<c:when
@@ -315,7 +295,7 @@
 				<!--S:띠배너 슬라이드-->
 				<div class="banner-area survey">
 					<div class="banner-list">
-						<a class="item" href="/customer/product/product.do" title="해당 페이지로 가기"
+						<a class="item" href="/customer/product" title="해당 페이지로 가기"
 							style="background-color: #4d54e7"> <img
 							src="/resources/assets/images/contents/banner_item01.jpg">
 							<span class="hide">어떤 녹즙을 드셔야 할까요? 간단한 설문을 통해 풀무원녹즙이 제안하는
@@ -329,33 +309,33 @@
 					<div class="container">
 						<div class="event-area section-area">
 							<h2 class="section-area-title title-more-btn">
-								녹즙 시음을 선물해보세요! <a href="/taste/taste.do" class="btn-more"> 전체보기
+								녹즙 시음을 선물해보세요! <a href="/taste/taste" class="btn-more"> 전체보기
 									<i class="ico ico-arr-right6"></i>
 								</a>
 							</h2>
 							<div class="event-list" data-carousel="items">
 								<a class="item"
-									href="/taste/taste.do?pkgIdx=56"
+									href="/taste/taste?pkgIdx=56"
 									title="베스트 녹즙"> <img
 									src="/file/download/banner/4d1a4dd5-821c-41db-a0d6-3535adb53a8e.png"
 									alt="">
 								</a> <a class="item "
-									href="/taste/taste.do?pkgIdx=54"
+									href="/taste/taste?pkgIdx=54"
 									title="건강한 한 끼"> <img
 									src="/file/download/banner/b9842c83-f89d-4687-8351-c71beeba16e4.png"
 									alt="">
 								</a> <a class="item "
-									href="/taste/taste.do?pkgIdx=53"
+									href="/taste/taste?pkgIdx=53"
 									title="아이사랑"> <img
 									src="/file/download/banner/57d7c4a5-9e5f-4158-9067-f8e2746a2ee8.png"
 									alt="">
 								</a> <a class="item "
-									href="/product/daily/view.do?tag=743"
+									href="/product/daily?743"
 									title="이달의 녹즙(비타맥스 엑스투)"> <img
 									src="/file/download/banner/c4f1a598-5bf4-4cb9-9acf-c733f86d3faf.png"
 									alt="">
 								</a> <a class="item"
-									href="/taste/taste.do?pkgIdx=58 "
+									href="/taste/taste?pkgIdx=58 "
 									title="융복합"> <img
 									src="/file/download/banner/ba6cd618-ea64-4c9e-a6ed-18186f895d6b.png"
 									alt="">
@@ -374,231 +354,6 @@
 				<div class="gray-line-bg">
 					<div class="container">
 						<div class="price-area section-area">
-							<!--S:특가 슬라이드-->
-							<h2 class="section-area-title">오늘의 풀무원녹즙 특가</h2>
-							<div class="prd-list owl-carousel owl-loaded owl-drag"
-								style="margin: 0px;">
-								<div class="owl-stage-outer">
-									<div class="owl-stage"
-										style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
-										<div class="owl-item active" style="width: 300px;">
-											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=30"
-													title="제품 상세페이지로 가기">
-													<div class="badges">
-														<span class="badge badge-new">NEW</span> <span
-															class="badge badge-sale">SALE</span>
-													</div>
-													<div class="thumb">
-														<img
-															src="/file/download/product/572a54ab-0586-425d-a9b8-648033959a6e.png"
-															alt="제품명">
-													</div>
-													<div class="prd-info">
-														<div class="prd-title-wrapper">
-															<b class="prd-title"> 키즈프리 전 품목 패키지 </b>
-														</div>
-														<div class="price-info" style="margin-bottom: 5px;">
-															<b class="before-price" style="margin-bottom: 0px;">
-																72,000 <span> 원</span>
-															</b> <b class="now-price"> 43,200 <span> 원</span>
-															</b>
-														</div>
-														<span class="volume">(4ml X 10포)</span>
-													</div>
-												</a>
-												<div class="btn-area btn-area-center">
-													<button type="button" data-wish-id="736"
-														data-wish-type="box"
-														class="btn-round btn-white wishlistBtn ">
-														<i class="ico ico-prd-wish"></i> <span class="hide">제품
-															찜하기</span>
-													</button>
-													<button type="button" data-cart-id="0074025"
-														data-cart-type="box" data-cart-event="2957"
-														class="btn-round addCartBtn">
-														<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에
-															담기</span>
-													</button>
-												</div>
-												<button type="button" data-buy-id="0074025"
-													data-buy-type="box" data-buy-event="2957"
-													data-price="72000" class="btn-default event-btn ">
-													바로구매</button>
-											</div>
-										</div>
-										<div class="owl-item active" style="width: 300px;">
-											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=35"
-													title="제품 상세페이지로 가기">
-													<div class="badges">
-														<span class="badge">BEST</span> <span
-															class="badge badge-sale">SALE</span>
-													</div>
-													<div class="thumb">
-														<img
-															src="/file/download/product/28541fc8-234b-42d8-902e-f189956419c8.png"
-															alt="제품명">
-													</div>
-													<div class="prd-info">
-														<div class="prd-title-wrapper">
-															<b class="prd-title"> 유기농주스 유기농 키즈프리 톡톡오렌지 </b>
-														</div>
-														<div class="price-info" style="margin-bottom: 5px;">
-															<b class="before-price" style="margin-bottom: 0px;">
-																19,000 <span> 원</span>
-															</b> <b class="now-price"> 9,500 <span> 원</span>
-															</b>
-														</div>
-														<span class="volume">(100ml X 10포)</span>
-													</div>
-												</a>
-												<div class="btn-area btn-area-center">
-													<button type="button" data-wish-id="620"
-														data-wish-type="box"
-														class="btn-round btn-white wishlistBtn ">
-														<i class="ico ico-prd-wish"></i> <span class="hide">제품
-															찜하기</span>
-													</button>
-													<button type="button" data-cart-id="0072907"
-														data-cart-type="box" data-cart-event="3020"
-														class="btn-round addCartBtn">
-														<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에
-															담기</span>
-													</button>
-												</div>
-												<button type="button" data-buy-id="0072907"
-													data-buy-type="box" data-buy-event="3020"
-													data-price="19000" class="btn-default event-btn ">
-													바로구매</button>
-											</div>
-										</div>
-										<div class="owl-item active" style="width: 300px;">
-											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=35"
-													title="제품 상세페이지로 가기">
-													<div class="badges">
-														<span class="badge">BEST</span> <span
-															class="badge badge-sale">SALE</span>
-													</div>
-													<div class="thumb">
-														<img
-															src="/file/download/product/1de28f0b-13f4-4348-a839-f4f1c956c47b.png"
-															alt="제품명">
-													</div>
-													<div class="prd-info">
-														<div class="prd-title-wrapper">
-															<b class="prd-title"> 유기농주스 유기농키즈프리 튼튼사과 </b>
-														</div>
-														<div class="price-info" style="margin-bottom: 5px;">
-															<b class="before-price" style="margin-bottom: 0px;">
-																19,000 <span> 원</span>
-															</b> <b class="now-price"> 9,500 <span> 원</span>
-															</b>
-														</div>
-														<span class="volume">(100ml X 10포)</span>
-													</div>
-												</a>
-												<div class="btn-area btn-area-center">
-													<button type="button" data-wish-id="619"
-														data-wish-type="box"
-														class="btn-round btn-white wishlistBtn ">
-														<i class="ico ico-prd-wish"></i> <span class="hide">제품
-															찜하기</span>
-													</button>
-													<button type="button" data-cart-id="0072906"
-														data-cart-type="box" data-cart-event="3020"
-														class="btn-round addCartBtn">
-														<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에
-															담기</span>
-													</button>
-												</div>
-												<button type="button" data-buy-id="0072906"
-													data-buy-type="box" data-buy-event="3020"
-													data-price="19000" class="btn-default event-btn ">
-													바로구매</button>
-											</div>
-										</div>
-										<div class="owl-item active" style="width: 300px;">
-											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=35"
-													title="제품 상세페이지로 가기">
-													<div class="badges">
-														<span class="badge">BEST</span> <span
-															class="badge badge-sale">SALE</span>
-													</div>
-													<div class="thumb">
-														<img
-															src="/file/download/product/3380bfd0-91b8-4cec-9410-1a745f5f4dba.png"
-															alt="제품명">
-													</div>
-													<div class="prd-info">
-														<div class="prd-title-wrapper">
-															<b class="prd-title"> 유기농주스 유기농 키즈프리 반짝포도 </b>
-														</div>
-
-
-														<div class="price-info" style="margin-bottom: 5px;">
-															<b class="before-price" style="margin-bottom: 0px;">
-																19,000 <span> 원</span>
-															</b> <b class="now-price"> 9,500 <span> 원</span>
-															</b>
-
-
-														</div>
-														<span class="volume">(100ml X 10포)</span>
-													</div>
-												</a>
-												<div class="btn-area btn-area-center">
-													<button type="button" data-wish-id="634"
-														data-wish-type="box"
-														class="btn-round btn-white wishlistBtn ">
-														<i class="ico ico-prd-wish"></i> <span class="hide">제품
-															찜하기</span>
-													</button>
-													<button type="button" data-cart-id="0072905"
-														data-cart-type="box" data-cart-event="3020"
-														class="btn-round addCartBtn">
-														<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에
-															담기</span>
-													</button>
-												</div>
-												<button type="button" data-buy-id="0072905"
-													data-buy-type="box" data-buy-event="3020"
-													data-price="19000" class="btn-default event-btn ">
-													바로구매</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="owl-nav disabled">
-									<button type="button" role="presentation"
-										class="owl-prev disabled">
-										<span aria-label="Previous">‹</span>
-									</button>
-									<button type="button" role="presentation"
-										class="owl-next disabled">
-										<span aria-label="Next">›</span>
-									</button>
-								</div>
-								<div class="owl-dots disabled">
-									<button role="button" class="owl-dot active">
-										<span></span>
-									</button>
-								</div>
-							</div>
-							<!--E:특가 슬라이드-->
-							<!--S:띠배너 슬라이드-->
-							<div class="banner-area this-prd" style="margin-top: 60px;">
-								<div class="banner-list">
-									<a class="item" href="/product/daily/view.do?tag=743"
-										title="월간녹즙 비타맥스 엑스투" style="background-color: #"> <img
-										src="/file/download/banner/f523748f-14ef-4844-a30d-5e97ff7c6456.png"
-										alt="">
-									</a>
-								</div>
-							</div>
-							<!--E:띠배너 슬라이드-->
 							<!--S:쿠폰 영역-->
 							<div class="coupon-guide section-area">
 								<div class="coupon-area">

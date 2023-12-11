@@ -47,10 +47,10 @@ public class ProductController {
 		dto.setPageNo2(Integer.toString(end));
 		List<ProductsDTO> searchlist = this.mapper.search(dto);
 		List<ProductsDTO> searchcountlist = this.mapper.searchcount(dto);
-//		List<ProductsDTO> bestlist = this.mapper.best(dto);
+		List<ProductsDTO> bestlist = this.mapper.best(dto);
 		model.addAttribute("searchlist",searchlist);
 		model.addAttribute("searchcountlist",searchcountlist);
-//		model.addAttribute("bestlist",bestlist);				
+		model.addAttribute("bestlist",bestlist);				
 		return "product/DailyList.tiles";
 	}
 	
