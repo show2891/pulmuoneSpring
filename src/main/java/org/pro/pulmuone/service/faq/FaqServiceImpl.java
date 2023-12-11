@@ -35,5 +35,10 @@ public class FaqServiceImpl implements FaqService {
 	public int getFaqTotal(int category, String searchKeyword) throws SQLException {
 		return this.faqMapper.selectCount(category, searchKeyword);
 	}
+
+	@Override
+	public int write(FaqDTO vo) throws SQLException {
+		return this.faqMapper.write(vo);
+	}
 	
 }

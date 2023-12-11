@@ -67,5 +67,11 @@
 		</choose>
      </select>
      
+     
+     <!-- int write(FaqDTO dto) throws SQLException -->
+     <insert id="write">
+     	INSERT INTO faq (q_no, faq_no, question, answer)
+		VALUES (seq_faq.NEXTVAL, #{faq_no}, #{question}, #{answer}) 
+     </insert>
 </mapper>
 
