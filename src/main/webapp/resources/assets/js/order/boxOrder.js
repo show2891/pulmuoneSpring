@@ -1,8 +1,8 @@
-// 영수증 초기값 설정
-let originPrice = 0;
-let salePrice = 0;
-
-function calculateReceipt() {
+function calculateBoxReceipt() {
+	// 영수증 초기값 설정
+	let originPrice = 0;
+	let salePrice = 0;
+	
 	let bpEm = $("em.before-price");
 	let npB = $("b.now-price");
 

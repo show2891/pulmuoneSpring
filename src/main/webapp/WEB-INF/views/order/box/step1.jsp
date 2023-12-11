@@ -33,3 +33,17 @@
 		goStep2("box");
 	});
 </script>
+<script>
+	// 영수증 계산
+	let salePrice = calculateBoxReceipt();
+	
+	// 쿠폰 선택 시
+	$("#coupon-selector").on("change", function() {
+		couponSelect(salePrice);
+	});
+				
+	// 쿠폰 삭제 시
+	$(document).on("click", "button.coupon-remove", function() {
+		couponDelete($(this), salePrice);
+	});
+</script>
