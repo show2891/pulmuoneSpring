@@ -21,7 +21,7 @@
 						idxs.push(nowIdx);
 					}
 					location.replace(location.pathname + "?category="
-							+ category + "&tags="
+							+ category_no + "&tags="
 							+ encodeURIComponent(idxs.join(",")));
 				});
 
@@ -72,7 +72,7 @@
 						</button>
 					</div>
 					<div class="vis-list" data-carousel="items">
-						<a class="item active" href="/product/box/view.do?tag=734"
+						<a class="item active" href="/product/box/734"
 							title="제품 상세페이지로 가기" style="background-color: #111111"> <img
 							src="/file/download/banner/ed3f2371-dd7a-48fc-844c-b68638b48431.png"
 							alt="">
@@ -87,7 +87,7 @@
 							src="/file/download/banner/a4b8f03b-534c-4fc1-ae12-1cb7e697bd45.png"
 							alt="">
 						</a> <a class="item" target="_blank"
-							href="/product/box/view.do?tag=728" title="제품 상세페이지로 가기"
+							href="/product/box/728" title="제품 상세페이지로 가기"
 							style="background-color: #111111"> <img
 							src="/file/download/banner/2227741e-b8db-4b79-8b0e-fba88ef415e7.png"
 							alt="">
@@ -99,7 +99,7 @@
 					<div class="container">
 						<ul>
 							<li><a>홈</a></li>
-							<li><a href="/product/box/boxlist.do" class="active">택배배송</a></li>
+							<li><a href="/product/box" class="active">택배배송</a></li>
 
 						</ul>
 					</div>
@@ -316,7 +316,6 @@
 											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
 										</c:when>
 												<c:otherwise>
-<%-- 											총 <em>${fn:length(list) }</em>건의 상품이 있습니다. --%>
 											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
 										</c:otherwise>
 											</c:choose>

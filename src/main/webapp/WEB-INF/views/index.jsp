@@ -62,7 +62,7 @@
 							src="/file/download/banner/e637a24e-8db2-47f2-8f0d-68b3d62529b9.png"
 							alt="">
 						</a> <a class="item"
-							href="/product/daily/view?tag=743"
+							href="/product/daily/743"
 							title="비타맥스 엑스투" style="background-color: #ffffff"> <img
 							src="/file/download/banner/846fc1e1-4818-4eef-80ff-94b7f47daca1.png"
 							alt="">
@@ -143,27 +143,7 @@
 										</div>
 									</div>
 								</c:otherwise>
-							</c:choose>
-							<!-- <div class="member-area" style="position:relative;overflow: visible" data-summary-view="#member_info"> -->
-							<!--         <div class="personal-info"> -->
-							<!--             <div class="user-info"> -->
-							<%--                 <strong><span>${auth.getName()}</span>님 안녕하세요!</strong> --%>
-							<!--                 <div class="pmenu-coupon"> -->
-							<!--                     <a href="/mypage/benefit/coupon" title="해당페이지로 가기"> -->
-							<!--                         <span>1</span> -->
-							<!--                         <i class="ico"></i> -->
-							<!--                     </a> -->
-							<!--                 </div> -->
-							<!--             </div> -->
-							<!--             <div class="billing-area">                 -->
-							<!--                     <div class="billing-prd" style="min-height: 40px; margin-bottom: 15px"></div> -->
-							<!--                         <div class="tasting-btn"> -->
-							<!--                             <span>시음 선물로 풀무원녹즙을 경험해 보세요.</span> -->
-							<!--                             <a href="/taste/taste" class="button btn-default">시음 선물하기</a> -->
-							<!--                         </div>                                     -->
-							<!--             </div> -->
-							<!--         </div> -->
-							<!--     </div> -->
+							</c:choose>						
 							<!--S:개인화 메뉴-->
 							<ul class="personal-menu" data-summary-view="#member_menu">
 								<li class="item"><a href="/mypage/drink/drink"
@@ -206,9 +186,13 @@
 											varStatus="status">
 											<div class="owl-item active" style="width: 308.5px;">
 												<div class="prd-area">
+<<<<<<< HEAD
 													<a
 														href="/product/daily/view?tag=${dto.products_tag }&eventIdx="
 														title="제품 상세페이지로 가기">
+=======
+													<a href="/product/${dto.delivery_type}/${dto.products_tag }?eventIdx=" title="제품 상세페이지로 가기">
+>>>>>>> branch 'develop' of https://github.com/dhl1031/pulmuoneSpring.git
 														<div class="badges">
 															<c:choose>
 																<c:when
@@ -357,7 +341,7 @@
 									src="/file/download/banner/57d7c4a5-9e5f-4158-9067-f8e2746a2ee8.png"
 									alt="">
 								</a> <a class="item "
-									href="/product/daily/view?tag=743"
+									href="/product/daily?743"
 									title="이달의 녹즙(비타맥스 엑스투)"> <img
 									src="/file/download/banner/c4f1a598-5bf4-4cb9-9acf-c733f86d3faf.png"
 									alt="">
