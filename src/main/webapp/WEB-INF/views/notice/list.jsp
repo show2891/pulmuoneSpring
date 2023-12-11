@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div class="page-content">
 	<div class="border-wrapper">
            <h2 class="container-title">
@@ -11,11 +11,9 @@
 	<div class="list-area" style="padding-top: 14px;">
 		<div class="list-head flex" style="margin-bottom: 28px">
         	<em class="count">총 <span>${ totalRows }</span>건</em>
-        	<u:isLogin>
-        		<c:if test="${ auth.getName() == 'admin'}">
+        	<sec:authorize access="hasRole('ROLE_ADMIN')">
         			<div><a href="/forum/notice/write">글쓰기</a></div>
-        		</c:if>  
-        	</u:isLogin>
+			</sec:authorize>      		
         </div>
 					
 		<table class="tbl-col event-winner-list">
@@ -57,11 +55,23 @@
 
 
 <script>
-	let $pageItem = $(".notice .pagenavi-area .pagination .page-item a");
-	
-	$pageItem.each(function(i, el) {
-		let aparam = $(this).data("param");
-		$(this).attr("href", `/forum/notice/list?pageNo=\${ aparam }`);
+	$(function(){
+		if( `${result}` == "success" ) {
+			$(".modal-body").text("공지사항 게시글이 작성되었습니다.");	
+			$("#alertModal").modal();
+		}else if( `${result}` == "deleted" ) {
+			$(".modal-body").text("공지사항 게시글이 삭제되었습니다.");	
+			$("#alertModal").modal();
+		}
+		
+		
+		let $pageItem = $(".notice .pagenavi-area .pagination .page-item a");
+		
+		$pageItem.each(function(i, el) {
+			let aparam = $(this).data("param");
+			$(this).attr("href", `/forum/notice/list?pageNo=\${ aparam }`);
+		})
+		
 	})
 
 </script>
