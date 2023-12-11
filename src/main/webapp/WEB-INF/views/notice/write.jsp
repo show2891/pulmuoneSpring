@@ -40,8 +40,9 @@
 				<button type="button" id="noticeWriteBtn" data-toggle="modal" data-target="#alertModal" class="basic-big-button primary" style="min-width:280px; max-width:280px;">글쓰기</button>
 				<button type="button" onclick="javascript:history.back()" id="cancelBtn" class="basic-big-button" style="margin-left:20px; min-width:280px; max-width:280px;">취소</button>
 			</div>
-			
 		</div>
+		
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
 	</form>
 
 </div>
@@ -50,74 +51,77 @@
 
 
 <script>
-	// editor 
-	const $wc = $("#word-count");
-	let maxtext = 2000;
-	$(".maxtext").text(maxtext);
-	let currentChar = 0;
-	let editor;
-	ClassicEditor
-       .create( document.querySelector( '#content' ), {
-				language: "ko",
-       	wordCount: {
-			onUpdate: stats => {
-					
-				const isLimit = maxtext < stats.characters;
-							
-				if( isLimit ) {
-					$wc.find(".current-char").text(`-${stats.characters - maxtext}`);	
-					$("#noticeWriteBtn").prop("disabled", true);
-					$wc.find(".current-char").addClass("over");
-				}else {
-					$wc.find(".current-char").text( stats.characters );
-					currentChar = stats.characters;
-					$("#noticeWriteBtn").prop("disabled", false);
-					$wc.find(".current-char").removeClass("over");
-				}
-			},
-       	},
-		ckfinder: {
-			uploadUrl : "/forum/notice/upload",
-			withCredentials: true
-		}	
-		}).then(edt => {
-				editor = edt;
-			})
-       .catch( error => {
-           console.error( error );
-       } );
-			
-	// title valid check
-	$("#title").on("blur", function(){
-		if( $(this).val() == "" ) {
-			$("#titleError").css("visibility", "visible");
-		}else {
-			$("#titleError").css("visibility", "hidden");
-		}
-	})
-	
-	// valid check
-	$("#noticeWriteBtn").on("click", function(e){
-		e.preventDefault();
-		if( $("#title").val() == "" ) {
-			console.log("aa")
-			$("#title").focus();
-			$(".modal-body").text("제목을 입력해주세요");
-			$("#alertModal").modal();
-			
-			return false;
-		}else if( currentChar < 1 ) {
-			console.log("bb")
-			editor.focus();
-			$(".modal-body").text("내용을 입력해주세요");
-			$("#alertModal").modal();
-			
-			return false;
-		}
+	$(function(){
 		
-		$("#noticeForm").submit();
-	})
-
+		// editor 
+		const $wc = $("#word-count");
+		let maxtext = 2000;
+		$(".maxtext").text(maxtext);
+		let currentChar = 0;
+		let editor;
+		ClassicEditor
+	       .create( document.querySelector( '#content' ), {
+					language: "ko",
+	       	wordCount: {
+				onUpdate: stats => {
+						
+					const isLimit = maxtext < stats.characters;
+								
+					if( isLimit ) {
+						$wc.find(".current-char").text(`-${stats.characters - maxtext}`);	
+						$("#noticeWriteBtn").prop("disabled", true);
+						$wc.find(".current-char").addClass("over");
+					}else {
+						$wc.find(".current-char").text( stats.characters );
+						currentChar = stats.characters;
+						$("#noticeWriteBtn").prop("disabled", false);
+						$wc.find(".current-char").removeClass("over");
+					}
+				},
+	       	},
+			ckfinder: {
+				uploadUrl : "/forum/notice/upload" + `?${_csrf.parameterName}=${_csrf.token}`,
+				withCredentials: true,
+				
+			}	
+			}).then(edt => {
+					editor = edt;
+				})
+	       .catch( error => {
+	           console.error( error );
+	       } );
+				
+		// title valid check
+		$("#title").on("blur", function(){
+			if( $(this).val() == "" ) {
+				$("#titleError").css("visibility", "visible");
+			}else {
+				$("#titleError").css("visibility", "hidden");
+			}
+		})
+		
+		// valid check
+		$("#noticeWriteBtn").on("click", function(e){
+			e.preventDefault();
+			if( $("#title").val() == "" ) {
+				console.log("aa")
+				$("#title").focus();
+				$(".modal-body").text("제목을 입력해주세요");
+				$("#alertModal").modal();
+				
+				return false;
+			}else if( currentChar < 1 ) {
+				console.log("bb")
+				editor.focus();
+				$(".modal-body").text("내용을 입력해주세요");
+				$("#alertModal").modal();
+				
+				return false;
+			}
+			
+			$("#noticeForm").submit();
+		})
+	});
 </script>
 
 </body>

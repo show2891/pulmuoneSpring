@@ -36,6 +36,8 @@
   	<!-- footer -->
   	<tiles:insertAttribute name="footer" />
 </div>
+<%@ include file="/WEB-INF/views/ui/modal.jsp" %>
+
 
 <script>
 	let breadcrumb_text = $(".container-title").text();
