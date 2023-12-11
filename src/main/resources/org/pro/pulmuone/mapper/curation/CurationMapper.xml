@@ -36,13 +36,13 @@
 		ORDER BY curation_no
 	</select>
 	
-<!-- 	큐레이션 결과-프로그램 -->
+<!-- 	큐레이션 결과 -->
 	<select id="CurationSel" resultType="org.pro.pulmuone.domain.curation.CurationVO">
 		SELECT curation_no, program_no, program_name, pi.img_no, dayweek, pi.products_no, p.products_name, program_content, products_tag, 
 		system_name, price, products_size, products_sub_name,  lifestyle_change01, lifestyle_change02, lifestyle_change03 
 		FROM curation_result c JOIN products_img pi ON c.img_no = pi.img_no 
-		JOIN products p ON c.products_no = p.products_no 
-		WHERE dayweek is not null 
+		JOIN products p ON c.products_no = p.products_no
+		WHERE dayweek is not null
 		and 
 		program_no = #{program_no} 
 		ORDER BY curation_no

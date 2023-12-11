@@ -22,12 +22,12 @@
 				<p>
 					${list2[0].price}<span>원</span>
 				</p>
-	<span>(${list2[0].products_size })</span>
+				<span>(${list2[0].products_size })</span>
 			</div>
 		</div>
 	</div>
 	<div class="button-set">
-		<a href="/product/daily/view?tag=${list2[0].products_tag}&eventIdx=" class="button-basic primary">상세보기</a>
+		<a href="/product/daily/${list2[0].products_tag}?eventIdx=" class="button-basic primary">상세보기</a>
 	</div>
 </div>
 <%-- </c:forEach> --%>

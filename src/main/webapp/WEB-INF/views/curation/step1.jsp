@@ -21,14 +21,14 @@
   $(function () {
       if(sessionStorage.getItem('req1')){
           const prevReq1 = JSON.parse(sessionStorage.getItem('req1'))
-          console.log('req1', prevReq1)
-          var score = $(".checkGoal:checked").val();
-		console.log(score)
+          console.log('req1', prevReq1) // {searchKeyword: ''}
+          // var score = $(".checkGoal:checked").val();
+			//console.log(score) // 숫자
           const prevReqKey = Object.keys(prevReq1)
           $('input[name=tallness]').val(prevReq1.tallness)
           $('input[name=weight]').val(prevReq1.weight)
           $('.filled-radio-group').children().each((i,v)=>{
-              //console.log(prevReqKey)
+              console.log(prevReqKey)
               prevReqKey.forEach((value, index) => {
                   if(value===$(v).children().prop('name')){
                       $(v).children().prop('checked',true)

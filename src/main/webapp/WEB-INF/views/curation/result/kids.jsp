@@ -371,7 +371,7 @@
 						</div>
 						<div class="button-set sm" style="margin: 20px 0px">
 
-								<form action="/cart/kidcart">
+								<form action="/cart/daily">
 								<button id="cartBtn" class="button-basic black">장바구니</button>
 								</form>
 
@@ -401,45 +401,9 @@
 
 		</div>
 
-		<div class="modal show" id="productPreviewModal" tabindex="-1"
-			style="display: none; padding-left: 17px;" aria-modal="true"
-			role="dialog">
+		<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-modal="true">
 			<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-				<div class="modal-content modal-product">
-
-
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close"></button>
-						<div class="thumb-normal">
-							<c:forEach var="list2" items="${list2 }">
-								<img src="/file/download/product/${list2.system_name }">
-							</c:forEach>
-						</div>
-					</div>
-
-					<c:forEach var="list2" items="${list2}">
-						<div class="modal-body">
-							<div class="info-area">
-								<h2>${list2.products_name }</h2>
-								<p>${list2.products_sub_name}</p>
-								<div class="product-addiction" style="border-bottom: none">
-									<div class="price-item">
-										<p>${list2.price}<span>원</span>
-										</p>
-										<span>(${list2.products_size })</span>
-									</div>
-								</div>
-							</div>
-							<div class="button-set">
-								<a href="/product/daily/${list2.products_tag }"
-									class="button-basic primary">상세보기</a>
-							</div>
-						</div>
-					</c:forEach>
-					
-					
-				</div>
+				<div class="modal-content modal-product"></div>
 			</div>
 		</div>
 	</main>

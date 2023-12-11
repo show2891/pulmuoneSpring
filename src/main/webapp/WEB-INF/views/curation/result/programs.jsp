@@ -50,7 +50,7 @@
     $('#orderBtn').click(function () {
         if (!window.is_signed) {
           alert('로그인이 필요한 서비스입니다.', function () {
-            location.href = '/member/login.do?redirectUrl=' + encodeURIComponent(location.href);
+            location.href = '/member/login?redirectUrl=' + encodeURIComponent(location.href);
           });
           return;
         }
@@ -129,7 +129,7 @@ window.orderProcess = function (args) {
   $("#orderModal ul").html("");
   $("#orderModal").addClass("loading").modal("show");
 
-  axios.post(`/product_available.do`, { ids: codes }).then(function (r) {
+  axios.post(`/product_available`, { ids: codes }).then(function (r) {
     var o = r.data.RESULT_MSG;
     if (o.fails.length) {
       var itemCodes = o.fails.map(v => v.itemCode);
@@ -173,7 +173,7 @@ window.orderProcess = function (args) {
             $('#orderModal input[name=custnum]:first').click()
             $("#orderModal").removeClass("loading")
           } else {
-            location.href = "/daily/order/step1.do?item=" + encodeURIComponent(JSON.stringify(args2));
+            location.href = "/daily/order/step1?item=" + encodeURIComponent(JSON.stringify(args2));
           }
         });
       });
@@ -204,7 +204,7 @@ window.orderProcess = function (args) {
           $('#orderModal input[name=custnum]:first').click()
           $("#orderModal").removeClass("loading")
         } else {
-          location.href = "/order/daily/step1.do?item=" + encodeURIComponent(JSON.stringify(args));
+          location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args));
         }
       });
     }
@@ -215,7 +215,7 @@ $(document).on("click", "#orderModal button", function (e) {
   var type = $(this).attr("data-type");
   var p = encodeURIComponent(JSON.stringify(nowArgs));;
   if (type === "new") {
-    location.href = "/order/daily/step1.do?item=" + p
+    location.href = "/order/daily/step1?item=" + p
   } else if (type === "continue") {
     var c = $("input[name='custnum']:checked");
     var custNumber = c.val();
@@ -295,12 +295,12 @@ $(document).on("click", "#orderModal button", function (e) {
 							<ul class="product-list" id="order2">
 								<c:forEach var="dto" items="${list }">
 									<li data-item-index="0"
-										data-item-link="product/daily/view.do?tag=${dto.products_tag }&eventIdx="
+										data-item-link="product/daily/${dto.products_tag }/eventIdx="
 										data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20231101/b7323a61-8792-488b-9a32-571fe276bcea.png"
 										data-item-title="비타맥스 엑스투" data-item-desc="3500"><input
 										value="0074095" name="itemCode" type="hidden"> <a
 										class="item" data-product-preview="${dto.products_tag }">
-											<label>${dto.dayweek }</label>
+											<label>${param.dayweek ne null }</label>
 											<div class="thumb">
 												<img src="/file/download/product/${dto.system_name }" alt="">
 											</div>
@@ -313,14 +313,14 @@ $(document).on("click", "#orderModal button", function (e) {
 							</ul>
 						</div>
 						<div class="button-set sm" style="margin: 20px 0px">
-						<form action="/cart/daily.do" method="GET">
+						<form action="/cart/daily" method="GET">
 								<c:forEach var="dto" items="${list }">
 								<input type="hidden" name="item"
 										value='{"item":[{"itemCode":"${dto.products_no}"}]'>
 							</c:forEach>
 							<button id="cartBtn" class="button-basic black">장바구니</button>
 							</form>
-							<form action="/daily/order/step1.do" method="GET">
+							<form action="/daily/order/step1" method="GET">
 								<c:forEach var="dto" items="${list }">
 									<input type="hidden" name="item"
 										value='{"item":[{"itemCode":"${dto.products_no}"}]'>
