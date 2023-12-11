@@ -9,8 +9,14 @@ public interface MemberService {
 
 	boolean authorizeNICE(String name, String tel, String rrnBirthDate, String rrnGenderCode) throws ClassNotFoundException, SQLException;
 
+	boolean duplicateIdCheck(String memberId) throws ClassNotFoundException, SQLException;
+	
+	MemberDTO invCodeCheck(String invCode) throws ClassNotFoundException, SQLException;
+	
 	int signUp(MemberDTO dto) throws ClassNotFoundException, SQLException;
 
 	Date getBirthDate(String rrnBirthDate, String rrnGenderCode);
+
+
 
 }
