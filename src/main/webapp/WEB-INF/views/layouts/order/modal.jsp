@@ -8,7 +8,7 @@
 				<button type="button" class="close" data-dismiss="modal"	aria-label="Close"></button>
 			</div>
 
-			<div class="modal-body" style="max-height: 80vh; overflow-y: scroll">
+			<div class="modal-body" style="max-height: 80vh; overflow-y: scroll; padding: 0 !important;">
 				<div class="drinking-list address" style="margin: 0"></div>
 				<div style="padding: 20px; display: none" id="showMoreBtn">
 					<button class="btn-default btn-white" style="width: 100%">더보기</button>

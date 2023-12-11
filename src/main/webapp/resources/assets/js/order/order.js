@@ -57,7 +57,7 @@ function showAddress(member_no, pageNo) {
 			if (data.length > 0) {
 				let tpl = null;
 				$.each(data, function(i, addr){
-					tpl = '<div class="item" style="margin: 0 ; border-radius: 0">'
+					tpl = '<div class="item" style="margin: 0; border-radius: 0">'
 								+ '<div class="head">'
 									+ '<div class="nickname-format xl">'
 										+ '<label>기본</label>'
