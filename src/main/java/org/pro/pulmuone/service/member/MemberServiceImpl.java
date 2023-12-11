@@ -51,7 +51,6 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
 	public int signUp(MemberDTO dto) throws ClassNotFoundException, SQLException {
 		
 		String invCode = getRandomInvCode();

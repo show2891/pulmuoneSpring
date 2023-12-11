@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.annotations.Param;
 import org.pro.pulmuone.domain.member.MemberDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface MemberMapper {
 	public int selectMemberForDuplicateIdCheck(String memberId) throws ClassNotFoundException, SQLException;
@@ -13,8 +14,10 @@ public interface MemberMapper {
 
 	public MemberDTO selectMemberWithInvCode(String invCode) throws ClassNotFoundException, SQLException;
 	
+	@Transactional
 	public int insert(MemberDTO dto) throws ClassNotFoundException, SQLException;
 
+	@Transactional
 	public int insertAuthForSignUp(String memberId) throws ClassNotFoundException, SQLException;
 	
 	
