@@ -4,10 +4,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.pro.pulmuone.domain.member.MemberDTO;
+import org.pro.pulmuone.domain.order.CouponDTO;
+import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.box.BoxItemInfoDTO;
 import org.pro.pulmuone.domain.order.box.BoxOrderItemDTO;
 import org.pro.pulmuone.service.order.BoxOrderServiceImpl;
+import org.pro.pulmuone.service.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +34,10 @@ public class BoxOrderController {
 	@Autowired
 	private BoxOrderServiceImpl boxOrderServiceImpl;
 	
+	@Autowired
+	private OrderServiceImpl orderServiceImpl;
+	
+	
 	@GetMapping("step1")
 	public String step1(@RequestParam(name = "item") String itemsStr, Model model) {
 		log.info("> BoxOrderController.step1 ...");
@@ -43,20 +49,30 @@ public class BoxOrderController {
 		// {"item":[{"itemCode":"0073561","qty":1}]} -> [{"itemCode":"0073561","qty":1}]
 		itemsStr = itemsStr.substring(8, itemsStr.length()-1);
 		
+		List<BoxOrderItemDTO> items = null;
+		List<BoxItemInfoDTO> itemInfos = null;
+		int total_price = 0;
 		try {
 			// 장바구니 정보 json -> 객체로 가져오기
-			List<BoxOrderItemDTO> items = Arrays.asList(objectMapper.readValue(itemsStr, BoxOrderItemDTO[].class));
+			items = Arrays.asList(objectMapper.readValue(itemsStr, BoxOrderItemDTO[].class));
 			
 			// 상품 정보 가져오기
-			List<BoxItemInfoDTO> itemInfos = boxOrderServiceImpl.selectItems(items);
+			itemInfos = boxOrderServiceImpl.selectItems(items);
 			
 			// 주문 갯수 담기
 			Iterator<BoxOrderItemDTO> ir = items.iterator();
+			BoxOrderItemDTO item = null;
+			BoxItemInfoDTO itemInfo = null;
 			int index = 0;
+			int qty = 0;
 			while (ir.hasNext()) {
-				BoxOrderItemDTO item = (BoxOrderItemDTO) ir.next();
-				itemInfos.get(index).setProducts_cnt(item.getQty());
+				item = (BoxOrderItemDTO) ir.next();
+				qty = item.getQty();
+				
+				itemInfo = itemInfos.get(index);
+				itemInfo.setProducts_cnt(qty);
 				index++;
+				total_price += itemInfo.getPrice() * qty;
 			} // while
 			
 			// 상품 정보 전달
@@ -80,9 +96,15 @@ public class BoxOrderController {
             username = userDetails.getUsername();
         } // if
         
-        // 전화번호 전달
-        MemberDTO member = boxOrderServiceImpl.getMemberInfo(username);
+        // 사용자 정보 전달
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
 		model.addAttribute("member", member);
+		
+		
+		// 3. 쿠폰 리스트 전달
+		List<CouponDTO> couponList = boxOrderServiceImpl.getCouponList(member.getMember_no(), total_price);
+		model.addAttribute("couponList", couponList);
+		
 		
         
 		return "order/box/step1.tiles";

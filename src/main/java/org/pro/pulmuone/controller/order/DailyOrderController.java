@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.pro.pulmuone.domain.member.MemberDTO;
+import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DailyOrderItemDTO;
-import org.pro.pulmuone.service.order.BoxOrderServiceImpl;
 import org.pro.pulmuone.service.order.DailyOrderServiceImpl;
+import org.pro.pulmuone.service.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,16 +34,18 @@ public class DailyOrderController {
 	private DailyOrderServiceImpl dailyOrderServiceImpl;
 
 	@Autowired
-	private BoxOrderServiceImpl boxOrderServiceImpl;
+	private OrderServiceImpl orderServiceImpl;
 	
 
 	@GetMapping("step1")
 	public String step1(@RequestParam(name = "item") String itemsStr , Model model) {
 		log.info("> DailyOrderController.step1 ...");
+		
+		// 1. 파라미터로 넘어온 상품 정보 출력
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		// {"item":[{"itemCode":"0071654","dayQty":[1,0,1,0,1]}]}
-		// -> [{"itemCode":"0071654","dayQty":[1,0,1,0,1]}]
+		// 파라미터로 넘어온 json String 변환
+		// {"item":[{"itemCode":"0071654","dayQty":[1,0,1,0,1]}]} -> [{"itemCode":"0071654","dayQty":[1,0,1,0,1]}]
 		itemsStr = itemsStr.substring(8, itemsStr.length());
 
 		try {
@@ -83,8 +85,8 @@ public class DailyOrderController {
 			username = userDetails.getUsername();
 		} // if
 
-		// 전화번호 전달
-		MemberDTO member = boxOrderServiceImpl.getMemberInfo(username);
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
 		model.addAttribute("member", member);
 		
 		

@@ -33,3 +33,18 @@
 		weekDayText();
 	})
 </script>
+<script>
+	$("button.prod-add").on("click", function() {
+		plusBtn($(this));
+	})
+
+	$("button.prod-remove").on("click", function() {
+		minusBtn($(this));
+	})
+	
+	
+	$("#allOrderBtn").on("click", function() {
+		goStep2("daily");
+	});
+	
+</script>

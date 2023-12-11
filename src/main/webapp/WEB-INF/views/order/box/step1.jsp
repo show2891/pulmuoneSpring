@@ -28,3 +28,8 @@
 		</div>
 	</form>
 </div>
+<script>
+	$("#allOrderBtn").on("click", function() {
+		goStep2("box");
+	});
+</script>

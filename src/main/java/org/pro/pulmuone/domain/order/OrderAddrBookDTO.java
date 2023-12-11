@@ -9,16 +9,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderAddrBookDTO {
 	
-	private int addrNo;
-	private int memberNo;
-	private String addrName;
+	private int addr_no;
+	private int member_no;
+	private String addr_name;
 	private String name;
 	private String tel;
 	private int dest;
-	private String zipCode;
+	private String zip_code;
 	private String addr;
-	private String addrDetail;
+	private String addr_detail;
 	private String memo;
-	private int defaultAddr;
+	private int default_addr;
+	private int total_count;
 	
 }
