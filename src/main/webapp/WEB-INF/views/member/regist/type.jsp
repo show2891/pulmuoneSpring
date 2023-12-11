@@ -23,7 +23,7 @@
             </h2>
             <div class="content">
                 <div class="button-set vertical">
-                    <a class="button-basic prefix kakao" href="/member/regist/social.do?type=K" style="padding: 0 24px; font-size: 16px">
+                    <a class="button-basic prefix kakao" href="/member/regist/social?type=K" style="padding: 0 24px; font-size: 16px">
                         <i class="ico" style="margin-right: 19px"></i>
                         카카오 아이디로 회원가입
                     </a>
@@ -37,11 +37,11 @@
             </h2>
             <div class="content">
                 <div class="button-set vertical">
-                    <a href="/member/regist/social.do?type=N" class="button-basic prefix naver" style="font-size: 16px">
+                    <a href="/member/regist/social?type=N" class="button-basic prefix naver" style="font-size: 16px">
                         <i class="ico" style="margin-right: 21px"></i>
                         네이버 아이디로 회원가입
                     </a>
-                    <a href="/member/regist/step1.do" class="button-basic prefix join" style="font-size: 16px">
+                    <a href="/member/regist/step1" class="button-basic prefix join" style="font-size: 16px">
                         <i class="ico" style="margin-right: 21px"></i>
                         일반 아이디로 회원가입
                     </a>

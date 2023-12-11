@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.pro.pulmuone.domain.member.MemberDTO;
 
 public interface MemberMapper {
-	public int selectMemberForDuplicateIdCheck(String id) throws ClassNotFoundException, SQLException;
+	public int selectMemberForDuplicateIdCheck(String memberId) throws ClassNotFoundException, SQLException;
 	
 	public int selectMemberForNICE(String name, String tel, Date birthDate) throws ClassNotFoundException, SQLException;
 
@@ -15,6 +15,7 @@ public interface MemberMapper {
 	
 	public int insert(MemberDTO dto) throws ClassNotFoundException, SQLException;
 
+	public int insertAuthForSignUp(String memberId) throws ClassNotFoundException, SQLException;
 	
 	
 	//회원정보 + 권한정보 얻어오는 메서드

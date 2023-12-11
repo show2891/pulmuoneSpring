@@ -64,14 +64,16 @@ public class MemberController {
 	@GetMapping("regist/step2")
 	public String interceptStep2() {
 
-		return "member/regist/step1.tiles";
+		return "redirect:/member/regist/step1";
 	}
 	
 	@PostMapping("regist/step2")
 	public String registStep2(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		
+		String inputTel = request.getParameter("tel");
+		String tel = String.format("%s-%s-%s", inputTel.substring(0, 3), inputTel.substring(3, 7), inputTel.substring(7, 11));
+
 		String name = request.getParameter("name");
-		String tel = request.getParameter("tel");
 		String rrnBirthDate = request.getParameter("rrnBirthDate");
 		String rrnGenderCode = request.getParameter("rrnGenderCode");		
 		
@@ -94,7 +96,7 @@ public class MemberController {
 	@GetMapping("regist/step3")
 	public String interceptStep3() {
 
-		return "member/regist/step1.tiles";
+		return "redirect:/member/regist/step1";
 	}
 	
 	@PostMapping("regist/step3")
@@ -129,7 +131,7 @@ public class MemberController {
 	@GetMapping("regist/step4")
 	public String interceptStep4() {
 		// TODO 페이지 완성하면 GET은 step1 리턴하도록 수정
-		return "member/regist/step1.tiles";
+		return "redirect:/member/regist/step1";
 	}
 	
 	@PostMapping("regist/step4")

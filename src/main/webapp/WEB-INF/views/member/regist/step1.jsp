@@ -1,68 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ include file="/WEB-INF/views/layouts/head.jsp" %>
-<body>
-<div class="wrapper">
+<div class="container-wrapper member"> <!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
+
 	<div class="container relative">
-	    <a class="member-close" href="/"></a>
-	    <div class="account-wrapper">
-	        <div class="account-logo-wrapper">
-	            <a class="account-logo"></a>
-	        </div>
-	    </div>
-	</div>
-
-	<div class="container-wrapper member"> <!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
-
-		<div class="container relative">
-		    
-		    <div class="account-wrapper lg" style="padding-bottom:80px;">
-		        <ul class="account-process" style="margin-top: 60px">
-		            <li class="active">
-		                <h2 class="title" style="height: 76px">
-		                    <b style="margin-right: 3px">01.</b>
-		                    본인인증
-		                </h2>
-		                <div class="caution-unit" style="margin: 11px auto 26px">
-		                    <span class="mark"></span>
-		                    <p style="margin-top: 26px">
-		                        가입여부와 실명확인을 위하여<br/>
-		                        휴대폰본인인증을 통해 인증해 주세요.
-		                    </p>
-		                </div>
-		
-		                <div class="button-set" style="margin: 46px 0 40px"> 
+	    
+	    <div class="account-wrapper lg" style="padding-bottom:80px;">
+	        <ul class="account-process" style="margin-top: 60px">
+	            <li class="active">
+	                <h2 class="title" style="height: 76px">
+	                    <b style="margin-right: 3px">01.</b>
+	                    본인인증
+	                </h2>
+	                <div class="caution-unit" style="margin: 11px auto 26px">
+	                    <span class="mark"></span>
+	                    <p style="margin-top: 26px">
+	                        가입여부와 실명확인을 위하여<br/>
+	                        휴대폰본인인증을 통해 인증해 주세요.
+	                    </p>
+	                </div>
+	
+	                <div class="button-set" style="margin: 46px 0 40px"> 
 <!-- 		                	<form action="/member/regist/step2.do" method="post"> -->
 <!-- 		                    <button type="button" onclick="javascript:fnPopup();" class="button-basic primary btn-certify" style="width: 460px; height: 69px">실명인증하기 -->
-		                    <button type="button" id="auth" class="button-basic primary btn-certify" style="width: 460px; height: 69px">실명인증하기</button>
+	                    <button type="button" id="auth" class="button-basic primary btn-certify" style="width: 460px; height: 69px">실명인증하기</button>
 <!-- 		                    </form> -->
-		                </div>
-		            </li>
-		            <li>
-		                <h2 class="title" style="height: 80px">
-		                    <b style="margin-right: 3px">02.</b>
-		                    약관동의 / 회원정보 입력
-		                </h2>
-		            </li>
-		            <li>
-		                <h2 class="title">
-		                    <b style="margin-right: 3px">03.</b>
-		                    추천정보
-		                </h2>
-		            </li>
-		        </ul>
-		    </div>
-    
-		</div>
-
-    
+	                </div>
+	            </li>
+	            <li>
+	                <h2 class="title" style="height: 80px">
+	                    <b style="margin-right: 3px">02.</b>
+	                    약관동의 / 회원정보 입력
+	                </h2>
+	            </li>
+	            <li>
+	                <h2 class="title">
+	                    <b style="margin-right: 3px">03.</b>
+	                    추천정보
+	                </h2>
+	            </li>
+	        </ul>
+	    </div>
+   
 	</div>
-	
-	
-	
-	
-</div> <!-- wrapper -->
+
+   
+</div>
+
 
 
  	
@@ -103,7 +87,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form id="authorizeNICE" action="/member/regist/step2.do" method="post">
+				<form id="authorizeNICE" action="/member/regist/step2" method="post">
 					<div class="form-input">
 						<dl>
 							<dt>
@@ -121,7 +105,7 @@
 								<label>주민번호 앞 6자리</label>
 							</dt>
 							<dd>
-								<input type="text" placeholder="주민번호 앞 6자리" id="rrnBirthDate" name="rrnBirthDate" autocomplete="off" pattern="\d*" maxlength="6">
+								<input type="text" placeholder="주민번호 앞 6자리" id="rrnBirthDate" name="rrnBirthDate" autocomplete="off" pattern="\d{6}" maxlength="6">
 							</dd>
 						</dl>
 						<p id="rrnBirthDateError"></p>
@@ -132,7 +116,7 @@
 								<label>주민번호 뒤 1자리</label>
 							</dt>
 							<dd>
-								<input type="text" placeholder="주민번호 뒤 1자리" id="rrnGenderCode" name="rrnGenderCode" autocomplete="off" pattern="\d*" maxlength="1">
+								<input type="text" placeholder="주민번호 뒤 1자리" id="rrnGenderCode" name="rrnGenderCode" autocomplete="off" pattern="\d{1}" maxlength="1">
 							</dd>
 						</dl>
 						<p id="rrnBirthDateError"></p>
@@ -143,11 +127,12 @@
 								<label>휴대폰 번호</label>
 							</dt>
 							<dd>
-								<input type="tel" placeholder="휴대폰 번호" id="tel" name="tel" autocomplete="off" pattern="\d{11}" maxlength="11">
+								<input type="tel" placeholder="휴대폰 번호" id="tel" name="tel" autocomplete="off" pattern="^010\d{7,8}$" maxlength="11">
 							</dd>
 						</dl>
 						<p id="telError"></p>
 					</div>
+					<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 				</form>
 			</div>
 			<button type="submit" class="modal-footer" form="authorizeNICE">확인</button>
@@ -156,22 +141,3 @@
 	</div>
 </div>
 
-
-
-
-
-<script type="text/javascript">
-
-// 	function fnPopup() {
-// 		location.href = "/member/regist/step1.do";
-
-// 	}
-</script>
-
-
-
-
-
-
-</body>
-</html>

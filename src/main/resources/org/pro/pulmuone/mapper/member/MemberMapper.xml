@@ -48,13 +48,16 @@
 
 	<!-- public int insert(MemberVO member) throws ClassNotFoundException, SQLException; -->
 	<insert id="insert">
-		INSERT INTO member(member_id, pwd, name, tel, email, birthdate, inv_code, reg_date)
-		VALUES( #{id}, #{pwd}, #{name}, #{gender}, #{birth}, #{is_lunar}, #{cphone}, #{email}, #{habit}, SYSDATE)
+		INSERT INTO member(member_no, member_id, pwd, name, tel, email, birthdate, inv_code, reg_date)
+		VALUES( SEQ_MEMBER.NEXTVAL, #{memberId}, #{pwd}, #{name}, #{tel}, #{email}, #{birthDate}, #{invCode}, SYSDATE)
 		<!-- MemberVO 객체의 필드값을 그대로 가져와서 사용. 단, 필드명과 일치해야 함 -->
 	</insert>
 	
 	
-	
+	<insert id="insertAuthForSignUp">
+		INSERT INTO member_authorities(member_id)
+		VALUES( #{memberId} )
+	</insert>
 	
 	
 	
