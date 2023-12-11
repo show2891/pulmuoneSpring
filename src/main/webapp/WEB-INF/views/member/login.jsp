@@ -46,12 +46,12 @@
 			                로그인합니다.
 			            </h2>
 			            <div class="content">
-							<form action="/login" method="post">
+							<form action="/member/login" method="post">
 								<div class="form-input none-dt">
 			                        <dl>
 			                            <dd>
 			                                <input type="text" id="loginId" name="username" placeholder="아이디"/>
-			                            </dd>
+			                            </dd>	
 			                        </dl>
 			                    </div>
 			                    <div class="form-input none-dt">
@@ -76,9 +76,9 @@
 							</form>
 						
 							<div class="addiction-button-group">
-			                    <a href="/member/regist/type.do">회원가입</a>
-			                    <a href="/member/find/id.do">아이디 찾기</a>
-			                    <a href="/member/find/password.do">비밀번호 찾기</a>
+			                    <a href="/member/regist/type">회원가입</a>
+			                    <a href="/member/find/id">아이디 찾기</a>
+			                    <a href="/member/find/password">비밀번호 찾기</a>
 			                </div>
 			        	</div>        
                 	</div>

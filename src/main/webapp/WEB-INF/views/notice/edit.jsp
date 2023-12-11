@@ -39,8 +39,9 @@
 				<button type="button" id="noticeEditBtn" data-toggle="modal" data-target="#alertModal" class="basic-big-button primary" style="min-width:280px; max-width:280px;">수정하기</button>
 				<button type="button" onclick="javascript:history.back()" id="cancelBtn" class="basic-big-button" style="margin-left:20px; min-width:280px; max-width:280px;">취소</button>
 			</div>
-			
 		</div>
+		<input type="hidden" name="seq" value="${vo.notice_no }"/>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token }" />
 	</form>
 
 </div>
@@ -51,8 +52,8 @@
 	$(function(){
 		
 	
-		if( `${result}` == "failed" ) {
-			$(".modal-body").text("공지사항 게시글이 수정되었습니다.");	
+		if( `${param.result}` == "failed" ) {
+			$(".modal-body").text("공지사항 게시글 수정이 실패되었습니다.");	
 			$("#alertModal").modal();
 		}
 	

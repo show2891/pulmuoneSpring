@@ -1,4 +1,4 @@
-package org.pro.pulmuone.controller.temp;
+package org.pro.pulmuone.controller.mypage;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,16 +11,15 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/*")
 @Log4j
-public class TempController {
+public class MypageController {
 
-	@GetMapping("")
-	public String home() {
-		return "temp/index.tiles";
+	@GetMapping("mypage")
+	public String login(HttpServletRequest request) {
+		log.warn("> MypageController mypage()...");
+			
+		return "mypage/home/userSummmary.tiles";
 	}
 	
-	@GetMapping("home")
-	public String test() {
-		return "temp/home.tiles";
-	}
+
 	
 }
