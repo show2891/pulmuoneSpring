@@ -72,7 +72,7 @@ public class DailyOrderController {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-		}  catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		} // try
 
