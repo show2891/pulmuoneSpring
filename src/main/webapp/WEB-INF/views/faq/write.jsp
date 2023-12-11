@@ -11,7 +11,7 @@
                 <div class="wrap">
                     <ul>
                         <li><a href="/">홈</a></li>
-                        <li><a href="/forum/faq/list.do">고객기쁨센터</a></li>
+                        <li><a href="/forum/faq/list">고객기쁨센터</a></li>
                         <li><a class="active">공지사항</a></li>
                     </ul>
                 </div>

@@ -66,28 +66,10 @@
     
 	<!-- mypage -->
     <definition name="mypage/*/*.tiles" extends="mypage">
-		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}/{2}.jsp" />    
+		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}/{2}.jsp" />
+		<put-attribute name="page" value="{1}"></put-attribute>    
    </definition>
    
-   
-   
-   
-   
-    <!-- customer.notice -->  
-    <!-- customer.noticeReg -->  
-    <!-- customer.noticeEdit --> 
-    <!-- joinus.join -->   
-    <!-- joinus.login -->   
-    <!-- <definition name="*.*" template="/WEB-INF/views/{1}/inc/layout.jsp">
-      <put-attribute name="header"  value="/WEB-INF/views/inc/header.jsp" />
-      <put-attribute name="footer"  value="/WEB-INF/views/inc/footer.jsp" />
-      
-      <put-attribute name="visual" value="/WEB-INF/views/{1}/inc/visual.jsp" /> 
-      <put-attribute name="aside" value="/WEB-INF/views/{1}/inc/aside.jsp" /> 
-      <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" /> 
-      
-      <put-attribute name="css" value="{2}.css" />
-    </definition> -->
     
    <!-- login -->
    <definition name="member/login.tiles" template="/WEB-INF/views/layouts/member/login/layouts.jsp">
