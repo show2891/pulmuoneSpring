@@ -97,12 +97,9 @@
 														style="font-family: Arial; color: rgb(119, 119, 119);"><span
 														style="font-size: 13.3333px;">${ item.answer }</span></span>&nbsp;
 												</p>
-												<u:isLogin>
-					                        		<c:if test="${ auth.getName() == 'admin'}">
+												<sec:authorize access="hasRole('ROLE_ADMIN')">
 					                        			<button type="button" class="faqDelete" data-seq="${item.q_no }" style="margin-top: 10px; border: 1px solid #ccc;  padding: 0 20px; border-radius: 10px 0; float: right;">삭제</button>
-					                        		</c:if>  
-					                        	</u:isLogin>
-												
+					                        	</sec:authorize>
 											</div>
 										</div>
 									</div>
@@ -194,5 +191,4 @@
 	
 	})
 </script>
-</body>
-</html>
+
