@@ -304,17 +304,16 @@ $(document).on("click", "#orderModal button", function (e) {
                <h4>생활습관 바꾸기</h4>
                <ul>
                   <c:choose>
-                     <c:when test="${param.bmi < 18.5 }">
+                     <c:when test="${param.bmi lt 18.5 }">
                         <li data-type="bmi">${list[0].lifestyle_change01 }</li>
                      </c:when>
-                     <c:when test="${param.bmi >= 18.5 or param.bmi < 23 }">
+                     <c:when test="${param.bmi ge 18.5 or param.bmi lt 23.0 }">
                         <li data-type="bmi">${list[0].lifestyle_change02 }</li>
                      </c:when>
-                     <c:when test="${param.bmi >= 23.5 or param.bmi < 25 }">
+                     <c:when test="${param.bmi ge 23.1 or param.bmi lt 25.0 }">
                         <li data-type="bmi">정상체중 범위에 들도록 현재의 식생활 행동에서 문제점을 찾고 행동 변화를 시도합니다.</li>
                      </c:when>
-
-                     <c:when test="${param.bmi >= 25 }">
+                     <c:when test="${param.bmi ge 25.1 }">
                         <li data-type="bmi">${list[0].lifestyle_change03 }</li>
                      </c:when>
                   </c:choose>
@@ -323,7 +322,7 @@ $(document).on("click", "#orderModal button", function (e) {
             </div>
 
             <div class="button-set">
-               <button class="button-basic border bottle prefix" onclick="location.href='/customer/product/result/${score}?singleYn=Y'">
+               <button class="button-basic border bottle prefix" onclick="location.href='/customer/product/result/${score}?singleYn=Y&bmi=${param.bmi}'">
                   <i class="ico"></i> 내게 맞는 상품 추천
                </button>
 
