@@ -24,7 +24,7 @@
 				</dt>
 				<dd>
 					<input type="text" data-receiver="" id="receiver" name="receiver" title="이름을 입력하세요" placeholder="이름을 입력하세요"
-								value="" data-init="" data-require="" data-name="받는사람" maxlength="10">
+								data-init="" data-require="" data-name="받는사람" maxlength="10" value="${ member.name }">
 				</dd>
 			</dl>
 		</div>
@@ -36,7 +36,7 @@
 				</dt>
 				<dd>
 					<input type="tel" id="tel" name="tel" maxlength="13" title="휴대폰번호를 입력하세요" placeholder="휴대폰번호를 입력하세요"
-								value="" data-init="" data-require="" data-name="휴대폰번호">
+								value="${ member.tel }" data-init="" data-require="" data-name="휴대폰번호">
 				</dd>
 			</dl>
 		</div>

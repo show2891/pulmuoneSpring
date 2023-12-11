@@ -4,9 +4,6 @@
 <!DOCTYPE html>
 <html>
 	<tiles:insertAttribute name="head" />
-	<script src="/resources/assets/js/order/dailyOrder.js"></script>
-	<script src="/resources/assets/js/order/order.js"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 
 <div class="wrapper">
@@ -37,15 +34,36 @@
   	<tiles:insertAttribute name="footer" />
 </div>
 
+<tiles:insertAttribute name="modal" />
+
 <script>
 		$(function () {
 			// 다음 주소 api
 			searchPostcode();
 			
 			// 고객 정보와 동일 체크박스
-			let name = "name";
-			let tel = "010-1234-1234";
+			let name = $("#receiver").val();
+			let tel = $("#tel").val();
 			chkCheck(name, tel);
+			
+			// 주소록 가져오기
+			let member_no = ${ member.member_no };
+			$("#addressBtn").on("click", function(){
+				showAddress(member_no, 1);
+			})
+			
+			// 영수증 계산
+			let salePrice = calculateReceipt();
+			
+			// 쿠폰 선택 시
+			$("#coupon-selector").on("change", function() {
+				couponSelect(salePrice);
+			});
+			
+			// 쿠폰 삭제 시
+			$(document).on("click", "button.coupon-remove", function() {
+				couponDelete($(this), salePrice);
+			});
 		});
 </script>
 </body>

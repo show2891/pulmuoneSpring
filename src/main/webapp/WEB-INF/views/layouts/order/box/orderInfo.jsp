@@ -6,7 +6,7 @@
 						<dt>
 							<span>상품 판매가 </span> <b>
 								<div class="now-price" id="prd-origin-price">
-									<b data-price-view="origin"></b> <span>원</span>
+									<b data-price-view="origin"></b><span>원</span>
 								</div>
 							</b>
 						</dt>
