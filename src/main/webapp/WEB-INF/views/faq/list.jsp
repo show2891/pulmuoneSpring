@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <div class="page-content">
 	<form id="searchForm">
 		<input type="hidden" id="category" name="category" value="${param.category == null ? '' : param.category}">
@@ -11,11 +13,9 @@
 			</h2>
 		</div>
 		<div class="list-head" style="margin-bottom: 0; text-align: right;">
-			<u:isLogin>
-          		<c:if test="${ auth.getName() == 'admin'}">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
           			<div><a href="/forum/faq/write">FAQ등록</a></div>
-          		</c:if>  
-          	</u:isLogin>
+          	</sec:authorize>
         </div>
 		<div class="coupon-srch" style="border-bottom:0; padding-bottom:0;">
 			<div class="form-input none-dt">
@@ -97,12 +97,9 @@
 														style="font-family: Arial; color: rgb(119, 119, 119);"><span
 														style="font-size: 13.3333px;">${ item.answer }</span></span>&nbsp;
 												</p>
-												<u:isLogin>
-					                        		<c:if test="${ auth.getName() == 'admin'}">
+												<sec:authorize access="hasRole('ROLE_ADMIN')">
 					                        			<button type="button" class="faqDelete" data-seq="${item.q_no }" style="margin-top: 10px; border: 1px solid #ccc;  padding: 0 20px; border-radius: 10px 0; float: right;">삭제</button>
-					                        		</c:if>  
-					                        	</u:isLogin>
-												
+					                        	</sec:authorize>
 											</div>
 										</div>
 									</div>
@@ -194,5 +191,4 @@
 	
 	})
 </script>
-</body>
-</html>
+
