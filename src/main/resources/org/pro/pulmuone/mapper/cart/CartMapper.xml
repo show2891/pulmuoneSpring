@@ -12,8 +12,8 @@
 
 <!-- 	장바구니 추가-박스 -->
 	<insert id="boxcart">
-		insert into cart_daily (cart_no, member_no, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fir_cnt, reg_date) 
-		values( #{cart_no}, #{member_no }, #{product_no}, #{mon_cnt} , #{tue_cnt}, #{wed_cnt}, #{thu_cnt}, #{fir_cnt}, sysdate)
+		insert into cart_box (cart_no, member_no, products_no, amount, reg_date) 
+		values( #{cart_no}, #{member_no }, #{product_no}, #{amount}, sysdate)
 	</insert>
 
 </mapper>

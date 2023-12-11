@@ -1,14 +1,10 @@
 package org.pro.pulmuone.controller.cart;
 
 import java.sql.SQLException;
-import java.util.List;
 
-import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.cart.CartMapper;
-import org.pro.pulmuone.mapper.main.MainMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j;
@@ -36,6 +32,7 @@ public class CartController {
 		log.info("> DailyCart Start");
 		return "cart/daily.tiles";
 	}
+	
 	// 택배 장바구니	
 	@RequestMapping("/box")
 	public String box() throws ClassNotFoundException, SQLException {
