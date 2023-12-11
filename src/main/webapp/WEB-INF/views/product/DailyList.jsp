@@ -23,7 +23,6 @@
 					location.replace(location.pathname + "?category="
 							+ category_no + "&tags="
 							+ encodeURIComponent(idxs.join(",")));
-// 						location.replace(location.pathname + "?category=" + category_no + "&tags=" + idxs.join(","));
 				});
 		$(document).ready(function() {
 			$(".visual-area").fddCarousel({
@@ -322,7 +321,6 @@
 											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.										
 										</c:when>
 												<c:otherwise>
-<%-- 											총 <em>${fn:length(list) }</em>건의 상품이 있습니다. --%>
 											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
 										</c:otherwise>
 											</c:choose>
