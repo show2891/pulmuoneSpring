@@ -215,12 +215,12 @@
 			mobilehost: "http://localhost",
 			webhost: "http://localhost/",
 			detailImage1: location.origin+ "/file/download"+'/product/${list[0].system_name}',			
-			weight: "${dto.products_size}",
+			weight: "${list[0].products_size}",
 			path: "product/daily/${list[0].products_tag}",
 			productName: "${list[0].products_name}",
 			slogan: "${list[0].products_sub_name}",
 			thumbnail: location.origin+ "/file/download"+'/product/${list[0].system_name}',
-			price: "<fmt:formatNumber value="${dto.price }" pattern="#,###" />",
+			price: "<fmt:formatNumber value="${list[0].price }" pattern="#,###" />",
 		}	
 	};
 
@@ -248,7 +248,7 @@
 
 	function calculateBoxPrice() {
 		const qty = $('.box-qty').text()
-		const price = '${dto.price}'
+		const price = '${list[0].price}'
 		$('#totalPrice b').text(formatter.format(qty * price))
 
 	}
@@ -262,7 +262,7 @@
                     $('input[name=c1]').removeAttr('disabled');
                     $('.check-list').find('input[type=checkbox]:not(:checked)').click()
                     const cnt = $('input[name=c1]:checked').length
-                    const price = '${dto.price}'
+                    const price = '${list[0].price}'
                     totalPrice = cnt * price * 4;
 
                 } else {
@@ -276,7 +276,7 @@
         $('input[name=c1]').change(function () {
             if ($("input[name=r1]:checked").hasClass('none-package')) {
                 const cnt = $('input[name=c1]:checked').length
-                const price = '${dto.price}'
+                const price = '${list[0].price}'
                 $("#totalPrice b").text(formatter.format(cnt * price * 4));
             }
         })    

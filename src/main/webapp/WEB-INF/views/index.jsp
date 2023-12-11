@@ -1,8 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".visual-area").fddCarousel({
@@ -28,7 +31,10 @@
 		        });
 		    },
 		});
-	</script>	
+	</script>
+	<div class="wrapper">
+		
+		<main class="page">
 			<div id="container-wrapper" class="container-wrapper">
 				<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 				<!--S: 메인 비주얼-->
@@ -48,37 +54,38 @@
 					</div>
 					<div class="vis-list" data-carousel="items">
 						<a class="item"
-							href="/event/event/view.do?event_no=36"
+							href="/event/event/view?event_no=36"
 							target="_blank" title="11월 브랜드데이"
 							style="background-color: #ffffff"> <img
 							src="/file/download/banner/0d3bc825-0970-4f85-9f7d-295f9d54e857.png"
 							alt="">
 						</a> <a class="item"
-							href="/event/event/view.do?event_no=30"
+							href="/event/event/view?event_no=30"
 							title="키즈프리 한 달 야채 프로젝트" style="background-color: #111111"> <img
 							src="/file/download/banner/e637a24e-8db2-47f2-8f0d-68b3d62529b9.png"
 							alt="">
 						</a> <a class="item"
-							href="/product/daily/view.do?tag=743"
+							href="/product/daily/743"
 							title="비타맥스 엑스투" style="background-color: #ffffff"> <img
 							src="/file/download/banner/846fc1e1-4818-4eef-80ff-94b7f47daca1.png"
 							alt="">
 						</a> <a class="item"
-							href="/event/event/view.do?event_no=35"
+							href="/event/event/view?event_no=35"
 							title="키즈프리 유기농 주스" style="background-color: #111111"> <img
 							src="/file/download/banner/896f670f-2e4c-44d3-9fbd-5b823b20c679.png"
 							alt="">
 						</a> <a class="item"
-							href="/event/event/view.do?event_no=33"
+							href="/event/event/view?event_no=33"
 							title="풀무원녹즙 쿠폰 사용 가이드" style="background-color: #ffffff"> <img
 							src="/file/download/banner/39447d58-8d60-4a85-b4b6-c3622ca41825.png"
 							alt="">
 						</a> <a class="item"
-							href="/taste/taste.do" title="시음선물"
+							href="/taste/taste" title="시음선물"
 							style="background-color: #ffffff"> <img
 							src="/file/download/banner/cf57865c-d559-4193-bce1-075b28c60a61.png"
 							alt="">
 						</a>
+
 					</div>
 				</div>
 				<!--E: 메인 비주얼-->
@@ -88,78 +95,64 @@
 						<!--S:개인화 영역 -->
 						<div class="personal-area">
 							<!-- 비로그인 (https://zpl.io/6NeDXpW) -->
-							<c:choose>
-								<c:when test="${ auth.getName() eq null }">
-									<div class="member-area">
-										<div class="personal-login">
-											<img src="/resources/assets/images/common/ico_member02.png"
-												alt=""> <strong> <b>로그인</b>하시고 <br> <span>맞춤
-													서비스</span>를 누리세요!
-											</strong> <a href="/mypage.do" class="btn-login" title="로그인하기">
-												로그인하기 <i class="ico ico-arr-right6"></i>
-											</a>
-										</div>
+
+							<sec:authorize access="isAnonymous()">
+								<div class="member-area">
+									<div class="personal-login">
+										<img src="/resources/assets/images/common/ico_member02.png"
+											alt=""> <strong> <b>로그인</b>하시고 <br> <span>맞춤
+												서비스</span>를 누리세요!
+										</strong> <a href="/member/login" class="btn-login" title="로그인하기">
+											로그인하기 <i class="ico ico-arr-right6"></i>
+										</a>
 									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="member-area"
-										style="position: relative; overflow: visible"
-										data-summary-view="#member_info">
-										<div class="personal-info">
-											<div class="user-info">
-												<strong><span>${auth.getName()}</span>님 안녕하세요!</strong>
-												<div class="pmenu-coupon">
-													<a href="/mypage/benefit/coupon" title="해당페이지로 가기"> <span>0</span>
-														<i class="ico"></i>
-													</a>
-												</div>
+								</div>
+							</sec:authorize>
+							<sec:authorize access="isAuthenticated()">
+								<div class="member-area" style="position: relative; overflow: visible" data-summary-view="#member_info">
+									<div class="personal-info">
+										<div class="user-info">
+											<strong><span><sec:authentication property="principal.member.name"/></span>님 안녕하세요!</strong>
+											<div class="pmenu-coupon">
+												<a href="/mypage/benefit/coupon" title="해당페이지로 가기"> <span>0</span>
+													<i class="ico"></i>
+												</a>
 											</div>
-											<div class="billing-area">
-												<div class="billing-prd">
-													<b>음용1</b>
-													<div class="prd-link">
-														<button type="button"
-															data-toggle-view="#customer-num-view">
-															<i class="ico"></i> <span class="hide">고객번호 확인하기</span>
-														</button>
-														<div id="customer-num-view" class="customer-info"
-															style="display: none;">
-															<em>고객번호</em> <span>230000234094</span> <a
-																href="/mypage/drink/drink" class="button" type="button">변경</a>
-														</div>
+										</div>
+										<div class="billing-area">
+											<div class="billing-prd">
+												<b>음용1</b>
+												<div class="prd-link">
+													<button type="button"
+														data-toggle-view="#customer-num-view">
+														<i class="ico"></i> <span class="hide">고객번호 확인하기</span>
+													</button>
+													<div id="customer-num-view" class="customer-info"
+														style="display: none;">
+														<em>고객번호</em> <span>230000234094</span> <a
+															href="/mypage/drink/drink" class="button" type="button">변경</a>
 													</div>
 												</div>
-												<ul>
-													<li><span>11월 청구예정 금액</span> <b class="now-price">62,100<span>
-																원</span></b></li>
-													<li><span>실시간 금액</span> <b class="now-price">32,700<span>
-																원</span></b></li>
-												</ul>
 											</div>
+											<ul>
+												<li><span>11월 청구예정 금액</span> <b class="now-price">62,100<span>
+															원</span></b></li>
+												<li><span>실시간 금액</span> <b class="now-price">32,700<span>
+															원</span></b></li>
+											</ul>
 										</div>
 									</div>
+								</div>
+							</sec:authorize>
+							
+							<c:choose>
+								<c:when test="${ auth.getName() eq null }">
+
+								</c:when>
+								<c:otherwise>
+									
 								</c:otherwise>
-							</c:choose>
-							<!-- <div class="member-area" style="position:relative;overflow: visible" data-summary-view="#member_info"> -->
-							<!--         <div class="personal-info"> -->
-							<!--             <div class="user-info"> -->
-							<%--                 <strong><span>${auth.getName()}</span>님 안녕하세요!</strong> --%>
-							<!--                 <div class="pmenu-coupon"> -->
-							<!--                     <a href="/mypage/benefit/coupon" title="해당페이지로 가기"> -->
-							<!--                         <span>1</span> -->
-							<!--                         <i class="ico"></i> -->
-							<!--                     </a> -->
-							<!--                 </div> -->
-							<!--             </div> -->
-							<!--             <div class="billing-area">                 -->
-							<!--                     <div class="billing-prd" style="min-height: 40px; margin-bottom: 15px"></div> -->
-							<!--                         <div class="tasting-btn"> -->
-							<!--                             <span>시음 선물로 풀무원녹즙을 경험해 보세요.</span> -->
-							<!--                             <a href="/taste/taste" class="button btn-default">시음 선물하기</a> -->
-							<!--                         </div>                                     -->
-							<!--             </div> -->
-							<!--         </div> -->
-							<!--     </div> -->
+							</c:choose>						
 							<!--S:개인화 메뉴-->
 							<ul class="personal-menu" data-summary-view="#member_menu">
 								<li class="item"><a href="/mypage/drink/drink"
@@ -180,7 +173,7 @@
 											<i class="ico ico-personal-03"></i>
 										</div> <span>배송일정변경</span>
 								</a></li>
-								<li class="item"><a href="/mypage/product/list.do"
+								<li class="item"><a href="/mypage/product/list"
 									data-require-login="">
 										<div class="cover">
 											<i class="ico ico-personal-04"></i>
@@ -198,10 +191,12 @@
 								<div class="owl-stage-outer">
 									<div class="owl-stage"
 										style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 6170px;">
-										<c:forEach items="${mainbestlist }" var="dto" varStatus="status">
+										<c:forEach items="${mainbestlist }" var="dto"
+											varStatus="status">
 											<div class="owl-item active" style="width: 308.5px;">
 												<div class="prd-area">
-													<a href="/product/daily/${dto.products_tag }?eventIdx=" title="제품 상세페이지로 가기">
+
+													<a href="/product/${dto.delivery_type}/${dto.products_tag }?eventIdx=" title="제품 상세페이지로 가기">
 														<div class="badges">
 															<c:choose>
 																<c:when
@@ -315,7 +310,7 @@
 				<!--S:띠배너 슬라이드-->
 				<div class="banner-area survey">
 					<div class="banner-list">
-						<a class="item" href="/customer/product/product.do" title="해당 페이지로 가기"
+						<a class="item" href="/customer/product" title="해당 페이지로 가기"
 							style="background-color: #4d54e7"> <img
 							src="/resources/assets/images/contents/banner_item01.jpg">
 							<span class="hide">어떤 녹즙을 드셔야 할까요? 간단한 설문을 통해 풀무원녹즙이 제안하는
@@ -329,33 +324,33 @@
 					<div class="container">
 						<div class="event-area section-area">
 							<h2 class="section-area-title title-more-btn">
-								녹즙 시음을 선물해보세요! <a href="/taste/taste.do" class="btn-more"> 전체보기
+								녹즙 시음을 선물해보세요! <a href="/taste/taste" class="btn-more"> 전체보기
 									<i class="ico ico-arr-right6"></i>
 								</a>
 							</h2>
 							<div class="event-list" data-carousel="items">
 								<a class="item"
-									href="/taste/taste.do?pkgIdx=56"
+									href="/taste/taste?pkgIdx=56"
 									title="베스트 녹즙"> <img
 									src="/file/download/banner/4d1a4dd5-821c-41db-a0d6-3535adb53a8e.png"
 									alt="">
 								</a> <a class="item "
-									href="/taste/taste.do?pkgIdx=54"
+									href="/taste/taste?pkgIdx=54"
 									title="건강한 한 끼"> <img
 									src="/file/download/banner/b9842c83-f89d-4687-8351-c71beeba16e4.png"
 									alt="">
 								</a> <a class="item "
-									href="/taste/taste.do?pkgIdx=53"
+									href="/taste/taste?pkgIdx=53"
 									title="아이사랑"> <img
 									src="/file/download/banner/57d7c4a5-9e5f-4158-9067-f8e2746a2ee8.png"
 									alt="">
 								</a> <a class="item "
-									href="/product/daily/view.do?tag=743"
+									href="/product/daily?743"
 									title="이달의 녹즙(비타맥스 엑스투)"> <img
 									src="/file/download/banner/c4f1a598-5bf4-4cb9-9acf-c733f86d3faf.png"
 									alt="">
 								</a> <a class="item"
-									href="/taste/taste.do?pkgIdx=58 "
+									href="/taste/taste?pkgIdx=58 "
 									title="융복합"> <img
 									src="/file/download/banner/ba6cd618-ea64-4c9e-a6ed-18186f895d6b.png"
 									alt="">
@@ -383,7 +378,7 @@
 										style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
 										<div class="owl-item active" style="width: 300px;">
 											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=30"
+												<a href="/event/event/view?event_no=30"
 													title="제품 상세페이지로 가기">
 													<div class="badges">
 														<span class="badge badge-new">NEW</span> <span
@@ -429,7 +424,7 @@
 										</div>
 										<div class="owl-item active" style="width: 300px;">
 											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=35"
+												<a href="/event/event/view?event_no=35"
 													title="제품 상세페이지로 가기">
 													<div class="badges">
 														<span class="badge">BEST</span> <span
@@ -475,7 +470,7 @@
 										</div>
 										<div class="owl-item active" style="width: 300px;">
 											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=35"
+												<a href="/event/event/view?event_no=35"
 													title="제품 상세페이지로 가기">
 													<div class="badges">
 														<span class="badge">BEST</span> <span
@@ -521,7 +516,7 @@
 										</div>
 										<div class="owl-item active" style="width: 300px;">
 											<div class="prd-area">
-												<a href="/event/event/view.do?event_no=35"
+												<a href="/event/event/view?event_no=35"
 													title="제품 상세페이지로 가기">
 													<div class="badges">
 														<span class="badge">BEST</span> <span
@@ -591,7 +586,7 @@
 							<!--S:띠배너 슬라이드-->
 							<div class="banner-area this-prd" style="margin-top: 60px;">
 								<div class="banner-list">
-									<a class="item" href="/product/daily/view.do?tag=743"
+									<a class="item" href="/product/daily/view?tag=743"
 										title="월간녹즙 비타맥스 엑스투" style="background-color: #"> <img
 										src="/file/download/banner/f523748f-14ef-4844-a30d-5e97ff7c6456.png"
 										alt="">
@@ -602,7 +597,7 @@
 							<!--S:쿠폰 영역-->
 							<div class="coupon-guide section-area">
 								<div class="coupon-area">
-									<a href="/event/event/view.do?event_no=1" title="해당 페이지로 가기">
+									<a href="/event/event/view?event_no=1" title="해당 페이지로 가기">
 										<div>
 											<strong>가입혜택</strong> <b>3,6,9 쿠폰 증정</b> <span>음용할수록
 												늘어나는 혜택! <br>3,6,9개월마다 쿠폰증정, 시음선물까지
@@ -610,7 +605,7 @@
 										</div> <img
 										src="/resources/assets/images/contents/coupon_item01.png"
 										alt="가입혜택">
-									</a> <a href="/event/event/view.do?event_no=2" title="해당 페이지로 가기">
+									</a> <a href="/event/event/view?event_no=2" title="해당 페이지로 가기">
 										<div>
 											<strong>친구초대</strong> <b>친구 초대 쿠폰 증정</b> <span>풀무원녹즙에
 												친구를 초대하면 <br>나도 친구도 5천원씩 쿠폰 증정
@@ -621,10 +616,10 @@
 									</a>
 								</div>
 								<div class="guide-area">
-									<a href="/forum/faq/list.do" title="해당 페이지로 가기" class="bg-green">
+									<a href="/forum/faq/list" title="해당 페이지로 가기" class="bg-green">
 										<span>풀무원녹즙 <br>고객기쁨센터
 									</span> <img src="/resources/assets/images/ui/ico-bag01.png" alt="">
-									</a> <a href="/forum/franchise/search.do" title="해당 페이지로 가기" class="bg-purple">
+									</a> <a href="/forum/franchise/search" title="해당 페이지로 가기" class="bg-purple">
 										<span>매일배송 <br>가능지역검색
 									</span> <img src="/resources/assets/images/ui/ico-map01.png" alt="">
 									</a>
@@ -640,14 +635,17 @@
 						<div class="notice-cont">
 							<h2 class="sub-h2">공지사항</h2>
 							<ul>
-								<li><a href="/forum/notice/view.do?seq=1"
+								<li><a href="/forum/notice/view?seq=1"
 									title="해당 게시글로 가기">'명일엽' 원료 공급 부족으로 인한 제품 배송 지연 안내</a></li>
 							</ul>
 						</div>
-						<a href="/forum/notice/list.do" class="btn-more"
+						<a href="/forum/notice/list" class="btn-more"
 							title="해당 페이지로 가기"> <i class="ico ico-more"></i>
 						</a>
 					</div>
 				</div>
 			</div>
+		</main>		
+	</div>
+</body>
 </html>
