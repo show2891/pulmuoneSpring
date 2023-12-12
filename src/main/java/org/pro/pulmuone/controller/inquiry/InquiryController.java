@@ -20,11 +20,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 public class InquiryController {
-	/*
-	/mypage/inquiry/list.do=servlets.inquiry.command.InquiryList
-	/mypage/inquiry/view.do=servlets.inquiry.command.InquiryView
-	/mypage/inquiry/delete.do=servlets.inquiry.command.InquiryDelete
-	 */
+
 	@Autowired
 	private InquiryService inquiryService;
 
