@@ -70,108 +70,114 @@
 
 
 <script>
-	// editor 
-	const $wc = $("#word-count");
-	let maxtext = 2000;
-	$(".maxtext").text(maxtext);
-	let currentChar = 0;
-	let editor;
-	ClassicEditor
-       .create( document.querySelector( '#content' ), {
-				language: "ko",
-       	wordCount: {
-			onUpdate: stats => {
-					
-				let isLimit = maxtext < stats.characters;
-				if( isLimit ) {
-					$wc.find(".current-char").text(`-${stats.characters - maxtext}`);	
-					$("#faqWriteBtn").prop("disabled", true);
-					$wc.find(".current-char").addClass("over");
-				}else {
-					$wc.find(".current-char").text( stats.characters );
-					currentChar = stats.characters;
-					$("#faqWriteBtn").prop("disabled", false);
-					$wc.find(".current-char").removeClass("over");
-				}
-			},
-       	},
-		ckfinder: {
-			uploadUrl : "/forum/faq/upload" + `?${_csrf.parameterName}=${_csrf.token}`,
-			withCredentials: true
-		}	
-		}).then(edt => {
-				editor = edt;
-			})
-       .catch( error => {
-           console.error( error );
-       } );
-	
-	let isSubmit = false;
-	
-	// title valid check
-	$("#title").on("blur", function(){
-		if( $(this).val() == "" ) {
-			$("#titleError").css("visibility", "visible");
-		}else {
-			$("#titleError").css("visibility", "hidden");
-		}
-	})
-	
-	$(".faq_cate .dropdown-item").on("click", function(){
-		let val = $(this).data("value");
-		$(":input[name=faq_no]").val(val);
-		$(".faq_cate .dropdown-toggle").text($(this).text());
-	})
-	
-	
-	// valid check
-	$("#faqWriteBtn").on("click", function(e){
-		e.preventDefault();
-		if( $("#title").val() == "" ) {
-			$(".modal-body").text("제목을 입력해주세요");
-			$("#alertModal").modal();
-			$("#title").focus();
-			
-			return false;
-		}else if( currentChar < 1 ) {
-			$(".modal-body").text("내용을 입력해주세요");
-			$("#alertModal").modal();
-			editor.focus();
-			
-			return false;
-		}
+	$(function(){
 		
-		ajaxWrite();
-	});
-	
-	function ajaxWrite () {
-		let cate = $("input[name=faq_no]").val();
-		let question = $("input[name=question]").val();
-		let answer = editor.getData();
-		let params = { faq_no: cate, question, answer};
+		// editor 
+		const $wc = $("#word-count");
+		let maxtext = 2000;
+		$(".maxtext").text(maxtext);
+		let currentChar = 0;
+		let editor;
+		ClassicEditor
+	       .create( document.querySelector( '#content' ), {
+					language: "ko",
+	       	wordCount: {
+				onUpdate: stats => {
+						
+					let isLimit = maxtext < stats.characters;
+					if( isLimit ) {
+						$wc.find(".current-char").text(`-${stats.characters - maxtext}`);	
+						$("#faqWriteBtn").prop("disabled", true);
+						$wc.find(".current-char").addClass("over");
+					}else {
+						$wc.find(".current-char").text( stats.characters );
+						currentChar = stats.characters;
+						$("#faqWriteBtn").prop("disabled", false);
+						$wc.find(".current-char").removeClass("over");
+					}
+				},
+	       	},
+			ckfinder: {
+				uploadUrl : "/upload/faq",
+				withCredentials: true
+			}	
+			}).then(edt => {
+					editor = edt;
+				})
+	       .catch( error => {
+	           console.error( error );
+	       } );
 		
-		$.ajax({
-			url: "/forum/faq/write" + `?${_csrf.parameterName}=${_csrf.token}`,
-			dataType: "json",	
-			type: "POST",
-			data: params,
-			cache: false,
-			success: function(data, textStatus, jqXHR){
-				if( data.result == 1 ) {
-					$(".modal-body").text("FAQ 글이 등록 되었습니다.");	
-					$("#alertModal").modal();
-					
-					$("#alertModal").on("click", function(e){
-						location.href = data.url;
-					})
-				}
-			},
-			error: function(){
-				console.log("error!");
+		let isSubmit = false;
+		
+		// title valid check
+		$("#title").on("blur", function(){
+			if( $(this).val() == "" ) {
+				$("#titleError").css("visibility", "visible");
+			}else {
+				$("#titleError").css("visibility", "hidden");
 			}
+		})
+		
+		$(".faq_cate .dropdown-item").on("click", function(){
+			let val = $(this).data("value");
+			$(":input[name=faq_no]").val(val);
+			$(".faq_cate .dropdown-toggle").text($(this).text());
+		})
+		
+		
+		// valid check
+		$("#faqWriteBtn").on("click", function(e){
+			e.preventDefault();
+			if( $("#title").val() == "" ) {
+				$(".modal-body").text("제목을 입력해주세요");
+				$("#alertModal").modal();
+				$("#title").focus();
+				
+				return false;
+			}else if( currentChar < 1 ) {
+				$(".modal-body").text("내용을 입력해주세요");
+				$("#alertModal").modal();
+				editor.focus();
+				
+				return false;
+			}
+			
+			ajaxWrite();
 		});
-	}
-	
+		
+		function ajaxWrite () {
+			let cate = $("input[name=faq_no]").val();
+			let question = $("input[name=question]").val();
+			let answer = editor.getData();
+			let params = { faq_no: cate, question, answer};
+			
+			$.ajax({
+				url: "/forum/faq/write" + `?${_csrf.parameterName}=${_csrf.token}`,
+				//dataType: "text",	// 응답 타입
+				type: "POST",
+				data: params,
+				cache: false,
+				success: function(data, textStatus, jqXHR){
+					if( data.result == "success" ) {
+						$(".modal-body").text("FAQ 글이 등록 되었습니다.");	
+						$("#alertModal").modal();
+						
+						$("#alertModal").on("click", function(e){
+							location.href = data.url;
+						})
+					}else if( data.result == "failed"){
+						$(".modal-body").text("FAQ 글 등록이 실패되었습니다.");	
+						$("#alertModal").modal();
+						
+					}
+				},
+				error: function(){
+					console.log("error!");
+				}
+			});
+		}
+	});
 </script>
 
 </body>

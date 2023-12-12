@@ -14,4 +14,7 @@ public interface FaqService {
 	
 	// faq 쓰기
 	int write (FaqDTO vo) throws SQLException;
+	
+	// faq 삭제 
+	int delete (int seq, int category) throws SQLException;
 }

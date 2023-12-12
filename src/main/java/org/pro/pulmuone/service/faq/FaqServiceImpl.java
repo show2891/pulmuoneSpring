@@ -40,5 +40,10 @@ public class FaqServiceImpl implements FaqService {
 	public int write(FaqDTO vo) throws SQLException {
 		return this.faqMapper.write(vo);
 	}
+
+	@Override
+	public int delete(int seq, int category) throws SQLException {
+		return this.faqMapper.delete(seq, category);
+	}
 	
 }
