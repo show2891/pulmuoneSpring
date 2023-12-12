@@ -18,6 +18,7 @@ function searchPostcode () {
 				if (fullRoadAddr !== '') {
 					fullRoadAddr += extraRoadAddr;
 				}
+				
 				$("#zipcode").val(data.zonecode);
 				$("#addrRoad").val(data.roadAddress);
 				$("#orderStreetAddress").val(data.jibunAddress);
