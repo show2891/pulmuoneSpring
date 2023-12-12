@@ -164,7 +164,7 @@
 		$(".faqDelete").on("click", function(e){
 			e.preventDefault();
 			let seq = $(this).data("seq");
-			let params = `seq=\${seq}&category=${ param.category }`
+			let params = `seq=\${seq}&category=${ param.category }&${_csrf.parameterName}=${_csrf.token}`
 			 
 			$.ajax({
 				url: "/forum/faq/delete",
@@ -172,14 +172,21 @@
 				type: "POST",
 				data: params,
 				cache: false,
+			/* 	beforeSend : function(xhr){
+					xhr.setRequestHeader(`${_csrf.parameterName}`, `${_csrf.token}`); 
+				}, */
 				success: function(data, textStatus, jqXHR){
-					if( data.result == 1 ) {
+					if( data.result == "success" ) {
 						$(".modal-body").text("FAQ 글이 삭제 되었습니다.");	
 						$("#alertModal").modal();
 						
 						$("#alertModal").on("click", function(e){
 							location.href = data.url;
 						})
+					}else if( data.result == "failed"){
+						$(".modal-body").text("FAQ 글 삭제가 실패되었습니다.");	
+						$("#alertModal").modal();
+						
 					}
 				},
 				error: function(){
