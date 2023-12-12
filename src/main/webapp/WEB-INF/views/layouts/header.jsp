@@ -161,7 +161,7 @@
                   </li>
                   
                   <li>
-                     <a href="/event/event/end/list" title="해당 페이지로 가기">종료된 이벤트</a>
+                     <a href="/event/event/endList" title="해당 페이지로 가기">종료된 이벤트</a>
                   </li>
                   
                   <li>

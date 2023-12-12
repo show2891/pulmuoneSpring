@@ -34,10 +34,10 @@ public class EventController {
 	    model.addAttribute("events", events);
 
 	    request.getSession().setAttribute("activeTab", "진행중이벤트");
-	    return "event/list";
+	    return "event/list.tiles";
 	}
 
-	@GetMapping("end/list")
+	@GetMapping("endList")
 	public String endList(Model model, HttpServletRequest request) {
 	    List<EventListVO> events = eventService.endedEventList();
 	    
@@ -53,7 +53,7 @@ public class EventController {
 
 	    request.getSession().setAttribute("activeTab", "종료된이벤트");
 
-	    return "event/end/endList";
+	    return "event/endList.tiles";
 	}
 
 	/*

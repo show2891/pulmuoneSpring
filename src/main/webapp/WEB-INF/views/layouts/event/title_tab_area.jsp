@@ -6,7 +6,7 @@
 
     if (requestURI.contains("/event/list")) {
         Erequest.getSession().setAttribute("activeTab", "진행중이벤트");
-    } else if (requestURI.contains("/event/end/EndList")) {
+    } else if (requestURI.contains("/event/endList")) {
         Erequest.getSession().setAttribute("activeTab", "종료된이벤트");
     } else if (requestURI.contains("/event/winList")) {
         Erequest.getSession().setAttribute("activeTab", "당첨자발표");
@@ -32,7 +32,7 @@
 			style="padding-right: 4px; margin-bottom: 0px; height: 47px">진행중이벤트</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a href="/event/event/end/list" class="nav-link <%= "종료된이벤트".equals(activeTab) ? "active" : "" %>"
+			<a href="/event/event/endList" class="nav-link <%= "종료된이벤트".equals(activeTab) ? "active" : "" %>"
 			style="padding-right: 4px; margin-bottom: 0px; height: 47px">종료된이벤트</a>
 		</li>
 		<li class="nav-item" role="presentation">
