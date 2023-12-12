@@ -16,149 +16,152 @@
 
 
 	<script>
-	function getBmi (w,h){
-		return (w / ((h * h) / 10000)).toFixed(2);
-	}
-	const totalCnt = "8"
-	let currentPage = 1;
-	function handleProgress(){
-		const progress = (currentPage) / totalCnt;
-		if (progress >= 1) {
-			$('.progress-bar').text("100%");
-			$("[data-progress-fill]").css("width", "100%");
-		} else {
-			$('.progress-bar').text((progress * 100) + "%");
-			$("[data-progress-fill]").css("width", (progress * 100) + "%");
-		}
+   function getBmi (w,h){
+      return (w / ((h * h) / 10000)).toFixed(2);
+   }
+   const totalCnt = "8"
+   let currentPage = 1;
+   function handleProgress(){
+      const progress = (currentPage) / totalCnt;
+      if (progress >= 1) {
+         $('.progress-bar').text("100%");
+         $("[data-progress-fill]").css("width", "100%");
+      } else {
+         $('.progress-bar').text((progress * 100) + "%");
+         $("[data-progress-fill]").css("width", (progress * 100) + "%");
+      }
 
-		return progress;
-	}
+      return progress;
+   }
 
-	function setCurrentPage(page) {
-		currentPage = page;
-		$("[data-showdesc]").css("display", "none");
-		$("[data-showdesc='" + page + "']").css("display", "block");
-		handleProgress();
-		if (currentPage > totalCnt) {
-			$('.last-page-section').show();
-			$('.question-section').hide();
-		} else {
-			$('.last-page-section').hide();
-			$('.question-section').show();
-			$('.question-section > div.active').removeClass("active");
-			$('.question-section > div[data-i=' + (currentPage - 1) + ']').addClass("active");
-		}
-	}
+   function setCurrentPage(page) {
+      currentPage = page;
+      $("[data-showdesc]").css("display", "none");
+      $("[data-showdesc='" + page + "']").css("display", "block");
+      handleProgress();
+      if (currentPage > totalCnt) {
+         $('.last-page-section').show();
+         $('.question-section').hide();
+      } else {
+         $('.last-page-section').hide();
+         $('.question-section').show();
+         $('.question-section > div.active').removeClass("active");
+         $('.question-section > div[data-i=' + (currentPage - 1) + ']').addClass("active");
+      }
+   }
 
-	$(function (){
+   $(function (){
 
-		if(!sessionStorage.getItem('req2')||!sessionStorage.getItem('req1')){
+      if(!sessionStorage.getItem('req2')||!sessionStorage.getItem('req1')){
 //             location.href='/customer/product/step1.do'
-		}
-		if(sessionStorage.getItem('req3')){
-			const prevReq3 = JSON.parse(sessionStorage.getItem('req3'))
-			console.log('req3', prevReq3)// 점수
-			$('.question-section').children().each((i,v)=>{
-				const idx = $(v).attr('id').replaceAll('q-','')
-				Object.keys(prevReq3).forEach((value, index)=>{
-					console.log($(v).find('.answer-btn-wrapper button').prop('value'))
-					if(value === idx){
-						if(prevReq3[value] === $(v).find('.answer-btn-wrapper button:first').prop('value'))
-						{
-							$(v).find('.answer-btn-wrapper button:first').addClass('selected')
-							$(v).find('.answer-btn-wrapper button:last').removeClass('selected')
-						} else {
-							$(v).find('.answer-btn-wrapper button:first').removeClass('selected')
-							$(v).find('.answer-btn-wrapper button:last').addClass('selected')
-						}
-					}
-				})
+      }
+      if(sessionStorage.getItem('req3')){
+         const prevReq3 = JSON.parse(sessionStorage.getItem('req3'))
+         console.log('req3', prevReq3)// 점수
+         $('.question-section').children().each((i,v)=>{
+            const idx = $(v).attr('id').replaceAll('q-','')
+            Object.keys(prevReq3).forEach((value, index)=>{
+               console.log($(v).find('.answer-btn-wrapper button').prop('value'))
+               if(value === idx){
+                  if(prevReq3[value] === $(v).find('.answer-btn-wrapper button:first').prop('value'))
+                  {
+                     $(v).find('.answer-btn-wrapper button:first').addClass('selected')
+                     $(v).find('.answer-btn-wrapper button:last').removeClass('selected')
+                  } else {
+                     $(v).find('.answer-btn-wrapper button:first').removeClass('selected')
+                     $(v).find('.answer-btn-wrapper button:last').addClass('selected')
+                  }
+               }
+            })
 
-				// const answer = $(v).find('.answer-btn-wrapper').find('.selected').val();
-				// return data[idx]=answer
-			})
-		}
+            // const answer = $(v).find('.answer-btn-wrapper').find('.selected').val();
+            // return data[idx]=answer
+         })
+      }
 
         $('.question-section').children().not(':first-of-type').removeClass('active')
 
-		$('.answer-btn-wrapper button').click(function (){
+      $('.answer-btn-wrapper button').click(function (){
             if($(this).hasClass('positive-btn')){
                 $(this).next('button').removeClass('selected')
             }else {
                 $(this).prev('button').removeClass('selected')
             }
 
-			$(this).toggleClass('selected')
+         $(this).toggleClass('selected')
 
             // handleProgress()
-		})
+      })
 
-		$('.prev-btn').click(function (){
+      $('.prev-btn').click(function (){
             if (currentPage > 1) {
-				setCurrentPage(currentPage - 1);
+            setCurrentPage(currentPage - 1);
             } else {
-				location.replace("/customer/product/step2");
+            location.replace("/customer/product/step2");
             }
-		})
-	
+      })
+   
         $('.next-btn').click(function (){
             const lastSection = $('.last-page-section')
-			if (lastSection.css('display') !== 'none') {
-				const singleYn = lastSection.find('input[type=radio]:checked').val();
-				
-				const req1 = JSON.parse(sessionStorage.getItem('req1'))
-				const req2 = JSON.parse(sessionStorage.getItem('req2'))
-				const req3 = JSON.parse(sessionStorage.getItem('req3'))
-				
-				const data = {...req1, ...req2, ...req3}				
-				const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
-						v => ({idx: v[0], answer: v[1]}));																		
-					var bmi = 0;					
-					if (bmi == 0 && req1.weight && req1.tallness) {
-						bmi = getBmi(req1.weight, req1.tallness)
-					}					
-					var score = 0;
-					Object.keys(data).forEach(function(k){
-						if(k<23){
-							score += Number(data[k]);					  
-						}
-					});
-					
-				location.href = '/customer/product/result/' 
-					+ score
-					+ '?singleYn=' + singleYn 
-					+ '&bmi=' + bmi;
 
-			}
-					
-// 					if (singleYn=='Y') {
-// 						location.href='result/products?' + data.RESULT_MSG.execution.idx + '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');
-// 					}	else { 
-// 						location.href="result/programs?" + data.RESULT_MSG.execution.idx +'?singleYn=' + singleYn+ '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');;
-// 					}
+         if (lastSection.css('display') !== 'none') {
+            const singleYn = lastSection.find('input[type=radio]:checked').val();
+            
+            const req1 = JSON.parse(sessionStorage.getItem('req1'))
+            const req2 = JSON.parse(sessionStorage.getItem('req2'))
+            const req3 = JSON.parse(sessionStorage.getItem('req3'))
+            
+            const data = {...req1, ...req2, ...req3}            
+            const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
+                  v => ({idx: v[0], answer: v[1]}));                                                      
+               var bmi = 0;               
+               if (bmi == 0 && req1.weight && req1.tallness) {
+                  bmi = getBmi(req1.weight, req1.tallness)
+               }               
+               var score = 0;
+               Object.keys(data).forEach(function(k){
+                  if(k<23){
+                     score += Number(data[k]);                 
+                  }
+               });
+               
+            location.href = '/customer/product/result/' 
+               + score
+               + '?singleYn=' + singleYn 
+               + '&bmi=' + bmi;
+
+
+         }
+               
+//                if (singleYn=='Y') {
+//                   location.href='result/products?' + data.RESULT_MSG.execution.idx + '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions'   + data.RESULT_MSG.questions.join(',');
+//                }   else { 
+//                   location.href="result/programs?" + data.RESULT_MSG.execution.idx +'?singleYn=' + singleYn+ '&bmi=' + bmi + '&questions'   + data.RESULT_MSG.questions.join(',');;
+//                }
 
             if (currentPage <= totalCnt) {
-				const data = {}
-				$('.question-section').children().each((i, v) => {
-					const idx = parseInt($(v).attr('id').replaceAll('q-', ''));
-					const answer = $(v).find('.answer-btn-wrapper').find('.selected').val();
-					return data[idx] = answer
-				})
+            const data = {}
+            $('.question-section').children().each((i, v) => {
+               const idx = parseInt($(v).attr('id').replaceAll('q-', ''));
+               const answer = $(v).find('.answer-btn-wrapper').find('.selected').val();
+               return data[idx] = answer
+            })
 
-				const habbit = Object.values(data)
-				if (!habbit[currentPage - 1]) {
-					alert('예, 아니오 중 선택해 주세요.')
-					return;
-				}
-				sessionStorage.setItem('req3', JSON.stringify(data));
-				setCurrentPage(currentPage + 1);
+            const habbit = Object.values(data)
+            if (!habbit[currentPage - 1]) {
+               alert('예, 아니오 중 선택해 주세요.')
+               return;
+            }
+            sessionStorage.setItem('req3', JSON.stringify(data));
+            setCurrentPage(currentPage + 1);
             }
         })
-	})
-	
-	
-	
+   })
+   
+   
+   
 </script>
+
 
 
 	<div class="wrapper">
@@ -191,6 +194,8 @@
 						</div>
 						<div class="question-section">
 
+
+
 							<div class="active" data-i="0" id="q-7">
 								<div class="card-item">
 									<span class="mark">Q.</span>
@@ -201,6 +206,8 @@
 									</div>
 								</div>
 							</div>
+
+
 
 							<div class="active" data-i="1" id="q-8">
 								<div class="card-item">
@@ -213,6 +220,8 @@
 								</div>
 							</div>
 
+
+
 							<div class="active" data-i="2" id="q-9">
 								<div class="card-item">
 									<span class="mark">Q.</span>
@@ -223,6 +232,8 @@
 									</div>
 								</div>
 							</div>
+
+
 
 							<div class="active" data-i="3" id="q-10">
 								<div class="card-item">
@@ -235,6 +246,8 @@
 								</div>
 							</div>
 
+
+
 							<div class="active" data-i="4" id="q-11">
 								<div class="card-item">
 									<span class="mark">Q.</span>
@@ -245,6 +258,8 @@
 									</div>
 								</div>
 							</div>
+
+
 
 							<div class="active" data-i="5" id="q-12">
 								<div class="card-item">
@@ -257,6 +272,7 @@
 								</div>
 							</div>
 
+
 							<div class="active" data-i="6" id="q-13">
 								<div class="card-item">
 									<span class="mark">Q.</span>
@@ -268,6 +284,8 @@
 								</div>
 							</div>
 
+
+
 							<div class="active" data-i="7" id="q-14">
 								<div class="card-item">
 									<span class="mark">Q.</span>
@@ -278,6 +296,8 @@
 									</div>
 								</div>
 							</div>
+
+
 
 						</div>
 					</div>
@@ -304,6 +324,8 @@
 							</div>
 						</div>
 
+
+
 					</div>
 					<div data-showdesc="5" class="alert-area" style="display: none;">
 						<h4>과음의 기준</h4>
@@ -323,6 +345,8 @@
 						<button class="next-btn button-basic primary" type="button" id="nextPage">다음으로</button>
 					</div>
 
+
+
 					<div class="modal fade show" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-modal="true" role="dialog" style="display: hidden;">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
@@ -335,6 +359,8 @@
 							</div>
 						</div>
 					</div>
+
+
 
 					<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered">
@@ -351,6 +377,7 @@
 							</div>
 						</div>
 					</div>
+
 
 				</div>
 			</form>

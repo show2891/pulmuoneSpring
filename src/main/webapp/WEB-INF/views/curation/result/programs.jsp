@@ -3,8 +3,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <main class="Cart">
+
 	<div id="container-wrapper" class="container-wrapper">
 		<script type="text/javascript">
+
   $(function () {
 
     sessionStorage.removeItem('req1');
@@ -65,13 +67,15 @@
 
   })
 </script>
+
 		<script>
+
 
 var singleYn = "N" == 'Y';
 var title = "${list[0].program_name }";
 var data = {
-		mobilehost: "http://localhost",
-		webhost: "http://localhost/",
+      mobilehost: "http://localhost",
+      webhost: "http://localhost/",
   title,
   result_path: location.pathname + location.search
 };
@@ -101,7 +105,9 @@ function sendKakao() {
 }
 
 </script>
+
 		<script type="text/javascript">
+
 var nowArgs = undefined;
 window.orderProcess = function (args) {
   if (!window.is_signed) {
@@ -216,6 +222,7 @@ $(document).on("click", "#orderModal button", function (e) {
 </script>
 
 
+
 		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -268,6 +275,8 @@ $(document).on("click", "#orderModal button", function (e) {
 
 						<p style="margin-bottom: 12px">${list[0].program_name }</p>
 
+
+
 						<ul class="product-list" id="order2">
 							<c:forEach var="dto" items="${list }">
 								<li data-item-index="0" data-item-link="product/daily/${dto.products_tag }" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/${dto.system_name }" data-item-title="${dto.products_name }" data-item-desc="3500"><input value="${dto.products_no }" name="itemCode" type="hidden"> <a class="item" data-product-preview="${dto.products_tag }"> <label>${dto.dayweek}</label>
@@ -279,6 +288,8 @@ $(document).on("click", "#orderModal button", function (e) {
 										</div>
 								</a></li>
 							</c:forEach>
+
+
 
 						</ul>
 					</div>
@@ -298,23 +309,26 @@ $(document).on("click", "#orderModal button", function (e) {
 					</div>
 				</div>
 
+
+
 				<div class="result-text">${list[0].program_content}</div>
+
+
 
 				<div class="alert-area">
 					<h4>생활습관 바꾸기</h4>
 					<ul>
 						<c:choose>
-							<c:when test="${param.bmi < 18.5 }">
+							<c:when test="${param.bmi lt 18.5 }">
 								<li data-type="bmi">${list[0].lifestyle_change01 }</li>
 							</c:when>
-							<c:when test="${param.bmi >= 18.5 or param.bmi < 23.0 }">
+							<c:when test="${param.bmi ge 18.5 or param.bmi lt 23.0 }">
 								<li data-type="bmi">${list[0].lifestyle_change02 }</li>
 							</c:when>
-							<c:when test="${param.bmi >= 23.5 or param.bmi < 25.0 }">
+							<c:when test="${param.bmi ge 23.1 or param.bmi lt 25.0 }">
 								<li data-type="bmi">정상체중 범위에 들도록 현재의 식생활 행동에서 문제점을 찾고 행동 변화를 시도합니다.</li>
 							</c:when>
-
-							<c:when test="${param.bmi >= 25.0 }">
+							<c:when test="${param.bmi ge 25.1 }">
 								<li data-type="bmi">${list[0].lifestyle_change03 }</li>
 							</c:when>
 						</c:choose>
@@ -374,5 +388,6 @@ $(document).on("click", "#orderModal button", function (e) {
 			</div>
 		</div>
 	</div>
+
 </main>
 </html>

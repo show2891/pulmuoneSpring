@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.pro.pulmuone.mapper.order.OrderMapper">
+
+     <!-- String getMemberInfo(String username); -->
+     <select id="getMemberInfo" resultType="org.pro.pulmuone.domain.order.OrderAddrBookDTO">
+     	SELECT name, tel, member_no
+     	FROM member
+     	WHERE member_id = #{username}
+     </select>
+     
+     <!-- List<OrderAddrBookDTO> getAddrInfo(int member_no, int pageNo); -->
+     <select id="getAddrInfo" resultType="org.pro.pulmuone.domain.order.OrderAddrBookDTO">
+     	<![CDATA[
+	     	SELECT addr_no, addr_name, name, tel, dest, zip_code, addr, addr_detail, memo, total_count
+	     	FROM (
+			     		SELECT addr_no, addr_name, name, tel, dest, zip_code, addr, addr_detail, memo, ROWNUM rn
+			     					, (SELECT COUNT(*) FROM addr_book WHERE member_no = 1) total_count
+				     	FROM addr_book
+				     	WHERE ROWNUM <= #{pageNo} * 5 AND member_no = #{member_no}
+	     			) a
+	     	WHERE rn > (#{pageNo} - 1) * 5
+     	]]>
+     </select>
+     
+</mapper>

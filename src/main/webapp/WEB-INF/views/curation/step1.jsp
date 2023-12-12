@@ -4,7 +4,9 @@
 <html>
 
 <body>
+
 	<div class="wrapper">
+
 
 		<main class="step1">
 			<div id="container-wrapper" class="container-wrapper">
@@ -23,7 +25,7 @@
           const prevReq1 = JSON.parse(sessionStorage.getItem('req1'))
 //           console.log('req1', prevReq1) // {searchKeyword: ''}
           // var score = $(".checkGoal:checked").val();
-			//console.log(score) // 숫자
+         //console.log(score) // 숫자
           const prevReqKey = Object.keys(prevReq1)
           $('input[name=tallness]').val(prevReq1.tallness)
           $('input[name=weight]').val(prevReq1.weight)
@@ -66,6 +68,7 @@
  
 </script>
 
+
 				<div class="breadcrumb-style">
 					<div class="container">
 						<div class="container">
@@ -92,6 +95,8 @@
 							</div>
 							<div class="filled-radio-group" id="health" value="all">
 
+
+
 								<label class="item"> <input type="checkbox" name="1" value="1" class="checkGoal">
 									<p>활력/피로</p>
 								</label> <label class="item"> <input type="checkbox" name="2" value="2" class="checkGoal">
@@ -104,11 +109,12 @@
 									<p>위 건강</p>
 								</label> <label class="item"> <input type="checkbox" name="6" value="6" class="checkGoal">
 									<p>체중 관리</p>
-								</label>
-							<input type="hidden" name="score" />
+								</label> <input type="hidden" name="score" />
 
 							</div>
 						</div>
+
+
 
 						<div class="question-part">
 							<div class="title">
@@ -146,6 +152,8 @@
 						</button>
 					</div>
 
+
+
 					<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" style="display: none;">
 						<div class="modal-dialog modal-dialog-centered">
 							<div id="modal" class="modal-content">
@@ -160,31 +168,38 @@
 					</div>
 				</div>
 
+
+
 				<script type="text/javascript">
+
 
 //체크박스 선택 없으면 모달창
 $("#nextPage").on("click", function() {
-	if($("input:checkbox:checked").is(":checked") == true){
-		var data = $("input:checkbox:checked").val();
-		var score = 0;
-		 const requestBody = $('form').serializeObject();		 
-		$(".checkGoal:checked").each(function(){
-			score +=	Number($(this).val());				
-		});
-		$("input[name=score]").val(score);		
-		if (data.length > 0) {
-			$(this).attr("checked", true);
-		}
-		$("#alertModal").hide();
-		 sessionStorage.setItem('req1',JSON.stringify(requestBody));		 
-		location.href= "/customer/product/step2"
-	}else{		 
-		alert('1개 이상의 목표를 선택해 주세요');
-	}	
+
+   if($("input:checkbox:checked").is(":checked") == true){
+      var data = $("input:checkbox:checked").val();
+      var score = 0;
+       const requestBody = $('form').serializeObject();       
+      $(".checkGoal:checked").each(function(){
+         score +=   Number($(this).val());            
+      });
+      $("input[name=score]").val(score);      
+      if (data.length > 0) {
+         $(this).attr("checked", true);
+      }
+      $("#alertModal").hide();
+       sessionStorage.setItem('req1',JSON.stringify(requestBody));       
+      location.href= "/customer/product/step2"
+   }else{       
+      alert('1개 이상의 목표를 선택해 주세요');
+   }   
+
 })
 
 </script>
+
 			</div>
+
 
 		</main>
 	</div>
