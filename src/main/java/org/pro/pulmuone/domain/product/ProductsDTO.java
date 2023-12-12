@@ -39,5 +39,7 @@ public class ProductsDTO {
 	   public String[] gettagArr() {
 		   return tags == null ? new String[] {} : this.tags.split(",");
 	   }
-	   
+	   private String count;
+	   private String member_id;
+	   private boolean classname;
 }

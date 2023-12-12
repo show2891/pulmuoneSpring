@@ -1,5 +1,6 @@
 package org.pro.pulmuone.controller.product;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import org.pro.pulmuone.mapper.product.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,7 +26,7 @@ public class ProductController {
 	@Autowired
 	private ProductMapper mapper;
 	
-	@RequestMapping("daily")
+	@GetMapping("daily")
 	public String daliy(ProductsDTO dto, Model model
 			, @RequestParam(value = "category",required = false  ) String category_no
 			, @RequestParam(value = "tags",required = false  ) String tags
@@ -52,7 +55,7 @@ public class ProductController {
 		return "product/DailyList.tiles";
 	}
 	
-	@RequestMapping("daily/{products_tag}")
+	@GetMapping("daily/{products_tag}")
 	public String daliy(@PathVariable String products_tag, ProductsDTO dto, Model model) throws ClassNotFoundException, SQLException {
 		log.info("dailyView" );		
 		dto.setDelivery_type("daily");			
@@ -61,7 +64,7 @@ public class ProductController {
 		return "product/DailyView.tiles";
 	}
 	
-	@RequestMapping("box")
+	@GetMapping("box")
 	public String box(ProductsDTO dto, Model model
 			, @RequestParam(value = "category" ,required = false  ) String category_no
 			, @RequestParam(value = "tags",required = false  ) String tags
@@ -90,7 +93,7 @@ public class ProductController {
 		return "product/BoxList.tiles";
 	}
 
-	@RequestMapping("box/{products_tag}")
+	@GetMapping("box/{products_tag}")
 	public String box(@PathVariable String products_tag, ProductsDTO dto, Model model) throws ClassNotFoundException, SQLException {
 		log.info("boxView" );		
 		dto.setDelivery_type("box");			
@@ -99,9 +102,9 @@ public class ProductController {
 		return "product/BoxView.tiles";
 	}
 
-	@RequestMapping("search")
+	@GetMapping("search")
 	public String search(ProductsDTO dto, Model model
-		, @RequestParam(value = "pageNo", defaultValue = "1" ) String num) throws ClassNotFoundException, SQLException {
+		, @RequestParam(value = "pageNo", defaultValue = "1" , required = false ) String num) throws ClassNotFoundException, SQLException {
 		log.info("search" + num);		
 		int begin = Integer.parseInt(num);
 		if(begin==2) {
@@ -129,6 +132,55 @@ public class ProductController {
 		model.addAttribute("list",list);
 		model.addAttribute("searchcountlist",searchcountlist);
 		return "product/search.tiles";
+	}	
+	
+	@RequestMapping("/daily/interest/{products_tag}")
+	public String dailyinterest(@PathVariable String products_tag, ProductsDTO dto, Model model, Principal principal
+		,@RequestParam(value = "classname", required = false ) boolean name) throws ClassNotFoundException, SQLException {
+		log.info("dailyinterest" + name);
+		dto.setClassname(name);
+		dto.setMember_id( principal.getName() );
+		dto.setProducts_tag(Integer.parseInt(products_tag));
+		int count = 0 ;
+		if(name == true) {
+		  count = this.mapper.wishdelete(dto);
+		  this.mapper.wishupdate(dto);
+		}else {
+		  count = this.mapper.wishinsert(dto);
+		  this.mapper.wishupdate(dto);
+		}						
+		if(count==1) {
+		  log.info("성공" );
+		  return "product/DailyList.tiles";
+		}else {
+		  log.info("실패" );
+		  return "product/DailyList.tiles";
+		}
+
 	}
 
+	@RequestMapping("/box/interest/{products_tag}")
+	public String boxinterest(@PathVariable String products_tag, ProductsDTO dto, Model model, Principal principal
+		,@RequestParam(value = "classname", required = false ) boolean name) throws ClassNotFoundException, SQLException {
+		log.info("boxinterest" + name);
+		dto.setClassname(name);
+		dto.setMember_id( principal.getName() );
+		dto.setProducts_tag(Integer.parseInt(products_tag));
+		int count = 0 ;
+		if(name == true) {
+		  count = this.mapper.wishdelete(dto);
+		  this.mapper.wishupdate(dto);
+		}else {
+		  count = this.mapper.wishinsert(dto);
+		  this.mapper.wishupdate(dto);
+		}						
+		if(count==1) {
+		  log.info("성공" );
+		  return "product/BoxList.tiles";
+		}else {
+		  log.info("실패" );
+		  return "product/BoxList.tiles";
+		}
+
+	}
 }

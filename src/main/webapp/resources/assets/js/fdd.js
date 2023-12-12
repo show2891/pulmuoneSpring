@@ -445,12 +445,12 @@ let timer;
 
     if (!window.is_signed) {
       alert("로그인 후 찜한상품으로 담을 수 있습니다.", function () {
-        location.href = "/member/login.do?redirectUrl=" + encodeURIComponent(location.href);
+        location.href = "/member/login?redirectUrl=" + encodeURIComponent(location.href);
       });
       return false;
     }
-      
-    axios.post('/product/' + type + '/interest.do?tag=' + id).then(function ({data}) {
+
+    axios.get('/product/' + type + '/interest/' + id+'?classname='+that.hasClass("active")).then(function ({data}) {
 	
 //      if (!data.ok) {
 //        return;

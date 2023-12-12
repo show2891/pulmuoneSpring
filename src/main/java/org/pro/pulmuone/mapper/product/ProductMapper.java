@@ -12,5 +12,8 @@ public interface ProductMapper {
 	List<ProductsDTO> best(ProductsDTO dto);
 //	상품 상세보기	
 	List<ProductsDTO> view(ProductsDTO dto);
-	
+//  상품 찜
+	int wishinsert(ProductsDTO dto);
+	int wishupdate(ProductsDTO dto);
+	int wishdelete(ProductsDTO dto);
 }
