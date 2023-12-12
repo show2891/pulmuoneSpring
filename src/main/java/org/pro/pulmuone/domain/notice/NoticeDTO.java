@@ -2,6 +2,8 @@ package org.pro.pulmuone.domain.notice;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,8 @@ public class NoticeDTO {
 	private String title;
 	private String content;
 	private Date regdate;
+	private String filesrc;
+	
+	private CommonsMultipartFile file;	// 필드 추가
 }
 

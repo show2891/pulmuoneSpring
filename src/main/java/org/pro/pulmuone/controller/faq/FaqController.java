@@ -21,7 +21,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class FaqController {
 	/*
-	 /forum/faq/list.do=servlets.faq.command.FaqList
 	/forum/faq/write.do=servlets.faq.command.FaqWrite
 	/forum/faq/upload.do=servlets.faq.command.FaqImageUpload
 	/forum/faq/view.do=servlets.faq.command.FaqView

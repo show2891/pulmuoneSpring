@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.pro.pulmuone.mapper.inquiry.InquiryMapper">
+
+	<!-- // 문의 목록
+	ArrayList<InquiryDTO> select (String user_id, String cate, int pageNo, int numberPerPage) throws SQLException; -->
+	<select id="select" resultType="org.pro.pulmuone.domain.inquiry.InquiryDTO">
+		SELECT b.*
+		FROM (        
+		    SELECT ROWNUM no, t.*        
+		    FROM (
+		        SELECT *
+		        FROM inquiry
+		        WHERE member_id = #{param1}
+		        <if test="param2 != 'all' ">
+					AND inquiry_cate = #{param2}
+				</if>	
+		        ORDER BY inquiry_no DESC
+		    ) t
+		) b
+		WHERE b.no BETWEEN (#{param3}-1) * #{param4} + 1 AND ((#{param3}-1) * #{param4}) + #{param4}
+		
+	</select>	
+
+	<!-- // 문의 작성
+	int write (InquiryDTO dto) throws SQLException; -->
+	<insert id="write">
+		INSERT INTO inquiry
+				( inquiry_no, member_id, inquiry_cate, email, title, content)
+		VALUES (seq_inquiry.NEXTVAL, #{member_id}, #{inquiry_cate}, #{email}, #{title}, #{content})
+	</insert>
+
+	<!-- // 문의 갯수 
+	int selectCount ( String user_id, String category) throws SQLException; -->
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*)
+		FROM inquiry
+		WHERE member_id = #{param1}		
+		<if test="param2 != 'all' ">
+			AND inquiry_cate = #{param2}
+		</if>
+	</select>
+	
+	
+	<!-- 총 페이지수 
+	int getTotalPages(String userId, String category, int numberPerPage) throws SQLException; -->
+     <select id="getTotalPages" resultType="int">
+
+		SELECT CEIL(COUNT(*)/#{param3})
+        FROM inquiry
+        WHERE member_id = #{param1}
+        <if test="param2 != 'all' ">
+			AND inquiry_cate = #{param2}
+		</if>	
+     	
+     </select>
+	
+	
+	<!-- // 문의 상세보기
+	InquiryDTO view (String user_id, String cate, int seq) throws SQLException; -->
+	<select id="view" resultType="org.pro.pulmuone.domain.inquiry.InquiryDTO">
+		SELECT *
+		FROM inquiry
+		WHERE member_id = #{param1}
+		AND inquiry_cate = #{param2}
+		AND inquiry_no = #{param3}
+	</select>
+	
+	<!-- // 문의 삭제
+	int delete (String user_id, String category, int seq) throws SQLException; -->
+    <delete id="delete">
+    	DELETE FROM inquiry
+		WHERE member_id = #{param1}
+		AND inquiry_cate = #{param2}
+		AND inquiry_no = #{param3}
+    </delete> 
+    
+</mapper>
+
