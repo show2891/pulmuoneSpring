@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html lang="ko">
 
 <body>
 
@@ -371,9 +369,9 @@
 						</div>
 						<div class="button-set sm" style="margin: 20px 0px">
 
-								<form action="/cart/daily">
+<!-- 								<form action="/cart/daily"> -->
 								<button id="cartBtn" class="button-basic black">장바구니</button>
-								</form>
+<!-- 								</form> -->
 
 								<form action="/daily/order/step1" method="GET">
 								<c:forEach var="dto" items="${list }">

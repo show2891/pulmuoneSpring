@@ -96,6 +96,7 @@
         parent.find('.prd-cart-info-sub > span').text('수량 '+ parseInt(qty/2-qty%2/2)+'개')
       }
     }
+    
 	function changeCount(el, s) {
 		var min = type === 'daily' ? 0 : 1;
 		var container = $(el).parents(".order-item");
@@ -141,7 +142,7 @@
 		if (!is_signed) {
 			args = '&itemCode=' + container.attr("data-itemcode") + "." + (container.attr("data-event-idx") || "null");
 		}
-
+	
 		newPut({
 			url: '/cart?type=' + type + args,
 			data
@@ -177,13 +178,13 @@
 			var parent = $(this).parents(".order-item");
 			var cartIdx = $(this).attr("data-cart-idx");
 			var eventIdx = $(this).attr("data-event-idx");
-			var itemCode = $(this).attr("data-itemcode");
+			var itemCode = $(this).attr("data-itemcode");	
 			confirmDesign("", "삭제하시겠습니까?", function () {
 				var s = "&cartIdx=" + cartIdx;
 				if (!is_signed) {
-					s = "&itemCode=" + itemCode + "." + (eventIdx || "null");
+					s = "&itemCode=" + itemCode 
+//					+ "." + (eventIdx || "null");
 				}
-
 				newDelete({
 					url: "/cart?type=daily" + s,
 				}, function () {
@@ -220,18 +221,45 @@
 			});
 		});
 
-
-		$(".prod-add").click(function () {
-			changeCount(this, 1);
-
-
-		});
+// 		$(".prod-add").click(function () {
+// 			changeCount(this, 1);
+// 		});
 
 
-		$(".prod-remove").click(function () {
-			changeCount(this, -1);
+// 		$(".prod-remove").click(function () {
+// 			changeCount(this, -1);
+// 		});
+		
+		// 수량 변경
+		// 상품 + 버튼
+		function plusBtn(btn){
+			let em = btn.next("em");
+			let input = btn.parent().prev().prev();
+			let cnt = parseInt(em.text())+1;
+			em.text(cnt);
+			input.val(cnt);
+			calculateTotalPrice();
+		};
 
-		});
+		// 상품 - 버튼
+		function minusBtn(btn){
+			let em = btn.prev("em")
+			let input = btn.parent().prev().prev();
+			let cnt = parseInt(em.text())-1;
+			if (cnt == -1) return;
+			em.text(cnt);
+			input.val(cnt);
+			calculateTotalPrice();
+		};
+
+		
+		$("button.prod-add").on("click", function() {
+			plusBtn($(this));
+		})
+
+		$("button.prod-remove").on("click", function() {
+			minusBtn($(this));
+		})
 
 		$("#allOrderBtn").click(function () {
 			const order = { item: [] };
@@ -288,13 +316,10 @@
 						<h2 class="cont-title" style="font-weight: 400">장바구니</h2>
 						<ul class="nav nav-tabs nav-justified" id="myTab-area"
 							role="tablist">
-							<li class="nav-item" role="presentation"><a
-								href="/cart/daily" class="nav-link active"
-								style="padding-right: 4px; margin-bottom: 0px; height: 47px">
-									매일배송 </a></li>
-							<li class="nav-item" role="presentation"><a
-								href="/cart/box" class="nav-link "
-								style="margin-bottom: 0px; height: 47px"> 택배배송 </a></li>
+							<li class="nav-item" role="presentation">
+							<a href="/cart/daily" class="nav-link active" style="padding-right: 4px; margin-bottom: 0px; height: 47px">매일배송 </a></li>
+							<li class="nav-item" role="presentation">
+							<a href="/cart/box" class="nav-link "	style="margin-bottom: 0px; height: 47px"> 택배배송 </a></li>
 						</ul>
 					</div>
 
@@ -319,9 +344,9 @@
 									
 								<c:forEach items="${list}" var="list">
 									<ul class="prd-cart-list  order-item-list">
-										<li data-id="" data-itemcode="" class="order-item order-chk" data-price="1600">
+										<li data-id="" data-itemcode="${list.products_no }" class="order-item order-chk" data-price="1600">
 											<div class="checkbox chk-type3">
-												<input type="checkbox" id="chk-prd-${list.products_no }" name="cartIdx"	value="" checked="checked" data-itemcode="${list.products_no }"> 
+												<input type="checkbox" id="chk-prd-${param.products_no }" name="cartIdx"	value="" checked="checked" data-itemcode="${list.products_no }"> 
 													<label for="chk-prd-"><span class="hide">해당제품선택</span></label>
 											</div> 
 												<a href="/product/daily/${list.products_tag }?eventIdx=" class="prd-cart">
@@ -404,11 +429,10 @@
 												<i class="ico ico-wishlist"></i> <span class="hide">제품
 													찜하기</span>
 											</button>
-											<button type="button" class="btn-delete btn-prd-delete"
-												data-cart-idx="" data-itemcode="">
-												<i class="ico ico-prd-delete"></i> <span class="hide">카트에서
-													삭제</span>
-											</button>
+											  <button type="button" class="btn-delete btn-prd-delete" data-cart-idx="" data-itemcode="${list.products_no }">
+    											<i class="ico ico-prd-delete"></i>
+									  				  <span class="hide">카트에서 삭제</span>
+									 			 </button>
 										</li>
 									</ul>
 								</c:forEach>
