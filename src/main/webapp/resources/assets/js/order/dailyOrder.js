@@ -329,3 +329,5 @@ function getFranchise(latitude, longitude, fc_type){
 		} // error
 	});
 };
+
+

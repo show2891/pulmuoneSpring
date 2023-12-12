@@ -113,6 +113,14 @@
 			$("#callCms").on("click", function () {
 				callCms($(this));
 			})
+			
+			// ? 버튼
+			$(document).on("click", ".btn-question:has(.show-body)", function () {
+				var html = $(".show-body", this).html();
+			    $("#descModal .modal-title").text($(".show-body", this).attr("title"));
+			    $("#descModal .modal-body").html(html);
+			    $("#descModal").modal("show");
+			})
 		});
 </script>
 </body>
