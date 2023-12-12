@@ -37,17 +37,6 @@ public class CurationResultController {
    return "curation/result/kids.tiles";
   }
 
-  // 큐레이션 결과- 프로그램
-  //   @RequestMapping("/result/programs")
-  //   public String programs(CurationVO vo,  @RequestParam(value = "num") String num, Model model) throws ClassNotFoundException, SQLException {
-  //      log.info("> Programs Start");
-  //      vo.setProgram_no(Integer.parseInt(num));
-  //      
-  //      List<CurationVO> list = this.curationMapper.selectPG(vo);
-  //      model.addAttribute("list", list);
-  //      return "curation/result/programs.tiles";
-  //   }
-
   // 큐레이션 결과
   @RequestMapping("/result/{score}")
   public String products(CurationVO vo, Model model, @PathVariable int score, @RequestParam(value = "singleYn") String singleYn, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
