@@ -12,7 +12,8 @@
 				<dt>
 					<label for="input01"> 배송가맹점
 						<button type="button" class="btn-question">
-							<i class="ico ico-question"></i> <span class="hide">자세한 내용 보기</span>
+							<i class="ico ico-question"></i>
+							<span class="hide">자세한 내용 보기</span>
 							<div class="show-body" title="배송가맹점">
 								<ul>
 									<li>입력하신 배송장소 및 주소에 따른 예상 가맹점이며, 실제 배송가맹점과는 상이할 수
@@ -40,7 +41,8 @@
 				<dt>
 					<label for="input02"> 첫 배송 예정일
 						<button type="button" class="btn-question">
-						<i class="ico ico-question"></i> <span class="hide">자세한 내용 보기</span>
+						<i class="ico ico-question"></i>
+						<span class="hide">자세한 내용 보기</span>
 						<div class="show-body" title="첫 배송일 안내">
 							<ul>
 								<li>풀무원녹즙은 주문 생산 방식으로, 첫 배송일은 영업일 기준, 낮 12시 이전 주문
