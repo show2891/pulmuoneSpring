@@ -10,7 +10,6 @@ function weekDayText () {
 
 // 영수증 계산
 function calculateReceipt() {
-
 	// 초기화
     var totalPrice = 0;
     var totalCount = 0;
@@ -31,9 +30,9 @@ function calculateReceipt() {
     totalPay = totalPrice*4;
     
     // 적용
-    $("[data-price-view='origin']").text(totalPay).toLocaleString();
-    $("[data-price-view='sale']").text(totalPay).toLocaleString();
-    $("[data-price-view='payment']").text(totalPay).toLocaleString();
+    $("[data-price-view='origin']").text(totalPay.toLocaleString());
+    $("[data-price-view='sale']").text(totalPay.toLocaleString());
+    $("[data-price-view='payment']").text(totalPay.toLocaleString());
     $("input[name='payPrice']").val(totalPay);
     
 } // calculateReceipt
@@ -177,3 +176,158 @@ function callCms(btn){
 		}, 3000);
 	})
 };
+
+
+// 상품추가하기 버튼
+function addProduct(searchKeyword, pageNo){
+	console.log("addProduct()... 키워드 : "+searchKeyword+", pageNo : "+pageNo);
+	
+	$("#addProductModal").addClass("loading");
+	
+	let root = $('.product-content-list');
+	
+	if(searchKeyword != null) {
+		root.children().remove();
+	}
+	
+	$.ajax({
+		url:"/order/productList"
+		, method: "GET"
+		, data: { searchKeyword : searchKeyword, pageNo : pageNo }
+		, dataType: "json"
+		, cache: false
+		, success: function(data, callback, xhr) {
+				let tpl = null;
+				$.each(data, function(i, prd){
+					tpl = `<li class="product-add" style="cursor:pointer;" data-available="null" data-products-no="${prd.products_no}" data-price="${prd.price}" data-img-path="${prd.img_path}" data-system-name="${prd.system_name}" data-products-name="${prd.products_name}">`;
+						tpl += `<div class="thumb"><img src="/${ prd.img_path }/${ prd.system_name }" alt=""></div>`;
+							tpl += `<div class="contents">`;
+								tpl += `<p class="name">${ prd.products_name }<span>(${prd.products_size})</span></p>`
+								tpl += `<div class="info">`
+								tpl += `<span class="price"><b>${ prd.price.toLocaleString() }</b> 원</span>`
+							tpl += `</div>`
+						tpl += `</div>`
+					tpl += `</li>`;
+					
+					root.append(tpl);
+				}); // each
+				
+				$("#addProductModal").modal('show');
+				
+				root.off("click", ".product-add");
+				root.on("click", ".product-add", function (e) {
+					e.stopPropagation();
+					$("#addProductModal").modal('hide');
+					appendPrd($(this));
+				});
+				
+				root.next().off("click");
+				let hasNext = data[0].total_count > $("#addProductModal").find('.product-add').length;
+				if (hasNext) {
+					root.next().show().click(function () {
+						addProduct(searchKeyword, pageNo + 1);
+					});
+				} else {
+					root.next().hide();
+				} // if
+				
+			$("#addProductModal").removeClass("loading");
+			
+		} // success
+		, error: function(xhr, errorType){
+			console.log(errorType);
+		} // error
+	});
+};
+
+// 선택한 상품 추가
+function appendPrd(prd){
+	let products_no = prd.data("products-no");
+	let price = prd.data("price");
+	let img_path = prd.data("img-path");
+	let system_name = prd.data("system-name");
+	let products_name = prd.data("products-name");
+	
+	let tpl = null;
+	tpl = '<li data-id="" data-itemcode="'+products_no+'" class="order-item order-chk active" data-price="'+price+'">'
+			 + '<a href="/product/daily/view.do?tag=281" class="prd-cart">'
+				+'<div class="thumb">'
+					+ '<img src="/'+img_path+'/'+system_name+'" alt="">'
+				+'</div>'
+				+'<div class="prd-info">'
+					+'<b class="prd-title">'+products_name+'</b>'
+						+'<b class="now-price">'+price.toLocaleString()+'<span> 원</span>'
+					+'</b>'
+				+'</div>'
+			+'</a>'
+			+'<div class="prd-cart-select-daily">'
+				+'<ul data-cart-idx="" data-itemcode="'+products_no+'">';
+					for(let i = 0; i<5; i++) {
+						tpl += '<li>'
+									+'<input type="hidden" data-count="'+i+'" value="1">'
+									+'<span class="weekDays" data-count="'+i+'">'+weekDays[i]+'</span>'
+									+'<div class="prd-select-daily">'
+										+'<button type="button" class="prod-add ea-control" data-index="0">'
+											+'+<span class="hide">제품 추가</span>'
+										+'</button>'
+										+'<em data-itemcount-view="'+weekDays[i]+'">1</em>'
+										+'<button type="button" class="prod-remove ea-control btn-minus" data-index="0">'
+											+'<span class="hide">제품 빼기</span>'
+										+'</button>'
+									+'</div>'
+								+'</li>'
+					} // for
+	tpl +='</ul></div></li>';
+	
+	let root = $("#order_targets");
+	root.append(tpl);
+	
+	let count = parseInt($(".prd-count").text())+1;
+	$(".prd-count").text(count);
+	
+	calculateReceipt();
+};
+
+
+// 위도, 경도값 찾기
+function getAddressInfo(address, kakaoREST) {
+	let addressInfo = new Object();
+	let authorization = "KakaoAK " + kakaoREST;
+	
+	$.ajax({
+		url: 'https://dapi.kakao.com/v2/local/search/address.json?query='+address
+		, type:'GET'
+		, async: false
+		, headers: {'Authorization': authorization}
+		, success: function(data){
+			addressInfo = data.documents[0];
+		}
+		, error : function(e){
+			console.log(e);
+		}
+	});
+	
+	return addressInfo;
+}; // getAddressInfo
+
+
+// 가맹점 찾기
+function getFranchise(latitude, longitude, fc_type){
+	console.log("getFranchise()... 위도 : "+latitude+", 경도 : "+longitude+", 가맹점 타입 : " + fc_type);
+	
+	$.ajax({
+		url:"/order/franchise"
+		, method: "GET"
+		, data: { latitude : latitude, longitude : longitude, fc_type : fc_type }
+		, cache: false
+		, success: function(data, callback, xhr) {
+			if(data == "") data = "배송이 불가한 지역입니다.";
+			$('#prtnName').val(data);
+		} // success
+		, error: function(xhr, errorType){
+			console.log(errorType);
+		} // error
+	});
+};
+
+
