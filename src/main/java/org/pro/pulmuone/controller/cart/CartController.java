@@ -1,12 +1,18 @@
 package org.pro.pulmuone.controller.cart;
 
+import java.lang.reflect.Member;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.pro.pulmuone.domain.cart.CartVO;
+import org.pro.pulmuone.domain.member.MemberDTO;
 import org.pro.pulmuone.mapper.cart.CartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,19 +36,20 @@ public class CartController {
 	@Autowired
 	private CartMapper cartMapper;
 	
-	// 매일 장바구니, 키즈
-
+	// 매일 장바구니, 키즈(로그인 후 확인 가능)
 	@RequestMapping("daily")
 	public String daily(CartVO vo, Model model, Principal principal ) throws ClassNotFoundException, SQLException {
 		
 		log.info("> DailyCart Start");
 
+		vo.setMember_id( principal.getName());
 		List<CartVO> list = this.cartMapper.daily(vo);
 		
 		model.addAttribute("list",list);
 		return "cart/daily.tiles";
 	}
 	
+	// 장바구니 삭제
 	  @PostMapping("daily")
 	  @ResponseBody
 	  public String delete( 
@@ -56,8 +63,8 @@ public class CartController {
 			int deleteCount = 0;
 			try {
 				
-				deleteCount = cartMapper.delete(principal.getName(), itemCode, cartIdx);
-			} catch (SQLException e) {
+				deleteCount = cartMapper.dailydelete(cartIdx);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
@@ -70,13 +77,26 @@ public class CartController {
 			return "redirect:/cart/daily";
 			
 		}
-
+	  // 장바구니 추가
+	  @PostMapping("/daily/add")
+	  @ResponseBody
+	  public String addcart(CartVO vo, HttpServletRequest request) throws Exception {
+		  HttpSession session = request.getSession();
+		  MemberDTO dto = (MemberDTO) session.getAttribute("member");
+		  if(dto == null) {
+			  return "X";
+		  }
+		  
+		  int result = cartMapper.dailyadd(vo);
+		  return result + "";
+	  }
 	
 	// 택배 장바구니	
 	@RequestMapping("box")
 	public String box(CartVO vo, Model model,Principal principal ) throws ClassNotFoundException, SQLException {
 		
 		log.info("> BoxCart Start");
+		vo.setMember_id( principal.getName());
 		List<CartVO> list = this.cartMapper.box(vo);
 		model.addAttribute("list",list);
 		return "cart/box.tiles";

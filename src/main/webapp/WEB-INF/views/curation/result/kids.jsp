@@ -107,10 +107,7 @@
     });
   }
 </script>
-
-
-
-			<script>
+<script>
   var nowArgs = undefined;
   window.orderProcess = function (args) {
     if (!window.is_signed) {
@@ -225,19 +222,6 @@
     }
   })
 </script>
-			<textarea id="orderPosLi" style="display: none">    &lt;li&gt;
-        &lt;label class="item-wrapper"&gt;
-            &lt;input name="custnum" type="radio" value="{custnumber}" data-prtn-id="{prtnId}" /&gt;
-            &lt;div class="item"&gt;
-                &lt;div class="contents"&gt;
-                    &lt;p class="name"&gt;
-                        {nickname} &lt;span style="margin-left: 0;"&gt;{custnumber}&lt;/span&gt;
-                    &lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/label&gt;
-    &lt;/li&gt;
-</textarea>
 
 			<div class="modal" id="orderModal" tabindex="-1"
 				aria-labelledby="orderModal" aria-hidden="true">

@@ -431,7 +431,8 @@
 
 										<div class="prd-cart-all-select">
 											<div class="checkbox chk-type3">
-												<input type="checkbox" id="cartIdxAll" checked="checked">
+											e="0"
+												data-delivery-per="" data-limi	<input type="checkbox" id="cartIdxAll" checked="checked">
 												<label for="cartIdxAll" style="font-weight: 300;">전체선택</label>
 											</div>
 											<button type="button" class="btn-round2 deleteAll">선택
@@ -443,8 +444,7 @@
 											<li class="order-item" data-len="1" data-id=""
 												data-event-idx="" data-prod-id="672" data-itemcode="${list.products_no }"
 												data-origin-price="30700" data-price="30700"
-												data-delivery-price="0" data-delivery-one-price="0"
-												data-delivery-per="" data-limit-size="-1"
+												data-delivery-price="0" data-delivery-one-prict-size="-1"
 												style="padding: 20px 0 18px;">
 												<div class="prd-cart-info-area">
 												
