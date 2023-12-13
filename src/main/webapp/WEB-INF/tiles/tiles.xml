@@ -73,22 +73,25 @@
 		<put-attribute name="footer" value="/WEB-INF/views/layouts/member/login/footer.jsp" />  
 		<put-attribute name="main" value="/WEB-INF/views/member/login.jsp" />
    </definition>
-    
+    <!-- regist/type -->
+    <definition name="member/regist/type.tiles" extends="member/login.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/member/regist/type.jsp" />     
+   </definition>
     
     <!-- regist -->
     <definition name="regist" template="/WEB-INF/views/layouts/member/regist/layouts.jsp">
 		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/member/header.jsp" /> 
    </definition>
-    <!-- regist -->
+    <!-- regist/* -->
     <definition name="member/regist/*.tiles" extends="regist">
 		<put-attribute name="main" value="/WEB-INF/views/member/regist/{1}.jsp" />    
    </definition>
+	<!-- find/* -->
+	<definition name="member/find/*.tiles" extends="regist">
+		<put-attribute name="main" value="/WEB-INF/views/member/find/{1}.jsp" />    
+	</definition>
    
-    <!-- regist/type -->
-    <definition name="member/regist/type.tiles" extends="member/login.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/member/regist/type.jsp" />     
-   </definition>
 </tiles-definitions>
 
 

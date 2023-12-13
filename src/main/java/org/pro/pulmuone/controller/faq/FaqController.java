@@ -26,10 +26,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/forum/faq/*")
 @Log4j
 public class FaqController {
-	/*
-	/forum/faq/write.do=servlets.faq.command.FaqWrite
-	/forum/faq/delete.do=servlets.faq.command.FaqDelete
-	 */
+
 	@Autowired
 	private FaqService faqService;
 
@@ -40,7 +37,6 @@ public class FaqController {
 			, @RequestParam(value = "searchKeyword",  required = false, defaultValue = "") String searchKeyword
 			, Model model) {
 		log.info("> FaqList.process..");
-		//@RequestParam("category") String category, @RequestParam("pageNo") String pageNo
 
 		int numberPerPage = 5; // 페이지당 글 수
 		int totalPages = 0; // 총 페이지수
