@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.log4j.Log4j;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -22,19 +24,20 @@ public class MemberServiceImpl implements MemberService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
-	public boolean authorizeNICE(String name, String tel, String rrnBirthDate, String rrnGenderCode) throws ClassNotFoundException, SQLException {
+	public MemberDTO authorizeNICE(String name, String tel, String rrnBirthDate, String rrnGenderCode) throws ClassNotFoundException, SQLException {
 		
 		Date birthDate = getBirthDate(rrnBirthDate, rrnGenderCode);
-		int result = this.memberMapper.selectMemberForNICE(name, tel, birthDate);
 		
+		MemberDTO dto = null;
+		dto = this.memberMapper.selectMemberForNICE(name, tel, birthDate);
 		
-		return result == 1 ? true : false;
+		return dto;
 	}
 
 	@Override
 	public boolean duplicateIdCheck(String memberId) throws ClassNotFoundException, SQLException {
 	
-		int  result = this.memberMapper.selectMemberForDuplicateIdCheck(memberId);
+		int result = this.memberMapper.selectMemberForDuplicateIdCheck(memberId);
 		
 		return result == 1 ? true : false;
 	}
@@ -64,6 +67,39 @@ public class MemberServiceImpl implements MemberService {
 		
 		return insertResult + insertAuthResult;
 	}
+	
+	// 비밀번호 초기화 : pwd = 11자리 랜덤 패스워드, pwd_reset = 1 업데이트 
+	@Override
+	public String resetPassword(String memberId) throws ClassNotFoundException, SQLException {
+		final int pwdReset = 1;
+		
+		String newPassword = getRandomPwd();
+		String encodedNewPassword = this.passwordEncoder.encode(newPassword);
+		
+		int updateResult = this.memberMapper.updatePwd(memberId, encodedNewPassword, pwdReset);
+		
+		return newPassword;
+	}	
+	
+	@Override
+	public boolean changePassword(String memberId, String nowPwd, String pwdToChange) throws ClassNotFoundException, SQLException {
+		final int pwdReset = 0;
+		
+		String encodedPwdToChange = this.passwordEncoder.encode(pwdToChange);		
+		String storedPwd = this.memberMapper.selectMemberForGetPwd(memberId);
+		
+		// 현재 비밀번호가 맞는지 확인
+		boolean pwdIsMatch = this.passwordEncoder.matches(nowPwd, storedPwd);
+
+		int updateResult = 0;
+		
+		if (pwdIsMatch) {
+			updateResult = this.memberMapper.updatePwd(memberId, encodedPwdToChange, pwdReset );
+		}		
+
+		return updateResult == 1 ? true : false;
+	}
+	
 	
 	
 	
@@ -110,6 +146,24 @@ public class MemberServiceImpl implements MemberService {
 		String invCode = invCodeBuilder.toString();
 		
 		return invCode;
-	}	
+	}
+
+	private String getRandomPwd() {
+		String charRange = "abcdefgehijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-_=+";
+		int charRangeLength = charRange.length();
+		int pwdLength = 11;
+		int randomIndex;
+		
+		StringBuilder pwdBuilder = new StringBuilder(pwdLength);
+		for (int i = 0; i < pwdLength; i++) {
+			randomIndex = (int) ( Math.random() * (charRangeLength) );
+			pwdBuilder.append(charRange.charAt(randomIndex));
+		}
+		
+		String pwd = pwdBuilder.toString();
+		
+		return pwd;
+	}
+
 	
 }

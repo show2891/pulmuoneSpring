@@ -197,7 +197,7 @@ $(document).ready(function () {
 			cache:false ,
 			success: function ( isDuplicated,  textStatus, jqXHR ){
 				console.log("중복 여부: " + isDuplicated);
-				if( isDuplicated == false ) {
+				if( isDuplicated ) {
 					showSuccessForm("memberIdError", message.member.regist.id.ok);
 					$("#duplicateIdCheck").val("Y");
 
