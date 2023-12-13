@@ -16,4 +16,8 @@ public interface ProductMapper {
 	int wishinsert(ProductsDTO dto);
 	int wishupdate(ProductsDTO dto);
 	int wishdelete(ProductsDTO dto);
+//  찜 조회
+	List<ProductsDTO> wishlist(ProductsDTO dto);
+	
+	
 }

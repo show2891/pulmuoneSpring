@@ -418,9 +418,15 @@ let timer;
     var type = that.attr("data-cart-type");
     var id = that.attr("data-cart-id");
     var eventIdx = that.attr("data-cart-event");
-    if (id && type) {
-      addCart(type, id, { eventIdx });
-    }
+//    if (id && type) {
+//      addCart(type, id, { eventIdx });
+//    }
+    axios.get('/cart/'+type+'/save/'+ id).then(function ({data}) {      
+        alert("제품이 담겼습니다.");
+    }).catch(function (e) {
+      alert("서버와 연결이 올바르지 않습니다.");
+    })
+    
     e.preventDefault();
     return false;
   });

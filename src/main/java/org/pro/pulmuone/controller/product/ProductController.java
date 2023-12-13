@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,7 +30,7 @@ public class ProductController {
 			, @RequestParam(value = "category",required = false  ) String category_no
 			, @RequestParam(value = "tags",required = false  ) String tags
 			, @RequestParam(value = "pageNo", defaultValue = "1" ) String num) throws ClassNotFoundException, SQLException {
-		log.info("daily" );
+		log.info("daily" +tags );
 		int begin = Integer.parseInt(num);
 		if(begin==2) {
 			begin = 13;
@@ -140,7 +139,7 @@ public class ProductController {
 		log.info("dailyinterest" + name);
 		dto.setClassname(name);
 		dto.setMember_id( principal.getName() );
-		dto.setProducts_tag(Integer.parseInt(products_tag));
+		dto.setProducts_tag(products_tag);
 		int count = 0 ;
 		if(name == true) {
 		  count = this.mapper.wishdelete(dto);
@@ -165,7 +164,7 @@ public class ProductController {
 		log.info("boxinterest" + name);
 		dto.setClassname(name);
 		dto.setMember_id( principal.getName() );
-		dto.setProducts_tag(Integer.parseInt(products_tag));
+		dto.setProducts_tag(products_tag);
 		int count = 0 ;
 		if(name == true) {
 		  count = this.mapper.wishdelete(dto);
@@ -181,6 +180,8 @@ public class ProductController {
 		  log.info("실패" );
 		  return "product/BoxList.tiles";
 		}
-
 	}
+	
+	
+
 }
