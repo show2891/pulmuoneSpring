@@ -62,5 +62,31 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<resultMap id="EventViewResultMap" type="org.pro.pulmuone.domain.event.EventViewVO">
+	    <id property="event_no" column="event_no"/>
+	    <result property="event_name" column="event_name"/>
+	    <result property="event_start" column="event_start"/>
+	    <result property="event_end" column="event_end"/>
+	    <result property="event_notice" column="event_notice"/>
+	    <result property="event_cmt" column="event_cmt"/>
+	    <collection property="images" ofType="org.pro.pulmuone.domain.event.EventImageVO">
+	        <id property="img_no" column="img_no"/>
+	        <result property="system_name" column="system_name"/>
+	        <result property="origin_name" column="origin_name"/>
+	        <result property="img_size" column="img_size"/>
+	        <result property="img_type" column="img_type"/>
+	        <result property="img_path" column="img_path"/>
+	        <result property="img_link" column="img_link"/>
+	    </collection>
+	</resultMap>
+	
+	<select id="viewEvent" resultMap="EventViewResultMap">
+	    SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, e.event_cmt, 
+	           i.img_no, i.system_name, i.origin_name, i.img_size, i.img_type, i.img_path, i.img_link 
+	    FROM event e 
+	    LEFT JOIN event_image i ON e.event_no = i.event_no 
+	    WHERE e.event_no = #{event_no}
+	</select>
 
 </mapper>

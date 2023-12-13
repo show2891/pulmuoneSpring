@@ -1,9 +1,11 @@
 package org.pro.pulmuone.controller.event;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.pro.pulmuone.domain.event.EventListVO;
+import org.pro.pulmuone.domain.event.EventViewVO;
 import org.pro.pulmuone.service.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/event/event/*")
 public class EventController {
+	
 	@Autowired
 	private EventService eventService;
 
@@ -55,6 +58,22 @@ public class EventController {
 
 	    return "event/endList.tiles";
 	}
+	
+	@GetMapping("view")
+	public String view(@RequestParam int event_no, Model model, HttpServletRequest request) {
+	    EventViewVO event = eventService.viewEvent(event_no);
+	    model.addAttribute("event", event);
+	    
+	    if (event_no == 2) {
+	        request.getSession().setAttribute("activeTab", "친구초대");
+	    } else if (event_no == 25) {
+	        request.getSession().setAttribute("activeTab", "회원혜택");
+	    } else {
+	        request.getSession().setAttribute("activeTab", "진행중이벤트");
+	    }
+	    
+	    return "event/view.tiles";
+	}
 
 	/*
 	@GetMapping("winner")
@@ -66,20 +85,6 @@ public class EventController {
 		return "winnerList";
 	}
 
-	@GetMapping("view")
-	public String view(@RequestParam int event_no, Model model, HttpServletRequest request) {
-		// event_no에 해당하는 이벤트를 가져오는 코드를 여기에 작성하십시오.
-
-		if (event_no == 2) {
-			request.getSession().setAttribute("activeTab", "친구초대");
-		} else if (event_no == 25) {
-			request.getSession().setAttribute("activeTab", "회원혜택");
-		} else {
-			request.getSession().setAttribute("activeTab", "진행중이벤트");
-		}
-
-		return "eventDetail";
-	}
 	
 	*/
 }

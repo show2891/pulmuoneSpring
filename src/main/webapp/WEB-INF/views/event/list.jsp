@@ -18,7 +18,7 @@
 					
 					<c:forEach var="event" items="${events}">
 						<li>
-							<a href="/event/event/view.do?event_no=${event.event_no}">
+							<a href="/event/event/view?event_no=${event.event_no}">
 								<div class="img-area">
 								    <img src="${event.thumbnail.img_path}" alt="${event.event_name}">
 								</div>

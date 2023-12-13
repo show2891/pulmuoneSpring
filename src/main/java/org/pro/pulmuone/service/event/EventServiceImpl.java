@@ -2,7 +2,9 @@ package org.pro.pulmuone.service.event;
 
 import java.util.List;
 
+import org.pro.pulmuone.domain.event.EventImageVO;
 import org.pro.pulmuone.domain.event.EventListVO;
+import org.pro.pulmuone.domain.event.EventViewVO;
 import org.pro.pulmuone.mapper.event.EventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,4 +34,10 @@ public class EventServiceImpl implements EventService {
     public int getTotalPages(int numberPerPage) {
         return eventMapper.getTotalPages(numberPerPage);
     }
+    
+    @Override
+    public EventViewVO viewEvent(int event_no) {
+        return eventMapper.viewEvent(event_no);
+    }
+
 }
