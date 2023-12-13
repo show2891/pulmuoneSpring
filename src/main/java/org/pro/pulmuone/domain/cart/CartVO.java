@@ -13,6 +13,8 @@ public class CartVO {
 
 	private int program_no;         		// 프로그램번호
 	private int img_no;	     	 			// 작성자
+	
+	private String member_id;
 	private String products_no;      		// 상품번호
 	private String products_name;      	// 상품명
 	private String program_content;    	// 프로그램 내용
@@ -22,9 +24,10 @@ public class CartVO {
 	private int products_tag;
 	private String Products_size;
 	private String img_path;
-
+	private String dayweek;	
 	
 	private int cart_no;  
+	private int amount;  
 	private int member_no;  
 	private int mon_cnt;  
 	private int tue_cnt;    
@@ -32,5 +35,6 @@ public class CartVO {
 	private int thu_cnt;    
 	private int fir_cnt;   
 	private String reg_date;
+	
 }
 
