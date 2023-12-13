@@ -4,89 +4,54 @@
 
 <mapper namespace="org.pro.pulmuone.mapper.cart.CartMapper">
 
-	<!-- 장바구니 추가 -->
-<!-- 	<insert id="dailyadd"> -->
-<!-- 		MERGE INTO cart_daily -->
-<!-- 		USING DUAL -->
-<!-- 		ON(products_no = #{products_no, jdbcType=VARCHAR} AND member_no = #{member_no}) -->
+   <!-- 장바구니 추가-데일리 -->
+   <insert id="dailycart">
+      <selectKey order="BEFORE" resultType="int" keyProperty="member_no">
+         select member_no from member where member_id = #{member_id }
+      </selectKey>
+      insert into cart_daily (cart_no, member_no, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fir_cnt, reg_date)
+      values(seq_cart_daily.NEXTVAL, #{member_no}, #{products_no}, #{mon_cnt} , #{tue_cnt}, #{wed_cnt}, #{thu_cnt}, #{fir_cnt}, sysdate)
+   </insert>
 
-<!-- 		WHEN MATCHED THEN -->
-<!-- 		UPDATE -->
-<!-- 		SET -->
-<!-- 		mon_cnt =mon_cnt + #{mon_cnt} -->
-<!-- 		, tue_cnt =tue_cnt + #{tue_cnt} -->
-<!-- 		, wed_cnt =wed_cnt + #{wed_cnt} -->
-<!-- 		, thu_cnt =thu_cnt + #{thu_cnt} -->
-<!-- 		, fir_cnt =fir_cnt + #{fir_cnt} -->
-<!-- 		WHERE member_no = #{member_no} -->
-<!-- 		AND products_no = #{products_no} -->
+   <!-- 장바구니 조회-데일리 -->
+   <select id="daily" resultType="org.pro.pulmuone.domain.cart.CartVO">
+      SELECT cart_no, member_no, p.products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fir_cnt, cd.reg_date, price, products_tag, products_name, system_name
+      FROM cart_daily cd JOIN products p ON p.products_no = cd.products_no
+      JOIN products_img pi ON p.products_no = pi.products_no
+      WHERE origin_name NOT LIKE 'View%'
+      and member_no = (select member_no from member where member_id = #{member_id })
+      ORDER BY cart_no
+   </select>
 
-<!-- 		WHEN NOT MATCHED THEN -->
-
-<!-- 		INSERT( cart_no, member_no, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fir_cnt, reg_date ) -->
-<!-- 		VALUES( seq_cart_daily.NEXTVAL, #{member_no}, #{products_no, jdbcType=VARCHAR}, #{mon_cnt} , -->
-<!-- 		#{tue_cnt}, #{wed_cnt}, #{thu_cnt}, #{fir_cnt}, sysdate ) -->
-<!-- 		<selectKey order="AFTER" resultType="int" -->
-<!-- 			keyProperty="cart_no"> -->
-<!-- 			SELECT NVL(MAX(cart_no+1), 1) -->
-<!-- 			FROM cart_daily; -->
-<!-- 		</selectKey> -->
-<!-- 	</insert> -->
-
-	<!-- 장바구니 조회-데일리 -->
-	<select id="daily" resultType="org.pro.pulmuone.domain.cart.CartVO">
-		SELECT cart_no, member_no, p.products_no, mon_cnt, tue_cnt,
-		wed_cnt, thu_cnt, fir_cnt, cd.reg_date, price, products_tag,
-		products_name, system_name
-		FROM cart_daily cd JOIN products p ON
-		p.products_no = cd.products_no
-		JOIN products_img pi ON p.products_no = pi.products_no
-		WHERE origin_name NOT LIKE 'View%'
-		ORDER BY cart_no
-	</select>
-	
-	
+	<!-- 장바구니 삭제-데일리 -->
 	<delete id="delete">
-		DELETE FROM CART_DAILY WHERE CART_NO = ${cart_no}
+		DELETE FROM CART_DAILY 
+		WHERE
+		member_no = (select member_no from member where member_id = #{member_id})
+		AND products_no = #{products_no} 
+		AND cart_no = #{cart_no}
 	</delete>
-	<!-- 수량 변경(쿼리 확인) -->
-<!-- 	<update id="update"> -->
-<!-- 		UPDATE cart_daily -->
-<!-- 		SET amount = #{amount} -->
-<!-- 		, price = ( SELECT PRICE -->
-<!-- 		FROM PRODUCTS -->
-<!-- 		WHERE PRODUCTS_NO = -->
-<!-- 		( -->
-<!-- 		SELECT PRODUCTS_NO -->
-<!-- 		FROM cart_daily -->
-<!-- 		WHERE CART_NO = #{cart_no} -->
-<!-- 		) -->
 
-<!-- 		) -->
-<!-- 		* #{amount} -->
-<!-- 		WHERE CART_NO = #{cart_no} -->
-<!-- 	</update> -->
+   <!-- 장바구니 추가-박스 -->
+   <insert id="boxcart">
+      <selectKey order="BEFORE" resultType="int" keyProperty="member_no">
+         select member_no from member where member_id = #{member_id }
+      </selectKey>
+      insert into cart_box (cart_no, member_no, products_no, amount, reg_date)
+      values( #{cart_no}, #{member_no }, #{products_no}, #{amount}, sysdate)
+   </insert>
 
+   <!-- 장바구니 조회-박스 -->
+   <select id="box" resultType="org.pro.pulmuone.domain.cart.CartVO">
+      SELECT cart_no, member_no, p.products_no, amount, cd.reg_date, price, products_tag, products_name, system_name
+      FROM cart_box cd JOIN products p ON p.products_no = cd.products_no
+      JOIN products_img pi ON p.products_no = pi.products_no
+      WHERE origin_name NOT LIKE 'View%'
+      and member_no = (select member_no from member where member_id = #{member_id })
+      ORDER BY cart_no
+   </select>
 
-	<!-- 장바구니 추가-박스 -->
-	<insert id="boxcart">
-		insert into cart_box (cart_no, member_no,
-		products_no, amount, reg_date)
-		values( #{cart_no}, #{member_no }, #{products_no}, #{amount}, sysdate)
-	</insert>
-
-	<!-- 장바구니 조회-박스 -->
-	<select id="box"
-		resultType="org.pro.pulmuone.domain.cart.CartVO">
-		SELECT cart_no, member_no, p.products_no, amount,
-		cd.reg_date, price, products_tag, products_name, system_name
-		FROM
-		cart_box cd JOIN products p ON p.products_no = cd.products_no
-		JOIN
-		products_img pi ON p.products_no = pi.products_no
-		WHERE origin_name NOT
-		LIKE 'View%'
-		ORDER BY cart_no
-	</select>
-
+   <!-- 장바구니 삭제-박스 -->
+   <delete id="boxcartdelete">
+   </delete>
 </mapper>

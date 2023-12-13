@@ -177,26 +177,44 @@
 		$(".btn-prd-delete").click(function () {
 			var parent = $(this).parents(".order-item");
 			var cartIdx = $(this).attr("data-cart-idx");
-			var eventIdx = $(this).attr("data-event-idx");
+//			var eventIdx = $(this).attr("data-event-idx");
 			var itemCode = $(this).attr("data-itemcode");	
-			confirmDesign("", "삭제하시겠습니까?", function () {
+			let products_no = $(this).data("data-itemcode")
+			let cart_no = $(this).data("data-cart-idx")
+			let params = `products_no=\${itemCode}&cart_no=\${cartIdx}&${_csrf.parameterName}=${_csrf.token}`;
+		
+			console.log(parent)
+			console.log(cartIdx)
+			console.log(itemCode)
+			console.log(params)
+			confirmDesign("", "삭제하시겠습니까?", function remove() {
 				var s = "&cartIdx=" + cartIdx;
 				if (!is_signed) {
 					s = "&itemCode=" + itemCode 
-//					+ "." + (eventIdx || "null");
+					// + "." + (eventIdx || "null");
 				}
-				newDelete({
-					url: "/cart?type=daily" + s,
+				$.ajax({
+					url:"daily?products_no=" + itemCode +"&" + "cart_no=" + cartIdx 
+					, dataType:"json"
+					, type:"POST"
+					, data : params
+					, cache:false
+				})
 				}, function () {
 					alert("삭제되었습니다.");
-					parent.remove();
+					$(".order-item>*:has([name='cartIdx']:checked)").remove();
 					calculateTotalPrice();
-				});
+				});	
 			});
-		});
 
-
-		$(".deleteAll").click(function () {
+		
+		$(".deleteAll").click(function remove() {
+			var cartIdx = $(this).attr("data-cart-idx");
+			var itemCode = $(this).attr("data-itemcode");	
+			let products_no = $(this).data("data-itemcode")
+			let cart_no = $(this).data("data-cart-idx")
+			let params = `products_no=\${itemCode}&cart_no=\${cartIdx}&${_csrf.parameterName}=${_csrf.token}`;
+		
 			var param = "";
 			$("[name='cartIdx']:checked").each(function () {
 				var s = "&cartIdx=" + $(this).val();
@@ -211,15 +229,20 @@
 			}
 
 			confirmDesign("", "삭제하시겠습니까?", function () {
-				newDelete({
-					url: "/cart?type=daily" + param,
+				$.ajax({
+					url:"daily?products_no=" + itemCode +"&" + "cart_no=" + cartIdx 
+					, dataType:"json"
+					, type:"POST"
+					, data : params
+					, cache:false
+				})
 				}, function () {
 					alert("삭제되었습니다.");
 					$(".order-item-list>*:has([name='cartIdx']:checked)").remove();
 					calculateTotalPrice();
 				});
 			});
-		});
+	
 
 // 		$(".prod-add").click(function () {
 // 			changeCount(this, 1);
@@ -268,7 +291,7 @@
 				const item = {
 					itemCode: itemCode,
 					dayQty: [],
-					eventIdx: $(el).attr("data-event-idx")
+					//eventIdx: $(el).attr("data-event-idx")
 				};
 				if (type == 'daily') {
 					$("[data-count]", el).each(function () {
@@ -306,6 +329,7 @@
 		calculateTotalPrice();
 	})
 </script>
+
 		<div class="contents-area">
 			<div class="container">
 				<div class="location">
@@ -344,10 +368,10 @@
 									
 								<c:forEach items="${list}" var="list">
 									<ul class="prd-cart-list  order-item-list">
-										<li data-id="" data-itemcode="${list.products_no }" class="order-item order-chk" data-price="1600">
+										<li data-id="" data-itemcode="" class="order-item order-chk" data-price="1600">
 											<div class="checkbox chk-type3">
-												<input type="checkbox" id="chk-prd-${param.products_no }" name="cartIdx"	value="" checked="checked" data-itemcode="${list.products_no }"> 
-													<label for="chk-prd-"><span class="hide">해당제품선택</span></label>
+												<input type="checkbox" id="chk-prd-${list.cart_no}" name="cartIdx"	value="" checked="checked" data-itemcode=""> 
+													<label for="chk-prd-${list.cart_no}"><span class="hide">해당제품선택</span></label>
 											</div> 
 												<a href="/product/daily/${list.products_tag }?eventIdx=" class="prd-cart">
 											<div class="thumb">
@@ -361,7 +385,7 @@
 										</a>
 										
 											<div class="prd-cart-select-daily">
-												<ul data-cart-idx="" data-itemcode="">
+												<ul data-cart-idx="${list.cart_no}" data-itemcode="">
 													<li><input type="hidden" data-count="0" value="0">
 														<span>월</span>
 														<div class="prd-select-daily">
@@ -429,8 +453,8 @@
 												<i class="ico ico-wishlist"></i> <span class="hide">제품
 													찜하기</span>
 											</button>
-											  <button type="button" class="btn-delete btn-prd-delete" data-cart-idx="" data-itemcode="${list.products_no }">
-    											<i class="ico ico-prd-delete"></i>
+											  <button type="button" class="btn-delete btn-prd-delete" data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no }">
+    											<i class="ico ico-prd-delete" ></i>
 									  				  <span class="hide">카트에서 삭제</span>
 									 			 </button>
 										</li>

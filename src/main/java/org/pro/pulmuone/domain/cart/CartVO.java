@@ -28,6 +28,8 @@ public class CartVO {
 	private String img_path;
 	private String dayweek;
 
+	private String itemCode;
+	private int cartIdx;
 	
 	private int cart_no;  
 	private int amount;  
