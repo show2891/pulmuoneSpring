@@ -14,7 +14,7 @@ import lombok.extern.log4j.Log4j;
 public class MypageController {
 
 	@GetMapping("mypage")
-	public String login(HttpServletRequest request) {
+	public String summary(HttpServletRequest request) {
 		log.warn("> MypageController mypage()...");
 			
 		return "mypage/home/userSummmary.tiles";
