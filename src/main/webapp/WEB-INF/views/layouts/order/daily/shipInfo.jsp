@@ -29,9 +29,10 @@
 					</label>
 				</dt>
 				<dd>
-					<input type="text" id="prtnName" readonly name="prtnName" title="" placeholder="배송 장소 선택 및 주소 입력을 해주세요." value="">
-					<input type="hidden" id="officeCode" name="estCd" value="">
-					<input type="hidden" id="buTelno" name="officePhoneNumber" value="">
+					<input type="text" id="prtnName" readonly name="fc_name" title="" placeholder="배송 장소 선택 및 주소 입력을 해주세요." value="">
+					<input type="hidden" id="prtnNo" name="fc_no" value="">
+					<input type="hidden" id="prtnPhone" name="fc_phone" value="">
+					<input type="hidden" id="prtnTel" name="fc_tel" value="">
 				</dd>
 			</dl>
 		</div>
@@ -54,7 +55,7 @@
 					</label>
 				</dt>
 				<dd class="input-util-area" style="position: relative">
-					<input type="text" id="ip-datepicker-1" readonly="" name="deliveryDate" title="첫 배송 예정일" placeholder="첫 배송 예정일" value="2022. 08. 08">
+					<input type="text" id="ip-datepicker-1" readonly="" name="drk_start_date" title="첫 배송 예정일" placeholder="첫 배송 예정일" value="2022. 08. 08">
 					<button type="button" class="btn-cacalendar" style="pointer-events: none; position: absolute; right: 20px;">
 						<i class="ico ico-calendar"></i>
 						<span class="hide">날짜 선택하기</span>

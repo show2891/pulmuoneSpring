@@ -21,7 +21,7 @@
 					<ul style="margin-bottom: 35px">
 						<li>
 							<span>배송가맹점</span>
-							<b>관악홈가맹점</b>
+							<b>${ franchiseDTO.fc_name }</b>
 						</li>
 						
 						<li>
@@ -31,13 +31,13 @@
 									<i>
 										<img src="/resources/assets/images/ui/ico_franchisee_tel.png" alt="전화">
 									</i>
-									<em data-call-text="">02-852-7949</em>
+									<em data-call-text="">${ franchiseDTO.fc_tel }</em>
 								</li>
 								<li>
 									<i>
 										<img src="/resources/assets/images/ui/ico_franchisee_phone.png" alt="휴대전화">
 									</i>
-									<em data-call-text="">010-6360-7949</em>
+									<em data-call-text="">${ franchiseDTO.fc_phone }</em>
 								</li>
 							</ol>
 						</li>

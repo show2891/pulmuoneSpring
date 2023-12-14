@@ -1,11 +1,16 @@
 package org.pro.pulmuone.controller.order;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pro.pulmuone.domain.order.FranchiseDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
+import org.pro.pulmuone.domain.order.box.BoxOrderDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
+import org.pro.pulmuone.domain.order.daily.DrkOrderDTO;
 import org.pro.pulmuone.domain.order.daily.DailyOrderItemDTO;
 import org.pro.pulmuone.service.order.DailyOrderServiceImpl;
 import org.pro.pulmuone.service.order.OrderServiceImpl;
@@ -95,7 +100,7 @@ public class DailyOrderController {
 	
 	
 	@PostMapping("step2")
- 	public String step2(Model model) {
+ 	public String step2(Model model, FranchiseDTO franchiseDTO, DrkOrderDTO drkOrderDTO) {
 		log.info("> BoxOrderController.step2 ...");
 		
 		// 1. member_no 가져오기
@@ -104,15 +109,47 @@ public class DailyOrderController {
 				
 		String username = "";
 		// 사용자 id 가져오기
-		   if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-		   	UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		       username = userDetails.getUsername();
-		   } // if
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		    username = userDetails.getUsername();
+		} // if
 			    
-		        // member_no 저장
-		        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-				int member_no = member.getMember_no();
-				
+		// member_no 저장
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+		
+		
+		// 2. drk_order 테이블 insert
+		// 음용 name 구해오기
+		String drk_order_name = dailyOrderServiceImpl.getOrderName(member_no);
+		
+		// drkOrderDTO에 정보 저장
+		drkOrderDTO.setMember_no(member_no);
+		Date today = Date.valueOf(LocalDate.now());
+		drkOrderDTO.setDrk_order_date(today);
+		drkOrderDTO.setDrk_order_type(0);
+		drkOrderDTO.setDrk_status(0);
+		drkOrderDTO.setDrk_order_name(drk_order_name);
+		int drkOrderInsertRowCnt = dailyOrderServiceImpl.drkOrderInsert(drkOrderDTO);
+		
+		
+		// 3. drkOrderNo 저장
+		int drkOrderNo = drkOrderDTO.getDrk_order_no();
+		
+		
+		// 가맹점 정보 전달
+		model.addAttribute("franchiseDTO", franchiseDTO);
+		
+		/*
+		drk_order_no 생성해야 함
+		member_no : 받음
+		drk_order_name : 음용1 < 이런 식으로 조회해야 함
+		drk_start_date : 넘어옴
+		drk_order_type 무조건 0(홈페이지 주문)
+		drk_order_date : 오늘 날짜
+		fc_no	: 넘어오쥬~?
+		drk_status : 무조건 0
+		*/
 				
 		/*
 		Iterator<String> ir = allParameters.keySet().iterator();

@@ -2,6 +2,7 @@ package org.pro.pulmuone.service.order;
 
 import java.util.List;
 
+import org.pro.pulmuone.domain.order.FranchiseDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
 
@@ -13,6 +14,6 @@ public interface OrderService {
 	
 	List<DailyItemInfoDTO> getproductList(String member_no, int pageNo);
 	
-	String getFranchise(double latitude, double longitude, int fc_type);
+	FranchiseDTO getFranchise(double latitude, double longitude, int fc_type);
 
 }

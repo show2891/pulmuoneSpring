@@ -18,4 +18,24 @@
      	ORDER BY p.products_no
      </select>
      
+     
+     <!-- String getOrderName(int member_no) -->
+     <select id="getOrderName" resultType="String">
+     	SELECT '음용' || (COUNT(*) + 1)
+	    FROM drk_order
+	    WHERE member_no = #{ member_no }
+     </select>
+     
+     
+     <!-- int drkOrderInsert(DrkOrderDTO drkOrderDTO); -->
+     <insert id="drkOrderInsert">
+	    <selectKey keyProperty="drkOrderDTO.drk_order_no" resultType="Integer" order="BEFORE">
+	        SELECT seq_drk_order.NEXTVAL
+	        FROM dual
+	    </selectKey>
+     	INSERT INTO drk_order (drk_order_no, member_no, drk_order_name, drk_start_date, drk_order_type, drk_order_date, fc_no, drk_status)
+     	VALUES (#{ drkOrderDTO.drk_order_no }, #{ drkOrderDTO.member_no }, #{ drkOrderDTO.drk_order_name }, #{ drkOrderDTO.drk_start_date }
+     				, #{ drkOrderDTO.drk_order_type }, #{ drkOrderDTO.drk_order_date }, #{ drkOrderDTO.fc_no }, #{ drkOrderDTO.drk_status })
+     </insert>
+     
 </mapper>

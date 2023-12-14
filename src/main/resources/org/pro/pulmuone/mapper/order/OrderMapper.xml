@@ -57,11 +57,11 @@
      </select>
      
 	<!-- public String getFranchise(@Param("latitude") double latitude, @Param("longitude") double longitude, @Param("fc_type")  int fc_type); -->
-     <select id="getFranchise" resultType="String">
+     <select id="getFranchise" resultType="org.pro.pulmuone.domain.order.FranchiseDTO">
      	<![CDATA[
-	     	SELECT f.fc_name
+	     	SELECT f.fc_name, f.fc_no, f.fc_phone, f.fc_tel
 			FROM (
-			        SELECT fc_name, POWER(#{longitude} - fc_lat, 2) + POWER(#{latitude} - fc_lng, 2) lat
+			        SELECT fc_phone, fc_tel, fc_name, fc_no, POWER(#{longitude} - fc_lat, 2) + POWER(#{latitude} - fc_lng, 2) lat
 			        FROM franchise
         			WHERE fc_type IN(2, #{fc_type})
 			        ORDER BY lat

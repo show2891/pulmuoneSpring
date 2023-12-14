@@ -319,11 +319,15 @@ function getFranchise(latitude, longitude, fc_type){
 		url:"/order/franchise"
 		, method: "GET"
 		, data: { latitude : latitude, longitude : longitude, fc_type : fc_type }
+		, dataType: "json"
 		, cache: false
 		, async: false
 		, success: function(data, callback, xhr) {
-			if(data == "") data = "배송이 불가한 지역입니다.";
-			$('#prtnName').val(data);
+			if(data.fc_name == "") data = "배송이 불가한 지역입니다.";
+			$('#prtnName').val(data.fc_name);
+			$('#prtnNo').val(data.fc_no);
+			$('#prtnPhone').val(data.fc_phone);
+			$('#prtnTel').val(data.fc_tel);
 		} // success
 		, error: function(xhr, errorType){
 			console.log(errorType);

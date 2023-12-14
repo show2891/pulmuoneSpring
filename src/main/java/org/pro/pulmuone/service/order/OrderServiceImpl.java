@@ -2,6 +2,7 @@ package org.pro.pulmuone.service.order;
 
 import java.util.List;
 
+import org.pro.pulmuone.domain.order.FranchiseDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
 //github.com/dhl1031/pulmuoneSpring.git
@@ -37,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public String getFranchise(double latitude, double longitude,  int fc_type) {
+	public FranchiseDTO getFranchise(double latitude, double longitude,  int fc_type) {
 		log.info("> OrderServiceImpl.getFranchise... 위도 : " + latitude + ", 경도 : " + longitude + ", 가맹점 타입 : " + fc_type);
 		return this.orderMapper.getFranchise(latitude, longitude, fc_type);
 	}

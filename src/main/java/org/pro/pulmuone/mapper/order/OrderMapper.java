@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.pro.pulmuone.domain.order.FranchiseDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
 
@@ -16,6 +17,6 @@ public interface OrderMapper {
 	
 	public List<DailyItemInfoDTO> getproductList(@Param("searchKeyword") String searchKeyword, @Param("pageNo") int pageNo);
 	
-	public String getFranchise(@Param("latitude") double latitude, @Param("longitude") double longitude, @Param("fc_type")  int fc_type);
+	public FranchiseDTO getFranchise(@Param("latitude") double latitude, @Param("longitude") double longitude, @Param("fc_type")  int fc_type);
 	
 }
