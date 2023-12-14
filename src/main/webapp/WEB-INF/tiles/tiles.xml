@@ -96,10 +96,13 @@
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
    		<put-attribute name="footermodal" value="/WEB-INF/views/ui/footermodal.jsp" />
-   		<put-attribute name="title_tab" value="/WEB-INF/views/layouts/title_tab_area.jsp" />
 		<put-attribute name="content" value="/WEB-INF/views/event/{1}.jsp" />
 	</definition>
-	
+<!-- 	<definition name="view.tiles" extends="event/*.tiles">
+	    <put-attribute name="content" value="/WEB-INF/views/event/view.jsp" />
+	    <put-attribute name="comment_area" value="/WEB-INF/views/layouts/event/comment_area.jsp" />
+	</definition>
+	 -->
    
 </tiles-definitions>
 

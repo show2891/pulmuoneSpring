@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.pro.pulmuone.domain.event.EventCommentVO;
 import org.pro.pulmuone.domain.event.EventListVO;
 import org.pro.pulmuone.domain.event.EventViewVO;
 import org.pro.pulmuone.service.event.EventService;
@@ -63,6 +64,9 @@ public class EventController {
 	public String view(@RequestParam int event_no, Model model, HttpServletRequest request) {
 	    EventViewVO event = eventService.viewEvent(event_no);
 	    model.addAttribute("event", event);
+	    
+	    List<EventCommentVO> comments = eventService.getComments(event_no, 1, 10); // 첫 페이지의 댓글 10개를 가져옴
+	    model.addAttribute("comments", comments);
 	    
 	    if (event_no == 2) {
 	        request.getSession().setAttribute("activeTab", "친구초대");

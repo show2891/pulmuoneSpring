@@ -16,6 +16,7 @@ public class EventCommentVO {
 	private int member_no;
 	private Date write_date;
 	private String content;
+	
 	private String name;
 	
 }

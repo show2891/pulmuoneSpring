@@ -8,7 +8,7 @@
 			<a href="/">홈</a> <a href="/event/event">이벤트</a>
 		</div>
 		<div class="cont-event-area">
-			<%@ include file="/WEB-INF/views/layouts/event/title_tab_area.jsp"%>
+			<%@ include file="/WEB-INF/views/layouts/event/content/title_tab_area.jsp"%>
 
 			<div class="tab-pane fade show active" id="profile" role="tabpanel"
 				aria-labelledby="profile-t">

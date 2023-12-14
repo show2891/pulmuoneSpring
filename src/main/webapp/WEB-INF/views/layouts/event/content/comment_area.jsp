@@ -1,26 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="auth.AuthInfo" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
 <%
-    AuthInfo authInfo = (AuthInfo)session.getAttribute("auth");
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails userDetails = null;
+    if(authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+        userDetails = (UserDetails)authentication.getPrincipal();
+    }
 %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#write-review').click(function() {
+            var content = $('#content').val();
+            $.post('/event/comment/write', { event_no: ${event.event_no}, content: content }, function() {
+                window.location.reload();
+            });
+        });
+    });
+</script>
 
 <div class="board-write">
     <span style="text-decoration: none">
-        <% if(authInfo != null){ %>
-            <% 
-                String name = authInfo.getName();
-                String maskedName;
-                if(name.length() > 2){
-                    maskedName = name.substring(0, 1);
-                    for(int i = 1; i < name.length()-1; i++){
-                        maskedName += "*";
-                    }
-                    maskedName += name.substring(name.length()-1);
-                } else {
-                    maskedName = name;
-                }
-            %>
-            <%=maskedName%>
+        <% if(userDetails != null){ %>
+            <%=userDetails.getUsername()%>
         <% }else{ %>
             <a href="/mypage.do" id="login-link" style="text-decoration: underline;">로그인</a>
         <% } %>
@@ -36,16 +41,23 @@
         <em class="count">댓글 <span>${totalComments}</span></em>
     </div>
     <ul class="board-review-list" data-list-object="replace" id="pagable-list">
-        <c:forEach var="comment" items="${comments}">
-            <li style="position: relative">
-                <div class="board-review-cont" style="width: 100%">
-                    <b>${comment.name}</b>
-                    <p class="review-content-${comment.comment_no}">${comment.content}</p>
-                    <span class="text-day">${comment.write_date}</span>
-                </div>
-                <div class="review-util-btn" style="white-space: nowrap; position: absolute; top: 32px; right: 0" data-idx="${comment.comment_no}" data-eventidx="${comment.event_no}"></div>
-            </li>
-        </c:forEach>
+    
+		<c:forEach var="comment" items="${comments}">
+		    <li style="position: relative">
+		        <div class="board-review-cont" style="width: 100%">
+		            <b>${comment.name}</b>
+		            <p class="review-content-${comment.comment_no}">${comment.content}</p>
+		            <span class="text-day">${comment.write_date}</span>
+		            <c:if test="${userDetails != null && userDetails.username == comment.username}">
+		                <div class="review-util-btn" style="white-space: nowrap; position: absolute; top: 32px; right: 0" data-idx="${comment.comment_no}" data-eventidx="${comment.event_no}">
+		                    <button class="edit-btn">수정</button>
+		                    <button class="delete-btn">삭제</button>
+		                </div>
+		            </c:if>
+		        </div>
+		    </li>
+		</c:forEach>
+
     </ul>
 </div>
 
@@ -54,12 +66,13 @@
     <ul class="pagination">
         <c:forEach var="i" begin="1" end="${totalPages}">
             <li class="page-item ${i == currentPage ? 'active' : ''}">
-                <a class="page-link" href="/event/event/view.do?event_no=${eventView.event.event_no}&currentPage=${i}">${i}</a>
+                <a class="page-link" href="/event/event/view.do?event_no=${event.event_no}&currentPage=${i}">${i}</a>
             </li>
         </c:forEach>
     </ul>
 </nav>
 
+ 
 <style> /* 모달창 스타일 */
 .modal-content {
 	max-width: 350px;
@@ -147,7 +160,7 @@ $(document).ready(function() {
         $(this).parent().addClass("active");
         
         var pageNo = $(this).text();
-        var eventNo = ${eventView.event.event_no};
+        var eventNo = ${event.event_no};
 
         $.ajax({
             url: "/event/event/EventComment.ajax", 

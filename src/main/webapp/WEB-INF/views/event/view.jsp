@@ -13,8 +13,7 @@
 				</div>
 				<div class="cont-event-area">
 				
-					<%@ include file="/WEB-INF/views/layouts/event/title_tab_area.jsp"%>
-					<%-- <tiles:insertAttribute name="title_tab" /> --%>
+					<%@ include file="/WEB-INF/views/layouts/event/content/title_tab_area.jsp"%>
 
 					<div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-t">
 						<!--S:이벤트 상세-->
@@ -54,12 +53,11 @@
 						            </c:forEach>
 						        </div>
 						    </div>
-						    <tiles:insertAttribute name="comment" ignore="true" />
-							<%-- 
-						    <c:if test="${eventView.event.event_cmt == 1}">
-							    <%@ include file="/WEB-INF/views/layouts/event/comment_area.jsp"%>
+
+						    <c:if test="${event.event_cmt == 1}">
+							    <%@ include file="/WEB-INF/views/layouts/event/content/comment_area.jsp"%>
 							</c:if>
-							 --%>
+
 						</div>
 						<div class="btn-area-right">
 							<a href="/event/event/list" class="btn-default btn-white">목록으로</a>

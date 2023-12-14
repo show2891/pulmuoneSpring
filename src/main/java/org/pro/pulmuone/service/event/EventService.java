@@ -2,6 +2,7 @@ package org.pro.pulmuone.service.event;
 
 import java.util.List;
 
+import org.pro.pulmuone.domain.event.EventCommentVO;
 import org.pro.pulmuone.domain.event.EventListVO;
 import org.pro.pulmuone.domain.event.EventViewVO;
 
@@ -13,5 +14,7 @@ public interface EventService {
     int getTotalPages(int numberPerPage);
     
     EventViewVO viewEvent(int event_no);
+    
+    List<EventCommentVO> getComments(int event_no, int currentPage, int numberPerPage);
     
 }

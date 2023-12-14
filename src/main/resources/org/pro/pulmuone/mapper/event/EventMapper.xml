@@ -88,5 +88,17 @@
 	    LEFT JOIN event_image i ON e.event_no = i.event_no 
 	    WHERE e.event_no = #{event_no}
 	</select>
+	
+	<select id="getComments" resultType="org.pro.pulmuone.domain.event.EventCommentVO">
+        SELECT comment_no, event_no, member_no, write_date, content, name
+        FROM (
+            SELECT rownum rnum, c.comment_no, c.event_no, c.member_no, c.write_date, c.content, m.name
+            FROM (
+                SELECT * FROM event_comment WHERE event_no = #{event_no} ORDER BY comment_no DESC
+            ) c
+            INNER JOIN member m ON c.member_no = m.member_no
+        )
+        WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
 
 </mapper>
