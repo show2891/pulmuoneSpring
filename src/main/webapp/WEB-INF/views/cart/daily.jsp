@@ -209,27 +209,47 @@
       $(".prod-remove").click(function () {
          changeCount(this, -1);
 
-      });
+		});
+		  var nowArgs = undefined;
+		  window.orderProcess = function (args) {
+		    if (!window.is_signed) {
+		      alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
+		      return;
+		    }
+		    nowArgs = args;
 
-      $("#allOrderBtn").click(function () {
-         const order = { item: [] };
-         $(".order-item-list>*:has([name='cartIdx']:checked)").each(function (i, el) {
-            const itemCode = $(el).attr("data-itemcode");
-            const item = {
-               itemCode: itemCode,
-               dayQty: [],
-               eventIdx: $(el).attr("data-event-idx")
-            };
-            if (type == 'daily') {
-               $("[data-count]", el).each(function () {
-                  item.dayQty.push(parseInt($(this).val(), 10));
-               });
-            }
-            else {
-               item.qty = String($("[data-count]", el).val());
-            }
-            order.item.push(item);
-         });
+		    var codes = [];
+		    for (var item of args.item) {
+		      if (!item.itemCode) continue;
+		      codes.push(item.itemCode);
+		    }
+
+		    
+		    $("#orderModal ul").html("");
+		    $("#orderModal").addClass("loading").modal("show");
+
+		   location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
+		   $("#orderModal").modal("hide").removeClass("loading");
+		  }
+		$("#allOrderBtn").click(function () {
+			const order = { item: [] };
+			$(".order-item-list>*:has([name='cartIdx']:checked)").each(function (i, el) {
+				const itemCode = $(el).attr("data-itemcode");
+				const item = {
+					itemCode: itemCode,
+					dayQty: [],
+					eventIdx: $(el).attr("data-event-idx")
+				};
+				if (type == 'daily') {
+					$("[data-count]", el).each(function () {
+						item.dayQty.push(parseInt($(this).val(), 10));
+					});
+				}
+				else {
+					item.qty = String($("[data-count]", el).val());
+				}
+				order.item.push(item);
+			});
 
          if (order.item.length <= 0) {
             alert("선택된 상품이 없습니다.");
@@ -280,157 +300,153 @@
                         </div>
                      </div>
 
-                     <div data-empty-action="N">
-                        <div class="prd-cart-all-select">
-                           <div class="checkbox chk-type3">
-                              <input type="checkbox" id="cartIdxAll" checked="checked"> <label for="cartIdxAll" style="font-weight: 300;">전체선택</label>
-                           </div>
-                           <button type="button" class="btn-round2 deleteAll">선택 삭제</button>
-                        </div>
-                        <c:forEach items="${list}" var="list">
-                           <ul class="prd-cart-list  order-item-list">
-                              <li data-id="${list.cart_no}" data-itemcode="${list.products_no}" class="order-item order-chk" data-price="${list.price}">
-                                 <div class="checkbox chk-type3">
-                                    <input type="checkbox" id="chk-prd-${list.cart_no}" name="cartIdx" value="${list.cart_no}" checked="checked" data-itemcode="${list.products_no}"> <label for="chk-prd-${list.cart_no}"><span class="hide">해당제품선택</span></label>
-                                 </div> <a href="/product/daily/${list.products_tag}" class="prd-cart">
-                                    <div class="thumb">
-                                       <img src="/file/download/product/${list.system_name }" alt="">
-                                    </div>
-                                    <div class="prd-info">
-                                       <b class="prd-title">${list.products_name }</b> <b class="now-price"><fmt:formatNumber value="${list.price }" pattern="#,###" /><span> 원</span> </b>
-                                    </div>
-                              </a>
-                                 <div class="prd-cart-select-daily">
-                                    <ul data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no}">
-                                       <li><input type="hidden" data-count="0" value="${list.mon_cnt}"> <span>월</span>
-                                          <div class="prd-select-daily">
-                                             <button type="button" class="prod-add ea-control" data-index="0">
-                                                +<span class="hide">제품 추가</span>
-                                             </button>
-                                             <em data-itemcount-view="0">${list.mon_cnt}</em>
-                                             <button type="button" class="prod-remove ea-control btn-minus" data-index="0">
-                                                <span class="hide">제품 빼기</span>
-                                             </button>
-                                          </div></li>
-                                       <li><input type="hidden" data-count="1" value="${list.tue_cnt}"> <span>화</span>
-                                          <div class="prd-select-daily">
-                                             <button type="button" class="prod-add ea-control" data-index="1">
-                                                +<span class="hide">제품 추가</span>
-                                             </button>
-                                             <em data-itemcount-view="1">${list.tue_cnt}</em>
-                                             <button type="button" class="prod-remove ea-control btn-minus" data-index="1">
-                                                <span class="hide">제품 빼기</span>
-                                             </button>
-                                          </div></li>
-                                       <li><input type="hidden" data-count="2" value="${list.wed_cnt}"> <span>수</span>
-                                          <div class="prd-select-daily">
-                                             <button type="button" class="prod-add ea-control" data-index="2">
-                                                +<span class="hide">제품 추가</span>
-                                             </button>
-                                             <em data-itemcount-view="2">${list.wed_cnt}</em>
-                                             <button type="button" class="prod-remove ea-control btn-minus" data-index="2">
-                                                <span class="hide">제품 빼기</span>
-                                             </button>
-                                          </div></li>
-                                       <li><input type="hidden" data-count="3" value="${list.thu_cnt}"> <span>목</span>
-                                          <div class="prd-select-daily">
-                                             <button type="button" class="prod-add ea-control" data-index="3">
-                                                +<span class="hide">제품 추가</span>
-                                             </button>
-                                             <em data-itemcount-view="3">${list.thu_cnt}</em>
-                                             <button type="button" class="prod-remove ea-control btn-minus" data-index="3">
-                                                <span class="hide">제품 빼기</span>
-                                             </button>
-                                          </div></li>
-                                       <li><input type="hidden" data-count="4" value="${list.fir_cnt}"> <span>금</span>
-                                          <div class="prd-select-daily">
-                                             <button type="button" class="prod-add ea-control" data-index="4">
-                                                +<span class="hide">제품 추가</span>
-                                             </button>
-                                             <em data-itemcount-view="4">${list.fir_cnt}</em>
-                                             <button type="button" class="prod-remove ea-control btn-minus" data-index="4">
-                                                <span class="hide">제품 빼기</span>
-                                             </button>
-                                          </div></li>
-                                    </ul>
-                                 </div> <c:choose>
-                                    <c:when test="${list.wish_status eq 1 }">
-                                       <button type="button" class="btn-wishList active" data-wish-type="daily" data-wish-id="${list.products_tag}">
-                                          <i class="ico ico-wishlist"></i> <span class="hide">제품 찜하기</span>
-                                       </button>
-                                       <button type="button" class="btn-delete btn-prd-delete" data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no}">
-                                          <i class="ico ico-prd-delete"></i> <span class="hide">카트에서 삭제</span>
-                                       </button>
-                                    </c:when>
-                                    <c:otherwise>
-                                       <button type="button" class="btn-wishList " data-wish-type="daily" data-wish-id="${list.products_tag}">
-                                          <i class="ico ico-wishlist"></i> <span class="hide">제품 찜하기</span>
-                                       </button>
-                                       <button type="button" class="btn-delete btn-prd-delete" data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no}">
-                                          <i class="ico ico-prd-delete"></i> <span class="hide">카트에서 삭제</span>
-                                       </button>
-                                    </c:otherwise>
-                                 </c:choose>
-                              </li>
-                           </ul>
-                        </c:forEach>
-                     </div>
-                     <div class="cart-notice-area">
-                        <b>주문 시 유의사항</b>
-                        <ul class="list dot-list">
-                           <li>담은 제품은 최대 50개까지 30일간 보관됩니다.</li>
-                           <li>주문 시 일별 음용 수량을 수정할 수 있으며, 예상 청구 금액 확인이 가능합니다.</li>
-                        </ul>
-                     </div>
-                     <!--S:띠배너 슬라이드-->
-                     <div class="banner-area this-prd" style="margin-bottom: 0px">
-                        <div class="banner-list">
-                           <a class="item" href="/event/event/view/2" title="장바구니_친구초대" style="background-color: #"> <img src="/file/download/banner/5944914d-b8f7-4d8d-90fc-e1cea9cb2d93.png" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <!--E:띠배너 슬라이드-->
-                  </div>
-                  <div class="prd-checkout-area">
-                     <dl>
-                        <dt class="list-head">
-                           <em class="count">선택한 상품 <span data-count-view="item">0</span>개
-                           </em>
-                        </dt>
-                        <dd>
-                           <span>상품 판매가 (4주)</span> <b>
-                              <div class="now-price">
-                                 <b data-price-view="origin">0</b> <span>원</span>
-                              </div>
-                           </b>
-                        </dd>
-                        <dd>
-                           <span>상품 할인 판매가</span> <b>
-                              <div class="now-price">
-                                 <b data-price-view="sale" class="">0</b> <span>원</span>
-                              </div>
-                           </b>
-                        </dd>
-                        <dd class="checkout-sum">
-                           <span>4주예상 주문금액</span> <b>
-                              <div class="now-price">
-                                 <b data-price-view="total">0</b> <span>원</span>
-                              </div>
-                           </b>
-                        </dd>
-                     </dl>
-                     <form action="/daily/order/step1" method="GET">
-                        <c:forEach var="list" items="${list }">
-                           <input type="hidden" name="item" value='{"item":[{"itemCode":"${list.products_no}","dayQty":[1,1,1,1,1]}]'>
-                        </c:forEach>
-                        <button type="button" id="allOrderBtn" class="btn-default">주문신청</button>
-                     </form>
 
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+							<div data-empty-action="N">
+								<div class="prd-cart-all-select">
+									<div class="checkbox chk-type3">
+										<input type="checkbox" id="cartIdxAll" checked="checked"> <label for="cartIdxAll" style="font-weight: 300;">전체선택</label>
+									</div>
+									<button type="button" class="btn-round2 deleteAll">선택 삭제</button>
+								</div>
+								<c:forEach items="${list}" var="list">
+									<ul class="prd-cart-list  order-item-list">
+										<li data-id="${list.cart_no}" data-itemcode="${list.products_no}" class="order-item order-chk" data-price="${list.price}">
+											<div class="checkbox chk-type3">
+												<input type="checkbox" id="chk-prd-${list.cart_no}" name="cartIdx" value="${list.cart_no}" checked="checked" data-itemcode="${list.products_no}"> <label for="chk-prd-${list.cart_no}"><span class="hide">해당제품선택</span></label>
+											</div> <a href="/product/daily/${list.products_tag}" class="prd-cart">
+												<div class="thumb">
+													<img src="/file/download/product/${list.system_name }" alt="">
+												</div>
+												<div class="prd-info">
+													<b class="prd-title">${list.products_name }</b> <b class="now-price"><fmt:formatNumber value="${list.price }" pattern="#,###" /><span> 원</span> </b>
+												</div>
+										</a>
+											<div class="prd-cart-select-daily">
+												<ul data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no}">
+													<li><input type="hidden" data-count="0" value="${list.mon_cnt}"> <span>월</span>
+														<div class="prd-select-daily">
+															<button type="button" class="prod-add ea-control" data-index="0">
+																+<span class="hide">제품 추가</span>
+															</button>
+															<em data-itemcount-view="0">${list.mon_cnt}</em>
+															<button type="button" class="prod-remove ea-control btn-minus" data-index="0">
+																<span class="hide">제품 빼기</span>
+															</button>
+														</div></li>
+													<li><input type="hidden" data-count="1" value="${list.tue_cnt}"> <span>화</span>
+														<div class="prd-select-daily">
+															<button type="button" class="prod-add ea-control" data-index="1">
+																+<span class="hide">제품 추가</span>
+															</button>
+															<em data-itemcount-view="1">${list.tue_cnt}</em>
+															<button type="button" class="prod-remove ea-control btn-minus" data-index="1">
+																<span class="hide">제품 빼기</span>
+															</button>
+														</div></li>
+													<li><input type="hidden" data-count="2" value="${list.wed_cnt}"> <span>수</span>
+														<div class="prd-select-daily">
+															<button type="button" class="prod-add ea-control" data-index="2">
+																+<span class="hide">제품 추가</span>
+															</button>
+															<em data-itemcount-view="2">${list.wed_cnt}</em>
+															<button type="button" class="prod-remove ea-control btn-minus" data-index="2">
+																<span class="hide">제품 빼기</span>
+															</button>
+														</div></li>
+													<li><input type="hidden" data-count="3" value="${list.thu_cnt}"> <span>목</span>
+														<div class="prd-select-daily">
+															<button type="button" class="prod-add ea-control" data-index="3">
+																+<span class="hide">제품 추가</span>
+															</button>
+															<em data-itemcount-view="3">${list.thu_cnt}</em>
+															<button type="button" class="prod-remove ea-control btn-minus" data-index="3">
+																<span class="hide">제품 빼기</span>
+															</button>
+														</div></li>
+													<li><input type="hidden" data-count="4" value="${list.fir_cnt}"> <span>금</span>
+														<div class="prd-select-daily">
+															<button type="button" class="prod-add ea-control" data-index="4">
+																+<span class="hide">제품 추가</span>
+															</button>
+															<em data-itemcount-view="4">${list.fir_cnt}</em>
+															<button type="button" class="prod-remove ea-control btn-minus" data-index="4">
+																<span class="hide">제품 빼기</span>
+															</button>
+														</div></li>
+												</ul>
+											</div> <c:choose>
+												<c:when test="${list.wish_status eq 1 }">
+													<button type="button" class="btn-wishList active" data-wish-type="daily" data-wish-id="${list.products_tag}">
+														<i class="ico ico-wishlist"></i> <span class="hide">제품 찜하기</span>
+													</button>
+													<button type="button" class="btn-delete btn-prd-delete" data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no}">
+														<i class="ico ico-prd-delete"></i> <span class="hide">카트에서 삭제</span>
+													</button>
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="btn-wishList " data-wish-type="daily" data-wish-id="${list.products_tag}">
+														<i class="ico ico-wishlist"></i> <span class="hide">제품 찜하기</span>
+													</button>
+													<button type="button" class="btn-delete btn-prd-delete" data-cart-idx="${list.cart_no}" data-itemcode="${list.products_no}">
+														<i class="ico ico-prd-delete"></i> <span class="hide">카트에서 삭제</span>
+													</button>
+												</c:otherwise>
+											</c:choose>
+										</li>
+									</ul>
+								</c:forEach>
+							</div>
+							<div class="cart-notice-area">
+								<b>주문 시 유의사항</b>
+								<ul class="list dot-list">
+									<li>담은 제품은 최대 50개까지 30일간 보관됩니다.</li>
+									<li>주문 시 일별 음용 수량을 수정할 수 있으며, 예상 청구 금액 확인이 가능합니다.</li>
+								</ul>
+							</div>
+							<!--S:띠배너 슬라이드-->
+							<div class="banner-area this-prd" style="margin-bottom: 0px">
+								<div class="banner-list">
+									<a class="item" href="/event/event/view/2" title="장바구니_친구초대" style="background-color: #"> <img src="/file/download/banner/5944914d-b8f7-4d8d-90fc-e1cea9cb2d93.png" alt="">
+									</a>
+								</div>
+							</div>
+							<!--E:띠배너 슬라이드-->
+						</div>
+						<div class="prd-checkout-area">
+							<dl>
+								<dt class="list-head">
+									<em class="count">선택한 상품 <span data-count-view="item">0</span>개
+									</em>
+								</dt>
+								<dd>
+									<span>상품 판매가 (4주)</span> <b>
+										<div class="now-price">
+											<b data-price-view="origin">0</b> <span>원</span>
+										</div>
+									</b>
+								</dd>
+								<dd>
+									<span>상품 할인 판매가</span> <b>
+										<div class="now-price">
+											<b data-price-view="sale" class="">0</b> <span>원</span>
+										</div>
+									</b>
+								</dd>
+								<dd class="checkout-sum">
+									<span>4주예상 주문금액</span> <b>
+										<div class="now-price">
+											<b data-price-view="total">0</b> <span>원</span>
+										</div>
+									</b>
+								</dd>
+							</dl>							
+								<button type="button" id="allOrderBtn" class="btn-default">주문신청</button>							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </main>
 </html>

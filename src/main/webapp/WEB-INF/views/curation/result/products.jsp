@@ -120,109 +120,27 @@ function sendKakao() {
 }
 
 </script>
-
-
 		<script type="text/javascript">
+		  var nowArgs = undefined;
+		  window.orderProcess = function (args) {
+		    if (!window.is_signed) {
+		      alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
+		      return;
+		    }
+		    nowArgs = args;
 
-var nowArgs = undefined;
-window.orderProcess = function (args) {
-  if (!window.is_signed) {
-    alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
-    return;
-  }
-  nowArgs = args;
+		    var codes = [];
+		    for (var item of args.item) {
+		      if (!item.itemCode) continue;
+		      codes.push(item.itemCode);
+		    }
+		    
+		    $("#orderModal ul").html("");
+		    $("#orderModal").addClass("loading").modal("show");
 
-  var codes = [];
-  for (var item of args.item) {
-    if (!item.itemCode) continue;
-    codes.push(item.itemCode);
-  }
-
-  $("#orderModal ul").html("");
-  $("#orderModal").addClass("loading").modal("show");
-
-  axios.post(`/product_available`, { ids: codes }).then(function (r) {
-    var o = r.data.RESULT_MSG;
-    if (o.fails.length) {
-      var itemCodes = o.fails.map(v => v.itemCode);
-      var args2 = {
-        item: args.item.filter(v => !itemCodes.includes(v.itemCode))
-      };
-      nowArgs = args2;
-      $("#orderModal").modal("hide").removeClass("loading");
-      showNotAvailModal(o.fails, function () {
-        $("#orderModal ul").html("");
-        $("#orderModal").addClass("loading").modal("show");
-
-        if (o.fails.length == codes.length) {
-          $("#orderModal").removeClass("loading").modal("hide");
-          return;
-        }
-
-        get({url: '/order/daily/check/option'}, function (r) {
-          if (typeof r.RESULT_MSG == 'object' && r.RESULT_MSG.length > 0) {
-            let customerList = r.RESULT_MSG
-            if (customerList.length > 5) {
-              customerList = customerList.slice(0, 5)
-            }
-
-            var latno = 0;
-            $.each(customerList, function (i, data) {
-              var tpl = $("#orderPosLi").text();
-              var nickname = data.nickname;
-              if (!nickname) {
-                if (latno == 0) {
-                  latno = customerList.filter(v => !!v.nickname).length
-                }
-                nickname = "음용 " + latno;
-                latno++;
-              }
-              tpl = tpl.replace(/\{nickname\}/g, nickname);
-              tpl = tpl.replace(/\{custnumber\}/g, data.custnumber);
-              tpl = tpl.replace(/\{prtnId\}/g, data.phiCustomerVo.prtnId);
-              $("#orderModal ul").append(tpl);
-            })
-            $('#orderModal input[name=custnum]:first').click()
-            $("#orderModal").removeClass("loading")
-          } else {
-            location.href = "/daily/order/step1?item=" + encodeURIComponent(JSON.stringify(args2));
-          }
-        });
-      });
-    }
-    else {
-      get({url: '/order/daily/check/option'}, function (r) {
-        if (typeof r.RESULT_MSG == 'object' && r.RESULT_MSG.length > 0) {
-          let customerList = r.RESULT_MSG
-          if (customerList.length > 5) {
-            customerList = customerList.slice(0, 5)
-          }
-          var latno = 0;
-          $.each(customerList, function (i, data) {
-            var tpl = $("#orderPosLi").text();
-            var nickname = data.nickname;
-            if (!nickname) {
-              if (latno == 0) {
-                latno = customerList.filter(v => !!v.nickname).length
-              }
-              nickname = "음용 " + latno;
-              latno++;
-            }
-            tpl = tpl.replace(/\{nickname\}/g, nickname);
-            tpl = tpl.replace(/\{custnumber\}/g, data.custnumber);
-            tpl = tpl.replace(/\{prtnId\}/g, data.phiCustomerVo.prtnId);
-            $("#orderModal ul").append(tpl);
-          })
-          $('#orderModal input[name=custnum]:first').click()
-          $("#orderModal").removeClass("loading")
-        } else {
-          location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args));
-        }
-      });
-    }
-  });
-
-}
+		   location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
+		   $("#orderModal").modal("hide").removeClass("loading");
+		  }
 $(document).on("click", "#orderModal button", function (e) {
   var type = $(this).attr("data-type");
   var p = encodeURIComponent(JSON.stringify(nowArgs));;
@@ -302,9 +220,8 @@ $(document).on("click", "#orderModal button", function (e) {
 					</div>
 					<div class="button-set sm" style="margin: 20px 0px">
 						<button id="cartBtn" class="button-basic black">장바구니</button>
-						<input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}","dayQty":[1,1,1,1,1]}]'>
-							<button id="orderBtn" class="button-basic primary">주문하기</button>
-						</div>
+						<button id="orderBtn" class="button-basic primary">주문하기</button>
+					</div>
 				</div>
 
 				<div class="result-text">${list[0].program_content}</div>
