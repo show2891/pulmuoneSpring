@@ -316,13 +316,13 @@ $(document).on("click", "#orderModal button", function (e) {
 							<c:when test="${param.bmi lt 18.5 }">
 								<li data-type="bmi">${list[0].lifestyle_change01 }</li>
 							</c:when>
-							<c:when test="${param.bmi ge 18.5 or param.bmi lt 23.0 }">
+							<c:when test="${param.bmi le 18.5 or param.bmi lt 23.0 }">
 								<li data-type="bmi">${list[0].lifestyle_change02 }</li>
 							</c:when>
-							<c:when test="${param.bmi ge 23.1 or param.bmi lt 25.0 }">
+							<c:when test="${param.bmi le 23.1 or param.bmi lt 25.0 }">
 								<li data-type="bmi">정상체중 범위에 들도록 현재의 식생활 행동에서 문제점을 찾고 행동 변화를 시도합니다.</li>
 							</c:when>
-							<c:when test="${param.bmi ge 25.1 }">
+							<c:when test="${param.bmi gt 25.1 }">
 								<li data-type="bmi">${list[0].lifestyle_change03 }</li>
 							</c:when>
 						</c:choose>
