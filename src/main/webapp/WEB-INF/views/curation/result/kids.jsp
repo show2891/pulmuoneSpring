@@ -66,13 +66,10 @@
         alert("상품을 선택해주세요.");
         return;
       }                 
-      
-    	    var that = $(this);
 			var param = [];
-			param.push(Object.values(orderItems)[0].itemCode);
-			param.push(Object.values(orderItems)[1].itemCode);
-
-
+			for (var i = 0; i < orderItems.length; i++) {
+		 		param.push(Object.values(orderItems)[i].itemCode);	
+			}
     	    axios.get('/cart/kid/save?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
     	        alert("제품이 담겼습니다.");
     	    }).catch(function (e) {

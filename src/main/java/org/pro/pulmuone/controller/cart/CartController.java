@@ -56,18 +56,19 @@ public class CartController {
   }
 
   @RequestMapping("kid/save")
-  public String kidcartsave(@RequestParam(value = "products_no", required = false ) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+  public String kidcartsave(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 	log.info("kidcartsave : " + products_no);
 	int count = 0;
-	String [] products_nos = products_no.split(",");
-	vo.setMember_id(principal.getName());	
-	if (products_nos[0].equals("0072840") && products_nos[1].equals("0072976") ) {
+	String[] products_nos = products_no.split(",");
+	vo.setMember_id(principal.getName());
+	if (products_nos[0].equals("0072840") && products_nos[1].equals("0072976")) {
 	  vo.setMon_cnt(1);
 	  vo.setTue_cnt(0);
 	  vo.setWed_cnt(1);
 	  vo.setThu_cnt(0);
 	  vo.setFir_cnt(1);
 	  vo.setProducts_no(products_nos[0]);
+	  this.cartMapper.dailycartdelete(vo);
 	  count = this.cartMapper.dailycart(vo);
 	  vo.setMon_cnt(0);
 	  vo.setTue_cnt(1);
@@ -75,8 +76,9 @@ public class CartController {
 	  vo.setThu_cnt(1);
 	  vo.setFir_cnt(0);
 	  vo.setProducts_no(products_nos[1]);
+	  this.cartMapper.dailycartdelete(vo);
 	  count = this.cartMapper.dailycart(vo);
-	} 
+	}
 	if (count == 1) {
 	  log.info("성공");
 	  return "product/DailyList.tiles";
@@ -85,20 +87,24 @@ public class CartController {
 	  return "product/DailyList.tiles";
 	}
   }
-  
-  @RequestMapping("daily/save/{products_no}")
-  public String dailycartsave(@PathVariable String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+
+  @RequestMapping("daily/save")
+  public String dailycartsave(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 	log.info("dailycartsave : " + products_no);
+	int count = 0;
+	String[] products_nos = products_no.split(",");
+	vo.setMember_id(principal.getName());
 	vo.setMon_cnt(1);
 	vo.setTue_cnt(1);
 	vo.setWed_cnt(1);
 	vo.setThu_cnt(1);
 	vo.setFir_cnt(1);
-	vo.setMember_id(principal.getName());
-	vo.setProducts_no(products_no);
-	int count = 0;
+	for (int i = 0; i < products_nos.length; i++) {
+	  vo.setProducts_no(products_nos[i]);
+	  this.cartMapper.dailycartdelete(vo);
+	  count = this.cartMapper.dailycart(vo);
+	}
 
-	count = this.cartMapper.dailycart(vo);
 	if (count == 1) {
 	  log.info("성공");
 	  return "product/DailyList.tiles";
@@ -109,15 +115,19 @@ public class CartController {
 
   }
 
-  @RequestMapping("box/save/{products_no}")
-  public String boxcartsave(@PathVariable String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+  @RequestMapping("box/save")
+  public String boxcartsave(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 	log.info("boxcartsave : " + products_no);
-	vo.setMember_id(principal.getName());
-	vo.setProducts_no(products_no);
-	vo.setAmount(1);
 	int count = 0;
+	vo.setMember_id(principal.getName());
+	vo.setAmount(1);
+	String[] products_nos = products_no.split(",");
+	for (int i = 0; i < products_nos.length; i++) {
+	  vo.setProducts_no(products_nos[i]);
+	  this.cartMapper.boxcartdelete(vo);
+	  count = this.cartMapper.boxcart(vo);
+	}
 
-	count = this.cartMapper.boxcart(vo);
 	if (count == 1) {
 	  log.info("성공");
 	  return "product/BoxList.tiles";
@@ -129,7 +139,7 @@ public class CartController {
   }
 
   @RequestMapping("daily/delete")
-  public String dailycartdelete(@RequestParam(value = "products_no", required = false ) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+  public String dailycartdelete(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 
 	log.info("> dailycartdelete Start" + products_no);
 	vo.setMember_id(principal.getName());
@@ -141,7 +151,7 @@ public class CartController {
 
   // 택배 장바구니	삭제
   @RequestMapping("box/delete")
-  public String boxcartdelete(@RequestParam(value = "products_no", required = false ) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+  public String boxcartdelete(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 
 	log.info("> boxcartdelete Start" + products_no);
 	vo.setMember_id(principal.getName());
@@ -149,7 +159,7 @@ public class CartController {
 	this.cartMapper.boxcartdelete(vo);
 	return "cart/box.tiles";
   }
-  
+
   @PutMapping("daily/{products_no}")
   public String dailycartupdate(@PathVariable String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 
@@ -162,6 +172,4 @@ public class CartController {
 	return "cart/daily.tiles";
   }
 
-  
-  
 }

@@ -60,13 +60,22 @@
     });
 
     $("#cartBtn").click(function () {
-      var orderItems = getItems('qty');
-      if (orderItems.length === 0) {
-        alert("상품을 선택해주세요.");
-        return;
-      }
-      addCarts("daily", orderItems);
-    });
+        var orderItems = getItems('qty');
+        if (orderItems.length === 0) {
+          alert("상품을 선택해주세요.");
+          return;
+        }
+  		var param = [];
+  		console.log(orderItems.length);
+  		for (var i = 0; i < orderItems.length; i++) {
+  	 		param.push(Object.values(orderItems)[i].itemCode);	
+  		}
+  	    axios.get('/cart/daily/save?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
+  	        alert("제품이 담겼습니다.");
+  	    }).catch(function (e) {
+  	      alert("서버와 연결이 올바르지 않습니다.");
+  	    })   
+      });
 
   })
   
@@ -281,7 +290,7 @@ $(document).on("click", "#orderModal button", function (e) {
 
 						<div class="product-radio-group">
 							<c:forEach var="dto" items="${list }">
-								<label data-item-index="1" data-item-link="product/daily/${dto.products_tag }?eventIdx=" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20230227/1c884ddf-10fc-4cb8-854e-792ba5bc4875.png" data-item-title="위러브 엑스투" data-item-desc="3500"> <input value="0073405" name="itemCode" type="checkbox">
+								<label data-item-index="1" data-item-link="product/daily/${dto.products_tag }?eventIdx=" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20230227/1c884ddf-10fc-4cb8-854e-792ba5bc4875.png" data-item-title="${dto.products_name} " data-item-desc="3500"> <input value="${dto.products_no }" name="itemCode" type="checkbox">
 									<div class="check-display"></div>
 									<div class="thumb" data-product-preview="${dto.products_tag }">
 										<img src="/file/download/product/${dto.system_name }" alt="">
