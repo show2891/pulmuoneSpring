@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 @RestController
 @RequestMapping("/ajax/member/*")
 @Log4j
-public class AjaxMemberController {
+public class MemberAjaxController {
 
 	@Autowired
 	private MemberService memberService;
