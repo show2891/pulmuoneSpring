@@ -26,7 +26,7 @@ public class MypageController {
 	private ProductMapper mapper;
 	
 	@GetMapping("mypage")
-	public String login(HttpServletRequest request) {
+	public String summary(HttpServletRequest request) {
 		log.warn("> MypageController mypage()...");
 			
 		return "mypage/home/userSummmary.tiles";

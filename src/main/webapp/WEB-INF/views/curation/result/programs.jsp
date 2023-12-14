@@ -62,7 +62,16 @@
         alert("상품을 선택해주세요.");
         return;
       }
-      addCarts("daily", orderItems);
+		var param = [];
+		console.log(orderItems.length);
+		for (var i = 0; i < orderItems.length; i++) {
+	 		param.push(Object.values(orderItems)[i].itemCode);	
+		}
+	    axios.get('/cart/daily/save?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
+	        alert("제품이 담겼습니다.");
+	    }).catch(function (e) {
+	      alert("서버와 연결이 올바르지 않습니다.");
+	    })   
     });
 
   })
@@ -271,12 +280,7 @@ $(document).on("click", "#orderModal button", function (e) {
 
 				<div class="card-item">
 					<div class="product-wrapper">
-
-
 						<p style="margin-bottom: 12px">${list[0].program_name }</p>
-
-
-
 						<ul class="product-list" id="order2">
 							<c:forEach var="dto" items="${list }">
 								<li data-item-index="0" data-item-link="product/daily/${dto.products_tag }" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/${dto.system_name }" data-item-title="${dto.products_name }" data-item-desc="3500"><input value="${dto.products_no }" name="itemCode" type="hidden"> <a class="item" data-product-preview="${dto.products_tag }"> <label>${dto.dayweek}</label>
@@ -288,18 +292,10 @@ $(document).on("click", "#orderModal button", function (e) {
 										</div>
 								</a></li>
 							</c:forEach>
-
-
-
 						</ul>
 					</div>
 					<div class="button-set sm" style="margin: 20px 0px">
-						<form action="/cart/daily" method="GET">
-							<c:forEach var="dto" items="${list }">
-								<input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}"}]'>
-							</c:forEach>
-							<button id="cartBtn" class="button-basic black">장바구니</button>
-						</form>
+						<button id="cartBtn" class="button-basic black">장바구니</button>
 						<form action="/daily/order/step1" method="GET">
 							<c:forEach var="dto" items="${list }">
 								<input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}"}]'>
