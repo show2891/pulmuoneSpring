@@ -67,6 +67,7 @@ function showNotAvailModal(fails, onOk, onCancel) {
   $("#noAvailModal").modal("show");
 }
 
+
 function addCartToServer(type, data, eventIdx) {
   var codes = [];
   for (var item of data) {

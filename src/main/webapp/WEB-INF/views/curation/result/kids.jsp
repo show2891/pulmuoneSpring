@@ -5,10 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <body>
+<main class="Cart">
 
-	<main class="Cart">
-
-		<div id="container-wrapper" class="container-wrapper">
+<div id="container-wrapper" class="container-wrapper">
 			<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 			
 <script type="text/javascript">
@@ -358,10 +357,7 @@
 <!-- 								</form> -->
 
 								<form action="/daily/order/step1" method="GET">
-								<c:forEach var="dto" items="${list }">
-									<input type="hidden" name="item"
-										value='{"item":[{"itemCode":"${dto.products_no}, ${dto.products_no }","dayQty":[1,1,1,1,1]}]'>
-								</c:forEach>
+								<input type="hidden" name="item" value='{"item":[{"itemCode":"${list[0].products_no}","dayQty":[1,0,1,0,1]}]'	>
 								<button id="orderBtn" class="button-basic primary">주문하기</button>
 							</form>
 						</div>

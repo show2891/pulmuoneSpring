@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.pro.pulmuone.domain.curation.CurationVO;
+import org.pro.pulmuone.domain.curation.KidsVO;
 import org.pro.pulmuone.mapper.curation.CurationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,12 @@ public class CurationResultController {
 
   // 키즈 프로그램
   @RequestMapping("/result/kids")
-  public String kids() throws ClassNotFoundException, SQLException {
+  public String kids(KidsVO vo, Model model) throws ClassNotFoundException, SQLException {
    log.info(">Kids Start");
+
+   vo.setProgram_no(9);
+   List<KidsVO> list = this.curationMapper.kids(vo);
+   model.addAttribute("list", list);
    return "curation/result/kids.tiles";
   }
 

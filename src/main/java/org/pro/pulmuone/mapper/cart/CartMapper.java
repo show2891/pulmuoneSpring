@@ -6,7 +6,7 @@ import org.pro.pulmuone.domain.cart.CartVO;
 
 public interface CartMapper {
 
-	// 데일리 조회
+		// 데일리 조회
 		public List<CartVO> daily ( CartVO vo ) ;
 		// 데일리 추가
 		public int dailyadd(CartVO vo) throws Exception;

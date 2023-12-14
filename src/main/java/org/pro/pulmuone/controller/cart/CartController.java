@@ -52,14 +52,15 @@ public class CartController {
 	// 장바구니 삭제
 	  @PostMapping("daily")
 	  @ResponseBody
-	  public String delete( 
-			  Principal principal
+	  public String delete( CartVO vo
+			 , Principal principal
 			 , @RequestParam("products_no") String itemCode
 			  , @RequestParam("cart_no") int cartIdx
 			  , RedirectAttributes rttr) throws Exception{
 		  
 		  log.info("delete start : " + itemCode + "/" + cartIdx);
-		  
+
+			vo.setMember_id( principal.getName());
 			int deleteCount = 0;
 			try {
 				

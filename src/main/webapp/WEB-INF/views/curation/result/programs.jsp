@@ -69,6 +69,7 @@
 
 var singleYn = "N" == 'Y';
 var title = "${list[0].program_name }";
+var itemCode = "${list[0].products_no}";
 var data = {
       mobilehost: "http://localhost",
       webhost: "http://localhost/",
@@ -270,7 +271,8 @@ $(document).on("click", "#orderModal button", function (e) {
 
                   <ul class="product-list" id="order2">
                      <c:forEach var="dto" items="${list }">
-                        <li data-item-index="0" data-item-link="product/daily/${dto.products_tag }" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/${dto.system_name }" data-item-title="${dto.products_name }" data-item-desc="3500"><input value="${dto.products_no }" name="itemCode" type="hidden"> <a class="item" data-product-preview="${dto.products_tag }"> <label>${dto.dayweek}</label>
+                        <li data-item-index="0" data-item-link="product/daily/${dto.products_tag }" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/${dto.system_name }" data-item-title="${dto.products_name }" data-item-desc="3500">
+                        <input value="${dto.products_no }" name="itemCode" type="hidden"> <a class="item" data-product-preview="${dto.products_tag }"> <label>${dto.dayweek}</label>
                               <div class="thumb">
                                  <img src="/file/download/product/${dto.system_name }" alt="">
                               </div>
@@ -283,16 +285,11 @@ $(document).on("click", "#orderModal button", function (e) {
                   </ul>
                </div>
                <div class="button-set sm" style="margin: 20px 0px">
-                  <form action="/cart/daily" method="GET">
-                     <c:forEach var="dto" items="${list }">
+
                         <input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}"}]'>
-                     </c:forEach>
                      <button id="cartBtn" class="button-basic black">장바구니</button>
-                  </form>
                   <form action="/daily/order/step1" method="GET">
-                     <c:forEach var="dto" items="${list }">
-                        <input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}"}]'>
-                     </c:forEach>
+                        <input type="hidden" name="item" value='{"item":[{"itemCode":"${list[0].products_no}","dayQty":[1,1,1,1,1]}]'>
                      <button id="orderBtn" class="button-basic primary">주문하기</button>
                   </form>
                </div>
@@ -307,13 +304,13 @@ $(document).on("click", "#orderModal button", function (e) {
                      <c:when test="${param.bmi lt 18.5 }">
                         <li data-type="bmi">${list[0].lifestyle_change01 }</li>
                      </c:when>
-                     <c:when test="${param.bmi ge 18.5 or param.bmi lt 23.0 }">
+                     <c:when test="${param.bmi le 18.5 or param.bmi lt 23.0 }">
                         <li data-type="bmi">${list[0].lifestyle_change02 }</li>
                      </c:when>
-                     <c:when test="${param.bmi ge 23.1 or param.bmi lt 25.0 }">
+                     <c:when test="${param.bmi le 23.1 or param.bmi lt 25.0 }">
                         <li data-type="bmi">정상체중 범위에 들도록 현재의 식생활 행동에서 문제점을 찾고 행동 변화를 시도합니다.</li>
                      </c:when>
-                     <c:when test="${param.bmi ge 25.1 }">
+                     <c:when test="${param.bmi gt 25.1 }">
                         <li data-type="bmi">${list[0].lifestyle_change03 }</li>
                      </c:when>
                   </c:choose>
