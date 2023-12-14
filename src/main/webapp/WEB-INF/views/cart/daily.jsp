@@ -244,45 +244,15 @@
 			});
 	
 
-// 		$(".prod-add").click(function () {
-// 			changeCount(this, 1);
-// 		});
+		$(".prod-add").click(function () {
+			changeCount(this, 1);
+		});
 
 
-// 		$(".prod-remove").click(function () {
-// 			changeCount(this, -1);
-// 		});
+		$(".prod-remove").click(function () {
+			changeCount(this, -1);
+		});
 		
-		// 수량 변경
-		// 상품 + 버튼
-		function plusBtn(btn){
-			let em = btn.next("em");
-			let input = btn.parent().prev().prev();
-			let cnt = parseInt(em.text())+1;
-			em.text(cnt);
-			input.val(cnt);
-			calculateTotalPrice();
-		};
-
-		// 상품 - 버튼
-		function minusBtn(btn){
-			let em = btn.prev("em")
-			let input = btn.parent().prev().prev();
-			let cnt = parseInt(em.text())-1;
-			if (cnt == -1) return;
-			em.text(cnt);
-			input.val(cnt);
-			calculateTotalPrice();
-		};
-
-		
-		$("button.prod-add").on("click", function() {
-			plusBtn($(this));
-		})
-
-		$("button.prod-remove").on("click", function() {
-			minusBtn($(this));
-		})
 
 		$("#allOrderBtn").click(function () {
 			const order = { item: [] };

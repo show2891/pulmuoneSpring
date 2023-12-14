@@ -13,7 +13,7 @@ public interface CartMapper {
 	   // 데일리 삭제
 	   public int dailydelete(int cart_no);
 	   // 데일리 수량 수정
-	   public int dailymodify(CartVO vo);
+	   public int dailymodify(int cart_no);
 	   
 	   // 장바구니 확인용
 	   public CartVO check(CartVO vo);

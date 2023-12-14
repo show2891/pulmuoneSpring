@@ -91,6 +91,11 @@ public class CartController {
 		  int result = cartMapper.dailyadd(vo);
 		  return result + "";
 	  }
+	  
+	  public String modifydaily(@RequestParam("cart_no") int cartIdx) throws Exception{
+		  cartMapper.dailymodify(cartIdx);
+		  return "redirect:daily";
+	  }
 	
 	// 택배 장바구니	
 	@RequestMapping("box")
