@@ -3,6 +3,7 @@ package org.pro.pulmuone.service.order;
 import java.util.List;
 
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
+import org.pro.pulmuone.domain.order.box.BoxOrderDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
 
 public interface OrderService {

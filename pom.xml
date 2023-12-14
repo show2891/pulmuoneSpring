@@ -257,6 +257,15 @@
          <version>${org.springframework-version}</version>
       </dependency>
       
+      <!-- ojdbc6.jar -->
+      <dependency>
+         <groupId>com.oracle</groupId>
+         <artifactId>ojdbc</artifactId>
+         <version>6</version>
+         <scope>system</scope>
+         <systemPath>C:\ojdbc6.jar</systemPath>
+      </dependency>
+      
 	</dependencies>
 	<build>
 		<plugins>

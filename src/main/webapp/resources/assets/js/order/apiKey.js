@@ -1,0 +1,1 @@
+const kakaoREST = 'dd417c54793eeea1c96a8f5e2914d2b0';
