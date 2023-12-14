@@ -16,8 +16,8 @@ public interface CartMapper {
   public int dailycartdelete(CartVO vo);
 
   // 매일배송 장바구니 수량
-  public int dailycartupdate(CartVO vo);  
-  
+  public int dailycartupdate(CartVO vo);
+
   // 택배배송 장바구니
   public int boxcart(CartVO vo);
 
@@ -26,4 +26,8 @@ public interface CartMapper {
 
   // 택배배송 장바구니 삭제
   public int boxcartdelete(CartVO vo);
+
+  // 매일배송 장바구니 수량
+  public int boxcartupdate(CartVO vo);
+
 }
