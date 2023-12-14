@@ -134,7 +134,7 @@
     $("#orderModal").addClass("loading").modal("show");
 
    location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
-    
+   $("#orderModal").modal("hide").removeClass("loading");
   }
 
   $(document).on("click", "#orderModal button", function (e) {
