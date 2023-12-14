@@ -213,7 +213,27 @@
 			changeCount(this, -1);
 
 		});
+		  var nowArgs = undefined;
+		  window.orderProcess = function (args) {
+		    if (!window.is_signed) {
+		      alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
+		      return;
+		    }
+		    nowArgs = args;
 
+		    var codes = [];
+		    for (var item of args.item) {
+		      if (!item.itemCode) continue;
+		      codes.push(item.itemCode);
+		    }
+
+		    
+		    $("#orderModal ul").html("");
+		    $("#orderModal").addClass("loading").modal("show");
+
+		   location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
+		   $("#orderModal").modal("hide").removeClass("loading");
+		  }
 		$("#allOrderBtn").click(function () {
 			const order = { item: [] };
 			$(".order-item-list>*:has([name='cartIdx']:checked)").each(function (i, el) {
@@ -421,14 +441,8 @@
 										</div>
 									</b>
 								</dd>
-							</dl>
-							<form action="/daily/order/step1" method="GET">
-								<c:forEach var="list" items="${list }">
-									<input type="hidden" name="item" value='{"item":[{"itemCode":"${list.products_no}","dayQty":[1,1,1,1,1]}]'>
-								</c:forEach>
-								<button type="button" id="allOrderBtn" class="btn-default">주문신청</button>
-							</form>
-
+							</dl>							
+								<button type="button" id="allOrderBtn" class="btn-default">주문신청</button>							
 						</div>
 					</div>
 				</div>
