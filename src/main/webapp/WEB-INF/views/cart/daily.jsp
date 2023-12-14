@@ -91,6 +91,7 @@
         parent.find('.prd-cart-info-sub > span').text('수량 '+ parseInt(qty/2-qty%2/2)+'개')
       }
     }
+    
    function changeCount(el, s) {
       var min = type === 'daily' ? 0 : 1;
       var container = $(el).parents(".order-item");
@@ -102,13 +103,7 @@
       });
 
       var ix = parseInt($(el).attr("data-index") || "0", 10);
-      if (max >= 0 && size[ix] + s > max && Math.max(size[ix] + s, min) != size[ix]) {
-         alert("해당 상품은 한정수량 판매입니다.");
-         return;
-      }
-
       size[ix] = Math.max(size[ix] + s, min);
-
       $("[data-print-price]", container).each(function () {
          var $t = $(this);
          $t.text(numberFormat(parseInt($t.attr("data-print-price"), 10) * size[0]));
@@ -117,6 +112,8 @@
       if (container.is("[data-delivery-per]")) {
          var per = parseInt(container.attr("data-delivery-per"), 10);
          var price = parseInt(container.attr("data-delivery-one-price"), 10);
+         console.log(per)
+         console.log(price)
          if (price > 0) {
             var dp = Math.max(Math.ceil(size[0] / per), 1) * price;
             container.attr("data-delivery-price", dp);
@@ -132,7 +129,7 @@
          }
       }
    
-         var   args = container.attr("data-itemcode");
+       var  args = container.attr("data-itemcode");
       
       newPut({
          url: '/cart/'+type+'/'+ args,

@@ -88,7 +88,6 @@ public class CartController {
 	  log.info("실패");
 	  return "product/DailyList.tiles";
 	}
-
   }
 
   @RequestMapping("daily/save")
@@ -115,7 +114,6 @@ public class CartController {
 	  log.info("실패");
 	  return "product/DailyList.tiles";
 	}
-
   }
 
   @RequestMapping("box/save")
@@ -163,16 +161,24 @@ public class CartController {
 	return "cart/box.tiles";
   }
 
-  @PutMapping("daily/{products_no}")
-  public String dailycartupdate(@PathVariable String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+  // 데일리 장바구니 수정
+  @PutMapping("daily/update")
+  public String dailycartupdate(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 
-	log.info("> dailycartupdate Start");
+	log.info("> dailycartupdate Start" );
 	vo.setMember_id(principal.getName());
-
-	List<CartVO> list = this.cartMapper.daily(vo);
-
-	model.addAttribute("list", list);
-	return "cart/daily.tiles";
+	vo.setProducts_no(products_no);
+	
+	int count = 0;
+	count = this.cartMapper.dailycartupdate(vo);
+	
+	if (count == 1) {
+		  log.info("성공");
+		  return "cart/daily.tiles";
+		} else {
+		  log.info("실패");
+		  return "cart/daily.tiles";
+		}
   }
 
 }

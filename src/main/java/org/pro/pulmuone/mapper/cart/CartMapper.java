@@ -26,5 +26,8 @@ public interface CartMapper {
 
   // 택배배송 장바구니 삭제
   public int boxcartdelete(CartVO vo);
+  
+  // 택배배송 장바구니 수량
+  public int boxcartupdate(CartVO vo);  
 
 }

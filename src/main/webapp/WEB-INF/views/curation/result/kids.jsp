@@ -345,17 +345,8 @@
 						</ul>
 					</div>
 					<div class="button-set sm" style="margin: 20px 0px">
-
-				
 							<button id="cartBtn" class="button-basic black">장바구니</button>
-						
-
-						<form action="/daily/order/step1" method="GET">
-							<c:forEach var="dto" items="${list }">
-								<input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}, ${dto.products_no }","dayQty":[1,1,1,1,1]}]'>
-							</c:forEach>
 							<button id="orderBtn" class="button-basic primary">주문하기</button>
-						</form>
 					</div>
 
 				</div>
