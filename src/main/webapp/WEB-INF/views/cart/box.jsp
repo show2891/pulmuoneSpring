@@ -326,13 +326,6 @@
 			    }).catch(function (e) {
 			      alert("서버와 연결이 올바르지 않습니다.");
 			    });
-// 				newDelete({
-// 					url: "/cart/box/delete?products_no=" + encodeURIComponent(param.join(",")),
-// 				}, function () {
-// 					alert("삭제되었습니다.");
-// 					$(".order-item-list>*:has([name='cartIdx']:checked)").remove();
-// 					calculateTotalPrice();
-// 				});
 			});
 		});
 
