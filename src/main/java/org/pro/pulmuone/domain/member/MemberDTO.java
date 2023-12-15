@@ -36,7 +36,7 @@ public class MemberDTO {
 	private int pwdReset;
 	private int enabled;
 	private List<AuthVO> authList; //회원이 어떤 권한을 가졌는지 list
-	
+	private String newPassword; // 비밀번호 변경용
 	
 //	"MEMBER_NO" NUMBER, 
 //	"MEMBER_ID" VARCHAR2(15 BYTE), 

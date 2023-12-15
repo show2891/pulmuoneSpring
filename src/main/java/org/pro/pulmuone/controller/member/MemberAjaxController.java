@@ -3,11 +3,14 @@ package org.pro.pulmuone.controller.member;
 import java.sql.SQLException;
 
 import org.pro.pulmuone.domain.member.MemberDTO;
+import org.pro.pulmuone.security.domain.CurrentUser;
 import org.pro.pulmuone.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,6 +69,20 @@ public class MemberAjaxController {
 		log.warn("> AjaxMemberController changePassword()...");
 		
 		boolean isChanged = this.memberService.changePassword(memberId, nowMemberPwd, memberPwd);
+		
+		return isChanged ? new ResponseEntity<Boolean>(isChanged, HttpStatus.OK)
+							: new ResponseEntity<Boolean>(isChanged, HttpStatus.OK);
+	}
+	
+	// 회원 탈퇴
+	@DeleteMapping(value = "quit", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Boolean> quit(Authentication authentication, @RequestBody ) throws ClassNotFoundException, SQLException {
+		log.warn("> AjaxMemberController quit()...");
+		
+		CurrentUser user = (CurrentUser) authentication.getPrincipal();
+		String storedPwd = user.getMember().getPwd();
+		
+		boolean isChanged = this.memberService.quit();
 		
 		return isChanged ? new ResponseEntity<Boolean>(isChanged, HttpStatus.OK)
 							: new ResponseEntity<Boolean>(isChanged, HttpStatus.OK);
