@@ -36,8 +36,16 @@
 		<include refid="products_no"></include>
 	</delete>
 
-	<!-- 장바구니 수량-데일리 -->
-	<update id="">
+	<!-- 장바구니 수량 수정-데일리 -->
+	<update id="dailycartupdate">
+		UPDATE cart_daily
+		SET mon_cnt = #{mon_cnt}
+		, tue_cnt = #{tue_cnt}
+		, wed_cnt = #{wed_cnt}
+		, thu_cnt = #{thu_cnt}
+		, fir_cnt = #{fir_cnt}
+		WHERE member_no = (select member_no from member where member_id = #{member_id })
+		and products_no = #{products_no}
 	</update>
 
 
@@ -67,4 +75,12 @@
 		and products_no in
 		<include refid="products_no"></include>
 	</delete>
+
+	<!-- 장바구니 수량 수정-박스 -->
+	<update id="boxcartupdate">
+		UPDATE cart_box
+		SET amount = #{amount}
+		WHERE member_no = (select member_no from member where member_id = #{member_id })
+		and products_no = #{products_no}		
+	</update>
 </mapper>

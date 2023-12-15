@@ -160,16 +160,47 @@ public class CartController {
 	return "cart/box.tiles";
   }
 
-  @PutMapping("daily/{products_no}")
-  public String dailycartupdate(@PathVariable String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+  @RequestMapping("daily/update")
+  public String dailycartupdate(@RequestParam(value = "products_no", required = false) String products_no, @RequestParam(value = "idx", required = false) String idx, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 
 	log.info("> dailycartupdate Start");
-	vo.setMember_id(principal.getName());
+	int count = 0;
+	String[] idxs = idx.split(",");
+	  vo.setMon_cnt(Integer.parseInt(idxs[0]));
+	  vo.setTue_cnt(Integer.parseInt(idxs[1]));
+	  vo.setWed_cnt(Integer.parseInt(idxs[2]));
+	  vo.setThu_cnt(Integer.parseInt(idxs[3]));
+	  vo.setFir_cnt(Integer.parseInt(idxs[4]));	
+	  vo.setMember_id(principal.getName());
+	  vo.setProducts_no(products_no);
+	count = this.cartMapper.dailycartupdate(vo);
 
-	List<CartVO> list = this.cartMapper.daily(vo);
+	if (count == 1) {
+	  log.info("성공");
+	  return "cart/daily.tiles";
+	} else {
+	  log.info("실패");
+	  return "cart/daily.tiles";
+	}
+  }
+  
+  @RequestMapping("box/update")
+  public String boxcartupdate(@RequestParam(value = "products_no", required = false) String products_no, @RequestParam(value = "idx", required = false) String idx, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
 
-	model.addAttribute("list", list);
-	return "cart/daily.tiles";
+	log.info("> boxcartupdate Start");
+	int count = 0;	
+	  vo.setAmount(Integer.parseInt(idx));
+	  vo.setMember_id(principal.getName());
+	  vo.setProducts_no(products_no);
+	count = this.cartMapper.boxcartupdate(vo);
+
+	if (count == 1) {
+	  log.info("성공");
+	  return "cart/box.tiles";
+	} else {
+	  log.info("실패");
+	  return "cart/box.tiles";
+	}
   }
 
 }
