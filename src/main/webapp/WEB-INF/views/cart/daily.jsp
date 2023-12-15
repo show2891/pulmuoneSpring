@@ -21,8 +21,8 @@
          </div>
       </div>
    </div>
+   
    <script type="text/javascript">
-
    var type = "daily";
    var gap = type == 'daily' ? 4 : 1;
 

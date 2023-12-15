@@ -168,6 +168,31 @@ public class CartController {
 	log.info("> dailycartupdate Start" );
 	vo.setMember_id(principal.getName());
 	vo.setProducts_no(products_no);
+	vo.setMon_cnt(1);
+	vo.setTue_cnt(1);
+	vo.setWed_cnt(1);
+	vo.setThu_cnt(1);
+	vo.setFir_cnt(1);
+	
+	int count = 0;
+	count = this.cartMapper.dailycartupdate(vo);
+	
+	if (count == 1) {
+		  log.info("성공");
+		  return "cart/daily.tiles";
+		} else {
+		  log.info("실패");
+		  return "cart/daily.tiles";
+		}
+  }
+  
+  @PutMapping("box/update")
+  public String boxcartupdate(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+
+	log.info("> boxcartupdate Start" );
+	vo.setMember_id(principal.getName());
+	vo.setProducts_no(products_no);
+	vo.setAmount(1);
 	
 	int count = 0;
 	count = this.cartMapper.dailycartupdate(vo);
