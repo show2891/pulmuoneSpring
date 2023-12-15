@@ -8,8 +8,9 @@ import org.pro.pulmuone.domain.event.EventViewVO;
 
 public interface EventService {
 	
-    List<EventListVO> eventList();
-    List<EventListVO> endedEventList();
+	List<EventListVO> eventList(int start, int numberPerPage);
+	List<EventListVO> endedEventList(int start, int numberPerPage);
+	
     int getTotalRecords();
     int getTotalPages(int numberPerPage);
     

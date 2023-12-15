@@ -16,13 +16,13 @@ public class EventServiceImpl implements EventService {
     private EventMapper eventMapper;
 
     @Override
-    public List<EventListVO> eventList() {
-        return eventMapper.eventList();
+    public List<EventListVO> eventList(int start, int numberPerPage) {
+        return eventMapper.eventList((start - 1) * numberPerPage, numberPerPage);
     }
 
     @Override
-    public List<EventListVO> endedEventList() {
-        return eventMapper.endedEventList();
+    public List<EventListVO> endedEventList(int start, int numberPerPage) {
+        return eventMapper.endedEventList(start, numberPerPage);
     }
     
     @Override

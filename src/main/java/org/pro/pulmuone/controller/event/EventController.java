@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.pro.pulmuone.domain.PageDTO;
 import org.pro.pulmuone.domain.event.EventCommentVO;
 import org.pro.pulmuone.domain.event.EventListVO;
 import org.pro.pulmuone.domain.event.EventViewVO;
@@ -23,8 +24,17 @@ public class EventController {
 	private EventService eventService;
 
 	@GetMapping("list")
-	public String list(Model model, HttpServletRequest request) {
-	    List<EventListVO> events = eventService.eventList();
+	public String list(Model model, HttpServletRequest request, @RequestParam(value = "pageNo", defaultValue = "1") int currentPage) {
+	    int numberPerPage = 10; // 페이지당 아이템 수를 설정합니다.
+
+	    int totalRecords = eventService.getTotalRecords();
+	    int totalPages = (totalRecords + numberPerPage - 1) / numberPerPage;
+	    int numberOfPageBlock = 10; // 페이지 블록 수를 설정합니다.
+
+	    int start = (currentPage - 1) * numberPerPage + 1;
+	    int end = start + numberPerPage - 1;
+
+	    List<EventListVO> events = eventService.eventList(start, end);
 	    
 	    String contextPath = request.getServletContext().getContextPath();
 	    for (EventListVO event : events) {
@@ -35,6 +45,8 @@ public class EventController {
 	        }
 	    }
 	    
+	    PageDTO pageDTO = new PageDTO(currentPage, numberPerPage, numberOfPageBlock, totalPages);
+	    model.addAttribute("pageDTO", pageDTO);
 	    model.addAttribute("events", events);
 
 	    request.getSession().setAttribute("activeTab", "진행중이벤트");
@@ -42,8 +54,17 @@ public class EventController {
 	}
 
 	@GetMapping("endList")
-	public String endList(Model model, HttpServletRequest request) {
-	    List<EventListVO> events = eventService.endedEventList();
+	public String endList(Model model, HttpServletRequest request, @RequestParam(value = "pageNo", defaultValue = "1") int currentPage) {
+	    int numberPerPage = 10; // 페이지당 아이템 수를 설정합니다.
+
+	    int totalRecords = eventService.getTotalRecords();
+	    int totalPages = (totalRecords + numberPerPage - 1) / numberPerPage;
+	    int numberOfPageBlock = 10; // 페이지 블록 수를 설정합니다.
+
+	    int start = (currentPage - 1) * numberPerPage + 1;
+	    int end = start + numberPerPage - 1;
+
+	    List<EventListVO> events = eventService.endedEventList(start, end);
 	    
 	    String contextPath = request.getServletContext().getContextPath();
 	    for (EventListVO event : events) {
@@ -53,15 +74,19 @@ public class EventController {
 	        }
 	    }
 	    
+	    PageDTO pageDTO = new PageDTO(currentPage, numberPerPage, numberOfPageBlock, totalPages);
+	    model.addAttribute("pageDTO", pageDTO);
 	    model.addAttribute("events", events);
 
 	    request.getSession().setAttribute("activeTab", "종료된이벤트");
-
 	    return "event/endList.tiles";
 	}
 	
 	@GetMapping("view")
 	public String view(@RequestParam int event_no, Model model, HttpServletRequest request) {
+		
+		
+		
 	    EventViewVO event = eventService.viewEvent(event_no);
 	    model.addAttribute("event", event);
 	    

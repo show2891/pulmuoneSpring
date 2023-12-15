@@ -34,19 +34,20 @@
 					</c:forEach>
 
 				</ul>
-				<nav aria-label="Page navigation example" class="pagenavi-area"
-					data-pagination="">
-					<input type="hidden" id="pageNo" name="pageNo">
-					<ul class="pagination">
-						<c:forEach var="i" begin="1" end="${pDto.totalPages}">
-							<li
-								class="page-item <c:if test="${i == pDto.currentPage}">active</c:if>">
-								<a class="page-link"
-								href="/event/endList?currentpage=${i}">${i}</a>
-							</li>
-						</c:forEach>
-					</ul>
+				<nav aria-label="Page navigation example" class="pagenavi-area" data-pagination="">
+				    <input type="hidden" id="pageNo" name="pageNo">
+				    <ul class="pagination">
+				
+				        <c:forEach var="i" begin="1" end="${pageDTO.totalPages}">
+				            <li class="page-item <c:if test="${i == pageDTO.currentPage}">active</c:if>">
+				                <a class="page-link" href="/event/event/endList?pageNo=${i}">${i}</a>
+				            </li>
+				        </c:forEach>
+				
+				    </ul>
 				</nav>
+
+
 				<!--E:종료된이벤트-->
 			</div>
 

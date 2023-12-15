@@ -21,25 +21,39 @@
 	</resultMap>
 
 	<select id="eventList" resultMap="EventListResultMap">
-    <![CDATA[
-        SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
-               et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
-        FROM event e 
-        LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
-        WHERE e.event_end >= SYSDATE 
-        ORDER BY e.event_no DESC
-    ]]>
+	<![CDATA[
+	    SELECT * 
+	    FROM (
+	        SELECT ROWNUM no, t.*
+	        FROM (
+	            SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
+	                   et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
+	            FROM event e 
+	            LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
+	            WHERE e.event_end >= SYSDATE 
+	            ORDER BY e.event_no DESC
+	        ) t
+	    )
+	    WHERE no BETWEEN #{start} AND #{numberPerPage}
+	]]>
 	</select>
-
+	
 	<select id="endedEventList" resultMap="EventListResultMap">
-    <![CDATA[
-        SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
-               et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
-        FROM event e 
-        LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
-        WHERE e.event_end < SYSDATE 
-        ORDER BY e.event_end DESC, e.event_no DESC 
-    ]]>
+	<![CDATA[
+	    SELECT * 
+	    FROM (
+	        SELECT ROWNUM no, t.*
+	        FROM (
+	            SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
+	                   et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
+	            FROM event e 
+	            LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
+	            WHERE e.event_end < SYSDATE 
+	            ORDER BY e.event_end DESC, e.event_no DESC 
+	        ) t
+	    )
+	    WHERE no BETWEEN #{start} AND #{numberPerPage}
+	]]>
 	</select>
 
 	<select id="getTotalRecords" resultType="int">

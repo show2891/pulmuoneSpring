@@ -9,8 +9,9 @@ import org.pro.pulmuone.domain.event.EventViewVO;
 
 public interface EventMapper {
 	
-    List<EventListVO> eventList();
-    List<EventListVO> endedEventList();
+	List<EventListVO> eventList(@Param("start") int start, @Param("numberPerPage") int numberPerPage);
+	List<EventListVO> endedEventList(@Param("start") int start, @Param("numberPerPage") int numberPerPage);
+
     int getTotalRecords();
     int getTotalPages(int numberPerPage);
     
