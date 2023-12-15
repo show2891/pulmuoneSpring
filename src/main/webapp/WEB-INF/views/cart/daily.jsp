@@ -120,33 +120,66 @@
          }
       }
 
-      var data = { idx };
-      if (size.length == 1) {
-         data.qty = size[0];
-      } else {
-         for (let i = 0; i < size.length; i++) {
-            data['day' + (i + 1)] = size[i];
-         }
-      }
-   
-       var  args = container.attr("data-itemcode");
-      
-      newPut({
-         url: '/cart/'+type+'/'+ args,
-         data
-      }, (r) => {
-         var textview = $("[data-itemcount-view='" + ix + "']", container);
-         textview.text(size[ix]);
-         if (size[ix] <= 0) {
-            textview.parents("li").removeClass("active");
-         } else {
-            textview.parents("li").addClass("active");
-         }
-         $("[data-count='" + ix + "']", container).val(size[ix]);
+		$("[data-print-price]", container).each(function () {
+			var $t = $(this);
+			$t.text(numberFormat(parseInt($t.attr("data-print-price"), 10) * size[0]));
+		});
+
+		if (container.is("[data-delivery-per]")) {
+			var per = parseInt(container.attr("data-delivery-per"), 10);
+			var price = parseInt(container.attr("data-delivery-one-price"), 10);
+			if (price > 0) {
+				var dp = Math.max(Math.ceil(size[0] / per), 1) * price;
+				container.attr("data-delivery-price", dp);
+			}
+		}
+
+		var data = { idx };
+		if (size.length == 1) {
+			data.qty = size[0];
+		} else {
+			for (let i = 0; i < size.length; i++) {
+				data['day' + (i + 1)] = size[i];
+			}
+		}
+	
+			var	args = container.attr("data-itemcode");
+			var param = [];
+			for (var i = 1; i < 6; i++) {
+		 		param.push(Object.values(data)[i]);	
+			}
+
+	    axios.get('/cart/daily/update?products_no='+ args+'&idx='+param).then(function ({data}) {      
+	    	var textview = $("[data-itemcount-view='" + ix + "']", container);
+			textview.text(size[ix]);
+			if (size[ix] <= 0) {
+				textview.parents("li").removeClass("active");
+			} else {
+				textview.parents("li").addClass("active");
+			}
+			$("[data-count='" + ix + "']", container).val(size[ix]);
             togglePromotion($(el))
-         calculateTotalPrice();
-      });
-   }
+			calculateTotalPrice();
+	    }).catch(function (e) {
+	      alert("서버와 연결이 올바르지 않습니다.");
+	    })   
+// 		newPut({
+// 			url: '/cart/'+type+'/'+ args,
+// 			data
+// 		}, (r) => {
+// 			var textview = $("[data-itemcount-view='" + ix + "']", container);
+// 			textview.text(size[ix]);
+// 			if (size[ix] <= 0) {
+// 				textview.parents("li").removeClass("active");
+// 			} else {
+// 				textview.parents("li").addClass("active");
+// 			}
+// 			$("[data-count='" + ix + "']", container).val(size[ix]);
+//             togglePromotion($(el))
+// 			calculateTotalPrice();
+// 		});
+	}
+>>>>>>> branch 'develop' of https://github.com/dhl1031/pulmuoneSpring.git
 
 
    $(document).on("click", "[name='cartIdx']", function () {
