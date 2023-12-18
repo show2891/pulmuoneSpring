@@ -30,4 +30,7 @@ public interface CartMapper {
   // 매일배송 장바구니 수량
   public int boxcartupdate(CartVO vo);
 
+  // 장바구니 조회
+  public List<CartVO> cart(CartVO vo);
+
 }

@@ -21,37 +21,37 @@
 	
 	<ul class="stat-wrapper">
 		<li>
-			<a href="/mypage/order/daily.do?drinkingType=Y" class="item">
+			<a href="/mypage/order/daily?drinkingType=Y" class="item">
 				<label>매일배송</label>
 				<span>1</span>
 			</a>
 		</li>
 		<li class="dim">
-			<a href="/mypage/order/box.do" class="item">
+			<a href="/mypage/order/box" class="item">
 				<label>택배배송</label>
 				<span style="color: #333;border-bottom: 1px solid #7acc12">${ boxOrderCnt }</span>
 			</a>
 		</li>
 		<li>
-			<a href="/taste/taste.do" class="item">
+			<a href="/taste/taste" class="item">
 				<label>시음선물</label>
 				<span class="blank_copy">선물해보세요</span>
 			</a>
 		</li>
 		<li>
-			<a href="/event/event/view.do?event_no=2" class="item">
+			<a href="/event/event/view?event_no=2" class="item">
 				<label>쿠폰</label>
 				<span class="blank_copy">친구초대하고 쿠폰받으세요</span>
 			</a>
 		</li>
 		<li>
-			<a href="/mypage/action/review.do" class="item">
+			<a href="/mypage/action/review" class="item">
 				<label>리뷰</label>
 				<span>${fn:length(reviewlist) }</span>
 			</a>
 		</li>
 		<li>
-			<a href="/mypage/inquiry/list.do" class="item">
+			<a href="/mypage/inquiry/list" class="item">
 				<label>1:1 문의</label>
 				<span style="border-bottom: none;color: #999">${ totalCount }</span>
 			</a>
@@ -61,7 +61,7 @@
 	<div class="box-partition">
 		<div class="part">
 			<div class="part-head" style="margin-bottom:17px;">
-				<a href="/mypage/order/daily.do?drinkingType=Y">매일배송 음용정보</a>
+				<a href="/mypage/order/daily?drinkingType=Y">매일배송 음용정보</a>
 			</div>
 			
 			<div class="box-layout" style="margin-bottom:6px;">
@@ -71,7 +71,7 @@
 						<h5>음용1</h5>
 						<span>1</span>
 					</div>
-					<a href="/mypage/order/dailyView.do?orderNo=1" class="rounded-button">상세보기</a>
+					<a href="/mypage/order/dailyView?orderNo=1" class="rounded-button">상세보기</a>
 				</div>
 				<div style="padding:20px 25px 20px 0;">
 					<div class="half-area">
@@ -101,7 +101,7 @@
 		
 		<div class="part" style="border-bottom: none;padding-bottom: 35px">
 			<div class="part-head" style="margin-bottom: 16px;">
-				<a href="/mypage/order/box.do">택배배송 주문내역</a>
+				<a href="/mypage/order/box">택배배송 주문내역</a>
 			</div>
 				<ul class="delivery-process">
 					<li class="">
@@ -192,7 +192,7 @@
 							</b>
 						</td>
 						<td>
-							<a href="/mypage/order/box.do?boxOrderNo=${ bosiList.orderNo }" class="rounded-button sm">상세보기</a>
+							<a href="/mypage/order/box?boxOrderNo=${ bosiList.orderNo }" class="rounded-button sm">상세보기</a>
 						</td>
 					</tr>
 				</c:forEach>

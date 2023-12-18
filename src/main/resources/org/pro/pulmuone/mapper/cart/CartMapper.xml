@@ -47,7 +47,16 @@
 		WHERE member_no = (select member_no from member where member_id = #{member_id })
 		and products_no = #{products_no}
 	</update>
-
+	
+	<select id="cart" resultType="org.pro.pulmuone.domain.cart.CartVO">
+		SELECT cart_no, member_no, products_no, reg_date
+		FROM cart_daily
+		where member_no = (select member_no from member where member_id = #{member_id })
+		union
+		SELECT cart_no, member_no, products_no, reg_date
+		FROM cart_box
+		where member_no = (select member_no from member where member_id = #{member_id })
+	</select>
 
 	<!-- 장바구니 추가-박스 -->
 	<insert id="boxcart">
@@ -81,6 +90,6 @@
 		UPDATE cart_box
 		SET amount = #{amount}
 		WHERE member_no = (select member_no from member where member_id = #{member_id })
-		and products_no = #{products_no}		
+		and products_no = #{products_no}
 	</update>
 </mapper>
