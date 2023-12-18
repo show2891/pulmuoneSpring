@@ -1,19 +1,18 @@
 package org.pro.pulmuone.domain.order.daily;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class DailyOrderItemDTO {
+public class CardInfoDTO {
 
-	private String itemCode;
-	private List<Integer> dayQty;
+	private int card_info_no;
+	private int member_no;
+	private String card_num;
+	private String expiry_date;
+	private String birth_date;
 	
 }
