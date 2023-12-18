@@ -3,6 +3,7 @@ package org.pro.pulmuone.service.member;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import org.pro.pulmuone.domain.deregist.DeregistDTO;
 import org.pro.pulmuone.domain.member.MemberDTO;
 
 public interface MemberService {
@@ -20,6 +21,8 @@ public interface MemberService {
 	boolean changePassword(String memberId, String nowMemberPwd, String memberPwd) throws ClassNotFoundException, SQLException;
 
 	Date getBirthDate(String rrnBirthDate, String rrnGenderCode);
+
+	boolean deregister(DeregistDTO dto);
 
 
 }

@@ -31,7 +31,6 @@
 		},
 	});
 </script>
-<div class="wrapper">
 
 	<main class="page">
 		<div id="container-wrapper" class="container-wrapper">
@@ -110,14 +109,6 @@
 							</div>
 						</sec:authorize>
 
-						<c:choose>
-							<c:when test="${ auth.getName() eq null }">
-
-							</c:when>
-							<c:otherwise>
-
-							</c:otherwise>
-						</c:choose>
 						<!--S:개인화 메뉴-->
 						<ul class="personal-menu" data-summary-view="#member_menu">
 							<li class="item"><a href="/mypage/drink/drink" title="해당페이지로 가기" data-require-login="">
@@ -315,6 +306,5 @@
 			</div>
 		</div>
 	</main>
-</div>
 </body>
 </html>
