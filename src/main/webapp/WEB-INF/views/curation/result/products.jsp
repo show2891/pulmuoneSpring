@@ -248,7 +248,7 @@ $(document).on("click", "#orderModal button", function (e) {
 				</div>
 				<div class="button-set">
 
-					<button class="button-basic border bottles prefix" onclick="location.href='/customer/product/result/${score}?singleYn=N&bmi=${param.bmi}'">
+					<button class="button-basic border bottles prefix" onclick="location.href='/customer/product/result/${score}?singleYn=N&bmi=${param.bmi}&questions=${param.qno }'">
 						<i class="ico"></i> <i class="ico"></i> 내게 맞는 프로그램 추천
 					</button>
 

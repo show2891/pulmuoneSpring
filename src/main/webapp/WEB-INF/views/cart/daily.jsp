@@ -179,8 +179,6 @@
 // 			calculateTotalPrice();
 // 		});
 	}
->>>>>>> branch 'develop' of https://github.com/dhl1031/pulmuoneSpring.git
-
 
    $(document).on("click", "[name='cartIdx']", function () {
       var checkCount = $("[name='cartIdx']").length;

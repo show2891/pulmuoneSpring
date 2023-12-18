@@ -8,9 +8,7 @@
 			<div id="container-wrapper" class="container-wrapper"></div>
 <script>
 $(function (){
-//     if(!sessionStorage.getItem('req1')){
-//         location.href ='/jspPro/pulmuone_curation/curation01.jsp'
-//     }
+
 	if(sessionStorage.getItem('req2')){
 		const score = JSON.parse(sessionStorage.getItem('req2'))
 		console.log('req2', score)
@@ -61,6 +59,12 @@ $(function (){
 			.removeClass("v2")
 			.addClass(v);
 	});
+	
+// 	$(document).on("click", "input:check:checked", function(){
+// 		var q = $(this).parents("[data-radios]");
+// 		console.log(q)
+// 	})
+	
 })
 
 </script>

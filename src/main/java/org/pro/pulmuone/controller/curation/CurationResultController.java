@@ -45,7 +45,11 @@ public class CurationResultController {
 
   // 큐레이션 결과
   @RequestMapping("/result/{score}")
-  public String products(CurationVO vo, Model model, @PathVariable int score, @RequestParam(value = "singleYn") String singleYn, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+  public String products(CurationVO vo, Model model
+		  , @PathVariable int score
+		  , @RequestParam(value = "singleYn") String singleYn
+		  , @RequestParam(value = "qno", required = false) String qno
+		  , HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 
 
    log.info("> Curation Result Start : " + score);
@@ -73,9 +77,11 @@ public class CurationResultController {
    } else if (42 <= score && score <= 45) {
      program_no = 8;
    }
-
-
-
+   
+//   String[] qnos = qno.split(",");
+//   vo.setQno(qno);
+   
+   
    vo.setProgram_no(program_no);
    vo.setSingleyn(singleYn);
    List<CurationVO> list = this.curationMapper.CurationSel(vo);
