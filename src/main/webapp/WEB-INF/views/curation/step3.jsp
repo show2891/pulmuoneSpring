@@ -14,8 +14,7 @@
 </style>
 <body>
 
-
-	<script>
+<script>
    function getBmi (w,h){
       return (w / ((h * h) / 10000)).toFixed(2);
    }
@@ -124,22 +123,12 @@
                      score += Number(data[k]);                 
                   }
                });
-               
-//                var qno = 0;
-//                Object.keys(data).forEach(function(n){
-//                    if(6<n && n<23){
-//                       qno += Number(data[n]);  
-//                       console.log(qno)
-//                       console.log(n)
-//                    }
-//                 });
-                              
+ 
             location.href = '/customer/product/result/' 
                + score
                + '?singleYn=' + singleYn 
                + '&bmi=' + bmi
-            //   + '&questions=' + qno;
-
+//               + "questions=" + idx
          }
                
 //                if (singleYn=='Y') {
