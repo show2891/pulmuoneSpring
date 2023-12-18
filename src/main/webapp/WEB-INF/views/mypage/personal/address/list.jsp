@@ -1,0 +1,169 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- 		<div class="breadcrumb-style"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<ul> -->
+<!-- 					<li><a href="/">홈</a></li> -->
+<!-- 					<li><a href="/mypage">MY녹즙</a></li> -->
+<!-- 					<li><a class="" href="/mypage/personal/address.do">개인정보</a></li> -->
+<!-- 					<li><a class="active" href="/mypage/personal/address.do">주소록</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+		
+		
+			<div class="container">
+				<div class="border-wrapper">
+					<h2 class="container-title">
+						주소록
+					</h2>
+				</div>
+				<div class="page-addiction-wrapper" style="align-items: center; margin-bottom:10px;">
+					<div class="info-copy description">
+						<p>총 <b>${ dtoCount }</b>건</p>
+					</div>
+					<a href="/mypage/personal/address/write" class="rect-button primary">주소록 등록</a>
+				</div>
+					
+				<div class="drinking-list">
+		
+
+				</div>
+			</div>
+
+
+<%-- 		<%@ include file="/WEB-INF/views/ui/footermodal.jsp"%> --%>
+
+<script>
+	$(function (){
+        //region render data
+        var search = {"memberId":"${ memberId }","endNum":10,"startNum":1}
+        const rootEl = $('.drinking-list');
+        
+        var data = { "data" : ${dtoList} }.data;
+
+        data.forEach((v, i) => {
+            addItem(v);
+        })
+        
+        
+    	var header = '${_csrf.headerName}';
+		var token = '${_csrf.token}';
+
+
+		$(document).on('click','.setDefault',function (){
+            const data = $(this).closest('.item').prop('data')
+			confirmDesign("", "기본주소로 설정하시겠습니까?", function() {
+                post({url:'/mypage/personal/address/setBasic',param:$.param({idx:data.addrNo})},function (r){
+                    if(r.RESULT_MSG){
+						alert('기본주소로 설정되었습니다.',()=>location.reload())
+                    }else {
+						alert('잘못된 요청입니다.',()=>location.reload())
+                    }
+                })
+            })
+		})
+		$(document).on('click','.modify',function (){
+            const data = $(this).closest('.item').prop('data')
+			location.href= '/mypage/personal/address/'+ data.addrNo
+		})
+		
+		$(document).on('click','.delete',function (){
+            const data = $(this).closest('.item').prop('data')
+			confirmDesign("", "선택한 주소를 삭제하시겠습니까?", function() {
+				$.ajax({
+					url: "/ajax/mypage/personal/address/" , 
+					contentType: "application/json; charset=utf-8",
+					dataType:"json",
+					data: { addrNo : data.addrNo },
+					type:"DELETE",
+					cache:false ,
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader(header, token);
+						console.log(params);
+					},
+					success: function ( isDeleted,  textStatus, jqXHR ){
+						if( isDeleted ) {
+			 				alert( "삭제되었습니다.", () => location.reload());
+
+						} else {  
+							alert('잘못된 요청입니다.',()=>location.reload())
+						}
+					 
+					},
+					error:function (request, status, error){
+						alert("에러~~~ ");
+						console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					}
+				
+				
+				
+				
+				
+				
+// 				post({url:'/mypage/personal/address/delete',param:$.param({addressIdx:data.addrNo})},function (r){
+//                     if(r.RESULT_MSG){
+//                         alert('삭제되었습니다.',()=>location.reload())
+//                     }else {
+// 						alert('잘못된 요청입니다.',()=>location.reload())
+//                     }
+				})
+			})
+		})
+
+        function addItem(v) {
+            const el = $(`<div class="item">
+				<div class="head">
+					<div class="nickname-format xl">
+						\${ v.defaultAddr=='1'?'<label>기본</label>':''}
+						<h5>\${v.addrName}</h5>
+						<span>(\${v.dest=='1'?'회사/사무실':'가정'})</span>
+					</div>
+					<ul class="info">
+						<li>
+							<p>\${v.name}</p>
+						</li>
+						<li>
+							<p>\${v.tel}</p>
+						</li>
+						<li>
+							<p>(\${v.zipCode}) \${v.addr} \${v.addrDetail}</p>
+						</li>
+					</ul>
+				</div>
+				<div class="tail">
+					<button type="button" disabled class="setDefault rounded-button disabled">기본설정</button>
+					<div class="button-text-set">
+						<button type="button" class="modify">수정</button>
+						<button type="button" class="delete">삭제</button>
+					</div>
+				</div>
+			</div>`);
+
+	        el.prop('data',v);
+            if(v.defaultAddr == '0'){
+                el.find('.setDefault').prop('disabled',false)
+                el.find('.setDefault').removeClass('disabled')
+                el.find('.setDefault').css('cursor','pointer')
+            }
+
+
+            rootEl.append(el);
+            if (rootEl.children().length >= v.totalCount) {
+                $('#moreBtn').remove();
+            }
+        }
+
+
+        $('#moreBtn').click(function () {
+            more('/mypage/personal/address/more', search, function (response) {
+                response.data.forEach(v => addItem(v));
+                search = response.search
+            });
+        })
+        //    endregion
+	})
+</script>
+
