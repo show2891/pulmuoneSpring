@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.pro.pulmuone.domain.order.AddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
 import org.pro.pulmuone.domain.order.daily.CardInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
@@ -39,5 +40,7 @@ public interface DailyOrderMapper {
 								, @Param("drk_end_date") Date drk_end_date);
 
 	int drkHistoryInsert(DrkHistoryDTO dto);
+
+	int insertAddrBook(AddrBookDTO addr);
 	
 }

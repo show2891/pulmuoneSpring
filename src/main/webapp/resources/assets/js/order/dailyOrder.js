@@ -88,6 +88,7 @@ function validCard(){
 	
 	alert("인증이 완료되었습니다.");
 	$("#validCardBtn").text("다시인증");
+	$("#isCertified").val(true);
 };
 
 
@@ -179,6 +180,7 @@ function callCms(btn){
 	$(".modal-footer").on("click", function(){
 		setTimeout(()=> {
 			$("#afterArs").css("display","block");
+			$("#isCertified").val(true);
 		}, 3000);
 	})
 };
@@ -333,7 +335,6 @@ function getFranchise(latitude, longitude, fc_type){
 		, cache: false
 		, async: false
 		, success: function(data, callback, xhr) {
-			if(data.fc_name == "") data = "배송이 불가한 지역입니다.";
 			$('#prtnName').val(data.fc_name);
 			$('#prtnNo').val(data.fc_no);
 			$('#prtnPhone').val(data.fc_phone);
@@ -341,6 +342,7 @@ function getFranchise(latitude, longitude, fc_type){
 		} // success
 		, error: function(xhr, errorType){
 			console.log(errorType);
+			$('#prtnName').val("배송이 불가한 지역입니다.");
 		} // error
 	});
 };

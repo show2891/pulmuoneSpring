@@ -113,8 +113,12 @@
 			
 			// 결제 방식
 			$("#myTab-area li").on("click", function () {
+				$("#isCertified").val(false);	// 인증 false
+				
 				let index = $(this).index();
 				$("#pay_method").val(index);
+				
+				if (index == 2) $("#isCertified").val(true);
 			});
 		});
 </script>

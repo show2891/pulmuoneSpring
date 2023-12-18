@@ -125,7 +125,7 @@
 							<dd>
 								<input type="text" id="accountNumber" name="acnt_num" title="계좌번호 입력" placeholder="계좌번호 입력">
 								<button id="callCms" data-isnew="true" data-phone="${member.tel}" type="button" class="btn-square btn-black">ARS인증</button>
-								<input id="hasRequest" value="false" type="hidden">
+								<input id="isCertified" value="false" type="hidden">
 							</dd>
 						</dl>
 						<p id="afterArs" style="margin-left: 137px; margin-top: 5px; display: none;">인증이 완료되었습니다.</p>

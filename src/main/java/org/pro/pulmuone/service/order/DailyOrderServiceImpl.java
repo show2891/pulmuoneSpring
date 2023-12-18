@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pro.pulmuone.domain.order.AddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
 import org.pro.pulmuone.domain.order.daily.CardInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
@@ -103,6 +104,12 @@ public class DailyOrderServiceImpl implements DailyOrderService {
 		} // while
 		
 		return rowCnt;
+	}
+
+	@Override
+	public int insertAddrBook(AddrBookDTO addr) {
+		log.info("> DailyOrderServiceImpl.insertAddrBook...");
+		return this.dailyOrderMapper.insertAddrBook(addr);
 	}
 
 

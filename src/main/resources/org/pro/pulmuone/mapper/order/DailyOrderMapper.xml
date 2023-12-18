@@ -96,5 +96,13 @@
      	INSERT INTO drk_history (drk_history_no, drk_schedule_no, drk_order_no, products_no, products_cnt, drk_date, drk_day, drk_complete)
      	VALUES (seq_drk_history.NEXTVAL, #{ drk_schedule_no }, #{ drk_order_no }, #{ products_no }, #{ products_cnt }, #{ drk_date }, #{ drk_day }, #{ drk_complete })
      </insert>
+     
+	<!-- int insertAddrBook(AddrBookDTO addr); -->
+	<insert id="insertAddrBook">
+		INSERT INTO addr_book (addr_no, member_no, addr_name, name, tel, dest, zip_code, addr, addr_detail, memo, default_addr)
+		VALUES (seq_addr_book.NEXTVAL, #{ member_no }, #{ addr_name }, #{ name }
+					, #{ tel }, #{ dest }, #{ zip_code }, #{ addr }
+					, #{ addr_detail }, #{ memo }, #{ default_addr })
+	</insert>
 
 </mapper>
