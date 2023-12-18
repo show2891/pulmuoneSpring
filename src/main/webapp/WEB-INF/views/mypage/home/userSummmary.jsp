@@ -47,13 +47,28 @@
 		<li>
 			<a href="/mypage/action/review" class="item">
 				<label>리뷰</label>
-				<span>${fn:length(reviewlist) }</span>
+				<c:choose>
+				<c:when test="${fn:length(reviewlist) > 0 }">
+				<span>${fn:length(reviewlist) }</span>				
+				</c:when>
+				<c:otherwise>
+				<span style="border-bottom: none;color: #999">0</span>
+				</c:otherwise>				
+				</c:choose>
 			</a>
 		</li>
 		<li>
 			<a href="/mypage/inquiry/list" class="item">
 				<label>1:1 문의</label>
-				<span style="border-bottom: none;color: #999">${ totalCount }</span>
+				<c:choose>
+				<c:when test="${fn:length(reviewlist) > 0 }">
+				<span>${ totalCount }</span>				
+				</c:when>
+				<c:otherwise>
+				<span style="border-bottom: none;color: #999">0</span>
+				</c:otherwise>				
+				</c:choose>
+				
 			</a>
 		</li>
 	</ul>

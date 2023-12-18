@@ -31,6 +31,6 @@ public interface CartMapper {
   public int boxcartupdate(CartVO vo);
 
   // 장바구니 조회
-  public List<CartVO> cart(CartVO vo);
+  public int cart(CartVO vo);
 
 }

@@ -48,7 +48,7 @@
 				</a>
 				<sec:authorize access="isAuthenticated()">
 					<a href="/cart/daily">
-						<div class="counter" data-cart-size="">${fn:length(cartlist) }</div> <i class="ico ico-cart1"></i> <span class="hide">장바구니로 가기</span>
+						<div class="counter" data-cart-size="">${ totalCount }</div> <i class="ico ico-cart1"></i> <span class="hide">장바구니로 가기</span>
 					</a>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
@@ -171,6 +171,7 @@
 		$("#logout").submit();
 	})
 	$(document).ready(function() {
+
 		$('.welcome b').hover(function() {
 			$('.logout-btn').stop().fadeIn('500');
 		}, function() {
@@ -178,4 +179,11 @@
 		});
 
 	});
+	<sec:authorize access="isAuthenticated()">
+	axios.get('/cart').then(function ({data}) {      
+		console.log("성공");
+    }).catch(function (e) {
+      alert("서버와 연결이 올바르지 않습니다.");
+    })  
+	</sec:authorize>
 </script>
