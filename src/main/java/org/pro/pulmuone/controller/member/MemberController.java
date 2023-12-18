@@ -266,4 +266,11 @@ public class MemberController {
 		
 		return "member/find/changePassword.tiles";
 	}
+	
+	@GetMapping("/quit")
+	public String quit() {
+		
+		return "member/quit.tiles";
+	}
+	
 }

@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+import org.pro.pulmuone.domain.deregist.DeregistDTO;
 import org.pro.pulmuone.domain.member.MemberDTO;
+import org.pro.pulmuone.mapper.deregist.DeregistMapper;
 import org.pro.pulmuone.mapper.member.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberMapper memberMapper;
+
+	@Autowired
+	private DeregistMapper deregistMapper;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -99,7 +104,16 @@ public class MemberServiceImpl implements MemberService {
 
 		return updateResult == 1 ? true : false;
 	}
-	
+
+	@Override
+	@Transactional
+	public boolean deregister(DeregistDTO dto) {
+		
+		int insertResult = this.deregistMapper.insertDeregist(dto); 
+		int updateResult = this.memberMapper.updateEnabled(dto.getMemberNo(), 0);
+		
+		return updateResult == 1 && insertResult == 1 ? true : false;
+	}
 	
 	
 	
@@ -164,6 +178,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		return pwd;
 	}
+
 
 	
 }

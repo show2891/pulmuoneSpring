@@ -15,10 +15,17 @@
 		<result property="tel" column="tel" />
 		<result property="email" column="email" />
 		<result property="birthDate" column="birthdate" />
+		<result property="invCode" column="inv_code" />
+		<result property="interestCode1" column="interest_code1" />
+		<result property="interestCode2" column="interest_code2" />
+		<result property="interestCode3" column="interest_code3" />
+		<result property="naverToken" column="naver_token" />
+		<result property="kakaoToken" column="kakao_token" />
 		<result property="adApproval" column="ad_approval" />
 		<result property="marketingApproval" column="marketing_approval" />
 		<result property="regDate" column="reg_date" />
 		<result property="pwdReset" column="pwd_reset" />
+		<result property="enabled" column="enabled" />
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	<resultMap type="org.pro.pulmuone.domain.auth.AuthVO" id="authMap"> 
@@ -73,15 +80,34 @@
 		WHERE member_id = #{memberId}
 	</select>
 	
-	
-
-
-		
 	<!-- 로그인 인증 처리 -->
 	<!-- 	public MemberVO read(String userid); -->
 	<select id="read" resultMap="memberMap">
-	 SELECT member_no, m.member_id, pwd, name, authority, pwd_reset
+	 SELECT member_no, m.member_id, pwd, name, authority, pwd_reset, enabled
 	 FROM member m LEFT JOIN member_authorities auth ON m.member_id = auth.member_id
 	 WHERE m.member_id = #{userid}
 	</select>
+	
+	<select id="selectMemberForInfo" resultMap="memberMap">
+		SELECT *
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
+	
+	<update id="updateInfo">
+		UPDATE member
+		SET  email = #{dto.email}, interest_code1 = #{dto.interestCode1}, interest_code2 = #{dto.interestCode2}, interest_code3 = #{dto.interestCode3}, naver_token = #{dto.naverToken, jdbcType=VARCHAR}, kakao_token = #{dto.kakaoToken, jdbcType=VARCHAR}, ad_approval = #{dto.adApproval}, marketing_approval = #{dto.marketingApproval}
+		<if test="dto.newPassword != null">
+			, pwd = #{ dto.newPassword }
+		</if>
+		WHERE member_id = #{memberId}
+	</update>
+
+	<update id="updateEnabled">
+		UPDATE member
+		SET enabled = #{enabled}
+		WHERE member_no = #{memberNo}
+	</update>
+
+	
 </mapper>
