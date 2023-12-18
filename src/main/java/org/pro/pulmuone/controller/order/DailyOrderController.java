@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pro.pulmuone.domain.order.AddrBookDTO;
 import org.pro.pulmuone.domain.order.FranchiseDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
@@ -167,18 +168,34 @@ public class DailyOrderController {
 		drkShipDTO.setDrk_order_no(drkOrderNo);
 		dailyOrderServiceImpl.drkShipInsert(drkShipDTO);
 		
+		// 7. 만약 saveAddrChk 체크 돼있으면 주소록에 저장
+		if(saveAddrChk!=null && saveAddrChk.equals("on")) {
+			AddrBookDTO addr = new AddrBookDTO().builder()
+																			.addr(drkShipDTO.getDrk_addr())
+																			.addr_detail(drkShipDTO.getDrk_addr_detail())
+																			.addr_name(drkShipDTO.getDrk_receiver())
+																			.default_addr(0)
+																			.dest(drkShipDTO.getDrk_ship_loc())
+																			.member_no(member_no)
+																			.memo(drkShipDTO.getDrk_memo())
+																			.name(drkShipDTO.getDrk_receiver())
+																			.tel(drkShipDTO.getDrk_tel())
+																			.zip_code(drkShipDTO.getDrk_zip_code())
+																		.build();
+			this.dailyOrderServiceImpl.insertAddrBook(addr);
+		};
 		
-		// 7. 음용 시작일, 종료일 구하기
+		// 8. 음용 시작일, 종료일 구하기
 		LocalDate start_date = getStartDate(drk_start_date);
 		LocalDate end_date = start_date.plusMonths(2).withDayOfMonth(1).minusDays(1);
 		
 		
-		// 8. 스케줄 정보 저장, drk_chedule_no 가져오기
+		// 9. 스케줄 정보 저장, drk_chedule_no 가져오기
 		List<DrkScheduleDTO> drkScheduleList = drkScheduleDTO.getDrkScheduleList();
 		dailyOrderServiceImpl.drkSchedulesInsert(drkScheduleList, drkOrderNo, today, Date.valueOf(start_date), Date.valueOf(end_date));
 
 		
-		// 9. 음용 기록 저장
+		// 10. 음용 기록 저장
 		DrkHistoryDTO drkHistoryDTO = null;
 		List<DrkHistoryDTO> drkHistoryList = new ArrayList<DrkHistoryDTO>();
 		
@@ -242,13 +259,13 @@ public class DailyOrderController {
 		dailyOrderServiceImpl.drkHistoryInsert(drkHistoryList);
 
 		
-		// 10. 가맹점 정보, 음용 시작일, 메모 전달
+		// 11. 가맹점 정보, 음용 시작일, 메모 전달
 		model.addAttribute("franchiseDTO", franchiseDTO);
 		model.addAttribute("memo", drkShipDTO.getDrk_memo());
 		model.addAttribute("drk_start_date", drk_start_date);
 		
 		
-		// 11. 주문한 상품 정보 가져와서 전달
+		// 12. 주문한 상품 정보 가져와서 전달
 		List<DailyOrderItemDTO> items = getItems(drkScheduleList);
 		List<DailyItemInfoDTO> dailyItemInfoList = dailyOrderServiceImpl.selectItems(items, member_no);
 		Iterator<DailyItemInfoDTO> ir2 = dailyItemInfoList.iterator();
