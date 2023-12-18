@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.pro.pulmuone.domain.curation.CurationVO;
+import org.pro.pulmuone.domain.curation.KidsVO;
 import org.pro.pulmuone.mapper.curation.CurationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,13 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/customer/product/*")
 public class CurationResultController {
 
+
+
   //   /customer/product/result/kids.do = servlets.curation.command.Kids
   //   /product/preview/modalview.do = servlets.curation.command.ModalView
   //   /customer/product/result/programs.do = servlets.curation.command.Program
   //   /customer/product/result/products.do = servlets.curation.command.Product
+
 
   @Autowired
   private CurationMapper curationMapper;
@@ -34,16 +38,25 @@ public class CurationResultController {
   @RequestMapping("/result/kids")
   public String kids() throws ClassNotFoundException, SQLException {
    log.info(">Kids Start");
+
    return "curation/result/kids.tiles";
+
   }
 
   // 큐레이션 결과
   @RequestMapping("/result/{score}")
-  public String products(CurationVO vo, Model model, @PathVariable int score, @RequestParam(value = "singleYn") String singleYn, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+  public String products(CurationVO vo, Model model
+		  , @PathVariable int score
+		  , @RequestParam(value = "singleYn") String singleYn
+		  , @RequestParam(value = "qno", required = false) String qno
+		  , HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+
 
    log.info("> Curation Result Start : " + score);
    log.info(singleYn + " singleYn");
    //6?singleYn=N&bmi=0&questions=7,11,13,14,20
+
+
 
    // 점수..
    int program_no = 0;
@@ -64,7 +77,11 @@ public class CurationResultController {
    } else if (42 <= score && score <= 45) {
      program_no = 8;
    }
-
+   
+//   String[] qnos = qno.split(",");
+//   vo.setQno(qno);
+   
+   
    vo.setProgram_no(program_no);
    vo.setSingleyn(singleYn);
    List<CurationVO> list = this.curationMapper.CurationSel(vo);
@@ -78,3 +95,4 @@ public class CurationResultController {
 
   }
 }
+

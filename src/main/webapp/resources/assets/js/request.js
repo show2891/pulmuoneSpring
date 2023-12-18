@@ -551,6 +551,7 @@ const newDelete = function (option, callback, failCallback) {
 }
 
 
+
 var post = function (option, callback, failCallback) {
     $('.confirm').prop('disabled',true)
     $('#loading').modal('show')
