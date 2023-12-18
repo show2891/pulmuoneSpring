@@ -66,15 +66,15 @@
    </definition>
     
  	<!-- mypage/personal -->
-    <definition name="personal" template="/WEB-INF/views/layouts/mypage/layouts.jsp">
-   		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
-   		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
-   		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
-    	<put-attribute name="aside" value="/WEB-INF/views/layouts/mypage/aside.jsp" />    
-   </definition>
+<!--     <definition name="personal" template="/WEB-INF/views/layouts/mypage/layouts.jsp"> -->
+<!--    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" /> -->
+<!--    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" /> -->
+<!--    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" /> -->
+<!--     	<put-attribute name="aside" value="/WEB-INF/views/layouts/mypage/aside.jsp" />     -->
+<!--    </definition> -->
     
 	<!-- mypage/personal/* -->
-    <definition name="mypage/personal/*/*.tiles" extends="personal">
+    <definition name="mypage/personal/*/*.tiles" extends="mypage">
 		<put-attribute name="content" value="/WEB-INF/views/mypage/personal/{1}/{2}.jsp" />
    </definition>
     
@@ -87,6 +87,14 @@
 		<put-attribute name="footer" value="/WEB-INF/views/layouts/member/login/footer.jsp" />  
 		<put-attribute name="main" value="/WEB-INF/views/member/login.jsp" />
    </definition>
+   <!-- quit -->
+   <definition name="member/quit.tiles" template="/WEB-INF/views/layouts/member/quit/layouts.jsp">
+   		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
+   		<put-attribute name="header" value="/WEB-INF/views/layouts/member/header.jsp" /> 
+		<put-attribute name="aside" value="/WEB-INF/views/layouts/mypage/aside.jsp" />  
+		<put-attribute name="main" value="/WEB-INF/views/member/quit.jsp" />
+   </definition>
+   
     <!-- regist/type -->
     <definition name="member/regist/type.tiles" extends="member/login.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/member/regist/type.jsp" />     
