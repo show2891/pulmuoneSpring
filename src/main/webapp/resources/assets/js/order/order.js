@@ -130,10 +130,6 @@ function showAddress(member_no, pageNo) {
 }
 
 
-// 
-
-
-
 // 주문하기
 function goStep2(orderType){
 	if ($("#receiver").val() == "") {

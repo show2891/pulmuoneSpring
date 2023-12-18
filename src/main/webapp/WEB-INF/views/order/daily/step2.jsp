@@ -11,7 +11,7 @@
 		
 		<div class="checkout-complete-area">
 			<div class="text-alignC">
-				<img src="/resources/images/ui/ico-check-big.png" alt="">
+				<img src="/resources/assets/images/ui/ico-check-big.png" alt="">
 				<strong>주문신청이 완료되었습니다.</strong>
 			</div>
 			
@@ -44,12 +44,12 @@
 						
 						<li>
 							<span>첫 배송 예정일</span>
-							<b>2023.12.13</b>
+							<b>${ drk_start_date }</b>
 						</li>
 						
 						<li>
 							<span>배송메모</span>
-							<b></b>
+							<b>${ memo }</b>
 						</li>
 					</ul>
 					
@@ -60,21 +60,25 @@
 				</div>
 				
 				<ul class="prd-area">
+					<c:forEach items="${ dailyItemInfoList }" var="item">
 						<li>
 							<span class="thumb">
-								<img src="/file/download//product/20221108/2476a7ea-a06c-4af4-a117-1666a39fe56f.jpg" alt="">
+								<img src="/${ item.img_path }/${ item.system_name }" alt="${ item.products_name }">
 							</span>
 							<div class="prd-info">
-								<b class="prd-title" style="text-align: start">식물성유산균 위&amp;캡슐
-									<small class="volume" style="font-size: 12px">(130ml)</small>
+								<b class="prd-title" style="text-align: start">${ item.products_name }
+									<small class="volume" style="font-size: 12px">(${ item.products_size })</small>
 								</b>
 								<ul class="checkout-daily-info">
-									<li>
-										월 <span>1</span>
-									</li>
+									<c:forEach items="${ item.products_cnt }" var="cnt" varStatus="status">
+										<li>
+											<span>${ cnt }</span>
+										</li>
+									</c:forEach>
 								</ul>
 							</div>
 						</li>
+					</c:forEach>
 				</ul>
 				
 			</div>
@@ -83,60 +87,16 @@
 	</div>
 </div>
 
+<script>
+	$(function () {
+		let uls = $(".checkout-daily-info");
 
-<div class="modal fade" id="friendModal" tabindex="-1" aria-labelledby="pauseModal" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content" style="width: 430px">
-			<div class="modal-header" style="border:0; padding: 27px 30px 28px;">
-				<h5 class="modal-title" id="pauseModalLabel"></h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-					<img src="/resources/images/common/btn_close.png">
-				</button>
-			</div>
-			<div class="coupon-img" style="margin-top: 2px;">
-				<label>매일배송상품</label>
-				<h4>5,000원 할인 쿠폰</h4>
-				<span>2022.06.07 ~ 2022.07.31</span>
-				<span>택배배송 상품 10,000원 이상 구매 시</span>
-			</div>
-			<div class="coupon-desc">
-                <span style="line-height: 1.5;">
-					친구초대 이벤트 혜택으로 첫 배송 완료 시<br>
-                   5,000원 쿠폰이 친구분과 고객님께<br>
-                    발행 될 예정입니다.
-				</span>
-			</div>
-			<div class="button-set">
-				<button class="button-basic primary">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="modal fade" id="tasteModal" tabindex="-1" aria-labelledby="pauseModal" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content" style="width: 430px">
-			<div class="modal-header" style="border:0; padding: 27px 30px 28px;">
-				<h5 class="modal-title" id="pauseModalLabel"></h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-					<img src="/resources/images/common/btn_close.png">
-				</button>
-			</div>
-			<div class="coupon-img" style="margin-top: 2px;">
-				<label>매일배송상품</label>
-				<h4>5,000원 할인 쿠폰</h4>
-				<span>2022.06.07 ~ 2022.07.31</span>
-				<span>택배배송 상품 10,000원 이상 구매 시</span>
-			</div>
-			<div class="coupon-desc">
-                <span style="line-height: 1.5;">
-					시음선물 고객 한정 쿠폰이 첫 배송 완료 시 <br>발행 될 예정입니다.
-				</span>
-			</div>
-			<div class="button-set b0">
-				<button class="button-basic primary">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
+	    for (var i = 0; i < uls.length; i++) {
+	        let lis = uls.eq(i).find("li");
+	        for (var j = 0; j < lis.length; j++) {
+	            let li = lis.eq(j);
+	            li.text(weekDays[j] + li.text());
+	        } // for
+	    } // for
+	});
+</script>

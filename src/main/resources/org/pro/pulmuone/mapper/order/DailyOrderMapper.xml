@@ -7,15 +7,20 @@
 
      <!--  List<DailyItemInfoDTO> selectItems(@Param("items") List<DailyOrderItemDTO> items); -->
      <select id="selectItems" resultType="org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO">
-     	SELECT p.products_no, products_name, price, event_price, img_path, system_name
-     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
-     	<where>
-	     	<foreach collection="items" item="item" open="p.products_no IN (" separator="," close=")">
-	     		#{item.itemCode}
-	     	</foreach>
-	     	AND origin_name != 'View.png'
-	    </where>
-     	ORDER BY p.products_no
+     	SELECT d.*
+     	FROM (
+		     	SELECT p.products_no, products_name, products_size, price, event_price, img_path, system_name, member_no, cart_no 
+		     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
+		     							LEFT JOIN cart_box c ON p.products_no = c.products_no
+		     	<where>
+			     	<foreach collection="items" item="item" open="p.products_no IN (" separator="," close=")">
+			     		#{item.itemCode}
+			     	</foreach>
+			     	AND origin_name != 'View.png'
+			    </where>
+		    	) d
+		WHERE member_no IS NULL OR member_no = #{ member_no }
+		ORDER BY cart_no
      </select>
      
      
@@ -38,4 +43,58 @@
      				, #{ drkOrderDTO.drk_order_type }, #{ drkOrderDTO.drk_order_date }, #{ drkOrderDTO.fc_no }, #{ drkOrderDTO.drk_status })
      </insert>
      
+     
+     <!-- 	int cardInfoInsert(CardInfoDTO cardInfoDTO); -->
+     <insert id="cardInfoInsert">
+		<selectKey keyProperty="cardInfoDTO.card_info_no" resultType="Integer" order="BEFORE">
+	        SELECT seq_card_info.NEXTVAL
+	        FROM dual
+	    </selectKey>
+     	INSERT INTO card_info(card_info_no, member_no, card_num, expiry_date, birth_date)
+     	VALUES(#{cardInfoDTO.card_info_no}, #{cardInfoDTO.member_no}, #{cardInfoDTO.card_num}, #{cardInfoDTO.expiry_date}, #{cardInfoDTO.birth_date})
+     </insert>
+     
+     
+     <!--	int acntInfoInsert(AcntInfoDTO acntInfoDTO); -->
+     <insert id="acntInfoInsert">
+		<selectKey keyProperty="acntInfoDTO.acnt_info_no" resultType="Integer" order="BEFORE">
+	        SELECT seq_acnt_info.NEXTVAL
+	        FROM dual
+	    </selectKey>
+     	INSERT INTO acnt_info(acnt_info_no, member_no, acnt_holder, bank_no, acnt_num)
+     	VALUES(#{acntInfoDTO.acnt_info_no}, #{acntInfoDTO.member_no}, #{acntInfoDTO.acnt_holder}, ${acntInfoDTO.bank_no}, ${acntInfoDTO.acnt_num})
+     </insert>
+     
+     
+     <!-- int drkPayInsert(DrkPayDTO drkPayDTO); -->
+     <insert id="drkPayInsert">
+     	INSERT INTO drk_pay (drk_pay_no, drk_order_no, drk_price, drk_discount_price, drk_final_price, drk_pay_method, pay_info_no, drk_pay_status)
+     	VALUES (seq_drk_pay.NEXTVAL, #{drk_order_no}, #{drk_price}, #{drk_discount_price}
+     				, #{drk_final_price}, #{drk_pay_method}, #{pay_info_no}, #{drk_pay_status})
+     </insert>
+     
+     <!-- int drkShipInsert(DrkShipDTO drkShipDTO); -->
+     <insert id="drkShipInsert">
+     	INSERT INTO drk_ship (drk_order_no, drk_receiver, drk_tel, drk_zip_code, drk_addr, drk_addr_detail, drk_memo, drk_ship_loc)
+     	VALUES (#{drk_order_no}, #{drk_receiver}, #{drk_tel}, #{drk_zip_code}, #{drk_addr}, #{drk_addr_detail}, #{drk_memo}, #{drk_ship_loc})
+     </insert>
+     
+     <!-- int drkScheduleInsert(@Param("drkScheduleDTO") DrkScheduleDTO drkScheduleDTO, @Param("drkOrderNo") int drkOrderNo, @Param("today") Date today, @Param("drk_start_date") LocalDate drk_start_date); -->
+     <insert id="drkScheduleInsert">
+     	<selectKey keyProperty="drkScheduleDTO.drk_schedule_no" resultType="Integer" order="BEFORE">
+     		SELECT seq_drk_schedule.NEXTVAL
+     		FROM dual
+     	</selectKey>
+        INSERT INTO drk_schedule (drk_schedule_no, drk_order_no, reg_date, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt, drk_start_date, drk_end_date)
+     	VALUES (#{ drkScheduleDTO.drk_schedule_no }, #{ drkOrderNo }, #{ today }, #{ drkScheduleDTO.products_no }
+     				, #{ drkScheduleDTO.mon_cnt }, #{ drkScheduleDTO.tue_cnt }, #{ drkScheduleDTO.wed_cnt }
+     				, #{ drkScheduleDTO.thu_cnt }, #{ drkScheduleDTO.fri_cnt }, #{ drk_start_date }, #{ drk_end_date })
+     </insert>
+     
+     <!-- int drkHistoryInsert(DrkHistoryDTO dto); -->
+     <insert id="drkHistoryInsert">
+     	INSERT INTO drk_history (drk_history_no, drk_schedule_no, drk_order_no, products_no, products_cnt, drk_date, drk_day, drk_complete)
+     	VALUES (seq_drk_history.NEXTVAL, #{ drk_schedule_no }, #{ drk_order_no }, #{ products_no }, #{ products_cnt }, #{ drk_date }, #{ drk_day }, #{ drk_complete })
+     </insert>
+
 </mapper>

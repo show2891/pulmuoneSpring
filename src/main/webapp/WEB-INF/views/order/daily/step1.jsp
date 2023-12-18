@@ -3,12 +3,9 @@
 <div class="contents-area">
 	<form id="orderForm">
 		<input type="hidden" id="${ _csrf.parameterName }" name="${ _csrf.parameterName }" value="${ _csrf.token }">
-		<input type="hidden" name="price" value="">
-		<input type="hidden" name="salePrice" value="">
-		<input type="hidden" name="discountPrice" value="">
-		<input type="hidden" name="shppingPrice" value="0">
-		<input type="hidden" name="payPrice" value="">
-		<input type="hidden" name="payMethod" value="0">
+		<input type="hidden" id="price" name="price" value="">
+		<input type="hidden" id="final_price" name="final_price" value="">
+		<input type="hidden" id="pay_method" name="drk_pay_method" value="0">
 
 		<div class="cont-checkout-area">
 			<div class="title-tab-area">

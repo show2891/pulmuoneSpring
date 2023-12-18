@@ -27,7 +27,7 @@
 			</a>
 		</li>
 		<li class="dim">
-			<a href="/mypage/order/box.do" class="item">
+			<a href="/mypage/order/box" class="item">
 				<label>택배배송</label>
 				<span style="color: #333;border-bottom: 1px solid #7acc12">${ boxOrderCnt }</span>
 			</a>
@@ -101,7 +101,7 @@
 		
 		<div class="part" style="border-bottom: none;padding-bottom: 35px">
 			<div class="part-head" style="margin-bottom: 16px;">
-				<a href="/mypage/order/box.do">택배배송 주문내역</a>
+				<a href="/mypage/order/box">택배배송 주문내역</a>
 			</div>
 				<ul class="delivery-process">
 					<li class="">
@@ -192,7 +192,7 @@
 							</b>
 						</td>
 						<td>
-							<a href="/mypage/order/box.do?boxOrderNo=${ bosiList.orderNo }" class="rounded-button sm">상세보기</a>
+							<a href="/mypage/order/box?boxOrderNo=${ bosiList.orderNo }" class="rounded-button sm">상세보기</a>
 						</td>
 					</tr>
 				</c:forEach>

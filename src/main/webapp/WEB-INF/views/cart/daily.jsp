@@ -265,7 +265,7 @@
 					return;
 				}
 
-				location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(order));
+				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(order));
 
 				return;
 			}

@@ -20,7 +20,7 @@
 		<input type="hidden" id="box_discount_price" name="box_discount_price" value="">
 		<input type="hidden" id="box_shpping_fee" name="box_shpping_fee" value="0">
 		<input type="hidden" id="box_final_price" name="box_final_price" value="">
-		<input type="hidden" id="box_pay_method" name="box_pay_method" value="0">
+		<input type="hidden" id="pay_method" name="box_pay_method" value="0">
 		
 		<div class="cont-checkout-area">
 			<div class="title-tab-area">

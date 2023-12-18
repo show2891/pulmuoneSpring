@@ -412,7 +412,7 @@
               $('#orderModal input[name=custnum]:first').click()
               $("#orderModal").removeClass("loading")
             } else {
-              location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args2));
+              location.href = "/daily/order/step1?item=" + encodeURIComponent(JSON.stringify(args2));
             }
           });
         });
@@ -443,7 +443,7 @@
             $('#orderModal input[name=custnum]:first').click()
             $("#orderModal").removeClass("loading")
           } else {
-            location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args));
+            location.href = "/daily/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
           }
         });
       }
@@ -453,7 +453,7 @@
     var type = $(this).attr("data-type");
     var p = encodeURIComponent(JSON.stringify(nowArgs));;
     if (type === "new") {
-      location.href = "/order/daily/step1?item=" + p
+      location.href = "/daily/order/step1?item=" + p
     } else if (type === "continue") {
       var c = $("input[name='custnum']:checked");
       var custNumber = c.val();

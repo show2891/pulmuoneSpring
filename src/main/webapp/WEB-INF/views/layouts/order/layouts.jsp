@@ -89,7 +89,13 @@
 					let day = date.getDay();
 					return [(day != 0 && day != 6)];
 				}
+			}).on('change', function() {
+			    $(this).attr('value', $(this).val());
 			});
+			$("#ip-datepicker-1").on('apply.daterangepicker', function(ev, picker) {
+			    $("#ip-datepicker-1").val();
+			});
+
 			
 			// 카드 인증
 			$("#validCardBtn").on("click", function () {
@@ -108,7 +114,7 @@
 			// 결제 방식
 			$("#myTab-area li").on("click", function () {
 				let index = $(this).index();
-				$("#box_pay_method").val(index);
+				$("#pay_method").val(index);
 			});
 		});
 </script>

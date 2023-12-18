@@ -7,15 +7,20 @@
 
      <!--  List<BoxItemInfoDTO> selectItems( List<BoxOrderItemDTO> items) -->
      <select id="selectItems" resultType="org.pro.pulmuone.domain.order.box.BoxItemInfoDTO">
-     	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name
-     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
-     	<where>
-	     	<foreach collection="items" item="item" open="p.products_no IN (" separator="," close=")">
-	     		#{item.itemCode}
-	     	</foreach>
-	     	AND origin_name != 'View.png'
-	    </where>
-     	ORDER BY p.products_no
+     	SELECT b.*
+     	FROM (
+		     	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name, member_no, cart_no
+		     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
+		     							LEFT JOIN cart_box c ON p.products_no = c.products_no
+		     	<where>
+			     	<foreach collection="items" item="item" open="p.products_no IN (" separator="," close=")">
+			     		#{item.itemCode}
+			     	</foreach>
+			     	AND origin_name != 'View.png'
+			    </where>
+	    		) b
+	    WHERE member_no IS NULL OR member_no = #{ member_no }
+	    ORDER BY cart_no
      </select>
      
      <!-- List<CouponDTO> getCouponList(int member_no); -->
@@ -39,9 +44,10 @@
      
     <!-- int insertBoxOrderProducts(@Param("boxOrderProductsList") List<BoxOrderProductsDTO> boxOrderProductsList, @Param("boxOrderNo") int boxOrderNo); -->
 	<insert id="insertBoxOrderProducts">
-		<foreach collection="boxOrderProductsList" item="dto" index="index">
-			INSERT INTO box_order_products (box_order_no, products_no, products_cnt)
-			VALUES (#{boxOrderNo}, #{dto.products_no}, ${dto.products_cnt})
+		INSERT INTO box_order_products (box_order_no, products_no, products_cnt)
+		<foreach collection="boxOrderProductsList" item="dto" index="index" separator=" UNION ALL ">
+			SELECT #{boxOrderNo}, #{dto.products_no}, ${dto.products_cnt}
+			FROM dual
 		</foreach>
 	</insert>
 
@@ -82,17 +88,11 @@
 		</foreach>
 	</update>
 	
-	<!-- BoxItemInfoDTO getBoxItemInfo(List<BoxOrderProductsDTO> boxOrderProductsList); -->
+	<!-- BoxItemInfoDTO getBoxItemInfo(BoxOrderProductsDTO boxOrderProductsList); -->
 	<select id="getBoxItemInfo" resultType="org.pro.pulmuone.domain.order.box.BoxItemInfoDTO">
      	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name
      	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
-     	<where>
-	     	<foreach collection="boxOrderProductsList" item="prd" open="p.products_no IN (" separator="," close=")">
-	     		#{prd.products_no}
-	     	</foreach>
-	     	AND origin_name != 'View.png'
-	    </where>
-     	ORDER BY p.products_no
+     	WHERE p.products_no = #{products_no} AND origin_name != 'View.png'
 	</select>
 
 </mapper>

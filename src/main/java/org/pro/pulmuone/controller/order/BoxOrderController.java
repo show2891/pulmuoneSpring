@@ -51,7 +51,27 @@ public class BoxOrderController {
 	public String step1(@RequestParam(name = "item") String itemsStr, Model model) {
 		log.info("> BoxOrderController.step1 ...");
 		
-		// 1. 파라미터로 넘어온 상품 정보 출력
+		// 1. 사용자 정보 출력
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+		        
+        // 사용자 정보 전달
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+		
+		
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
+		
+		
+		// 3. 파라미터로 넘어온 상품 정보 출력
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		// 파라미터로 넘어온 json String 변환
@@ -66,7 +86,7 @@ public class BoxOrderController {
 			items = Arrays.asList(objectMapper.readValue(itemsStr, BoxOrderItemDTO[].class));
 			
 			// 상품 정보 가져오기
-			itemInfos = boxOrderServiceImpl.selectItems(items);
+			itemInfos = boxOrderServiceImpl.selectItems(items, member_no);
 			
 			// 주문 갯수 담기
 			Iterator<BoxOrderItemDTO> ir = items.iterator();
@@ -94,23 +114,7 @@ public class BoxOrderController {
 		}  
 		
 
-		// 2. 사용자 정보 출력
-		// 현재 사용자의 인증 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-        
-        // 사용자 정보 전달
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		model.addAttribute("member", member);
-		
-		
-		// 3. 쿠폰 리스트 전달
+		// 4. 쿠폰 리스트 전달
 		List<CouponDTO> couponList = boxOrderServiceImpl.getCouponList(member.getMember_no(), total_price);
 		model.addAttribute("couponList", couponList);
         
@@ -189,9 +193,9 @@ public class BoxOrderController {
 		model.addAttribute("boxOrderDTO", boxOrderDTO);
 		
 		// 9. 주문한 상품 정보 넘겨주기
-		List<BoxItemInfoDTO> boxItemInfoList = boxOrderServiceImpl.getBoxItemInfo(boxOrderProductsList);
-		System.out.println(boxItemInfoList.get(0).getProducts_no());
-		model.addAttribute("boxItemInfoList", boxItemInfoList);
+		model.addAttribute("totalCnt", boxOrderProductsList.size());
+		BoxItemInfoDTO boxItemInfo = boxOrderServiceImpl.getBoxItemInfo(boxOrderProductsList.get(0).getProducts_no());
+		model.addAttribute("boxItemInfo", boxItemInfo);
 		
 		// 10. 배송 정보 넘겨주기
 		model.addAttribute("boxShipDTO", boxShipDTO);

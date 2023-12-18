@@ -26,12 +26,20 @@
 					<div class="checkout-complete-info-text">
 
 						<div class="prd-area">
-							<c:forEach items="${ boxItemInfoList }" var="i">
-								<span class="thumb">
-									<img src="/${ i.img_path }/${ i.system_name }" alt="">
-								</span>
-								<b class="prd-title" style="text-align: left">${ i.products_name }</b>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${ totalCnt eq 1 }">
+									<span class="thumb">
+										<img src="/${ boxItemInfo.img_path }/${ boxItemInfo.system_name }" alt="">
+									</span>
+									<b class="prd-title" style="text-align: left">${ boxItemInfo.products_name }</b>
+								</c:when>
+								<c:otherwise>
+									<span class="thumb">
+										<img src="/${ boxItemInfo.img_path }/${ boxItemInfo.system_name }" alt="">
+									</span>
+									<b class="prd-title" style="text-align: left">${ boxItemInfo.products_name } 외 ${ totalCnt }개</b>
+								</c:otherwise>
+							</c:choose>
 						</div>
 							
 						<ul class="checkout-num-address">

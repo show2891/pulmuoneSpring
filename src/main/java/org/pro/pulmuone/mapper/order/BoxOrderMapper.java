@@ -18,7 +18,7 @@ import org.pro.pulmuone.domain.order.box.BoxShipDTO;
 public interface BoxOrderMapper {
 	
 	// 상품 정보 가져오기
-	List<BoxItemInfoDTO> selectItems(@Param("items") List<BoxOrderItemDTO> items);
+	List<BoxItemInfoDTO> selectItems(@Param("items") List<BoxOrderItemDTO> items, @Param("member_no") int member_no);
 	
 	// 쿠폰 정보 가져오기
 	List<CouponDTO> getCouponList(@Param("member_no") int member_no, @Param("total_price") int total_price);
@@ -40,6 +40,6 @@ public interface BoxOrderMapper {
 	int updateHaveCoupon(@Param("couponList") List<HaveCouponDTO> couponList, @Param("member_no") int member_no, @Param("box_pay_no") int box_pay_no);
 
 	// 상품 정보 가져오기
-	List<BoxItemInfoDTO> getBoxItemInfo(@Param("boxOrderProductsList") List<BoxOrderProductsDTO> boxOrderProductsList);
+	BoxItemInfoDTO getBoxItemInfo(@Param("products_no") String products_no);
 	
 }

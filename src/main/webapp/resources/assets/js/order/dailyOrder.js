@@ -1,10 +1,15 @@
 const weekDays = ['월','화','수','목','금'];
+const weekDaysEng = ['mon','tue','wed','thu','fri'];
 
 function weekDayText () {
 	$(".weekDays").each(function () {
 		let count = $(this).data("count");
 		let weekDay = weekDays[count];
 		$(this).text(weekDay);
+		
+		let index = $(this).prev().data("index");
+		let weekDayEng = `drkScheduleList[${index}].${weekDaysEng[count]}_cnt`;
+		$(this).prev().attr("name", weekDayEng);
 	});
 };
 
@@ -13,17 +18,17 @@ function calculateReceipt() {
 	// 초기화
     var totalPrice = 0;
     var totalCount = 0;
-    var count = 0;
+    var qty = 0;
     var totalPay = 0;
 		    
     // 1주 예상 금액 계산
     $("#order_targets [data-itemcode][data-price]").each(function () {
-    	count = 0;
+    	qty = 0;
 		$(this).find("input[data-count]").each(function () {
-        	count += parseInt($(this).val(), 10);
+        	qty += parseInt($(this).val(), 10);
      	});
-      	totalCount += count;
-      	totalPrice += parseInt($(this).attr("data-price"), 10) * count;
+      	totalCount += qty;
+      	totalPrice += parseInt($(this).attr("data-price"), 10) * qty;
     });
 	
     // 4주 예상 금액 계산
@@ -33,7 +38,8 @@ function calculateReceipt() {
     $("[data-price-view=origin]").text(totalPay.toLocaleString());
     $("[data-price-view=sale]").text(totalPay.toLocaleString());
     $("[data-price-view=payment]").text(totalPay.toLocaleString());
-    $("input[name=pay_price]").val(totalPay);
+    $("#price").val(totalPay);
+    $("#final_price").val(totalPay);
     
 } // calculateReceipt
 
@@ -198,6 +204,7 @@ function addProduct(searchKeyword, pageNo){
 		, cache: false
 		, success: function(data, callback, xhr) {
 				let tpl = null;
+				
 				$.each(data, function(i, prd){
 					tpl = `<li class="product-add" style="cursor:pointer;" data-available="null" data-products-no="${prd.products_no}" data-price="${prd.price}" data-img-path="${prd.img_path}" data-system-name="${prd.system_name}" data-products-name="${prd.products_name}">`;
 						tpl += `<div class="thumb"><img src="/${ prd.img_path }/${ prd.system_name }" alt=""></div>`;
@@ -249,7 +256,11 @@ function appendPrd(prd){
 	let products_name = prd.data("products-name");
 	
 	let tpl = null;
+	
+	let count = parseInt($(".prd-count").text());
+	
 	tpl = '<li data-id="" data-itemcode="'+products_no+'" class="order-item order-chk active" data-price="'+price+'">'
+		+ `<input type="hidden" value="${ products_no }" name="drkScheduleList[${count}].products_no">`
 			 + '<a href="/product/daily/view.do?tag=281" class="prd-cart">'
 				+'<div class="thumb">'
 					+ '<img src="/'+img_path+'/'+system_name+'" alt="">'
@@ -264,7 +275,7 @@ function appendPrd(prd){
 				+'<ul data-cart-idx="" data-itemcode="'+products_no+'">';
 					for(let i = 0; i<5; i++) {
 						tpl += '<li>'
-									+'<input type="hidden" data-count="'+i+'" value="1">'
+									+'<input type="hidden" data-count="1" data-index="'+count+'" value="1" name="drkScheduleList['+count+'].'+weekDaysEng[i]+'_cnt" >'
 									+'<span class="weekDays" data-count="'+i+'">'+weekDays[i]+'</span>'
 									+'<div class="prd-select-daily">'
 										+'<button type="button" class="prod-add ea-control" data-index="0">'
@@ -282,8 +293,7 @@ function appendPrd(prd){
 	let root = $("#order_targets");
 	root.append(tpl);
 	
-	let count = parseInt($(".prd-count").text())+1;
-	$(".prd-count").text(count);
+	$(".prd-count").text(count+1);
 	
 	calculateReceipt();
 };

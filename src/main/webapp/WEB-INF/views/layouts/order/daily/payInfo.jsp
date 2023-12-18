@@ -38,7 +38,7 @@
 								<label for="input01">카드번호</label>
 							</dt>
 							<dd>
-								<input type="text" name="cardNumber" id="cardNumber" class="numberOnly" maxlength="19" title="카드번호 입력" placeholder="카드번호 입력">
+								<input type="text" id="cardNumber" name="card_num" class="numberOnly" maxlength="16" title="카드번호 입력" placeholder="카드번호 입력">
 							</dd>
 						</dl>
 					</div>
@@ -49,7 +49,7 @@
 								<label for="input01">생년월일</label>
 							</dt>
 							<dd>
-								<input type="text" id="birthDay" class="numberOnly" maxlength="6" name="birthDay" title="생년월일 입력 (YYMMDD 6자리)" placeholder="생년월일 입력 (예: 990101)" value="">
+								<input type="text" id="birthDay" class="numberOnly" maxlength="6" name="birth_date" title="생년월일 입력 (YYMMDD 6자리)" placeholder="생년월일 입력 (예: 990101)" value="">
 							</dd>
 						</dl>
 					</div>
@@ -60,7 +60,7 @@
 								<label for="input01">유효기간</label>
 							</dt>
 							<dd>
-								<input type="text" id="validYYMM" name="validYYMM" title="유효기간 입력" placeholder="유효기간 입력 (MM/YY)" maxlength="5" value="" onKeyup="inputValidThru(this);">
+								<input type="text" id="validYYMM" name="expiry_date" title="유효기간 입력" placeholder="유효기간 입력 (MM/YY)" maxlength="5" value="" onKeyup="inputValidThru(this);">
 								<button type="button" id="validCardBtn" class="btn-square btn-black">카드인증</button>
 							</dd>
 						</dl>
@@ -76,7 +76,7 @@
 								<label for="input01">예금주</label>
 							</dt>
 							<dd>
-								<input type="text" id="input01" name="input01" title="예금주 입력" placeholder="" readonly value="${ member.name }">
+								<input type="text" id="input01" name="acnt_holder" title="예금주 입력" placeholder="" readonly value="${ member.name }">
 							</dd>
 						</dl>
 					</div>
@@ -87,29 +87,29 @@
 								<label for="bankCode">은행</label>
 							</dt>
 							<dd>
-								<select name="bankCode" id="bankCode" class="form-select form-select-lg" aria-label=".form-select-lg example">
-									<option value="">은행을 선택해주세요.</option>
-									<option value="002">산업은행</option>
-									<option value="003">기업은행</option>
-									<option value="004">국민은행</option>
-									<option value="007">수협중앙회</option>
-									<option value="011">농협은행</option>
-									<option value="020">우리은행</option>
-									<option value="023">SC은행</option>
-									<option value="027">한국씨티은행</option>
-									<option value="031">대구은행</option>
-									<option value="032">부산은행</option>
-									<option value="034">광주은행</option>
-									<option value="035">제주은행</option>
-									<option value="037">전북은행</option>
-									<option value="039">경남은행</option>
-									<option value="045">새마을금고</option>
-									<option value="048">신협중앙회</option>
-									<option value="071">우체국</option>
-									<option value="081">KEB하나은행</option>
-									<option value="088">신한은행</option>
-									<option value="209">유안타증권</option>
-									<option value="240">삼성증권</option>
+								<select name="bank_no" id="bankCode" class="form-select form-select-lg" aria-label=".form-select-lg example">
+									<option value="0">은행을 선택해주세요.</option>
+									<option value="1">산업은행</option>
+									<option value="2">기업은행</option>
+									<option value="3">국민은행</option>
+									<option value="4">수협중앙회</option>
+									<option value="5">농협은행</option>
+									<option value="6">우리은행</option>
+									<option value="7">SC은행</option>
+									<option value="8">한국씨티은행</option>
+									<option value="9">대구은행</option>
+									<option value="10">부산은행</option>
+									<option value="11">광주은행</option>
+									<option value="12">제주은행</option>
+									<option value="13">전북은행</option>
+									<option value="14">경남은행</option>
+									<option value="15">새마을금고</option>
+									<option value="16">신협중앙회</option>
+									<option value="17">우체국</option>
+									<option value="18">KEB하나은행</option>
+									<option value="19">신한은행</option>
+									<option value="20">유안타증권</option>
+									<option value="21">삼성증권</option>
 								</select>
 								<input type="hidden" name="fdCustId" id="fdCustId">
 								<input type="hidden" name="cmsId" id="cmsId">
@@ -123,7 +123,7 @@
 								<label for="accountNumber">계좌번호</label>
 							</dt>
 							<dd>
-								<input type="text" id="accountNumber" name="accountNumber" title="계좌번호 입력" placeholder="계좌번호 입력">
+								<input type="text" id="accountNumber" name="acnt_num" title="계좌번호 입력" placeholder="계좌번호 입력">
 								<button id="callCms" data-isnew="true" data-phone="${member.tel}" type="button" class="btn-square btn-black">ARS인증</button>
 								<input id="hasRequest" value="false" type="hidden">
 							</dd>

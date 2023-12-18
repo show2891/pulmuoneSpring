@@ -27,9 +27,9 @@ public class BoxOrderServiceImpl implements BoxOrderService {
 	private BoxOrderMapper boxOrderMapper;
 	
 	@Override
-	public List<BoxItemInfoDTO> selectItems(List<BoxOrderItemDTO> items) {
+	public List<BoxItemInfoDTO> selectItems(List<BoxOrderItemDTO> items, int member_no) {
 		log.info("> BoxOrderServiceImpl.selectItems...");
-		return this.boxOrderMapper.selectItems(items);
+		return this.boxOrderMapper.selectItems(items, member_no);
 	}
 
 	@Override
@@ -69,9 +69,9 @@ public class BoxOrderServiceImpl implements BoxOrderService {
 	}
 
 	@Override
-	public List<BoxItemInfoDTO> getBoxItemInfo(List<BoxOrderProductsDTO> boxOrderProductsList) {
+	public BoxItemInfoDTO getBoxItemInfo(String products_no) {
 		log.info("> BoxOrderServiceImpl.getBoxItemInfo...");
-		return this.boxOrderMapper.getBoxItemInfo(boxOrderProductsList);
+		return this.boxOrderMapper.getBoxItemInfo(products_no);
 	}
 	
 
