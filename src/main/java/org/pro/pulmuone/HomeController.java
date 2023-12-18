@@ -40,15 +40,12 @@ public class HomeController {
 	}
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping("cart")
-	public String cart(HttpServletRequest request, Model model, CartVO vo, Principal principal) throws Exception {		
-	  String uri = request.getRequestURI();
-		log.info("4444444444444444444" + uri);		  
+	public String cart(Model model, CartVO vo, Principal principal) throws Exception {				  
 		vo.setMember_id(principal.getName());		
-		int totalCount = this.cartMapper.cart(vo);
-//		model.addAttribute("list", list );		
-		log.warn(totalCount+" : asdkdsjkadsadsklads");
-		request.setAttribute("totalCount", totalCount);
-		return "layouts/header.tiles";
+		int count = this.cartMapper.cart(vo);
+		model.addAttribute("count", count );				
+//		return "layouts/header.tiles";
+		return "home.index";
 		
 	}
 }
