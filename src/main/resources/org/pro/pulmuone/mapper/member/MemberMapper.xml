@@ -83,7 +83,7 @@
 	<!-- 로그인 인증 처리 -->
 	<!-- 	public MemberVO read(String userid); -->
 	<select id="read" resultMap="memberMap">
-	 SELECT member_no, m.member_id, pwd, name, authority, pwd_reset
+	 SELECT member_no, m.member_id, pwd, name, authority, pwd_reset, enabled
 	 FROM member m LEFT JOIN member_authorities auth ON m.member_id = auth.member_id
 	 WHERE m.member_id = #{userid}
 	</select>
@@ -103,7 +103,11 @@
 		WHERE member_id = #{memberId}
 	</update>
 
-
+	<update id="updateEnabled">
+		UPDATE member
+		SET enabled = #{enabled}
+		WHERE member_no = #{memberNo}
+	</update>
 
 	
 </mapper>

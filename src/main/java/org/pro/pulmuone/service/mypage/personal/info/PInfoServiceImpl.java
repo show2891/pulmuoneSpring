@@ -27,8 +27,10 @@ public class PInfoServiceImpl implements PInfoService {
 	public boolean modifyMemberInfo(String memberId, MemberDTO dto) {
 
 		int updateResult = 0;
-		String encodedNewPwd = this.passwordEncoder.encode(dto.getNewPassword());
-		dto.setNewPassword(encodedNewPwd);
+		if (dto.getNewPassword() != null) {
+			String encodedNewPwd = this.passwordEncoder.encode(dto.getNewPassword());			
+			dto.setNewPassword(encodedNewPwd);
+		}
 		
 		updateResult = this.memberMapper.updateInfo(memberId, dto);
 

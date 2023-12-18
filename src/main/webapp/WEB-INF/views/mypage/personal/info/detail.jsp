@@ -416,18 +416,23 @@ $(function () {
 
 			if ( pwd == "" ) {
 				showError("memberPwdError", message.member.regist.password.empty);
+				memberPwdError = false;
 			}
 			else if ( pwd.indexOf(" ") > -1 ) {
 				showError("memberPwdError", message.member.regist.password.space);
+				memberPwdError = false;
 			}
 			else if ( !message.member.regist.password.isFormat(pwd) ) {
 				showError("memberPwdError", message.member.regist.password.format);
+				memberPwdError = false;
 			}
 			else if ( message.member.regist.password.isConnect(pwd) ) {
 				showError("memberPwdError", message.member.regist.password.connect);
+				memberPwdError = false;
 			}
 			else if ( pwd.indexOf(id) > -1 ) {
 				showError("memberPwdError", message.member.regist.password.sameId);
+				memberPwdError = false;
 			}
 			else {
 				hideError("memberPwdError");
@@ -445,9 +450,11 @@ $(function () {
 
 			if ( pwdConfirm == "" ) {
 				showError("memberPwdConfirmError", message.member.regist.password.more);
+				memberPwdConfirmError = false;
 			}
 			else if ( pwdConfirm != pwd ) {
 				showError("memberPwdConfirmError", message.member.regist.password.notMatch);
+				memberPwdConfirmError = false;
 			}
 			else {
 				hideError("memberPwdConfirmError");

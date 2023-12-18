@@ -78,6 +78,9 @@
 							</div>
 						</div>
 					</form>
+		            <form action="/member/logout" method="post" id="logout">
+		            	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	            	</form>
 				</div>
 
 
@@ -107,7 +110,9 @@
 				}
 			}
 
-			var ajaxStatus = false;
+			var header = '${_csrf.headerName}';
+			var token = '${_csrf.token}';
+			
 		    var params = null;
 		    params = JSON.stringify($("#quitForm").serializeObject());
 			$.ajax({
@@ -117,19 +122,22 @@
 				type:"DELETE",
 				data: params,
 				cache:false ,
-				success: function ( data,  textStatus, jqXHR ){
-					if( data.rowCount == "1" ) {
-						ajaxStatus = true;
-		 				alert( "회원탈퇴가 완료되었습니다.", ()=>{location.href='/'});
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+					console.log(params);
+				},
+				success: function ( isDeregistered,  textStatus, jqXHR ){
+					if( isDeregistered ) {
+		 				alert( "회원탈퇴가 완료되었습니다.", () => { $("#logout").submit() } );
 
 					} else {  
-						console.log("비밀번호가 틀렸습니다.");
 						alert( "시스템에러");
 					}
 				 
 				},
-				error:function (){
-				 alert("에러~~~ ");
+				error:function (request, status, error){
+					alert("에러~~~ ");
+					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			});
 			

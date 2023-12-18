@@ -43,6 +43,12 @@ public class PInfoAjaxController {
 		
         CurrentUser user = (CurrentUser) authentication.getPrincipal();
 		String memberId = user.getMember().getMemberId();
+
+		log.info(dto);
+		if (dto.getNewPassword().equals("")) {
+			dto.setNewPassword(null);
+		}
+		log.info(dto);
 		
 		boolean modifyResult = this.pInfoService.modifyMemberInfo(memberId, dto);
 		

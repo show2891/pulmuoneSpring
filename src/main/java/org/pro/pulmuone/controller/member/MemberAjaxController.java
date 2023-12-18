@@ -2,6 +2,7 @@ package org.pro.pulmuone.controller.member;
 
 import java.sql.SQLException;
 
+import org.pro.pulmuone.domain.deregist.DeregistDTO;
 import org.pro.pulmuone.domain.member.MemberDTO;
 import org.pro.pulmuone.security.domain.CurrentUser;
 import org.pro.pulmuone.service.member.MemberService;
@@ -76,15 +77,17 @@ public class MemberAjaxController {
 	
 	// 회원 탈퇴
 	@DeleteMapping(value = "quit", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<Boolean> quit(Authentication authentication, @RequestBody ) throws ClassNotFoundException, SQLException {
+	public ResponseEntity<Boolean> quit(Authentication authentication, @RequestBody DeregistDTO dto) throws ClassNotFoundException, SQLException {
 		log.warn("> AjaxMemberController quit()...");
 		
 		CurrentUser user = (CurrentUser) authentication.getPrincipal();
-		String storedPwd = user.getMember().getPwd();
+		int memberNo = user.getMember().getMemberNo();
 		
-		boolean isChanged = this.memberService.quit();
+		dto.setMemberNo(memberNo);
 		
-		return isChanged ? new ResponseEntity<Boolean>(isChanged, HttpStatus.OK)
-							: new ResponseEntity<Boolean>(isChanged, HttpStatus.OK);
+		boolean isDeregistered = this.memberService.deregister(dto);
+		
+		
+		return new ResponseEntity<Boolean>(isDeregistered, HttpStatus.OK);
 	}
 }
