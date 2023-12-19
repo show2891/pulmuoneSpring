@@ -133,12 +133,13 @@
 		}
 	
 			var	args = container.attr("data-itemcode");
-		
-		newPut({
-			url: '/cart/'+type+'/'+ args,
-			data
-		}, (r) => {
-			var textview = $("[data-itemcount-view='" + ix + "']", container);
+			var param = [];
+			for (var i = 1; i < 6; i++) {
+		 		param.push(Object.values(data)[i]);	
+			}
+
+	    axios.get('/cart/daily/update?products_no='+ args+'&idx='+param).then(function ({data}) {      
+	    	var textview = $("[data-itemcount-view='" + ix + "']", container);
 			textview.text(size[ix]);
 			if (size[ix] <= 0) {
 				textview.parents("li").removeClass("active");
@@ -148,7 +149,24 @@
 			$("[data-count='" + ix + "']", container).val(size[ix]);
             togglePromotion($(el))
 			calculateTotalPrice();
-		});
+	    }).catch(function (e) {
+	      alert("서버와 연결이 올바르지 않습니다.");
+	    })   
+// 		newPut({
+// 			url: '/cart/'+type+'/'+ args,
+// 			data
+// 		}, (r) => {
+// 			var textview = $("[data-itemcount-view='" + ix + "']", container);
+// 			textview.text(size[ix]);
+// 			if (size[ix] <= 0) {
+// 				textview.parents("li").removeClass("active");
+// 			} else {
+// 				textview.parents("li").addClass("active");
+// 			}
+// 			$("[data-count='" + ix + "']", container).val(size[ix]);
+//             togglePromotion($(el))
+// 			calculateTotalPrice();
+// 		});
 	}
 
 

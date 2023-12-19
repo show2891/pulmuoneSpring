@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.log4j.Log4j;
 
 @RestController
-@RequestMapping("/ajax/mypage/personal/*")
+@RequestMapping("/ajax/mypage/personal/refund/*")
 @Log4j
 public class RefundAjaxController {
 
@@ -27,7 +27,7 @@ public class RefundAjaxController {
 	private RefundService refundService;
 	
 	// 환불계좌 등록 처리
-	@PostMapping(value = "/refund/{memberNo}", consumes = "application/json", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE } )
+	@PostMapping(value = "/{memberNo}", consumes = "application/json", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE } )
 	public ResponseEntity<Boolean> write(Authentication authentication, @RequestBody RefundDTO dto) {
 		log.warn("> RefundAjaxController write()...");
 		
@@ -43,7 +43,7 @@ public class RefundAjaxController {
 	}	
 	
 	// 환불계좌 수정 처리
-	@PutMapping(value = "/refund/{memberNo}", consumes = "application/json", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@PutMapping(value = "/{memberNo}", consumes = "application/json", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Boolean> modify(Authentication authentication, @RequestBody RefundDTO dto) {
 		log.warn("> RefundAjaxController modify()...");
 		
@@ -59,7 +59,7 @@ public class RefundAjaxController {
 	}
 	
 	// 환불계좌 삭제 처리
-	@DeleteMapping(value = "/refund/{memberNo}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@DeleteMapping(value = "/{memberNo}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Boolean> delete(Authentication authentication) {
 		log.warn("> RefundAjaxController delete()...");
 		
