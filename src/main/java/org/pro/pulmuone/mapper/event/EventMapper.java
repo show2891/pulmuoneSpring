@@ -19,5 +19,7 @@ public interface EventMapper {
     
     List<EventCommentVO> getComments(@Param("event_no") int event_no, @Param("start") int currentPage, @Param("end") int numberPerPage);
     
+    int getCommentCount(int event_no);
+    
 }
 

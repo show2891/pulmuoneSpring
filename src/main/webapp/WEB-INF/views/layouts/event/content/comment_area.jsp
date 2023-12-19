@@ -2,39 +2,29 @@
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
-<%
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    UserDetails userDetails = null;
-    if(authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-        userDetails = (UserDetails)authentication.getPrincipal();
-    }
-%>
+<%@ page import="org.pro.pulmuone.domain.member.MemberDTO" %>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#write-review').click(function() {
-            var content = $('#content').val();
-            $.post('/event/comment/write', { event_no: ${event.event_no}, content: content }, function() {
-                window.location.reload();
-            });
-        });
-    });
-</script>
+            <sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.member.name"/>
+            </sec:authorize>
 
 <div class="board-write">
     <span style="text-decoration: none">
-        <% if(userDetails != null){ %>
-            <%=userDetails.getUsername()%>
-        <% }else{ %>
-            <a href="/mypage.do" id="login-link" style="text-decoration: underline;">로그인</a>
-        <% } %>
+        <c:choose>
+            <c:when test="${not empty name}">
+                ${name}
+            </c:when>
+            <c:otherwise>
+                <a href="/mypage" id="login-link" style="text-decoration: underline;">로그인</a>
+            </c:otherwise>
+        </c:choose>
     </span>
     <div class="textarea">
         <textarea id="content" title="댓글을 남겨보세요." placeholder="댓글을 남겨보세요" maxlength="500"></textarea>
         <button id="write-review" type="button">댓글등록</button>
     </div>
 </div>
+
 
 <div class="board-review-list-area">
     <div class="list-head">
@@ -64,11 +54,11 @@
 <nav aria-label="Page navigation example" class="pagenavi-area" data-pagination="">
     <input type="hidden" id="pageNo" name="pageNo">
     <ul class="pagination">
-        <c:forEach var="i" begin="1" end="${totalPages}">
-            <li class="page-item ${i == currentPage ? 'active' : ''}">
-                <a class="page-link" href="/event/event/view.do?event_no=${event.event_no}&currentPage=${i}">${i}</a>
-            </li>
-        </c:forEach>
+		<c:forEach var="i" begin="1" end="${totalPages}">
+		    <li class="page-item ${i == currentPage ? 'active' : ''}">
+		        <a class="page-link" href="#">${i}</a>
+		    </li>
+		</c:forEach>
     </ul>
 </nav>
 
@@ -153,7 +143,7 @@
 <script>
 $(document).ready(function() {
     
-    $(".page-link").click(function(e) {
+    $(".pagination").on("click", ".page-link", function(e) {
         e.preventDefault(); 
 
         $(".page-item").removeClass("active");
@@ -163,7 +153,7 @@ $(document).ready(function() {
         var eventNo = ${event.event_no};
 
         $.ajax({
-            url: "/event/event/EventComment.ajax", 
+        	url: "/event/event/view/EventComment.ajax",
             type: "GET",
             data: {
                 event_no: eventNo,
@@ -173,17 +163,35 @@ $(document).ready(function() {
             success: function(response) {
                 $("#pagable-list").empty();
                 $.each(response.comments, function(i, comment) {
+                	// UNIX 타임스탬프를 밀리초 단위로 변환한 후 Date 객체를 생성합니다.
+                    var writeDate = new Date(comment.write_date * 1);
+                    // Date 객체를 'yyyy-mm-dd' 형식의 문자열로 변환합니다.
+                    var formattedDate = writeDate.getFullYear() + '-' + ('0' + (writeDate.getMonth() + 1)).slice(-2) + '-' + ('0' + writeDate.getDate()).slice(-2);
+                    
                     $("#pagable-list").append(
                         '<li style="position: relative">' +
                             '<div class="board-review-cont" style="width: 100%">' +
                                 '<b>' + comment.name + '</b>' +
                                 '<p class="review-content-' + comment.comment_no + '">' + comment.content + '</p>' +
-                                '<span class="text-day">' + comment.write_date + '</span>' +
+                                '<span class="text-day">' + formattedDate + '</span>' +
                             '</div>' +
                             '<div class="review-util-btn" style="white-space: nowrap; position: absolute; top: 32px; right: 0" data-idx="' + comment.comment_no + '" data-eventidx="' + comment.event_no + '"></div>' +
                         '</li>'
                     );
                 });
+
+                $(".pagination").empty();
+                var totalPages = Math.ceil(response.totalComments / 10);
+                for (var i = 1; i <= totalPages; i++) {
+                    var li = $('<li class="page-item"></li>');
+                    if (i == pageNo) {
+                        li.addClass("active");
+                    }
+                    var a = $('<a class="page-link" href="#">' + i + '</a>');
+                    li.append(a);
+                    $(".pagination").append(li);
+                }
+
                 $(".count > span").text(response.totalComments);
                 
                 $('html, body').animate({
@@ -194,11 +202,9 @@ $(document).ready(function() {
                 console.log(textStatus, errorThrown);
             }
         });
-
-
-        
     });
 });
+
 </script>
 
 <script>

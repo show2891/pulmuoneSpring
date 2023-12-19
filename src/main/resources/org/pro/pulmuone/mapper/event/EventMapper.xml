@@ -114,5 +114,10 @@
         )
         WHERE rnum BETWEEN #{start} AND #{end}
     </select>
+    
+    <select id="getCommentCount" resultType="int">
+	    SELECT COUNT(*) FROM event_comment
+	    WHERE event_no = #{event_no}
+	</select>
 
 </mapper>

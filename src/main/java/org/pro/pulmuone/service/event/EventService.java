@@ -18,4 +18,6 @@ public interface EventService {
     
     List<EventCommentVO> getComments(int event_no, int currentPage, int numberPerPage);
     
+    int getCommentCount(int event_no);
+    
 }
