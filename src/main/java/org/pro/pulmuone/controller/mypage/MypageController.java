@@ -2,7 +2,6 @@ package org.pro.pulmuone.controller.mypage;
 
 import java.security.Principal;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;

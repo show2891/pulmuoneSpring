@@ -1,5 +1,6 @@
 package org.pro.pulmuone.domain.mypage.order;
 
+import java.sql.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -14,9 +15,10 @@ import lombok.NoArgsConstructor;
 public class BoxOrderMypageListDTO {
 	
 	private int box_order_no;
-	private String box_order_date;
+	private Date box_order_date;
 	private String box_order_status;
 	private int total_count;
+	private String tracking_no;
 	
 	private List<BoxOrderMypageProductsDTO> boxOrderProductsList;
 	

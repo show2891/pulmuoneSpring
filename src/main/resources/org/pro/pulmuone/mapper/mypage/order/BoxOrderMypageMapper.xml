@@ -35,10 +35,11 @@
 	
 	<!-- List<BoxOrderMypageListDTO> selectBoxInfos(int member_no, Date startDate, Date endDate); -->
 	<select id="selectBoxInfos" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO">
-		SELECT box_order_no, box_order_date, box_order_status
-		    , COUNT(box_order_no) OVER() total_count
-		FROM box_order
+		SELECT o.box_order_no, box_order_date, box_order_status, tracking_no
+		    , COUNT(o.box_order_no) OVER() total_count
+		FROM box_order o JOIN box_ship s ON o.box_order_no = s.box_order_no 
 		WHERE member_no = #{member_no} AND box_order_date BETWEEN #{startDate} AND #{endDate}
+		ORDER BY box_order_date DESC
 	</select>
 	
 	<!-- List<BoxOrderMypageProductsDTO> selectBoxOrderMypageProducts(int box_order_no); -->
