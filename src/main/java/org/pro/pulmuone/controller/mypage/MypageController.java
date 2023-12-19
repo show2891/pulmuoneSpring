@@ -2,11 +2,13 @@ package org.pro.pulmuone.controller.mypage;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
+import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
@@ -165,8 +167,8 @@ public class MypageController {
 		int member_no = member.getMember_no();
 		
 		// >> 음용 정보 가져오기 <<
-		// List<BoxOrderMypageListDTO> boxOrderMypageList = this.boxOrderMypageServiceImpl.selectBoxInfos(member_no, startSearchDate, endSearchDate);
-		// model.addAttribute("boxOrderMypageList", boxOrderMypageList);
+		List<BoxOrderMypageListDTO> boxOrderMypageList = this.boxOrderMypageServiceImpl.selectBoxInfos(member_no, startSearchDate, endSearchDate);
+		model.addAttribute("boxOrderMypageList", boxOrderMypageList);
 		
 		return "mypage/order/box.tiles";
 	}

@@ -33,4 +33,21 @@
         </if> 
 	</select>
 	
+	<!-- List<BoxOrderMypageListDTO> selectBoxInfos(int member_no, Date startDate, Date endDate); -->
+	<select id="selectBoxInfos" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO">
+		SELECT box_order_no, box_order_date, box_order_status
+		    , COUNT(box_order_no) OVER() total_count
+		FROM box_order
+		WHERE member_no = #{member_no} AND box_order_date BETWEEN #{startDate} AND #{endDate}
+	</select>
+	
+	<!-- List<BoxOrderMypageProductsDTO> selectBoxOrderMypageProducts(int box_order_no); -->
+	<select id="selectBoxOrderMypageProducts" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO">
+		SELECT op.products_no, products_cnt, products_name, products_size, products_type
+		        , price, event_price, img_path, system_name
+		FROM box_order_products op JOIN products p ON op.products_no = p.products_no
+		                            			JOIN products_img i ON p.products_no = i.products_no
+		WHERE box_order_no = #{member_no} AND origin_name != 'View.png'
+	</select>
+	
 </mapper>
