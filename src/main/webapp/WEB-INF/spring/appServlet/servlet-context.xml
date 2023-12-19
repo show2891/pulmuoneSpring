@@ -41,17 +41,7 @@
 		<beans:property name="maxInMemorySize" value="10240"></beans:property>
 		<beans:property name="defaultEncoding" value="ISO-8859-1"></beans:property>
 	</beans:bean>
-	<!-- 스프링 인터셉터 -->
-<!-- 	<interceptors> -->
-<!-- 		<interceptor> -->
-<!-- 			<mapping path="/**" /> -->
-<!-- 			<exclude-mapping path="/" />			 -->
-<!-- 			<exclude-mapping path="/index" /> -->
-<!-- 			<exclude-mapping path="/cart" /> -->
-<!-- 			<exclude-mapping path="/member/login" />			 -->
-<!-- 			<beans:bean class="org.pro.pulmuone.Intercepter" /> -->
-<!-- 		</interceptor> -->
-<!-- 	</interceptors> -->
+
 
 
 </beans:beans>
