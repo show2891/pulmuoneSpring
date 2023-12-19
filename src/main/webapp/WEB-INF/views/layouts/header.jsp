@@ -47,9 +47,11 @@
 				<a href="/mypage" data-require-login="true"> <i class="ico ico-myIcon"></i> <span class="hide">로그인 페이지 / 마이 페이지로 가기</span>
 				</a>
 				<sec:authorize access="isAuthenticated()">
-					<a href="/cart/daily">
-						<div class="counter" data-cart-size="">${ count }</div> <i class="ico ico-cart1"></i> <span class="hide">장바구니로 가기</span>
-					</a>
+					<div id="cart">
+						<a href="/cart/daily">
+							<div class="counter" data-cart-size="">${ count }</div> <i class="ico ico-cart1"></i> <span class="hide">장바구니로 가기</span>
+						</a>
+					</div>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<a href="/cart/daily">
@@ -180,21 +182,13 @@
 
 	});
 	<sec:authorize access="isAuthenticated()">	
-// 	var is_action = false;
-// 	function test(){
-// 	    if (is_action === true) { 
-// 	    	return false;	    	
-// 	    	}
-// 	    location.href = "/cart";
-// 	    is_action = true;
-// 	//함수
-// 	}
-	
-	axios.get('/cart').then(function ({data}) {      
-		console.log("성공");
-		console.log(${count});
-    }).catch(function (e) {
-      alert("서버와 연결이 올바르지 않습니다.");
-    })  
+		    axios.get(`/cart`).then(function (res) {		    	
+		        var patt = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi;
+		    	  var html = res.data;
+		          html = html.substring(html.indexOf('<a href="/cart/daily">'));
+		          html = html.substring(0, html.indexOf("</a>"));		          
+		          html = html.trim();
+		          $("#cart").html(html);		 		
+		    });
 	</sec:authorize>
 </script>
