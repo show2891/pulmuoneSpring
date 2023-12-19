@@ -185,7 +185,6 @@
 				},
 				success: function ( modifyResult,  textStatus, jqXHR ){
 					if( modifyResult ) {
-						ajaxStatus = true;
 		 				alert( "환불계좌가 정상적으로 수정되었습니다.", ()=>{location.href='/mypage/personal/refund'});
 
 					} else {  
@@ -222,7 +221,6 @@
 				},
 				success: function ( writeResult,  textStatus, jqXHR ){
 					if( writeResult ) {
-						ajaxStatus = true;
 		 				alert( "환불계좌가 정상적으로 등록되었습니다.", ()=>{location.href='/mypage/personal/refund'});
 
 					} else {  
