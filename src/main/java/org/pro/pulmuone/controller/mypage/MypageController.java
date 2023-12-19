@@ -11,6 +11,7 @@ import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
+import org.pro.pulmuone.service.inquiry.InquiryService;
 import org.pro.pulmuone.service.mypage.order.BoxOrderMypageServiceImpl;
 import org.pro.pulmuone.service.mypage.order.DailyOrderMypageServiceImpl;
 import org.pro.pulmuone.service.order.OrderServiceImpl;
@@ -35,6 +36,9 @@ public class MypageController {
 	private ProductMapper mapper;
 	
 	@Autowired
+	private InquiryService inquiryService;
+	
+	@Autowired
 	private DailyOrderMypageServiceImpl dailyOrderMypageServiceImpl;
 	
 	@Autowired
@@ -44,8 +48,18 @@ public class MypageController {
 	private OrderServiceImpl orderServiceImpl;
 	
 	@GetMapping("mypage")
-	public String summary(HttpServletRequest request, Model model) {
+	public String summary(HttpServletRequest request, Model model, ProductsDTO dto, Principal principal) throws SQLException {
 		log.warn("> MypageController mypage()...");
+		
+//		1. 리뷰 카운트를 위한 쿼리 최선의 방법은 무엇일까 
+		dto.setMember_id( principal.getName() );
+		List<ProductsDTO> reviewlist = this.mapper.reviewlist(dto);
+		model.addAttribute("reviewlist",reviewlist);
+//		2. 문의 카운트를 위한 쿼리 최선의 방법은 무엇일까
+		String userId = principal.getName();
+		int totalCount = 0;
+		 totalCount = inquiryService.selectCount(userId, "all");
+		 request.setAttribute("totalCount", totalCount);
 		
 		// >> member_no 가져오기 <<
 		// 현재 사용자의 인증 정보 가져오기
@@ -85,7 +99,7 @@ public class MypageController {
 		dto.setMember_id( principal.getName() );
 		List<ProductsDTO> wishlist = this.mapper.wishlist(dto);
 		model.addAttribute("wishlist",wishlist);
-		return "product/list.tiles";
+		return "mypage/wish/list.tiles";
 	}
 	
 	@RequestMapping("/mypage/product/delete")
@@ -99,7 +113,7 @@ public class MypageController {
 		this.mapper.wishdelete(dto);
 		this.mapper.wishupdate(dto);
 				
-		return "product/list.tiles";
+		return "mypage/wish/list.tiles";
 		
 	}
 	
@@ -130,7 +144,9 @@ public class MypageController {
 	}
 
 	@RequestMapping("/mypage/order/box")
-	public String orderBox(Model model) {
+	public String orderBox(Model model
+								, @RequestParam(name = "startSearchDate", required = false) String startSearchDate
+								, @RequestParam(name = "endSearchDate", required = false) String endSearchDate) {
 		log.info("> MypageController orderBox()...");
 		
 		// >> member_no 가져오기 <<
@@ -149,8 +165,28 @@ public class MypageController {
 		int member_no = member.getMember_no();
 		
 		// >> 음용 정보 가져오기 <<
+		// List<BoxOrderMypageListDTO> boxOrderMypageList = this.boxOrderMypageServiceImpl.selectBoxInfos(member_no, startSearchDate, endSearchDate);
+		// model.addAttribute("boxOrderMypageList", boxOrderMypageList);
 		
 		return "mypage/order/box.tiles";
+	}
+	
+	@RequestMapping("mypage/action/review")
+	public String review(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+		log.info("reviewlist" );		
+		dto.setMember_id( principal.getName() );
+		List<ProductsDTO> reviewlist = this.mapper.reviewlist(dto);
+		model.addAttribute("reviewlist",reviewlist);
+		return "mypage/review/list.tiles";
+	}
+	
+	@RequestMapping("/mypage/action/review/myWriteReview")
+	public String myWriteReview(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+		log.info("myreviewlist" );		
+		dto.setMember_id( principal.getName() );
+		List<ProductsDTO> myreviewlist = this.mapper.myreviewlist(dto);
+		model.addAttribute("myreviewlist",myreviewlist);
+		return "mypage/review/writelist.tiles";
 	}
 	
 }

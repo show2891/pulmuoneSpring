@@ -121,7 +121,7 @@
 							<form action="http://info.sweettracker.co.kr/tracking/5" method="post">
 								<div class="form-group" style="display: none">
 									<label for="t_key">API key</label>
-								    <input type="text" class="form-control" id="t_key" name="t_key" placeholder="제공받은 APIKEY" value="Ppgk5mfovfq2cMhSjFOnYA">
+								    <input type="text" class="form-control" id="t_key" name="t_key" placeholder="제공받은 APIKEY" value="">
 								</div>
 								            
 								<div class="form-group" style="display: none">
