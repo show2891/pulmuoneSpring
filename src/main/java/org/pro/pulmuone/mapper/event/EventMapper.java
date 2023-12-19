@@ -21,5 +21,7 @@ public interface EventMapper {
     
     int getCommentCount(int event_no);
     
+    void insertComment(EventCommentVO dto);
+    
 }
 

@@ -65,5 +65,10 @@ public class EventServiceImpl implements EventService {
     public int getCommentCount(int event_no) {
         return eventMapper.getCommentCount(event_no);
     }
+    
+    @Override
+    public void saveComment(EventCommentVO vo) {
+        eventMapper.insertComment(vo);
+    }
 
 }

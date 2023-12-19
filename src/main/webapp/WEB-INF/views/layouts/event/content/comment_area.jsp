@@ -3,11 +3,12 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
 <%@ page import="org.pro.pulmuone.domain.member.MemberDTO" %>
-
-            <sec:authorize access="isAuthenticated()">
-				<sec:authentication property="principal.member.name"/>
-            </sec:authorize>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!-- 
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.member.name"/>
+</sec:authorize>
+ -->
 <div class="board-write">
     <span style="text-decoration: none">
         <c:choose>
@@ -206,7 +207,19 @@ $(document).ready(function() {
 });
 
 </script>
+<%-- 
+<sec:authorize access="isAuthenticated()">
+	<script>
+		var isAuthenticated = true;
+	</script>
+</sec:authorize>
 
+<sec:authorize access="!isAuthenticated()">
+	<script>
+		var isAuthenticated = false;
+	</script>
+</sec:authorize>
+ --%>
 <script>
 $(document).ready(function() {
     $('#write-review').click(function(e) {
@@ -234,7 +247,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "/event/comment/write.do",
+            url: "/event/comment/write",
             data: {
             	'event_no': encodeURIComponent('${eventView.event.event_no}'),
                 'content': encodeURIComponent(content),
@@ -261,4 +274,8 @@ $(document).ready(function() {
     }
 });
 </script>
+
+
+
+
 

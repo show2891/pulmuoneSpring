@@ -14,12 +14,15 @@ import org.pro.pulmuone.domain.member.MemberDTO;
 import org.pro.pulmuone.mapper.member.MemberMapper;
 import org.pro.pulmuone.service.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -153,6 +156,30 @@ public class EventController {
 
 	    return response;
 	}
+
+
+
+	@PostMapping("view/EventComment.ajax")
+	@ResponseBody
+	public Map<String, Object> postComment(@RequestBody EventCommentVO eventCommentVO) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    // 로그인 상태 확인
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+	        response.put("result", "notAuthenticated");
+	        return response;
+	    }
+
+	    try {
+	        eventService.saveComment(eventCommentVO);
+	        response.put("result", "success");
+	    } catch (Exception e) {
+	        response.put("result", "fail");
+	    }
+	    return response;
+	}
+
 
 
 	/*

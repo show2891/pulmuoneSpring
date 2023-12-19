@@ -119,5 +119,10 @@
 	    SELECT COUNT(*) FROM event_comment
 	    WHERE event_no = #{event_no}
 	</select>
+	
+    <insert id="insertComment" parameterType="org.pro.pulmuone.domain.event.EventCommentVO">
+        INSERT INTO event_comment (event_no, member_no, content)
+        VALUES (#{event_no}, #{member_no}, #{content})
+    </insert>
 
 </mapper>
