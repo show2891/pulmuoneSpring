@@ -137,6 +137,7 @@
 		<include refid="products_tag"></include>
 		and member_id = #{member_id}
 	</delete>
+	
 	<select id="wishlist" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
 		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price
 		, products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, member_id, idx
@@ -144,5 +145,22 @@
 		where origin_name not like 'View%'
 		and member_id = #{member_id}
 	</select>
-
+	
+	<select id="reviewlist" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		select a.products_no, category_no, products_name, products_sub_name, products_type, a.content, price, event_price
+		, products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, a.reg_date, system_name
+		from review a join products_img b on a.products_no = b.products_no join products c on b.products_no = c.products_no
+		where origin_name not like 'View%'
+		and approval = 0
+		and member_no = (select member_no from member where member_id = #{member_id })
+	</select>
+	
+	<select id="myreviewlist" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		select a.products_no, category_no, products_name, products_sub_name, products_type, a.content, price, event_price
+		, products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, a.reg_date, system_name
+		from review a join products_img b on a.products_no = b.products_no join products c on b.products_no = c.products_no
+		where origin_name not like 'View%'
+		and approval != 0
+		and member_no = (select member_no from member where member_id = #{member_id })
+	</select>
 </mapper>
