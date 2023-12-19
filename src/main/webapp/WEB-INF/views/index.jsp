@@ -31,7 +31,6 @@
 		},
 	});
 </script>
-<div class="wrapper">
 
 	<main class="page">
 		<div id="container-wrapper" class="container-wrapper">
@@ -307,6 +306,5 @@
 			</div>
 		</div>
 	</main>
-</div>
 </body>
 </html>
