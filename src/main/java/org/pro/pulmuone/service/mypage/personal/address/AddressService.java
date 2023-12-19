@@ -12,4 +12,11 @@ public interface AddressService {
 
 	boolean deleteAddress(int addrNo);
 
+	boolean writeAddress(AddrBookDTO dto);
+
+	boolean modifyAddress(AddrBookDTO dto);
+
+	boolean setDefaultAddr(int memberNo, int addrNo);
+
+
 }

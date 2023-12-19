@@ -3,6 +3,7 @@ package org.pro.pulmuone.controller.mypage.personal.address;
 import java.util.List;
 
 import org.pro.pulmuone.domain.mypage.personal.address.AddrBookDTO;
+import org.pro.pulmuone.domain.mypage.personal.address.MoreDTO;
 import org.pro.pulmuone.security.domain.CurrentUser;
 import org.pro.pulmuone.service.mypage.personal.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,26 @@ public class AddressController {
 		
 		CurrentUser user = (CurrentUser) authentication.getPrincipal();
 		int memberNo = user.getMember().getMemberNo();
-		String memberId = user.getMember().getMemberId();
 		
-		List<AddrBookDTO> addrBookDtoList = this.addressService.getList(memberNo); 
-		int dtoCount = addrBookDtoList.size();
+		int startNum = 1;
+		int pagingSize = 3;
+		int endNum = startNum + pagingSize - 1;
+		
+		List<AddrBookDTO> allAddrBookDtoList = this.addressService.getList(memberNo);
+		int dtoCount = allAddrBookDtoList.size();
+
+		List<AddrBookDTO> addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, endNum); 
 		
         Gson gson = new GsonBuilder().create();
         String json = gson.toJson(addrBookDtoList);
-
+        
+        MoreDTO moreDto = new MoreDTO(memberNo, startNum, endNum); 
+        String pagingInfo = gson.toJson(moreDto);
         
 		model.addAttribute("dtoList", json);
 		model.addAttribute("dtoCount", dtoCount);
-		model.addAttribute("memberId", memberId);
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("pagingInfo", pagingInfo);
 		
 		return "mypage/personal/address/list.tiles";
 	}

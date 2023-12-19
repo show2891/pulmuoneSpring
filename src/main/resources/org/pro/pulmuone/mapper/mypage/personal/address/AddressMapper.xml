@@ -20,10 +20,11 @@
 	</resultMap>
 
 
-	<select id="selectAddresses" resultMap="addressMap">
+	<select id="selectAddressList" resultMap="addressMap">
 		SELECT *
 		FROM addr_book
 		WHERE member_no = #{memberNo}
+		ORDER BY default_addr DESC, addr_no DESC
 	</select>
 
 	<select id="selectAddress" resultMap="addressMap">
@@ -32,7 +33,28 @@
 		WHERE addr_no = #{addrNo}
 	</select>
 
+	<insert id="insertAddress">
+		INSERT INTO addr_book
+		VALUES ( seq_addr_book.NEXTVAL, #{dto.memberNo}, #{dto.addrName}, #{dto.name}, #{dto.tel}, #{dto.dest}, #{dto.zipCode}, #{dto.addr}, #{dto.addrDetail}, #{dto.memo}, #{dto.defaultAddr} )
+	</insert>
 
+	<update id="updateAddress">
+		UPDATE addr_book
+		SET addr_name = #{dto.addrName}, name = #{dto.name}, tel = #{dto.tel}, dest = #{dto.dest}, zip_code = #{dto.zipCode}, addr = #{dto.addr}, addr_detail = #{dto.addrDetail}, memo = #{dto.memo}
+		WHERE member_no = #{dto.memberNo} AND addr_no =  #{dto.addrNo}
+	</update>
+
+	<update id="updateDefaultAddrForReset">
+		UPDATE addr_book
+		SET default_addr = 0
+		WHERE member_no = #{memberNo} AND default_addr = 1
+	</update>
+
+	<update id="updateDefaultAddr">
+		UPDATE addr_book
+		SET default_addr = 1
+		WHERE addr_no = #{addrNo}
+	</update>
 
 	<delete id="deleteAddress">
 		DELETE FROM addr_book

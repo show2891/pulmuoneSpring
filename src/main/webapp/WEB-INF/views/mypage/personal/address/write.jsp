@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!-- 		<div class="breadcrumb-style"> -->
@@ -14,107 +14,118 @@
 <!-- 			</div> -->
 <!-- 		</div> -->
 
-
-			<div class="container">
-					<div class="border-wrapper">
-						<h2 class="container-title">
-							주소 등록
-						</h2>
-					</div>
-					<div class="address-input-form">
-						<div class="input-group">
-							<div class="form-input">
-								<dl>
-									<dt><label for="nickname">애칭</label></dt>
-									<dd>
-										<input type="text" id="nickname" name="nickname" value="${ dto.addrName }">
-									</dd>
-								</dl>
-							</div>
-							<div class="form-input">
-								<dl>
-									<dt><label for="name">이름</label></dt>
-									<dd>
-										<input name="name" id="name" value="${ dto.name }" type="text">
-									</dd>
-								</dl>
-							</div>
-							<div class="form-input">
-								<dl>
-									<dt><label for="phoneNumber">휴대폰번호</label></dt>
-									<dd>
-										<input data-call-text="" value="" maxlength="13" class="numberOnly" name="phoneNumber" id="phoneNumber" type="hidden">
-									<input value="${ dto.tel }" maxlength="13" class="numberOnly" name="_x_phoneNumber"></dd>
-								</dl>
-							</div>
-						</div>
-						<div class="input-group">
-							<div class="form-input">
-								<dl>
-									<dt style="min-width:140px;"><label>배달장소</label></dt>
-									<dd>
-										<div class="radio-area radio-type2">
-											<div class="radio">
-												<input value="H" type="radio" id="placeTypeH" ${ dto.dest == 0 ? 'checked="checked"' : ''  } name="placeType">
-												<label for="placeTypeH">가정</label>
-											</div>
-											<div class="radio">
-												<input value="P" type="radio" id="placeTypeP" ${ dto.dest == 1 ? 'checked="checked"' : ''  } name="placeType">
-												<label for="placeTypeP">회사/사무실</label>
-											</div>
-										</div>
-									</dd>
-								</dl>
-							</div>
-							<div class="form-input">
-								<dl>
-									<dt><label for="post">우편번호</label></dt>
-									<dd>
-										<input name="post" id="post" readonly="" value="${ dto.zipCode }" type="text">
-										<button type="button" class="btn-square search-addr btn-black" style="width:121px; padding:0">
-											우편번호찾기
-										</button>
-									</dd>
-								</dl>
-							</div>
-							<div class="form-input">
-								<dl>
-									<dt><label for="addr1">주소입력</label></dt>
-									<dd>
-										<input readonly="" name="addr1" id="addr1" type="text" value="${ dto.addr }">
-										<input readonly="" name="oldAddr" id="oldAddr" type="hidden" value="">
-									</dd>
-								</dl>
-							</div>
-							<div class="form-input">
-								<dl>
-									<dt><label for="addr2">상세주소</label></dt>
-									<dd>
-										<input name="addr2" id="addr2" value="${ dto.addrDetail }" type="text">
-									</dd>
-								</dl>
-							</div>
-							<div class="form-input">
-								<dl>
-									<dt><label for="memo">배송메모</label></dt>
-									<dd>
-										<input name="memo" id="memo" value="${ dto.memo != 'null' ? dto.memo : ''}" type="text">
-									</dd>
-								</dl>
-							</div>
-						</div>
-						<div class="btn-area-right" style="border-top:1px #e5e5e5 solid; padding-top:20px; margin-top:20px;">
-							<button type="button" id="cancel" class="btn-default btn-white">취소하기</button>
-							<button type="button" id="register" class="btn-default">저장하기</button>
-						</div>
-					</div>
+<form method="post" id="addressForm" data-gtm-form-interact-id="0">
+	<div class="container">
+		<div class="border-wrapper">
+			<h2 class="container-title">주소 등록</h2>
+		</div>
+		<div class="address-input-form">
+			<div class="input-group">
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="addrName">애칭</label>
+						</dt>
+						<dd>
+							<input type="text" id="nickname" name="addrName" value="${ dto.addrName }">
+						</dd>
+					</dl>
 				</div>
-			
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="name">이름</label>
+						</dt>
+						<dd>
+							<input name="name" id="name" value="${ dto.name }" type="text">
+						</dd>
+					</dl>
+				</div>
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="tel">휴대폰번호</label>
+						</dt>
+						<dd>
+							<input data-call-text="" value="${ dto.tel }" maxlength="13" class="numberOnly" name="tel" id="phoneNumber">
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="input-group">
+				<div class="form-input">
+					<dl>
+						<dt style="min-width: 140px;">
+							<label>배달장소</label>
+						</dt>
+						<dd>
+							<div class="radio-area radio-type2">
+								<div class="radio">
+									<input value="0" type="radio" id="placeTypeH" ${ dto.dest == 0 ? 'checked="checked"' : ''  } name="dest"> <label for="placeTypeH">가정</label>
+								</div>
+								<div class="radio">
+									<input value="1" type="radio" id="placeTypeP" ${ dto.dest == 1 ? 'checked="checked"' : ''  } name="dest"> <label for="placeTypeP">회사/사무실</label>
+								</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="zipCode">우편번호</label>
+						</dt>
+						<dd>
+							<input name="zipCode" id="post" readonly="" value="${ dto.zipCode }" type="text">
+							<button type="button" class="btn-square search-addr btn-black" style="width: 121px; padding: 0">우편번호찾기</button>
+						</dd>
+					</dl>
+				</div>
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="addr">주소입력</label>
+						</dt>
+						<dd>
+							<input readonly="" name="addr" id="addr1" type="text" value="${ dto.addr }">
+							<input readonly="" name="oldAddr" id="oldAddr" type="hidden" value="${ dto.addr }">
+						</dd>
+					</dl>
+				</div>
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="addrDetail">상세주소</label>
+						</dt>
+						<dd>
+							<input name="addrDetail" id="addr2" value="${ dto.addrDetail != 'null' ? dto.addrDetail : ''}" type="text">
+						</dd>
+					</dl>
+				</div>
+				<div class="form-input">
+					<dl>
+						<dt>
+							<label for="memo">배송메모</label>
+						</dt>
+						<dd>
+							<input name="memo" id="memo" value="${ dto.memo != 'null' ? dto.memo : ''}" type="text">
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="btn-area-right" style="border-top: 1px #e5e5e5 solid; padding-top: 20px; margin-top: 20px;">
+				<button type="button" id="cancel" class="btn-default btn-white">취소하기</button>
+				<button type="button" id="register" class="btn-default">저장하기</button>
+			</div>
+		</div>
+	</div>
+</form>
+
 <%-- 		<%@ include file="/WEB-INF/views/ui/footermodal.jsp"%> --%>
 
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
- <script>
+<script>
 	$(function (){
         function searchPostcode() {
             new daum.Postcode({
@@ -175,34 +186,34 @@
             const formArr = $('#addressForm').serializeArray();
             let hasEmpty = false;
             var data = {}
-			formArr.filter(v=>v.name==='phoneNumber')[0].value=$('input[name=_x_phoneNumber]').val();
+			formArr.filter( v => v.name === 'tel')[0].value = $('input[name=_x_tel]').val();
 			formArr.every(
 					x => {
-						if (x.name == 'memo') {
-							return true;
-						}
+// 						if (x.name == 'memo') {
+// 							return true;
+// 						}
 						if (x.name == 'oldAddr') {
 							return true;
 						}
 
-						if (!x.value.trim()) {
+						if (!x.value.trim() && !(x.name == 'memo')) {
 							hasEmpty = true;
-							const label = `label[for=${x.name}]`
+							const label = "label[for=" + x.name + "]";
 
 							let input = '#' + x.name
-							if (x.name === 'phoneNumber') input = 'input[name=_x_phoneNumber]'
+							if (x.name === 'tel') input = 'input[name=_x_tel]'
 							alert($('#addressForm').find(label).text() + '을(를) 입력 해주세요',
 									() => $(input).focus());
 							hasEmpty = true;
 							return false;
 						}
 
-						if (x.name === 'phoneNumber') {
+						if (x.name === 'tel') {
 							console.log(x.value)
 							if (!/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/.test(x.value)){
 								hasEmpty = true;
 								return alert('휴대전화 형식에 맞게 입력해주세요.',
-										() => $('input[name=_x_phoneNumber]').focus())
+										() => $('input[name=_x_tel]').focus())
 							}
 
 						}
@@ -212,33 +223,88 @@
 			)
 			if(hasEmpty)return;
 
-            if(""){
-				post({url:'/mypage/personal/address/modify/',param:$.param(data)},function (r){
-                    if(r.RESULT_MSG){
-                        alert('주소록이 정상적으로 수정되었습니다.',()=>location.href = '/mypage/personal/address')
-                    }else {
-                        return alert('잘못된 요청입니다.')
-                    }
-				})
-            }else {
-                post({url:'/mypage/personal/address/write',param: $.param(data)},function (r){
-                    if(r.RESULT_MSG){
-                        alert('주소록이 정상적으로 등록되었습니다.',()=>location.href = '/mypage/personal/address')
-                    }else {
-                        return alert('잘못된 요청입니다.')
-                    }
-                })
+	    	var header = '${_csrf.headerName}';
+			var token = '${_csrf.token}';
+			
+            if("${ dto.addrNo }"){
+				$.ajax({
+					url: "/ajax/mypage/personal/address/modify/${ dto.addrNo }" , 
+					contentType: "application/json; charset=utf-8",
+					dataType:"json",
+					data: JSON.stringify(data),
+					type:"PUT",
+					cache:false ,
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success: function ( isModified,  textStatus, jqXHR ){
+	                    if(  isModified ){
+	                        alert('주소록이 정상적으로 수정되었습니다.',() => location.href = '/mypage/personal/address');
+	                    }else {
+	                        return alert('잘못된 요청입니다.');
+	                    }
+					},
+					error:function (request, status, error){
+						alert("에러~~~ ");
+						console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					}
+				});
+            	
+            	
+            	
+// 				post({url:'/mypage/personal/address/modify/',param:$.param(data)},function (r){
+//                     if(r.RESULT_MSG){
+//                         alert('주소록이 정상적으로 수정되었습니다.',()=>location.href = '/mypage/personal/address')
+//                     }else {
+//                         return alert('잘못된 요청입니다.')
+//                     }
+// 				})
+            } else {
+            	console.log(data);
+				$.ajax({
+					url: "/ajax/mypage/personal/address/write" , 
+					contentType: "application/json; charset=utf-8",
+					dataType:"json",
+					data: JSON.stringify(data),
+					type:"POST",
+					cache:false ,
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success: function ( isWritten,  textStatus, jqXHR ){
+	                    if(  isWritten ){
+	                        alert('주소록이 정상적으로 등록되었습니다.',() => location.href = '/mypage/personal/address');
+	                    }else {
+	                        return alert('잘못된 요청입니다.');
+	                    }
+					},
+					error:function (request, status, error){
+						alert("에러~~~ ");
+						console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					}
+				});
+            	
+            	
+            	
+            	
+//                 post({url:'/mypage/personal/address/write',param: $.param(data)},function (r){
+//                     if(r.RESULT_MSG){
+//                         alert('주소록이 정상적으로 등록되었습니다.',()=>location.href = '/mypage/personal/address')
+//                     }else {
+//                         return alert('잘못된 요청입니다.')
+//                     }
+//                 })
             }
 		})
 	})
 </script>
+
 <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-modal="true" role="dialog">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="alertModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body"></div>
 			<button type="button" class="modal-footer" data-dismiss="modal">확인</button>

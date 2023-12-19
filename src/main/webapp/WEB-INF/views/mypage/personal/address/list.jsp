@@ -28,8 +28,11 @@
 				</div>
 					
 				<div class="drinking-list">
-		
 
+				</div>
+				
+				<div class="button-set">
+					<button type="button" id="moreBtn" class="basic-big-button">더보기</button>
 				</div>
 			</div>
 
@@ -37,9 +40,11 @@
 <%-- 		<%@ include file="/WEB-INF/views/ui/footermodal.jsp"%> --%>
 
 <script>
+    var search = ${ pagingInfo };
 	$(function (){
         //region render data
-        var search = {"memberId":"${ memberId }","endNum":10,"startNum":1}
+//         var search = {"memberNo":${ memberNo },"endNum":10,"startNum":1};
+//         var search = ${ pagingInfo };
         const rootEl = $('.drinking-list');
         
         var data = { "data" : ${dtoList} }.data;
@@ -56,13 +61,38 @@
 		$(document).on('click','.setDefault',function (){
             const data = $(this).closest('.item').prop('data')
 			confirmDesign("", "기본주소로 설정하시겠습니까?", function() {
-                post({url:'/mypage/personal/address/setBasic',param:$.param({idx:data.addrNo})},function (r){
-                    if(r.RESULT_MSG){
-						alert('기본주소로 설정되었습니다.',()=>location.reload())
-                    }else {
-						alert('잘못된 요청입니다.',()=>location.reload())
-                    }
-                })
+				$.ajax({
+					url: "/ajax/mypage/personal/address/setBasic" , 
+					dataType:"json",
+					data: { addrNo : data.addrNo },
+					type:"PUT",
+					cache:false ,
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success: function ( isUpdated,  textStatus, jqXHR ){
+						if( isUpdated ) {
+			 				alert( "기본주소로 설정되었습니다.", () => location.reload());
+
+						} else {  
+							alert('잘못된 요청입니다.',()=>location.reload())
+						}
+					 
+					},
+					error:function (request, status, error){
+						alert("에러~~~ ");
+						console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					}
+				});
+				
+
+//                 post({url:'/mypage/personal/address/setBasic',param:$.param({idx:data.addrNo})},function (r){
+//                     if(r.RESULT_MSG){
+// 						alert('기본주소로 설정되었습니다.',()=>location.reload())
+//                     }else {
+// 						alert('잘못된 요청입니다.',()=>location.reload())
+//                     }
+//                 })
             })
 		})
 		$(document).on('click','.modify',function (){
@@ -74,15 +104,13 @@
             const data = $(this).closest('.item').prop('data')
 			confirmDesign("", "선택한 주소를 삭제하시겠습니까?", function() {
 				$.ajax({
-					url: "/ajax/mypage/personal/address/" , 
-					contentType: "application/json; charset=utf-8",
+					url: "/ajax/mypage/personal/address" , 
 					dataType:"json",
 					data: { addrNo : data.addrNo },
 					type:"DELETE",
 					cache:false ,
 					beforeSend: function(xhr) {
 						xhr.setRequestHeader(header, token);
-						console.log(params);
 					},
 					success: function ( isDeleted,  textStatus, jqXHR ){
 						if( isDeleted ) {
@@ -97,19 +125,13 @@
 						alert("에러~~~ ");
 						console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 					}
-				
-				
-				
-				
-				
-				
+				});
 // 				post({url:'/mypage/personal/address/delete',param:$.param({addressIdx:data.addrNo})},function (r){
 //                     if(r.RESULT_MSG){
 //                         alert('삭제되었습니다.',()=>location.reload())
 //                     }else {
 // 						alert('잘못된 요청입니다.',()=>location.reload())
 //                     }
-				})
 			})
 		})
 
@@ -151,17 +173,47 @@
 
 
             rootEl.append(el);
-            if (rootEl.children().length >= v.totalCount) {
+            if (rootEl.children().length >= ${dtoCount}) {
                 $('#moreBtn').remove();
             }
         }
 
+            
+            
 
         $('#moreBtn').click(function () {
-            more('/mypage/personal/address/more', search, function (response) {
-                response.data.forEach(v => addItem(v));
-                search = response.search
-            });
+        	console.log(search);
+			$.ajax({
+				url: "/ajax/mypage/personal/address/more" , 
+				contentType: "application/json; charset=utf-8",
+				dataType:"json",
+				data: search,
+				type:"GET",
+				cache:false ,
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
+				success: function ( response,  textStatus, jqXHR ){
+					
+	                response.data.forEach(v => addItem(v));
+	                search = response.search;
+	                
+					if( !data ) {
+						alert('잘못된 요청입니다.')
+					}				 
+				},
+				error:function (request, status, error){
+					alert("에러~~~ ");
+					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				}
+			});	
+        	
+        	console.log(search);
+        
+//             more('/mypage/personal/address/more', search, function (response) {
+//                 response.data.forEach(v => addItem(v));
+//                 search = response.search
+//             });
         })
         //    endregion
 	})
