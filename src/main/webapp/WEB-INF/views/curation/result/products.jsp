@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <main class="products">
-
-
 	<div id="container-wrapper" class="container-wrapper">
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
@@ -155,26 +153,6 @@ $(document).on("click", "#orderModal button", function (e) {
 })
 </script>
 
-		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header" style="padding-bottom: 8px;">
-						<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body select-wrapper">
-						<ul class="product-content-list order">
-
-						</ul>
-					</div>
-					<div class="button-set">
-						<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
-						<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<div class="breadcrumb-style">
 			<div class="container">
 				<ul>
@@ -248,7 +226,7 @@ $(document).on("click", "#orderModal button", function (e) {
 				</div>
 				<div class="button-set">
 
-					<button class="button-basic border bottles prefix" onclick="location.href='/customer/product/result/${score}?singleYn=N&bmi=${param.bmi}&questions=${param.qno }'">
+					<button class="button-basic border bottles prefix" onclick="location.href='/customer/product/result/${score}?singleYn=N&bmi=${param.bmi}'">
 						<i class="ico"></i> <i class="ico"></i> 내게 맞는 프로그램 추천
 					</button>
 

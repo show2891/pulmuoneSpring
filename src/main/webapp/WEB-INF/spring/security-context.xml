@@ -15,6 +15,7 @@
 
 		<!-- <security:intercept-url pattern="/**" access="permitAll"/> -->
 		<security:intercept-url pattern="/mypage/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/member/quit" access="isAuthenticated()"/>
 		
 		<!-- 문의하기 -->
 		<security:intercept-url pattern="/forum/inquiry/write" access="isAuthenticated()" />

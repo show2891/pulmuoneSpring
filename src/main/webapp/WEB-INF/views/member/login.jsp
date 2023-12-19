@@ -101,6 +101,10 @@
 		const redirectUrl = params.redirectUrl
 		const token = params.token;
 
+		if (location.href.indexOf("error") != -1) {
+			alert("아이디 또는 비밀번호를 확인해 주세요.");
+		}
+		
 		$("#loginBtn").click(function () {
 			$(".input-text").text("");
 			$(".idError,.pwdError").removeClass("input-error");
@@ -172,4 +176,20 @@
 
 	});
 </script>
+
+
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModalLabel"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				</button>
+			</div>
+			<div class="modal-body">
+			</div>
+			<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
+		</div>
+	</div>
+</div>
 

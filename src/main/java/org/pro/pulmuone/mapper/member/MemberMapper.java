@@ -27,5 +27,9 @@ public interface MemberMapper {
 	//회원정보 + 권한정보 얻어오는 메서드
 	public MemberDTO read(@Param("userid") String userid);
 
+	public MemberDTO selectMemberForInfo(@Param("memberId") String memberId);
 
+	public int updateInfo(@Param("memberId") String memberId, @Param("dto") MemberDTO dto);
+
+	public int updateEnabled(@Param("memberNo") int memberNo, @Param("enabled") int i);
 }

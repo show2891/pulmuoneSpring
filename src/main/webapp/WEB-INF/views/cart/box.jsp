@@ -248,8 +248,9 @@
 					alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
 					return;
 				}
-				console.log(order)
-				location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(order));
+				console.log(order);
+				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(order));
+
 				return;
 			}
 			else {
