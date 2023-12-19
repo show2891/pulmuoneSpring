@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
+import org.pro.pulmuone.domain.order.box.BoxPayDTO;
 
 @Mapper
 public interface BoxOrderMypageMapper {
@@ -19,5 +20,15 @@ public interface BoxOrderMypageMapper {
 	List<BoxOrderMypageListDTO> selectBoxInfos(@Param("member_no") int member_no, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 	List<BoxOrderMypageProductsDTO> selectBoxOrderMypageProducts(int box_order_no);
+
+	BoxOrderMypageListDTO selectBoxInfo(int box_order_no);
+
+	BoxPayDTO selectBoxPay(int box_order_no);
+
+	int updateHaveCoupon(int box_pay_no);
+
+	int updateBoxOrder(int box_order_no);
+
+	int updateBoxPay(int box_pay_no);
 	
 }

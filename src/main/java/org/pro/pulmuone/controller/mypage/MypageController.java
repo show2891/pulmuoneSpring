@@ -3,6 +3,7 @@ package org.pro.pulmuone.controller.mypage;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +11,7 @@ import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
+import org.pro.pulmuone.domain.order.box.BoxPayDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
 import org.pro.pulmuone.service.inquiry.InquiryService;
@@ -23,6 +25,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -147,7 +151,8 @@ public class MypageController {
 	@RequestMapping("/mypage/order/box")
 	public String orderBox(Model model
 								, @RequestParam(name = "startSearchDate", required = false) String startSearchDate
-								, @RequestParam(name = "endSearchDate", required = false) String endSearchDate) {
+								, @RequestParam(name = "endSearchDate", required = false) String endSearchDate
+								, @RequestParam(name = "searchMonth", required = false) String searchMonth) {
 		log.info("> MypageController orderBox()...");
 		
 		// >> member_no 가져오기 <<
@@ -169,7 +174,78 @@ public class MypageController {
 		List<BoxOrderMypageListDTO> boxOrderMypageList = this.boxOrderMypageServiceImpl.selectBoxInfos(member_no, startSearchDate, endSearchDate);
 		model.addAttribute("boxOrderMypageList", boxOrderMypageList);
 		
+		// >> startSearchDate, endSearchDate 출력 <<
+		model.addAttribute("searchMonth", searchMonth);
+		model.addAttribute("startSearchDate", startSearchDate);
+		model.addAttribute("endSearchDate", endSearchDate);
+		
 		return "mypage/order/box.tiles";
+	}
+	
+	@RequestMapping("/mypage/order/box/{box_order_no}")
+	public String orderBoxView(Model model, @PathVariable int box_order_no) {
+		log.info("> MypageController orderBoxView()...");
+		
+		// >> member_no 가져오기 <<
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+				        
+        // member_no 가져오기
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+		
+		// >> 음용 정보 가져오기 <<
+		
+		
+		return "mypage/order/boxView.tiles";
+	}
+	
+	@RequestMapping("/mypage/order/box/cancel/{box_order_no}")
+	public String orderBoxCancel(Model model, @PathVariable int box_order_no) {
+		log.info("> MypageController orderBoxCancel()...");
+		
+		// >> 음용 정보 가져오기 <<
+		BoxOrderMypageListDTO boxOrderMypageDTO = this.boxOrderMypageServiceImpl.selectBoxInfo(box_order_no);
+		model.addAttribute("boxOrderMypageDTO", boxOrderMypageDTO);
+		
+		// >> 결제 정보 가져오기 <<
+		BoxPayDTO boxPayDTO = this.boxOrderMypageServiceImpl.selectBoxPay(box_order_no);
+		model.addAttribute("boxPayDTO", boxPayDTO);
+		
+		return "mypage/order/boxCancel.tiles";
+	}
+	
+	@RequestMapping("/mypage/order/box/canceled/{box_order_no}")
+	public String orderBoxCanceled(Model model, @PathVariable int box_order_no) {
+		log.info("> MypageController orderBoxCanceled()...");
+		
+		// >> 음용 정보 가져오기 <<
+		BoxOrderMypageListDTO boxOrderMypageDTO = this.boxOrderMypageServiceImpl.selectBoxInfo(box_order_no);
+		model.addAttribute("boxOrderMypageDTO", boxOrderMypageDTO);
+		
+		// >> 결제 정보 가져오기 <<
+		BoxPayDTO boxPayDTO = this.boxOrderMypageServiceImpl.selectBoxPay(box_order_no);
+		model.addAttribute("boxPayDTO", boxPayDTO);
+		
+		// >> 주문 취소 처리 <<
+		this.boxOrderMypageServiceImpl.updateBoxOrder(box_order_no);
+		// this.boxOrderMypageServiceImpl.deleteBoxShip(box_order_no);
+		
+		// >> 결제 취소 처리 <<
+		int box_pay_no = boxPayDTO.getBox_pay_no();
+		this.boxOrderMypageServiceImpl.updateBoxPay(box_pay_no);
+		
+		// >> 쿠폰 사용 취소 처리 <<
+		this.boxOrderMypageServiceImpl.updateHaveCoupon(box_pay_no);
+		
+		return "mypage/order/boxCanceled.tiles";
 	}
 	
 	@RequestMapping("mypage/action/review")

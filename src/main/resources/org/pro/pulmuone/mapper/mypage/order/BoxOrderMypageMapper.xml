@@ -51,4 +51,39 @@
 		WHERE box_order_no = #{member_no} AND origin_name != 'View.png'
 	</select>
 	
+	<!-- BoxOrderMypageListDTO selectBoxInfo(int box_order_no); -->
+	<select id="selectBoxInfo" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO">
+		SELECT o.box_order_no, box_order_date
+		FROM box_order o JOIN box_ship s ON o.box_order_no = s.box_order_no 
+		WHERE o.box_order_no = #{box_order_no}
+	</select>
+	
+	<!-- BoxPayDTO selectBoxPay(int box_order_no); -->
+	<select id="selectBoxPay" resultType="org.pro.pulmuone.domain.order.box.BoxPayDTO">
+		SELECT box_pay_no, box_sale_price, box_discount_price, box_shipping_fee, box_final_price, box_pay_method
+		FROM box_pay
+		WHERE box_order_no = #{box_order_no}
+	</select>
+	
+	<!-- int updateHaveCoupon(int box_pay_no); -->
+	<update id="updateHaveCoupon">
+		UPDATE have_coupon
+		SET used = 0, box_pay_no = NULL
+		WHERE box_pay_no = #{ box_pay_no }
+	</update> 
+	
+	<!-- int updateBoxOrder(int box_order_no);  -->
+	<update id="updateBoxOrder">
+		UPDATE box_order
+		SET box_order_status = -1
+		WHERE box_order_no = #{ box_order_no }
+	</update>
+	
+	<!-- int updateBoxPay(int box_pay_no); -->
+	<update id="updateBoxPay">
+		UPDATE box_pay
+		SET box_pay_status = 1
+		WHERE box_pay_no = #{ box_pay_no }
+	</update>
+	
 </mapper>
