@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.pro.pulmuone.domain.curation.CurationVO;
-import org.pro.pulmuone.domain.curation.KidsVO;
 import org.pro.pulmuone.mapper.curation.CurationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,6 +87,8 @@ public class CurationResultController {
    } else {
      return "curation/result/products.tiles";
    }
+   
+
 
   }
 }

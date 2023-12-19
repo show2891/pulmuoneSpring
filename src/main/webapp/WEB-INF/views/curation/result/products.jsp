@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <main class="products">
-
-
 	<div id="container-wrapper" class="container-wrapper">
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
