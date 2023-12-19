@@ -6,9 +6,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
+import org.pro.pulmuone.service.mypage.order.BoxOrderMypageServiceImpl;
+import org.pro.pulmuone.service.mypage.order.DailyOrderMypageServiceImpl;
+import org.pro.pulmuone.service.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +34,48 @@ public class MypageController {
 	@Autowired
 	private ProductMapper mapper;
 	
+	@Autowired
+	private DailyOrderMypageServiceImpl dailyOrderMypageServiceImpl;
+	
+	@Autowired
+	private BoxOrderMypageServiceImpl boxOrderMypageServiceImpl;
+	
+	@Autowired
+	private OrderServiceImpl orderServiceImpl;
+	
 	@GetMapping("mypage")
-	public String summary(HttpServletRequest request) {
+	public String summary(HttpServletRequest request, Model model) {
 		log.warn("> MypageController mypage()...");
-			
+		
+		// >> member_no 가져오기 <<
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+		        
+        // member_no 가져오기
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+		
+		
+		// >> 매일배송 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = dailyOrderMypageServiceImpl.selectDailyOrder(member_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		
+		// >> 택배배송 <<
+		List<Integer> boxOrderStatus = boxOrderMypageServiceImpl.getBoxOrderStatus(member_no);
+		model.addAttribute("boxOrderStatus", boxOrderStatus);
+		
+		List<BoxOrderMypageDTO> boxOrderMypageList = boxOrderMypageServiceImpl.selectBoxOrder(member_no);
+		model.addAttribute("boxOrderMypageList", boxOrderMypageList);
+		
+		
 		return "mypage/home/userSummmary.tiles";
 	}
 	
@@ -55,5 +102,55 @@ public class MypageController {
 		return "product/list.tiles";
 		
 	}
+	
+	@RequestMapping("/mypage/drink/drink")
+	public String orderDaily(Model model, @RequestParam(name = "drinkingType", required = false) String drinkingType) {
+		log.info("> MypageController orderDaily()...");
+		
+		// >> member_no 가져오기 <<
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+				        
+        // member_no 가져오기
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+		
+		// >> 음용 정보 가져오기 <<
+		List<DrkOrderMypageDTO> drkOrderMypageList = this.dailyOrderMypageServiceImpl.selectDrinkInfos(member_no, drinkingType);
+		model.addAttribute("drkOrderMypageList", drkOrderMypageList);
+		
+		return "mypage/drink/drink.tiles";
+	}
+
+	@RequestMapping("/mypage/order/box")
+	public String orderBox(Model model) {
+		log.info("> MypageController orderBox()...");
+		
+		// >> member_no 가져오기 <<
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+				        
+        // member_no 가져오기
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+		
+		// >> 음용 정보 가져오기 <<
+		
+		return "mypage/order/box.tiles";
+	}
+	
 }

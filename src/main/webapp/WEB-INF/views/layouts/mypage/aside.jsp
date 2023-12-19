@@ -7,7 +7,7 @@
         <li class="indepth">
             <a>매일배송 음용내역</a>
             <ul class="sub-navigation">
-                <li><a href="/mypage/order/daily?drinkingType=Y">음용내역</a></li>
+                <li><a href="/mypage/drink/drink">음용내역</a></li>
                 <li><a href="/mypage/drink/bill">영수증조회</a></li>
             </ul>
         </li>
