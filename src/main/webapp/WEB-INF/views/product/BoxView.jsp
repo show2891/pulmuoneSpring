@@ -412,7 +412,7 @@
               $('#orderModal input[name=custnum]:first').click()
               $("#orderModal").removeClass("loading")
             } else {
-              location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args2));
+              location.href = "/daily/order/step1?item=" + encodeURIComponent(JSON.stringify(args2));
             }
           });
         });
@@ -443,7 +443,7 @@
             $('#orderModal input[name=custnum]:first').click()
             $("#orderModal").removeClass("loading")
           } else {
-            location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args));
+            location.href = "/daily/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
           }
         });
       }
@@ -453,7 +453,7 @@
     var type = $(this).attr("data-type");
     var p = encodeURIComponent(JSON.stringify(nowArgs));;
     if (type === "new") {
-      location.href = "/order/daily/step1?item=" + p
+      location.href = "/daily/order/step1?item=" + p
     } else if (type === "continue") {
       var c = $("input[name='custnum']:checked");
       var custNumber = c.val();
@@ -605,11 +605,8 @@
 					</c:otherwise>
 				</c:choose>
 				<!-- 품절용 가이드 추가 -->
-				<form action="/box/order/step1" method="GET">
-					<input type="hidden" name="productsNo" value="${list[0].products_no }"> <input type="hidden" name="qty" value="1">
-					<button id="cartBtn" class="button-fix black">장바구니</button>
-					<button id="orderBtn" class="button-fix primary">바로구매</button>
-				</form>
+				<button id="cartBtn" class="button-fix black">장바구니</button>
+				<button id="orderBtn" class="button-fix primary">바로구매</button>
 			</div>
 		</div>
 	</div>

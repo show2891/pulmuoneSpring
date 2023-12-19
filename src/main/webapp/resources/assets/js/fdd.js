@@ -439,7 +439,7 @@ let timer;
     var eventIdx = that.attr("data-buy-event");
 
     var args = { item: [{itemCode, qty: "1", eventIdx }] };
-    location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(args));
+    location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
 
     e.preventDefault();
     return false;
