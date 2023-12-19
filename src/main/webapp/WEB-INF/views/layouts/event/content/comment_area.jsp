@@ -247,7 +247,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "/event/comment/write",
+            url: "/event/comment/write.do",
             data: {
             	'event_no': encodeURIComponent('${eventView.event.event_no}'),
                 'content': encodeURIComponent(content),
