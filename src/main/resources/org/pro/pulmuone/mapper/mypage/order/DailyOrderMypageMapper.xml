@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.pro.pulmuone.mapper.mypage.order.DailyOrderMypageMapper">
+	
+	<!-- DrkOrderMypageDTO selectDailyOrder(int member_no); -->
+	<select id="selectDailyOrder" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
+		SELECT t.*
+		FROM (
+				    SELECT drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, COUNT (drk_order_no) OVER () total_count
+				    FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
+				    WHERE member_no = #{member_no} AND d.drk_status = 0
+				    ORDER BY drk_order_date DESC
+			    ) t
+		WHERE ROWNUM = 1
+	</select>
+	
+	<!-- DrkOrderMypageDTO selectDrinkInfos(int member_no, String drinkingType); -->
+	<select id="selectDrinkInfos" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
+		SELECT d.drk_order_no, drk_order_name, fc_name, drk_start_date, drk_pay_method
+		FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
+								JOIN drk_pay p ON d.drk_order_no = p.drk_order_no
+		WHERE member_no = #{member_no}
+		<if test="drinkingType != null">
+			AND d.drk_status = #{drinkingType}
+		</if>
+		ORDER BY drk_order_date DESC
+	</select>
+	
+</mapper>
