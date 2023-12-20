@@ -52,41 +52,7 @@
 			$("#confirmModal").addClass('show');
 		});
 	});
-	// 	  $(document).on("click", "[data-wish-type][data-wish-id]", function (e) {
-	// 		    var that = $(this);
-	// 		    var type = that.attr("data-wish-type");
-	// 		    var id = that.attr("data-wish-id");		    
-	// 		    if (!window.is_signed) {
-	// 		      alert("로그인 후 찜한상품으로 담을 수 있습니다.", function () {
-	// 		        location.href = "/member/login?redirectUrl=" + encodeURIComponent(location.href);
-	// 		      });
-	// 		      return false;
-	// 		    }
-	// 			$.ajax({
-	// 				url: "/product/daily/interest/"+id,
-	// 				dataType: "json",	
-	// 				type: "POST",
-	// 				data: id,
-	// 				cache: false,
-	// 				success: function(data, textStatus, jqXHR){
-	// 				      if (!that.hasClass("active")) {
-	// 					        $("[data-wish-type][data-wish-id='" + id + "']").addClass('active');
-	// 					        alert("찜한상품에 담겼습니다.");
-	// 					      } else {
-	// 					        $("[data-wish-type][data-wish-id='" + id + "']").removeClass('active');
-	// 					        alert("찜한상품이 해제되었습니다.");
-	// 					      }
-	// 				},
-	// 				error: function(){
-	// 					console.log("error!");
-	// 				}
-	// 			});
 
-	// 		    // addCarts(type, id, {});
-
-	// 		    e.preventDefault();
-	// 		    return false;
-	// 		  });
 </script>
 <div id="container-wrapper" class="container-wrapper">
 	<!--S: 메인 비주얼-->

@@ -421,7 +421,7 @@ let timer;
 //    if (id && type) {
 //      addCart(type, id, { eventIdx });
 //    }
-    axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
+    axios.get('/cart/'+type+'/save?products_no='+ id+'&item=1,1,1,1,1').then(function ({data}) {      
         alert("제품이 담겼습니다.");
     }).catch(function (e) {
       alert("서버와 연결이 올바르지 않습니다.");

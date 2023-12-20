@@ -366,10 +366,7 @@
 					alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
 					return;
 				}
-<<<<<<< HEAD
-=======
-				console.log(order);
->>>>>>> branch 'develop' of https://github.com/dhl1031/pulmuoneSpring.git
+
 				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(order));
 				return;
 			}
