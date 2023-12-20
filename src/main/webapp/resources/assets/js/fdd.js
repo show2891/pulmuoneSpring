@@ -421,7 +421,7 @@ let timer;
 //    if (id && type) {
 //      addCart(type, id, { eventIdx });
 //    }
-    axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
+    axios.get('/cart/'+type+'/save?products_no='+ id+'&item=1,1,1,1,1').then(function ({data}) {      
         alert("제품이 담겼습니다.");
     }).catch(function (e) {
       alert("서버와 연결이 올바르지 않습니다.");
@@ -438,7 +438,7 @@ let timer;
     var eventIdx = that.attr("data-buy-event");
 
     var args = { item: [{itemCode, qty: "1", eventIdx }] };
-    location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(args));
+    location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
 
     e.preventDefault();
     return false;
