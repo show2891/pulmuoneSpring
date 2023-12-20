@@ -22,7 +22,7 @@ public class DailyItemInfoDTO {
 	private String img_path;
 	private String system_name;
 	// private String tracking_no;
-	// private String products_tag;
+	private String products_tag;
 	private int total_count;
 	
 }

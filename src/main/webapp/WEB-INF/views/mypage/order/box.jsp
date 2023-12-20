@@ -26,6 +26,44 @@
 
 <script>
 	$(function () {
+		// 택배 조회 api key
+		console.log(trackingKey);
 		$(".t_key").val(trackingKey);
+		
+		// 최근 n 개월 날짜 검색
+        $('.dropdown-item').click(function () {
+        	dropdownClick($(this));
+        });
+	
+		// 날짜 범위 검색
+		$(document).on('click', '.applyBtn', function () {
+			searchBtnClick();
+		});
+
+        var startDate = new Date();
+        var endDate = new Date();
+        startDate.setMonth(startDate.getMonth() - 3);
+
+        var startSearchDate = "${empty startSearchDate ? '' : startSearchDate}";
+        var endSearchDate = "${empty endSearchDate ? '' : endSearchDate}";
+        
+        if (startSearchDate) {
+            startDate = new Date(startSearchDate);
+            endDate = new Date(endSearchDate);
+        } // if
+
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left',
+            startDate,
+            endDate
+        });
+
+        $('#searchBtn').click(function () {
+        	searchBtnClick();
+        });
+        
+        $(".btn-cancel").click(function () {
+			location.href=`/mypage/order/box/cancel/`+$(this).data("order-no");
+		});
 	})
 </script>
