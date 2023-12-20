@@ -12,6 +12,14 @@
     sessionStorage.removeItem('req1');
     sessionStorage.removeItem('req2');
     sessionStorage.removeItem('req3');
+    
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+        // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+        alert("발생!");
+        location.href='/customer/product/step1';
+      }
+  }
 
     function getItems(lbl) {
       var items = {};
@@ -147,6 +155,8 @@ $(document).on("click", "#orderModal button", function (e) {
     location.href = "/mypage/drink/drink/change/" + custNumber + "/" + prtnId + "?item=" + p;
   }
 })
+
+
 </script>
 
 
@@ -225,7 +235,6 @@ $(document).on("click", "#orderModal button", function (e) {
 					<button class="button-basic border bottle prefix" onclick="location.href='/customer/product/result/${score}?singleYn=Y&bmi=${param.bmi}'">
 						<i class="ico"></i> 내게 맞는 상품 추천
 					</button>
-
 					<button class="button-basic kakao prefix" onclick="javascript:sendKakao()">
 						<i class="ico"></i> 카카오톡으로 공유
 					</button>

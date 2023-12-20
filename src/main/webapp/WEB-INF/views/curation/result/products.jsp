@@ -80,7 +80,7 @@
 </script>
 
 
-		<script>
+<script>
 
 
 var singleYn = "Y" == 'Y';
