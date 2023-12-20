@@ -11,9 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CartVO {
 
+
 	private int program_no;         		// 프로그램번호
 	private int img_no;	     	 			// 작성자
-	
+
+	private String itemCode;
+	private int cartIdx;
+
 	private String member_id;
 	private String products_no;      		// 상품번호
 	private String products_name;      	// 상품명

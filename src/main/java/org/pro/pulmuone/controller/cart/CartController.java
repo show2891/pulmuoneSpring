@@ -1,5 +1,6 @@
 package org.pro.pulmuone.controller.cart;
 
+
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,7 +10,6 @@ import org.pro.pulmuone.mapper.cart.CartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,7 +78,9 @@ public class CartController {
 	  vo.setProducts_no(products_nos[1]);
 	  this.cartMapper.dailycartdelete(vo);
 	  count = this.cartMapper.dailycart(vo);
+
 	}
+
 	if (count == 1) {
 	  log.info("성공");
 	  return "product/DailyList.tiles";
@@ -121,7 +123,6 @@ public class CartController {
 	  log.info("실패");
 	  return "product/DailyList.tiles";
 	}
-
   }
 
   @RequestMapping("box/save")
@@ -210,6 +211,7 @@ public class CartController {
 	  log.info("실패");
 	  return "cart/box.tiles";
 	}
+
   }
 
 }

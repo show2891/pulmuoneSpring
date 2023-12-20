@@ -11,7 +11,7 @@ public interface CurationMapper {
    public List<CurationVO> CurationSel(CurationVO vo);
 
    // 2. 키즈 상품
-   public List<KidsVO> kids();
+   public List<KidsVO> kids(KidsVO vo);
    
    // 모달창
    public List<KidsVO> modal( KidsVO vo );

@@ -6,13 +6,9 @@
 <body>
 
 	<div class="wrapper">
-
-
 		<main class="step1">
 			<div id="container-wrapper" class="container-wrapper">
-				<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
-
-				<script>
+<script>
 
 // BMI 계산
   function getBmi(w, h) {
@@ -67,7 +63,6 @@
   
  
 </script>
-
 
 				<div class="breadcrumb-style">
 					<div class="container">

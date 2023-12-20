@@ -2,10 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <main class="Cart">
 
 	<div id="container-wrapper" class="container-wrapper">
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
+
 
 		<script type="text/javascript">
   var singleYn = 'N' == 'Y';
@@ -115,6 +117,7 @@
 </script>
 
 		<script>
+
   var nowArgs = undefined;
   window.orderProcess = function (args) {
     if (!window.is_signed) {
@@ -150,6 +153,7 @@
     }
   })
 </script>
+
 		<textarea id="orderPosLi" style="display: none">    &lt;li&gt;
         &lt;label class="item-wrapper"&gt;
             &lt;input name="custnum" type="radio" value="{custnumber}" data-prtn-id="{prtnId}" /&gt;
@@ -163,6 +167,7 @@
         &lt;/label&gt;
     &lt;/li&gt;
 </textarea>
+
 
 		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -182,6 +187,8 @@
 					</div>
 				</div>
 			</div>
+
+
 		</div>
 
 		<div class="breadcrumb-style">
