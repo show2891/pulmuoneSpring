@@ -1,4 +1,4 @@
-package org.pro.pulmuone.domain.mypage.personal.address;
+package org.pro.pulmuone.domain.mypage;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
