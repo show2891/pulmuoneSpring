@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.order.CouponDTO;
+import org.pro.pulmuone.domain.order.HaveCouponDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.box.BoxPayDTO;
+import org.pro.pulmuone.domain.order.box.BoxShipDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
 import org.pro.pulmuone.service.inquiry.InquiryService;
@@ -147,6 +150,16 @@ public class MypageController {
 		
 		return "mypage/drink/drink.tiles";
 	}
+	
+	@RequestMapping("/mypage/drink/drinks/${drk_order_no}")
+	public String orderDailyView(Model model, @PathVariable int drk_order_no) {
+		log.info("> MypageController orderDailyView()...");
+		
+		// >> 음용 정보 가져오기 <<
+		
+		
+		return "mypage/drink/drinks.tiles";
+	}
 
 	@RequestMapping("/mypage/order/box")
 	public String orderBox(Model model
@@ -186,23 +199,21 @@ public class MypageController {
 	public String orderBoxView(Model model, @PathVariable int box_order_no) {
 		log.info("> MypageController orderBoxView()...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		int member_no = member.getMember_no();
-		
 		// >> 음용 정보 가져오기 <<
+		BoxOrderMypageListDTO boxOrderMypageDTO = this.boxOrderMypageServiceImpl.selectBoxInfo(box_order_no);
+		model.addAttribute("boxOrderMypageDTO", boxOrderMypageDTO);
 		
+		// >> 배송지 정보 가져오기 <<
+		BoxShipDTO boxShipDTO = this.boxOrderMypageServiceImpl.selectBoxShip(box_order_no);
+		model.addAttribute("boxShipDTO", boxShipDTO);
+		
+		// >> 결제 정보 가져오기 <<
+		BoxPayDTO boxPayDTO = this.boxOrderMypageServiceImpl.selectBoxPay(box_order_no);
+		model.addAttribute("boxPayDTO", boxPayDTO);
+		
+		// >> 사용한 쿠폰 리스트 가져오기 <<
+		List<CouponDTO> usedCouponList = this.boxOrderMypageServiceImpl.selectUsedCouponList(boxPayDTO.getBox_pay_no());
+		model.addAttribute("usedCouponList", usedCouponList);
 		
 		return "mypage/order/boxView.tiles";
 	}

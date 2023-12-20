@@ -9,7 +9,9 @@ import java.util.List;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
+import org.pro.pulmuone.domain.order.CouponDTO;
 import org.pro.pulmuone.domain.order.box.BoxPayDTO;
+import org.pro.pulmuone.domain.order.box.BoxShipDTO;
 import org.pro.pulmuone.mapper.mypage.order.BoxOrderMypageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,6 +111,18 @@ public class BoxOrderMypageServiceImpl implements BoxOrderMypageService {
 	public int updateBoxPay(int box_pay_no) {
 		log.info("BoxOrderMypageServiceImpl.updateBoxPay()...");
 		return boxOrderMypageMapper.updateBoxPay(box_pay_no);
+	}
+
+	@Override
+	public BoxShipDTO selectBoxShip(int box_order_no) {
+		log.info("BoxOrderMypageServiceImpl.selectBoxShip()...");
+		return boxOrderMypageMapper.selectBoxShip(box_order_no);
+	}
+
+	@Override
+	public List<CouponDTO> selectUsedCouponList(int box_pay_no) {
+		log.info("BoxOrderMypageServiceImpl.selectUsedCouponList()...");
+		return boxOrderMypageMapper.selectUsedCouponList(box_pay_no);
 	}
 
 }

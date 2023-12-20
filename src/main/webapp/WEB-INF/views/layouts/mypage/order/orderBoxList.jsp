@@ -32,9 +32,9 @@
 									</div>
 									
 									<div class="contents">
-										<a href="/product/box/view.do?tag=" class="prd-info">
+										<a href="/product/box/${ pList.products_tag }??eventIdx=" class="prd-info">
 											<div class="product">
-												<label class="category"></label>
+												<label class="category">${ pList.products_type }</label>
 												<div style="display:flex;justify-content: space-between">
 													<p class="title">${ pList.products_name }</p>
 												</div>
