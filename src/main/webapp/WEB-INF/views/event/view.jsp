@@ -101,7 +101,7 @@ $(document).ready(function() {
     	</div>`;
 
     // 이미 생성된 button1, button2 이미지 태그를 제거
-    $("#content-editor-area img[src*='event_friend_button01.png'], #content.editor-area img[src*='event_friend_button02.png']").remove();
+    $("#content-editor-area img[src*='event_friend_button01.png'], #content-editor-area img[src*='event_friend_button02.png']").remove();
     
     $("#content-editor-area").prepend(newElement);
   }
