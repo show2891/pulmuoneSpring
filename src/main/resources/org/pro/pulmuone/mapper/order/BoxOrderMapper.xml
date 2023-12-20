@@ -9,7 +9,7 @@
      <select id="selectItems" resultType="org.pro.pulmuone.domain.order.box.BoxItemInfoDTO">
      	SELECT b.*
      	FROM (
-		     	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name, member_no, cart_no
+		     	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name, member_no, cart_no, products_tag
 		     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
 		     							LEFT JOIN cart_box c ON p.products_no = c.products_no
 		     	<where>

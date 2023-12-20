@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <main class="products">
-
-
 	<div id="container-wrapper" class="container-wrapper">
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
@@ -82,11 +80,12 @@
 </script>
 
 
-		<script>
+<script>
 
 
 var singleYn = "Y" == 'Y';
 var title = "${list[0].program_name }";
+var itemCode = "${list[0].products_no}";
 var data = {
       mobilehost: "http://localhost",
       webhost: "http://localhost/",
@@ -154,26 +153,6 @@ $(document).on("click", "#orderModal button", function (e) {
 })
 </script>
 
-		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header" style="padding-bottom: 8px;">
-						<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body select-wrapper">
-						<ul class="product-content-list order">
-
-						</ul>
-					</div>
-					<div class="button-set">
-						<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
-						<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<div class="breadcrumb-style">
 			<div class="container">
 				<ul>
@@ -182,8 +161,6 @@ $(document).on("click", "#orderModal button", function (e) {
 				</ul>
 			</div>
 		</div>
-
-
 
 		<div class="container curation">
 
@@ -234,13 +211,13 @@ $(document).on("click", "#orderModal button", function (e) {
 							<c:when test="${param.bmi lt 18.5 }">
 								<li data-type="bmi">${list[0].lifestyle_change01 }</li>
 							</c:when>
-							<c:when test="${param.bmi ge 18.5 or param.bmi lt 23.0 }">
+							<c:when test="${param.bmi le 18.5 or param.bmi lt 23.0 }">
 								<li data-type="bmi">${list[0].lifestyle_change02 }</li>
 							</c:when>
-							<c:when test="${param.bmi ge 23.1 or param.bmi lt 25.0 }">
+							<c:when test="${param.bmi le 23.1 or param.bmi lt 25.0 }">
 								<li data-type="bmi">정상체중 범위에 들도록 현재의 식생활 행동에서 문제점을 찾고 행동 변화를 시도합니다.</li>
 							</c:when>
-							<c:when test="${param.bmi ge 25.1 }">
+							<c:when test="${param.bmi gt 25.1 }">
 								<li data-type="bmi">${list[0].lifestyle_change03 }</li>
 							</c:when>
 						</c:choose>

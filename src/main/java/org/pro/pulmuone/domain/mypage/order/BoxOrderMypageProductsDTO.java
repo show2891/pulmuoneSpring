@@ -14,6 +14,7 @@ public class BoxOrderMypageProductsDTO {
 	private String products_no;
 	private String products_name;
 	private String products_size;
+	private String products_tag;
 	private String products_type;
 	private int price;
 	private int event_price;

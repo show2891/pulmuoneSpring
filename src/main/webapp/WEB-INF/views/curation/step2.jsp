@@ -8,9 +8,7 @@
 			<div id="container-wrapper" class="container-wrapper"></div>
 <script>
 $(function (){
-//     if(!sessionStorage.getItem('req1')){
-//         location.href ='/jspPro/pulmuone_curation/curation01.jsp'
-//     }
+
 	if(sessionStorage.getItem('req2')){
 		const score = JSON.parse(sessionStorage.getItem('req2'))
 		console.log('req2', score)
@@ -61,6 +59,12 @@ $(function (){
 			.removeClass("v2")
 			.addClass(v);
 	});
+	
+// 	$(document).on("click", "input:check:checked", function(){
+// 		var q = $(this).parents("[data-radios]");
+// 		console.log(q)
+// 	})
+	
 })
 
 </script>
@@ -192,13 +196,14 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="190"> <input class="idx"
-											checked name="19" id="190" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="191"> <input class="idx"
-											name="19" id="191" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="192"> <input class="idx"
-											name="19" id="192" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="190"> 
+											<input class="idx" checked name="19" id="190" type="radio" value="0"> <span>0~2일</span>
+										</label>
+										<label class="unit" for="191">	
+											<input class="idx" name="19" id="191" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="192"> 
+											<input class="idx"	name="19" id="192" type="radio" value="2"> <span>6일	이상</span>
 										</label>
 									</div>
 								</div>
@@ -215,13 +220,14 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="200"> <input class="idx"
-											checked name="20" id="200" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="201"> <input class="idx"
-											name="20" id="201" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="202"> <input class="idx"
-											name="20" id="202" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="200"> 
+											<input class="idx" checked name="20" id="200" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="201"> 
+											<input class="idx" name="20" id="201" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="202"> 
+											<input class="idx" name="20" id="202" type="radio" value="2"> <span>6일 이상</span>
 										</label>
 									</div>
 								</div>
@@ -238,13 +244,14 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="210"> <input class="idx"
-											checked name="21" id="210" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="211"> <input class="idx"
-											name="21" id="211" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="212"> <input class="idx"
-											name="21" id="212" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="210"> 
+											<input class="idx"	checked name="21" id="210" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="211"> 
+											<input class="idx"	name="21" id="211" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="212"> 
+											<input class="idx" name="21" id="212" type="radio" value="2"> <span>6일 이상</span>
 										</label>
 									</div>
 								</div>
@@ -261,13 +268,14 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="220"> <input class="idx"
-											checked name="22" id="220" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="221"> <input class="idx"
-											name="22" id="221" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="222"> <input class="idx"
-											name="22" id="222" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="220"> 
+											<input class="idx" checked name="22" id="220" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="221"> 
+											<input class="idx" name="22" id="221" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="222"> 	
+											<input class="idx" name="22" id="222" type="radio" value="2"> <span>6일 이상</span>
 										</label>
 									</div>
 								</div>
