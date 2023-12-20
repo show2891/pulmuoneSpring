@@ -29,4 +29,34 @@
 		ORDER BY drk_order_date DESC
 	</select>
 	
+	<!-- List<DrkOrderMypageDTO> selectDrinkInfos(int member_no); -->
+	<select id="selectDrinks" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
+		SELECT drk_order_no, drk_order_name
+		FROM drk_order
+		WHERE member_no = #{member_no} AND drk_status = 0
+		ORDER BY drk_order_date DESC
+	</select>
+	
+	<!-- DrkOrderMypageDTO selectDrinkInfo(int drk_order_no); -->
+	<select id="selectDrinkInfo" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
+		SELECT d.drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, drk_order_type, drk_start_date, drk_pay_method
+		FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
+								JOIN drk_pay p ON d.drk_order_no = p.drk_order_no
+		WHERE d.drk_order_no = #{drk_oder_no}
+	</select>
+	
+	<!-- DrkShipDTO selectDrinkShip(int drk_order_no); -->
+	<select id="selectDrinkShip" resultType="org.pro.pulmuone.domain.order.daily.DrkShipDTO">
+		SELECT drk_receiver, drk_tel, drk_addr, drk_addr_detail, drk_ship_loc
+		FROM drk_ship
+		WHERE drk_order_no = #{drk_order_no}
+	</select>
+	
+	<!-- List<BoxOrderMypageProductsDTO> selectNextWeekDrink(int drk_order_no, int plusDay); -->
+	<select id="selectNextWeekDrink" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO">
+		SELECT products_cnt, img_path, system_name
+		FROM drk_history h JOIN products_img i ON h.products_no = i.products_no
+		WHERE drk_order_no = #{drk_order_no} AND drk_date = NEXT_DAY(TRUNC(SYSDATE), '월') + #{plusDay} AND origin_name != 'View.png'
+	</select>
+	
 </mapper>

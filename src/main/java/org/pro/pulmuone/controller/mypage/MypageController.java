@@ -9,12 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
+import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.CouponDTO;
 import org.pro.pulmuone.domain.order.HaveCouponDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
+import org.pro.pulmuone.domain.order.box.BoxOrderProductsDTO;
 import org.pro.pulmuone.domain.order.box.BoxPayDTO;
 import org.pro.pulmuone.domain.order.box.BoxShipDTO;
+import org.pro.pulmuone.domain.order.daily.DrkHistoryDTO;
+import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
 import org.pro.pulmuone.service.inquiry.InquiryService;
@@ -151,12 +155,40 @@ public class MypageController {
 		return "mypage/drink/drink.tiles";
 	}
 	
-	@RequestMapping("/mypage/drink/drinks/${drk_order_no}")
+	@RequestMapping("/mypage/drink/drinks/{drk_order_no}")
 	public String orderDailyView(Model model, @PathVariable int drk_order_no) {
 		log.info("> MypageController orderDailyView()...");
 		
-		// >> 음용 정보 가져오기 <<
+		// >> member_no 가져오기 <<
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		String username = "";
+		// 사용자 id 가져오기
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			username = userDetails.getUsername();
+		} // if
+
+		// member_no 가져오기
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+
+		// >> 음용 리스트 가져오기 <<
+		List<DrkOrderMypageDTO> drkOrderMypageList = this.dailyOrderMypageServiceImpl.selectDrinkInfos(member_no);
+		model.addAttribute("drkOrderMypageList", drkOrderMypageList);
 		
+		// >> 음용 정보 가져오기 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		// >> 배송지 정보 가져오기 <<
+		DrkShipDTO drkShipDTO = this.dailyOrderMypageServiceImpl.selectDrinkShip(drk_order_no);
+		model.addAttribute("drkShipDTO", drkShipDTO);
+		
+		// >> 다음주 음용 상품 가져오기 <<
+		List<List<BoxOrderMypageProductsDTO>> boxOrderMypageProductsList = this.dailyOrderMypageServiceImpl.selectNextWeekDrink(drk_order_no);
+		model.addAttribute("productsList", boxOrderMypageProductsList);
 		
 		return "mypage/drink/drinks.tiles";
 	}

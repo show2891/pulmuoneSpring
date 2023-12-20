@@ -20,6 +20,7 @@ public class DrkOrderMypageDTO {
 	private String fc_phone;
 	private int drk_status;
 	private int total_count;
+	private int drk_order_type;
 	private Date drk_start_date;
 	private int drk_pay_method;
 	
