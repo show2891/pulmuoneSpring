@@ -2,8 +2,8 @@ package org.pro.pulmuone.controller.mypage.personal.address;
 
 import java.util.List;
 
+import org.pro.pulmuone.domain.mypage.MoreDTO;
 import org.pro.pulmuone.domain.mypage.personal.address.AddrBookDTO;
-import org.pro.pulmuone.domain.mypage.personal.address.MoreDTO;
 import org.pro.pulmuone.security.domain.CurrentUser;
 import org.pro.pulmuone.service.mypage.personal.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,12 @@ public class AddressController {
 		List<AddrBookDTO> allAddrBookDtoList = this.addressService.getList(memberNo);
 		int dtoCount = allAddrBookDtoList.size();
 
-		List<AddrBookDTO> addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, endNum); 
+		List<AddrBookDTO> addrBookDtoList = null;
+		if (dtoCount >= endNum) {
+			addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, endNum); 			
+		} else {
+			addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, dtoCount); 
+		}
 		
         Gson gson = new GsonBuilder().create();
         String json = gson.toJson(addrBookDtoList);

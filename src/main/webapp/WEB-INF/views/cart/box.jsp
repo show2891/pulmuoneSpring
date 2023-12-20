@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <main class="Cart">
+
 	<div id="container-wrapper" class="container-wrapper">
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
@@ -120,6 +121,7 @@
     }
   })
 </script>
+
 		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -366,11 +368,9 @@
 					alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
 					return;
 				}
-<<<<<<< HEAD
-=======
-				console.log(order);
->>>>>>> branch 'develop' of https://github.com/dhl1031/pulmuoneSpring.git
+
 				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(order));
+
 				return;
 			}
 			else {
@@ -412,11 +412,13 @@
 									<div class="prd-cart-all-select">
 										<div class="checkbox chk-type3">
 											<input type="checkbox" id="cartIdxAll" checked="checked"> <label for="cartIdxAll" style="font-weight: 300;">전체선택</label>
+
 										</div>
 										<button type="button" class="btn-round2 deleteAll">선택 삭제</button>
 									</div>
 
 									<c:forEach items="${list }" var="list">
+
 										<ul class="prd-cart-list cart-box-list order-item-list">
 											<c:choose>
 												<c:when test="${list.event_price ne null and list.event_price > '0' }">
@@ -444,6 +446,7 @@
 															<button type="button" class="prod-add">
 																+<span class="hide">제품 추가</span>
 															</button>
+
 														</div>
 													</div>
 												</div>												

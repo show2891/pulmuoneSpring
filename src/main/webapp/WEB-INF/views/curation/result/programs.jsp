@@ -12,6 +12,14 @@
     sessionStorage.removeItem('req1');
     sessionStorage.removeItem('req2');
     sessionStorage.removeItem('req3');
+    
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+        // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+        alert("발생!");
+        location.href='/customer/product/step1';
+      }
+  }
 
     function getItems(lbl) {
       var items = {};
@@ -81,6 +89,7 @@
 
 var singleYn = "N" == 'Y';
 var title = "${list[0].program_name }";
+var itemCode = "${list[0].products_no}";
 var data = {
       mobilehost: "http://localhost",
       webhost: "http://localhost/",
@@ -146,29 +155,10 @@ $(document).on("click", "#orderModal button", function (e) {
     location.href = "/mypage/drink/drink/change/" + custNumber + "/" + prtnId + "?item=" + p;
   }
 })
+
+
 </script>
 
-
-
-		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header" style="padding-bottom: 8px;">
-						<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body select-wrapper">
-						<ul class="product-content-list order">
-
-						</ul>
-					</div>
-					<div class="button-set">
-						<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
-						<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<div class="breadcrumb-style">
 			<div class="container">
@@ -215,11 +205,11 @@ $(document).on("click", "#orderModal button", function (e) {
 					<div class="button-set sm" style="margin: 20px 0px">
 						<button id="cartBtn" class="button-basic black">장바구니</button>
 						<button id="orderBtn" class="button-basic primary">주문하기</button>
+
 					</div>
 				</div>
-
 				<div class="result-text">${list[0].program_content}</div>
-
+				
 				<div class="alert-area">
 					<h4>생활습관 바꾸기</h4>
 					<ul>
@@ -227,13 +217,13 @@ $(document).on("click", "#orderModal button", function (e) {
 							<c:when test="${param.bmi lt 18.5 }">
 								<li data-type="bmi">${list[0].lifestyle_change01 }</li>
 							</c:when>
-							<c:when test="${param.bmi ge 18.5 or param.bmi lt 23.0 }">
+							<c:when test="${param.bmi le 18.5 or param.bmi lt 23.0 }">
 								<li data-type="bmi">${list[0].lifestyle_change02 }</li>
 							</c:when>
-							<c:when test="${param.bmi ge 23.1 or param.bmi lt 25.0 }">
+							<c:when test="${param.bmi le 23.1 or param.bmi lt 25.0 }">
 								<li data-type="bmi">정상체중 범위에 들도록 현재의 식생활 행동에서 문제점을 찾고 행동 변화를 시도합니다.</li>
 							</c:when>
-							<c:when test="${param.bmi ge 25.1 }">
+							<c:when test="${param.bmi gt 25.1 }">
 								<li data-type="bmi">${list[0].lifestyle_change03 }</li>
 							</c:when>
 						</c:choose>
@@ -245,7 +235,6 @@ $(document).on("click", "#orderModal button", function (e) {
 					<button class="button-basic border bottle prefix" onclick="location.href='/customer/product/result/${score}?singleYn=Y&bmi=${param.bmi}'">
 						<i class="ico"></i> 내게 맞는 상품 추천
 					</button>
-
 					<button class="button-basic kakao prefix" onclick="javascript:sendKakao()">
 						<i class="ico"></i> 카카오톡으로 공유
 					</button>
@@ -259,37 +248,6 @@ $(document).on("click", "#orderModal button", function (e) {
 	<div class="modal show" id="productPreviewModal" tabindex="-1" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
 		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
 			<div class="modal-content modal-product">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-					<div class="thumb-normal">
-
-						<c:forEach var="dto" items="${list }">
-							<img src="/file/download/product/${dto.system_name }">
-						</c:forEach>
-					</div>
-				</div>
-				<div class="modal-body">
-					<div class="info-area">
-						<c:forEach var="dto" items="${list }">
-							<h2>${dto.products_name }</h2>
-							<p>${dto.products_sub_name }</p>
-							<div class="product-addiction" style="border-bottom: none">
-								<div class="price-item">
-
-									<p>${dto.price }<span>원</span>
-									</p>
-									<span>(${dto.products_size })</span>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-					<div class="button-set">
-						<c:forEach var="dto" items="${list }">
-							<a href="${dto.products_tag }" class="button-basic primary">상세보기</a>
-						</c:forEach>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
