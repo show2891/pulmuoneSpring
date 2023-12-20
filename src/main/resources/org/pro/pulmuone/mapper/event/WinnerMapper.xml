@@ -1,0 +1,28 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.event.WinnerMapper">
+
+	<select id="selectList" resultType="org.pro.pulmuone.domain.event.EventWinnerVO">
+	    SELECT * FROM (
+	        SELECT rownum rnum, win_board_no, win_title, win_content, win_regdate
+	        FROM (
+	            SELECT * FROM winner_board ORDER BY win_board_no DESC
+	        )
+	    ) WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+
+	<insert id="insert" parameterType="org.pro.pulmuone.domain.event.EventWinnerVO">
+	    INSERT INTO winner_board (win_board_no, win_title, win_content, win_regdate) 
+	    VALUES (#{win_board_no}, #{win_title}, #{win_content}, #{win_regdate})
+	</insert>
+	
+	<select id="getTotalRecords" resultType="int">
+	    SELECT COUNT(*) FROM winner_board
+	</select>
+	
+	<select id="getWinner" resultType="org.pro.pulmuone.domain.event.EventWinnerVO">
+	    SELECT * FROM winner_board WHERE win_board_no = #{win_board_no}
+	</select>
+	
+</mapper>
+
