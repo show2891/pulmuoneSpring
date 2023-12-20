@@ -374,22 +374,38 @@ let timer;
       $("#alertModal").find('.modal-footer').text(okBtnText);
     }
     if (callback && typeof callback == 'function') {
-      $("#alertModal .modal-footer").on("click", function () {
+      $("#alertModal .modal-footer").on("click", function () {        
         $("#alertModal").find('.modal-footer').text('확인');
         callback();
         $("#alertModal .modal-footer").off("click")
 
       });
-    }
+    }    
       $("#alertModal").on("hide.bs.modal", function () {
         $('#alertModal .modal-footer').removeClass('disabled')
         $('#alertModal .modal-footer').prop('disabled',false);
-        $("#alertModal .modal-footer").off("click")
+        $("#alertModal .modal-footer").off("click")        
         $("#alertModal").find('.modal-footer').text('확인');
         clearTimeout(timer)
       });
   }
+  window.confirm = function (message, callback, okBtnText) {
+    $("#confirmModalLabel").html("");
+    $("#confirmModal .modal-body").html(message);
+    $("#confirmModal").modal('show');
+    if (okBtnText) {
+      $("#confirmModal").find('.modal-footer').text(okBtnText);
+    }
+    if (callback && typeof callback == 'function') {
+      $("#confirmModal .modal-footer").on("click", function () {
+        $("#confirmModal").find('.modal-footer').text('취소');
+        $("#confirmModal").find('.modal-footer').text('확인');
+        callback();
+        $("#confirmModal .modal-footer").off("click")
+      });
+    }        
 
+  }
   window.alertWithRedirect = function (message, uri) {
     window.alert(message, function () {
       location.href = uri;
@@ -419,15 +435,20 @@ let timer;
     var type = that.attr("data-cart-type");
     var id = that.attr("data-cart-id");
     var eventIdx = that.attr("data-cart-event");
-//    if (id && type) {
-//      addCart(type, id, { eventIdx });
-//    }
-    axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
-        alert("제품이 담겼습니다.");
+
+if (type == "daily"){
+    axios.get('/cart/'+type+'/save?products_no='+ id+'&item=1,1,1,1,1').then(function ({data}) {      
+        confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
     }).catch(function (e) {
       alert("서버와 연결이 올바르지 않습니다.");
     })
-    
+  }else{
+  axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
+        confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
+    }).catch(function (e) {
+      alert("서버와 연결이 올바르지 않습니다.");
+    })
+    }
     e.preventDefault();
     return false;
   });

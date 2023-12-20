@@ -11,7 +11,6 @@
 			<li data-code="CARD" class="nav-item" role="presentation">
 				<a href="#" class="nav-link active" id="checkout-type-tab1" data-target="#checkout-type1" data-toggle="tab"
 					data-value="CARD" role="tab" aria-controls="checkout-type1" aria-selected="true">
-					<img src="/resources/assets/images/ui/checkout-item01.png" alt="">
 					<span>카드결제</span>
 				</a>
 			</li>

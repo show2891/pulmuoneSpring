@@ -24,7 +24,7 @@
 							<img src="/${ item.img_path }/${ item.system_name }" alt="${ item.products_name }">
 						</a>
 						<div class="prd-info-select-amount">
-							<a href="/product/box/728?eventIdx=" class="prd-info">
+							<a href="/product/box/${ item.products_tag }?eventIdx=" class="prd-info">
 								<em>${ item.products_type }</em>
 								<b class="prd-title">${ item.products_name }</b>
 								<span class="volume">(${ item.products_size })</span>
