@@ -197,13 +197,13 @@ $(document).ready(function () {
 			cache:false ,
 			success: function ( isDuplicated,  textStatus, jqXHR ){
 				console.log("중복 여부: " + isDuplicated);
-				if( isDuplicated == false ) {
-					showSuccessForm("memberIdError", message.member.regist.id.ok);
-					$("#duplicateIdCheck").val("Y");
-
-				} else {  
+				if( isDuplicated ) {
 					showErrorForm("memberIdError", message.member.regist.id.duplicate);
 					$("#duplicateIdCheck").val("N");
+
+				} else {  
+					showSuccessForm("memberIdError", message.member.regist.id.ok);
+					$("#duplicateIdCheck").val("Y");
 				}
 			 
 			},

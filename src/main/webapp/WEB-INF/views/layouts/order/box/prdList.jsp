@@ -14,21 +14,22 @@
 
 	<ul style="padding: 0px 20px;" class="prd-cart-list cart-box-list box-list-type2" id="order_targets">
 
-		<c:forEach items="${ itemInfos }" var="item">
+		<c:forEach items="${ itemInfos }" var="item" varStatus="status">
 			<li class="order-item" data-itemcode="${ item.products_no }" data-origin-price="${ item.price }" data-price="${ item.event_price }" style="padding: 20px 0 18px;">
-				<input type="hidden" value="${ item.products_no }" name="productsNo">
+		        <input type="hidden" value="${ item.products_no }" name="boxOrderProductsList[${status.index}].products_no">
+				
 				<div class="prd-cart-info-area">
 					<div class="flex-l">
 						<a class="thumb">
 							<img src="/${ item.img_path }/${ item.system_name }" alt="${ item.products_name }">
 						</a>
 						<div class="prd-info-select-amount">
-							<a href="/product/box/728?eventIdx=" class="prd-info">
+							<a href="/product/box/${ item.products_tag }?eventIdx=" class="prd-info">
 								<em>${ item.products_type }</em>
 								<b class="prd-title">${ item.products_name }</b>
 								<span class="volume">(${ item.products_size })</span>
 							</a>
-							<input type="hidden" data-count="0" value="${ item.products_cnt }" name="productsCnt">
+							<input type="hidden" data-count="0" value="${ item.products_cnt }" name="boxOrderProductsList[${status.index}].products_cnt">
 							<div class="prd-select-amount">
 								<em>${ item.products_cnt }</em>개
 							</div>

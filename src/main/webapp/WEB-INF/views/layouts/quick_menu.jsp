@@ -20,38 +20,40 @@ function openWindowPop(url, name){
 	}
 
 }
-$(function(){
+// https://greenjuice.pulmuone.com/user_summary/default  ||  https://greenjuice.pulmuone.com/user_summary
+// 위 주소 처럼 따로 페이지 구성이 되어야 효과를 발휘하기떄문에 주석처리 밑 스크립트 오류로인해 메인페이지 계속 호출 
+// $(function(){
 
-  axios.get('/axios/mypage').then(function (response) {
+//   axios.get('/axios/mypage').then(function (response) {
 
-    const {info, customerVo} = response.data.RESULT_MSG;
+//     const {info, customerVo} = response.data.RESULT_MSG;
 
-		const ec = ( !info.overEnd) && (info.complex||info.hasHp) && customerVo.phiCustomerVo.intfacId == '0' && customerVo.phiCustomerVo.dlvyCustYn==='Y'
-      if(ec&&customerVo){
-        $('#quickChangeDrink').attr('href', `/mypage/drink/drink/change/${customerVo.custnumber}/${customerVo.prtnId}`)
-        $('#quickChangeSchedule').attr('href', `/mypage/drink/drink/pause/${customerVo.custnumber}/${customerVo.prtnId}`)
-      }else {
-        $('#quickChangeDrink').attr('href', `/mypage?with=01`)
-        $('#quickChangeSchedule').attr('href', `/mypage?with=01`)
-      }
-      console.log(window.innerWidth)
-      if(window.innerWidth>1450){
-        $('#mini-side-nav').show();
-      }
-  }).catch(function (error) {
-    if(window.innerWidth>1450) {
-      $('#mini-side-nav').show()
-    }
-	});
-  window.addEventListener('resize', function(){
-	  if(window.innerWidth>1450){
-		$('#mini-side-nav').show();
-	  }else {
-		$('#mini-side-nav').hide();
-	  }
-	})
+// 		const ec = ( !info.overEnd) && (info.complex||info.hasHp) && customerVo.phiCustomerVo.intfacId == '0' && customerVo.phiCustomerVo.dlvyCustYn==='Y'
+//       if(ec&&customerVo){
+//         $('#quickChangeDrink').attr('href', `/mypage/drink/drink/change/${customerVo.custnumber}/${customerVo.prtnId}`)
+//         $('#quickChangeSchedule').attr('href', `/mypage/drink/drink/pause/${customerVo.custnumber}/${customerVo.prtnId}`)
+//       }else {
+//         $('#quickChangeDrink').attr('href', `/mypage?with=01`)
+//         $('#quickChangeSchedule').attr('href', `/mypage?with=01`)
+//       }
+//       console.log(window.innerWidth)
+//       if(window.innerWidth>1450){
+//         $('#mini-side-nav').show();
+//       }
+//   }).catch(function (error) {
+//     if(window.innerWidth>1450) {
+//       $('#mini-side-nav').show()
+//     }
+// 	});
+//   window.addEventListener('resize', function(){
+// 	  if(window.innerWidth>1450){
+// 		$('#mini-side-nav').show();
+// 	  }else {
+// 		$('#mini-side-nav').hide();
+// 	  }
+// 	})
 
-})
+// })
 </script>
 
 

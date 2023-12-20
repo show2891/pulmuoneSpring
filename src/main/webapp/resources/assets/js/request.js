@@ -488,6 +488,7 @@ const newPut = function (option, callback, failCallback) {
 
 }
 
+
 const newDelete = function (option, callback, failCallback) {
     if (option.duplicate == undefined) {
         // false : 중복 방지해야 함.
@@ -548,6 +549,7 @@ const newDelete = function (option, callback, failCallback) {
 
 
 }
+
 
 
 var post = function (option, callback, failCallback) {

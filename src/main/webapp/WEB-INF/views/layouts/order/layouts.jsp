@@ -13,15 +13,6 @@
   	<!-- main -->
   	<main class="page order box">
 		<div class="container">
-			<div class="breadcrumb-style">
-	            <div class="wrap">
-	                <ul>
-	                    <li><a href="/">홈</a></li>
-	                    <li><a href="/">장바구니</a></li>
-	                    <li><a class="active">주문서작성</a></li>
-	                </ul>
-	            </div>
-	        </div>
 	             
 	        <div class="page-wrap">
 				<!-- content -->
@@ -38,6 +29,22 @@
 
 <script>
 		$(function () {
+			// 상품 추가하기 버튼
+			$("#addProductBtn").on("click", function () {
+				addProduct(null, 1);
+			})
+			
+			$("#searchKeyword").on("keydown", function(event){
+				let searchKeyword = $(this).val();
+				if (event.keyCode == 13) {
+					addProduct(searchKeyword, 1);
+			    }
+			})
+			$("#productSearch").on("click", function(event){
+				let searchKeyword = $("#searchKeyword").val();
+				addProduct(searchKeyword, 1);
+			})
+			
 			// 다음 주소 api
 			searchPostcode();
 			
@@ -52,21 +59,67 @@
 				showAddress(member_no, 1);
 			})
 			
+			// 가맹점
+			$(".radio-area").on("change", function(){
+				// 위도, 경도값 가져오기
+				let address = $("#addrRoad").val();
+				if(address == "") return false;
+				let addressInfo = getAddressInfo(address, kakaoREST);
+				
+				// 홈/오피스 체크값 가져오기
+				let fc_type = $(this).find(":checked").val();
+				
+				// 가맹점 정보 가져오기
+				getFranchise(addressInfo.x, addressInfo.y, fc_type);
+			});
+			
+			// datepicker
+			let today = new Date();
+			let minDate = new Date();
+			minDate.setDate(today.getDate()+2);
+			let maxDate = new Date();
+			maxDate.setDate(today.getDate()+30);
+			$("#ip-datepicker-1").daterangepicker({
+				singleDatePicker: true
+				, minDate: minDate
+				, maxDate: maxDate
+				, regional: "ko"
+				// 주말 선택 비활성화 옵션 - 안 먹음
+				, beforeShowDay: function(date) {
+					let day = date.getDay();
+					return [(day != 0 && day != 6)];
+				}
+			}).on('change', function() {
+			    $(this).attr('value', $(this).val());
+			});
+			$("#ip-datepicker-1").on('apply.daterangepicker', function(ev, picker) {
+			    $("#ip-datepicker-1").val();
+			});
+
+			
 			// 카드 인증
 			$("#validCardBtn").on("click", function () {
 				validCard();
-			})
+			});
 			
 			$(".numberOnly").on("keyup", function() {
 				$(this).val($(this).val().replace(/[^0-9]/g,""));
 			});
 			
-			
 			// 계좌 인증
 			$("#callCms").on("click", function () {
 				callCms($(this));
-			})
+			});
 			
+			// 결제 방식
+			$("#myTab-area li").on("click", function () {
+				$("#isCertified").val(false);	// 인증 false
+				
+				let index = $(this).index();
+				$("#pay_method").val(index);
+				
+				if (index == 2) $("#isCertified").val(true);
+			});
 		});
 </script>
 </body>

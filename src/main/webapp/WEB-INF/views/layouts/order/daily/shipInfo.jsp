@@ -12,7 +12,8 @@
 				<dt>
 					<label for="input01"> 배송가맹점
 						<button type="button" class="btn-question">
-							<i class="ico ico-question"></i> <span class="hide">자세한 내용 보기</span>
+							<i class="ico ico-question"></i>
+							<span class="hide">자세한 내용 보기</span>
 							<div class="show-body" title="배송가맹점">
 								<ul>
 									<li>입력하신 배송장소 및 주소에 따른 예상 가맹점이며, 실제 배송가맹점과는 상이할 수
@@ -28,9 +29,10 @@
 					</label>
 				</dt>
 				<dd>
-					<input type="text" readonly="" name="prtnName" title="" placeholder="배송 장소 선택 및 주소 입력을 해주세요." value="">
-					<input type="hidden" id="officeCode" name="estCd" value="">
-					<input type="hidden" id="buTelno" name="officePhoneNumber" value="">
+					<input type="text" id="prtnName" readonly name="fc_name" title="" placeholder="배송 장소 선택 및 주소 입력을 해주세요." value="">
+					<input type="hidden" id="prtnNo" name="fc_no" value="">
+					<input type="hidden" id="prtnPhone" name="fc_phone" value="">
+					<input type="hidden" id="prtnTel" name="fc_tel" value="">
 				</dd>
 			</dl>
 		</div>
@@ -40,7 +42,8 @@
 				<dt>
 					<label for="input02"> 첫 배송 예정일
 						<button type="button" class="btn-question">
-						<i class="ico ico-question"></i> <span class="hide">자세한 내용 보기</span>
+						<i class="ico ico-question"></i>
+						<span class="hide">자세한 내용 보기</span>
 						<div class="show-body" title="첫 배송일 안내">
 							<ul>
 								<li>풀무원녹즙은 주문 생산 방식으로, 첫 배송일은 영업일 기준, 낮 12시 이전 주문
@@ -52,7 +55,7 @@
 					</label>
 				</dt>
 				<dd class="input-util-area" style="position: relative">
-					<input type="text" id="ip-datepicker-1" readonly="" name="deliveryDate" title="첫 배송 예정일" placeholder="첫 배송 예정일" value="2022. 08. 08">
+					<input type="text" id="ip-datepicker-1" readonly name="drk_start_date" title="첫 배송 예정일" placeholder="첫 배송 예정일" value="">
 					<button type="button" class="btn-cacalendar" style="pointer-events: none; position: absolute; right: 20px;">
 						<i class="ico ico-calendar"></i>
 						<span class="hide">날짜 선택하기</span>

@@ -351,116 +351,26 @@
 
 </script>
 <script>
-  var nowArgs = undefined;
-  window.orderProcess = function (args) {
-    if (!window.is_signed) {
-      alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
-      return;
-    }
-    nowArgs = args;
-
-    var codes = [];
-    for (var item of args.item) {
-      if (!item.itemCode) continue;
-      codes.push(item.itemCode);
-    }
-
-    $("#orderModal ul").html("");
-    $("#orderModal").addClass("loading").modal("show");
-
-    axios.post(`/product_available`, { ids: codes }).then(function (r) {
-      var o = r.data.RESULT_MSG;
-      if (o.fails.length) {
-        var itemCodes = o.fails.map(v => v.itemCode);
-        var args2 = {
-          item: args.item.filter(v => !itemCodes.includes(v.itemCode))
-        };
-        nowArgs = args2;
-        $("#orderModal").modal("hide").removeClass("loading");
-        showNotAvailModal(o.fails, function () {
-          $("#orderModal ul").html("");
-          $("#orderModal").addClass("loading").modal("show");
-
-          if (o.fails.length == codes.length) {
-            $("#orderModal").removeClass("loading").modal("hide");
-            return;
-          }
-
-          get({url: '/order/daily/check/option'}, function (r) {
-            if (typeof r.RESULT_MSG == 'object' && r.RESULT_MSG.length > 0) {
-              let customerList = r.RESULT_MSG
-              if (customerList.length > 5) {
-                customerList = customerList.slice(0, 5)
-              }
-
-              var latno = 0;
-              $.each(customerList, function (i, data) {
-                var tpl = $("#orderPosLi").text();
-                var nickname = data.nickname;
-                if (!nickname) {
-                  if (latno == 0) {
-                    latno = customerList.filter(v => !!v.nickname).length
-                  }
-                  nickname = "음용 " + latno;
-                  latno++;
-                }
-                tpl = tpl.replace(/\{nickname\}/g, nickname);
-                tpl = tpl.replace(/\{custnumber\}/g, data.custnumber);
-                tpl = tpl.replace(/\{prtnId\}/g, data.phiCustomerVo.prtnId);
-                $("#orderModal ul").append(tpl);
-              })
-              $('#orderModal input[name=custnum]:first').click()
-              $("#orderModal").removeClass("loading")
-            } else {
-              location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args2));
-            }
-          });
-        });
-      }
-      else {
-        get({url: '/order/daily/check/option'}, function (r) {
-          if (typeof r.RESULT_MSG == 'object' && r.RESULT_MSG.length > 0) {
-            let customerList = r.RESULT_MSG
-            if (customerList.length > 5) {
-              customerList = customerList.slice(0, 5)
-            }
-            var latno = 0;
-            $.each(customerList, function (i, data) {
-              var tpl = $("#orderPosLi").text();
-              var nickname = data.nickname;
-              if (!nickname) {
-                if (latno == 0) {
-                  latno = customerList.filter(v => !!v.nickname).length
-                }
-                nickname = "음용 " + latno;
-                latno++;
-              }
-              tpl = tpl.replace(/\{nickname\}/g, nickname);
-              tpl = tpl.replace(/\{custnumber\}/g, data.custnumber);
-              tpl = tpl.replace(/\{prtnId\}/g, data.phiCustomerVo.prtnId);
-              $("#orderModal ul").append(tpl);
-            })
-            $('#orderModal input[name=custnum]:first').click()
-            $("#orderModal").removeClass("loading")
-          } else {
-            location.href = "/order/daily/step1?item=" + encodeURIComponent(JSON.stringify(args));
-          }
-        });
-      }
-    });
+var nowArgs = undefined;
+window.orderProcess = function (args) {
+  if (!window.is_signed) {
+    alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
+    return;
   }
-  $(document).on("click", "#orderModal button", function (e) {
-    var type = $(this).attr("data-type");
-    var p = encodeURIComponent(JSON.stringify(nowArgs));;
-    if (type === "new") {
-      location.href = "/order/daily/step1?item=" + p
-    } else if (type === "continue") {
-      var c = $("input[name='custnum']:checked");
-      var custNumber = c.val();
-      var prtnId = c.attr("data-prtn-id");
-      location.href = "/mypage/drink/drink/change/" + custNumber + "/" + prtnId + "?item=" + p;
-    }
-  })
+  nowArgs = args;
+
+  var codes = [];
+  for (var item of args.item) {
+    if (!item.itemCode) continue;
+    codes.push(item.itemCode);
+  }
+
+  $("#orderModal ul").html("");
+  $("#orderModal").addClass("loading").modal("show");
+  
+  location.href = "/box/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
+  $("#orderModal").modal("hide").removeClass("loading");
+}
 </script>
 <main class="page">
 	<div class="bgfff">
@@ -528,45 +438,7 @@
 		</div>
 	</div>
 	<!-- Tab panes -->
-	<div class="tab-content">
-		${list[0].content }
-		<div role="tabpanel" class="tab-pane" id="info">
-			<div class="container">
-				<div class="product-spec">
-					<ul>
-						<li><label>식품의 유형</label>
-							<p>상세 참조</p></li>
-						<li><label>제조업소의 명칭과 소재지</label>
-							<p>상세 참조</p></li>
-						<li><label>제조연월일/유통기한</label>
-							<p>상세 참조</p></li>
-						<li><label>용량</label>
-							<p>상세 참조</p></li>
-						<li><label>수량</label>
-							<p>상세 참조</p></li>
-						<li><label>원재료 및 함량</label>
-							<p>상세 참조</p></li>
-						<li><label>영양정보</label>
-							<p>상세 참조</p></li>
-						<li><label>영양정보</label>
-							<p>상세 참조</p></li>
-						<li><label>섭취량,섭취방법 및 섭취시 주의사항 및 부작용 가능성</label>
-							<p>상세 참조</p></li>
-						<li><label>질병의 예방 및 치료를 위한 의약품이 아니라는 내용의 표현</label>
-							<p>해당 사항 없음</p></li>
-						<li><label>유전자변형건강기능식품에 해당하는 경우의 표시</label>
-							<p>해당 사항 없음</p></li>
-						<li><label>수입신고여부</label>
-							<p>해당 사항 없음</p></li>
-						<li><label>소비자안전을 위한 주의사항</label>
-							<p>상세 참조</p></li>
-						<li><label>소비자 상담번호</label>
-							<p>080-800-0393</p></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="tab-content">${list[0].content }</div>
 	<a class="faq-product" href="/forum/faq/list">
 		<div class="container">
 			<h2 class="part-title">FAQ</h2>
@@ -586,23 +458,6 @@
 						<button class="btn-plus" type="button">
 							+<span class="hide">제품 추가</span>
 						</button>
-
-					<div class="button-set"
-						style="margin-right: -4px; margin-bottom: 7px">
-						<c:choose>
-							<c:when test="${list[0].wish_status eq 1 }">
-								<button class="button-fix interest-button  active"
-									data-wish-type="box" data-wish-id="${list[0].products_tag }"></button>
-							</c:when>
-							<c:otherwise>
-								<button class="button-fix interest-button " data-wish-type="box"
-									data-wish-id="${list[0].products_tag }"></button>
-							</c:otherwise>
-						</c:choose>
-						<!-- 품절용 가이드 추가 -->
-						<button id="cartBtn" class="button-fix black">장바구니</button>
-						<button id="orderBtn" class="button-fix primary">바로구매</button>
-
 					</div>
 				</div>
 				<div class="prd-detail-modal-title " style="margin-left: 50px">
@@ -622,14 +477,13 @@
 					</c:otherwise>
 				</c:choose>
 				<!-- 품절용 가이드 추가 -->
-				<form action="/box/order/step1" method="GET">
-					<input type="hidden" name="productsNo" value="${list[0].products_no }"> <input type="hidden" name="qty" value="1">
-					<button id="cartBtn" class="button-fix black">장바구니</button>
-					<button id="orderBtn" class="button-fix primary">바로구매</button>
-				</form>
+				<!-- 				<button id="cartBtn" class="button-fix black">장바구니</button> -->
+				<button type="button" data-cart-id="${list[0].products_no }" data-cart-type="box" data-cart-event="" class="button-fix black">장바구니</button>
+				<button id="orderBtn" class="button-fix primary">바로구매</button>
 			</div>
 		</div>
 	</div>
+
 </main>
 </html>
 

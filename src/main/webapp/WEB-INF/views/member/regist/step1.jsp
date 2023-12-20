@@ -127,7 +127,7 @@
 								<label>휴대폰 번호</label>
 							</dt>
 							<dd>
-								<input type="tel" placeholder="휴대폰 번호" id="tel" name="tel" autocomplete="off" pattern="^010\d{7,8}$" maxlength="11">
+								<input type="tel" placeholder="휴대폰 번호" id="tel" name="tel" autocomplete="off" pattern="^010\d{8}$" maxlength="11">
 							</dd>
 						</dl>
 						<p id="telError"></p>

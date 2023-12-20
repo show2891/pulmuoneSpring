@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.pro.pulmuone.mapper.mypage.order.BoxOrderMypageMapper">
+	
+	<!-- List<BoxOrderMypageDTO> selectBoxOrder(int member_no); -->
+	<select id="selectBoxOrder" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO">
+		<![CDATA[
+			SELECT box_order_no, products_name, box_order_date, box_order_status, box_final_price, total_count
+			FROM (
+			        SELECT op.box_order_no, op.products_no, products_name, box_order_date, box_order_status, box_final_price, member_no
+			                , ROW_NUMBER() OVER(PARTITION BY op.box_order_no ORDER by op.box_order_no) prn
+			                , ROW_NUMBER() OVER(PARTITION BY member_no ORDER BY o.box_order_no DESC ) rn
+			                , (SELECT COUNT(*) FROM box_order WHERE member_no = #{member_no}) total_count
+			        FROM box_order_products op JOIN products pr ON op.products_no = pr.products_no
+			                                    JOIN box_order o ON op.box_order_no = o.box_order_no
+			                                    JOIN box_pay p ON op.box_order_no = p.box_order_no
+			        WHERE member_no = #{member_no}
+				 ) t
+			WHERE prn = 1 AND rn <= 2 AND box_order_date - ADD_MONTHS(SYSDATE, -3) > 0 
+		]]>
+	</select>
+	
+	<!-- int getBoxOrderStatus(int member_no, int status); -->
+	<select id="getBoxOrderStatus" resultType="Integer">
+		SELECT COUNT(*)
+		FROM box_order
+		WHERE member_no = #{member_no} AND box_order_status = #{status}
+		<if test="status == 4">
+                  AND box_order_date - ADD_MONTHS(SYSDATE, -3) > 0
+        </if> 
+	</select>
+	
+	<!-- List<BoxOrderMypageListDTO> selectBoxInfos(int member_no, Date startDate, Date endDate); -->
+	<select id="selectBoxInfos" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO">
+		SELECT o.box_order_no, box_order_date, box_order_status, tracking_no
+		    , COUNT(o.box_order_no) OVER() total_count
+		FROM box_order o JOIN box_ship s ON o.box_order_no = s.box_order_no 
+		WHERE member_no = #{member_no} AND box_order_date BETWEEN #{startDate} AND #{endDate}
+		ORDER BY box_order_date DESC
+	</select>
+	
+	<!-- List<BoxOrderMypageProductsDTO> selectBoxOrderMypageProducts(int box_order_no); -->
+	<select id="selectBoxOrderMypageProducts" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO">
+		SELECT op.products_no, products_cnt, products_name, products_size, products_type, products_tag
+		        , price, event_price, img_path, system_name
+		FROM box_order_products op JOIN products p ON op.products_no = p.products_no
+		                            			JOIN products_img i ON p.products_no = i.products_no
+		WHERE box_order_no = #{member_no} AND origin_name != 'View.png'
+	</select>
+	
+	<!-- BoxOrderMypageListDTO selectBoxInfo(int box_order_no); -->
+	<select id="selectBoxInfo" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO">
+		SELECT o.box_order_no, box_order_date, box_order_status, tracking_no
+		FROM box_order o JOIN box_ship s ON o.box_order_no = s.box_order_no 
+		WHERE o.box_order_no = #{box_order_no}
+	</select>
+	
+	<!-- BoxPayDTO selectBoxPay(int box_order_no); -->
+	<select id="selectBoxPay" resultType="org.pro.pulmuone.domain.order.box.BoxPayDTO">
+		SELECT box_pay_no, box_price, box_sale_price, box_discount_price, box_shipping_fee, box_final_price, box_pay_method
+		FROM box_pay
+		WHERE box_order_no = #{box_order_no}
+	</select>
+	
+	<!-- int updateHaveCoupon(int box_pay_no); -->
+	<update id="updateHaveCoupon">
+		UPDATE have_coupon
+		SET used = 0, box_pay_no = NULL
+		WHERE box_pay_no = #{ box_pay_no }
+	</update> 
+	
+	<!-- int updateBoxOrder(int box_order_no);  -->
+	<update id="updateBoxOrder">
+		UPDATE box_order
+		SET box_order_status = -1
+		WHERE box_order_no = #{ box_order_no }
+	</update>
+	
+	<!-- int updateBoxPay(int box_pay_no); -->
+	<update id="updateBoxPay">
+		UPDATE box_pay
+		SET box_pay_status = 1
+		WHERE box_pay_no = #{ box_pay_no }
+	</update>
+	
+	<!-- BoxShipDTO selectBoxShip(int box_order_no); -->
+	<select id="selectBoxShip" resultType="org.pro.pulmuone.domain.order.box.BoxShipDTO">
+		SELECT box_receiver, box_tel, box_zip_code, box_addr, box_addr_detail, box_memo
+		FROM box_ship
+		WHERE box_order_no = #{ box_order_no }
+	</select>
+
+	<!-- List<CouponDTO> selectUsedCouponList(int box_pay_no); -->
+	<select id="selectUsedCouponList" resultType="org.pro.pulmuone.domain.order.CouponDTO">
+		SELECT h.coupon_no, coupon_name, discount
+		FROM have_coupon h JOIN coupon c ON h.coupon_no = c.coupon_no
+		WHERE box_pay_no = #{ box_pay_no }
+	</select>
+	
+</mapper>

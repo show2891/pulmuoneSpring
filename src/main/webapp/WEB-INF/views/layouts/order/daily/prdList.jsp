@@ -14,10 +14,10 @@
 	</div>
 								
 	<ul style="" class="prd-cart-list" id="order_targets">
-		<c:forEach items="${ itemInfos }" var="item">
+		<c:forEach items="${ itemInfos }" var="item" varStatus="s">
 			<li data-id="" data-itemcode="${ item.products_no }" class="order-item order-chk active" data-price="${ item.price }">
-		
-				<a href="/product/daily/view.do?tag=281" class="prd-cart">
+				<input type="hidden" value="${ item.products_no }" name="drkScheduleList[${s.index}].products_no" id="products_no">
+				<a href="/product/daily/${ item.products_tag }?eventIdx=" class="prd-cart">
 					<div class="thumb">
 						<img src="/${ item.img_path }/${ item.system_name }" alt="">
 					</div>
@@ -29,11 +29,12 @@
 						</b>
 					</div>
 				</a>
+				
 				<div class="prd-cart-select-daily">
 					<ul data-cart-idx="" data-itemcode="${ item.products_no }">
 						<c:forEach items="${ item.products_cnt }" var="cnt" varStatus="status">
 							<li>
-								<input type="hidden" data-count="${ status.index }" value="${ cnt }">
+								<input type="hidden" data-index="${s.index}" data-count="1" value="${ cnt }" name="" id="cnt">
 								<span class="weekDays" data-count="${ status.index }"></span>
 								<div class="prd-select-daily">
 									<button type="button" class="prod-add ea-control" data-index="0">
@@ -46,7 +47,6 @@
 								</div>
 							</li>
 						</c:forEach>
-			
 					</ul>
 				</div>
 			</li>

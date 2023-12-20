@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript">
 	var category_no = "${param.category}";
 	$(document).on(
@@ -51,6 +52,7 @@
 			$("#confirmModal").addClass('show');
 		});
 	});
+
 </script>
 <div id="container-wrapper" class="container-wrapper">
 	<!--S: 메인 비주얼-->
@@ -138,7 +140,7 @@
 											</div>
 										</a>
 										<div class="btn-area btn-area-center">
-											<c:if test="${ auth.getName() ne null }">
+											<sec:authorize access="isAuthenticated()">
 												<c:choose>
 													<c:when test="${dto.wish_status eq 1 }">
 														<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn active ">
@@ -157,15 +159,15 @@
 														</button>
 													</c:otherwise>
 												</c:choose>
-											</c:if>
-											<c:if test="${ auth.getName() eq null }">
+											</sec:authorize>
+											<sec:authorize access="isAnonymous()">
 												<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn ">
 													<i class="ico ico-prd-wish"></i> <span class="hide">제품 찜하기</span>
 												</button>
 												<button type="button" data-cart-id="${dto.products_no }" data-cart-type="daily" data-cart-event="" class="btn-round addCartBtn">
 													<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에 담기</span>
 												</button>
-											</c:if>
+											</sec:authorize>
 										</div>
 									</div>
 								</div>
@@ -307,7 +309,7 @@
 										</div>
 									</a>
 									<div class="btn-area btn-area-center">
-										<c:if test="${ auth.getName() ne null }">
+										<sec:authorize access="isAuthenticated()">
 											<c:choose>
 												<c:when test="${dto.wish_status eq 1 }">
 													<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn active ">
@@ -326,15 +328,15 @@
 													</button>
 												</c:otherwise>
 											</c:choose>
-										</c:if>
-										<c:if test="${ auth.getName() eq null }">
+										</sec:authorize>
+										<sec:authorize access="isAnonymous()">
 											<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn ">
 												<i class="ico ico-prd-wish"></i> <span class="hide">제품 찜하기</span>
 											</button>
 											<button type="button" data-cart-id="${dto.products_no }" data-cart-type="daily" data-cart-event="" class="btn-round addCartBtn">
 												<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에 담기</span>
 											</button>
-										</c:if>
+										</sec:authorize>
 									</div>
 								</div>
 							</c:forEach>
