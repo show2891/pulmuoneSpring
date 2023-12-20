@@ -67,6 +67,7 @@ function showNotAvailModal(fails, onOk, onCancel) {
   $("#noAvailModal").modal("show");
 }
 
+
 function addCartToServer(type, data, eventIdx) {
   var codes = [];
   for (var item of data) {
@@ -74,13 +75,13 @@ function addCartToServer(type, data, eventIdx) {
     codes.push(item.itemCode);
   }
 
-  axios.post(`/product_available`, { ids: codes }).then(function (r) {
+  axios.get('/product/available', { ids: codes }).then(function (r) {
     var o = r.data.RESULT_MSG;
 	
     var lockIds = o.fails.map(x => x.itemCode);
     var target = data.filter(x => lockIds.indexOf(x.itemCode) < 0);         
 
-    axios.post('/cart/save.do', {[type]: target, eventIdx}).then(function ({data}) {
+    axios.get('/cart/save', {[type]: target, eventIdx}).then(function ({data}) {
       if (o.fails.length) {
         var nextDisabled = o.fails.length >= codes.length;
         showNotAvailModal(o.fails, nextDisabled ? undefined : function () {

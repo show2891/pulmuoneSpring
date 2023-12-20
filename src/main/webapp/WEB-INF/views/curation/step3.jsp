@@ -14,8 +14,7 @@
 </style>
 <body>
 
-
-	<script>
+<script>
    function getBmi (w,h){
       return (w / ((h * h) / 10000)).toFixed(2);
    }
@@ -52,9 +51,6 @@
 
    $(function (){
 
-      if(!sessionStorage.getItem('req2')||!sessionStorage.getItem('req1')){
-//             location.href='/customer/product/step1.do'
-      }
       if(sessionStorage.getItem('req3')){
          const prevReq3 = JSON.parse(sessionStorage.getItem('req3'))
          console.log('req3', prevReq3)// 점수
@@ -106,14 +102,14 @@
 
          if (lastSection.css('display') !== 'none') {
             const singleYn = lastSection.find('input[type=radio]:checked').val();
-            
+           
             const req1 = JSON.parse(sessionStorage.getItem('req1'))
             const req2 = JSON.parse(sessionStorage.getItem('req2'))
             const req3 = JSON.parse(sessionStorage.getItem('req3'))
             
             const data = {...req1, ...req2, ...req3}            
             const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
-                  v => ({idx: v[0], answer: v[1]}));                                                      
+                  v => ({idx: v[0], answer: v[1]}));     
                var bmi = 0;               
                if (bmi == 0 && req1.weight && req1.tallness) {
                   bmi = getBmi(req1.weight, req1.tallness)
@@ -124,13 +120,13 @@
                      score += Number(data[k]);                 
                   }
                });
-               
+ 			 var idx =0;
+ 			 
             location.href = '/customer/product/result/' 
                + score
                + '?singleYn=' + singleYn 
-               + '&bmi=' + bmi;
-
-
+               + '&bmi=' + bmi
+             
          }
                
 //                if (singleYn=='Y') {
@@ -158,7 +154,17 @@
         })
    })
    
-   
+    function goback() {
+         if(!sessionStorage.getItem('req2')||!sessionStorage.getItem('req1')){
+               location.href='/customer/product/step1'
+         }
+   }
+window.onpageshow = function(event) {
+
+    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {             
+        goback();    
+    }
+} 
    
 </script>
 

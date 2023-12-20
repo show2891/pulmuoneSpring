@@ -36,34 +36,23 @@ public class CurationResultController {
   // 키즈 프로그램
   @RequestMapping("/result/kids")
   public String kids() throws ClassNotFoundException, SQLException {
-
    log.info(">Kids Start");
+
    return "curation/result/kids.tiles";
 
   }
 
-  // 큐레이션 결과- 프로그램
-
-  //   @RequestMapping("/result/programs")
-  //   public String programs(CurationVO vo,  @RequestParam(value = "num") String num, Model model) throws ClassNotFoundException, SQLException {
-  //      log.info("> Programs Start");
-  //      vo.setProgram_no(Integer.parseInt(num));
-  //      
-  //      List<CurationVO> list = this.curationMapper.selectPG(vo);
-  //      model.addAttribute("list", list);
-  //      return "curation/result/programs.tiles";
-  //   }
-
-
   // 큐레이션 결과
   @RequestMapping("/result/{score}")
-  public String products(CurationVO vo, Model model, @PathVariable int score, @RequestParam(value = "singleYn") String singleYn, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
+  public String products(CurationVO vo, Model model
+		  , @PathVariable int score
+		  , @RequestParam(value = "singleYn") String singleYn
+		  , HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 
 
    log.info("> Curation Result Start : " + score);
    log.info(singleYn + " singleYn");
-   //6?singleYn=N&bmi=0&questions=7,11,13,14,20
-
+   //6?singleYn=N&bmi=0&questions=7,11,13,14,15,20
 
 
    // 점수..
@@ -86,18 +75,20 @@ public class CurationResultController {
      program_no = 8;
    }
 
-
-
+   
    vo.setProgram_no(program_no);
    vo.setSingleyn(singleYn);
    List<CurationVO> list = this.curationMapper.CurationSel(vo);
    model.addAttribute("list", list);
    model.addAttribute("score", score);
+
    if (singleYn.equals("N")) {
      return "curation/result/programs.tiles";     
    } else {
      return "curation/result/products.tiles";
    }
+   
+
 
   }
 }

@@ -3,6 +3,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.pro.pulmuone.mapper.cart.CartMapper">
+
 	<sql id="products_no">
 		<foreach collection="pnoArr" item="products_no" open="(" separator="," close=")">
 			#{products_no}
@@ -95,4 +96,5 @@
 		WHERE member_no = (select member_no from member where member_id = #{member_id })
 		and products_no = #{products_no}
 	</update>
+
 </mapper>
