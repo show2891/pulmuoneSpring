@@ -38,13 +38,12 @@ public class HomeController {
 		model.addAttribute("mainbestlist", mainbestlist );
 		return "home.index";
 	}
-	@PreAuthorize("hasRole('ROLE_USER')")
+	
 	@RequestMapping("cart")
 	public String cart(Model model, CartVO vo, Principal principal) throws Exception {				  
 		vo.setMember_id(principal.getName());		
 		int count = this.cartMapper.cart(vo);
 		model.addAttribute("count", count );				
-//		return "layouts/header.tiles";
 		return "home.index";
 		
 	}

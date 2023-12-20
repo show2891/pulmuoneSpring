@@ -130,30 +130,47 @@ function showAddress(member_no, pageNo) {
 }
 
 
+// 주문하기
 function goStep2(orderType){
 	if ($("#receiver").val() == "") {
-		$('#alertModal').find(".modal-body").text("받는사람항목이 비어있습니다.");
-		showModal();
+		alert("받는사람항목이 비어있습니다.");
 		return;
 	}
 	if ($("#tel").val() == "") {
-		$('#alertModal').find(".modal-body").text("휴대폰번호항목이 비어있습니다.");
-		showModal();
+		alert("휴대폰번호항목이 비어있습니다.");
 		return;
 	}
 	if ($("#zipcode").val() == "") {
-		$('#alertModal').find(".modal-body").text("우편번호항목이 비어있습니다.");
-		showModal();
+		alert("우편번호항목이 비어있습니다.");
 		return;
 	}
+	let prtnName = $('#prtnName').val();
+	if (orderType == "daily") {
+		if (prtnName == "배송이 불가한 지역입니다." || prtnName == "") {
+			alert("배송가맹점을 확인해주세요.");
+			return;
+		}
+		let payMethod = $("#pay_method").val();
+		if ($("#isCertified").val() == "false"){
+			if (payMethod == 0 && $("#validCardBtn").text() == "카드인증") {
+				alert("카드를 인증해주세요.");
+				return
+			}
+			if (payMethod == 1 && $("#afterArs").css("display") == "none") {
+				alert("계좌를 인증해주세요.");
+				return;
+			}
+		}
+	}
 	if (!$("#agree-11").is(':checked')) {
-		$('#alertModal').find(".modal-body").text("구매조건 확인 및 결제진행에 동의 해주세요.");
-		showModal();
+		alert("구매조건 확인 및 결제진행에 동의 해주세요.")
 		return;
-	} 
+	}
+	
+	let url = "/"+orderType+"/order/step2";
 	$("#orderForm").attr({
 		method:"post"
-		, action:"/"+orderType+"/order/step2"
+		, action:url
 	}).submit();
 };
 

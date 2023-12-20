@@ -51,9 +51,6 @@
 
    $(function (){
 
-      if(!sessionStorage.getItem('req2')||!sessionStorage.getItem('req1')){
-            location.href='/customer/product/step1'
-      }
       if(sessionStorage.getItem('req3')){
          const prevReq3 = JSON.parse(sessionStorage.getItem('req3'))
          console.log('req3', prevReq3)// 점수
@@ -156,6 +153,19 @@
             }
         })
    })
+   
+    function goback() {
+         if(!sessionStorage.getItem('req2')||!sessionStorage.getItem('req1')){
+               location.href='/customer/product/step1'
+         }
+   }
+window.onpageshow = function(event) {
+
+    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {             
+        goback();    
+    }
+} 
+   
 </script>
 
 

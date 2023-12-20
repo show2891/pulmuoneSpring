@@ -158,7 +158,7 @@
 			if (itemType != "daily") {
 				// 택배배송
 				var args = { item: [{itemCode, qty: ($('.box-qty').text()) || "1", eventIdx: ""}] };
-				location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(args));
+				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
 				return;
 			}
 
@@ -332,7 +332,7 @@
     var type = $(this).attr("data-type");
     var p = encodeURIComponent(JSON.stringify(nowArgs));;
     if (type === "new") {
-      location.href = "/order/daily/step1?item=" + p
+      location.href = "/daily/order/step1?item=" + p
     } else if (type === "continue") {
       var c = $("input[name='custnum']:checked");
       var custNumber = c.val();
