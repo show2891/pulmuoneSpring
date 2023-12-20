@@ -477,7 +477,8 @@ window.orderProcess = function (args) {
 					</c:otherwise>
 				</c:choose>
 				<!-- 품절용 가이드 추가 -->
-				<button id="cartBtn" class="button-fix black">장바구니</button>
+				<!-- 				<button id="cartBtn" class="button-fix black">장바구니</button> -->
+				<button type="button" data-cart-id="${list[0].products_no }" data-cart-type="box" data-cart-event="" class="button-fix black">장바구니</button>
 				<button id="orderBtn" class="button-fix primary">바로구매</button>
 			</div>
 		</div>

@@ -28,6 +28,9 @@
 		<!--  faq  -->
 		<security:intercept-url pattern="/forum/faq/write" access="hasRole('ROLE_ADMIN')" />
 		
+		<!--  장바구니  -->
+		<security:intercept-url pattern="/cart/daily" access="isAuthenticated()" />
+		
 		<security:form-login 
 			login-page="/member/login"
 			login-processing-url="/member/login"
