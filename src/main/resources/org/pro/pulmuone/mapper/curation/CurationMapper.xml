@@ -12,6 +12,7 @@
       FROM kids_product k JOIN products_img pi ON k.products_no = pi.products_no
       JOIN products p ON p.products_name = k.products_name
       WHERE origin_name not like 'View%'
+      AND program_no = #{program_no}
       ORDER BY kids_product_no
    </select>
 

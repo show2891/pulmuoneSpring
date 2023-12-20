@@ -102,13 +102,7 @@
         })
 		//region 제품 담기
 		$("#cartBtn").click(function () {
-			if (itemType != "daily") {
-				// 택배배송
-				var qty = parseInt($('.box-qty').text());
-				addCart("box", itemCode, {qty, eventIdx});
-				return;
-			}
-
+			
 			// 매일배송
 			var input = $('input[name=r1]:checked');
 			if (input.hasClass('none-package')) {
@@ -125,7 +119,7 @@
 					return selectedDays.includes(i) ? 1 : 0;
 				});
 			axios.get('/cart/'+itemType+'/save?products_no='+ itemCode+'&item='+dayQty).then(function ({data}) {      
-        		alert("제품이 담겼습니다.");
+				confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
     		}).catch(function (e) {
       			alert("서버와 연결이 올바르지 않습니다.");
     		});

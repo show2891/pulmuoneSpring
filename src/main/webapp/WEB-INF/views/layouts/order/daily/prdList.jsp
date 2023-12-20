@@ -17,7 +17,7 @@
 		<c:forEach items="${ itemInfos }" var="item" varStatus="s">
 			<li data-id="" data-itemcode="${ item.products_no }" class="order-item order-chk active" data-price="${ item.price }">
 				<input type="hidden" value="${ item.products_no }" name="drkScheduleList[${s.index}].products_no" id="products_no">
-				<a href="/product/daily/view.do?tag=281" class="prd-cart">
+				<a href="/product/daily/${ item.products_tag }?eventIdx=" class="prd-cart">
 					<div class="thumb">
 						<img src="/${ item.img_path }/${ item.system_name }" alt="">
 					</div>

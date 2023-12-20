@@ -30,6 +30,7 @@
 <script>
 	$(function () {
 		weekDayText();
+		calculateReceipt();
 	})
 </script>
 <script>
