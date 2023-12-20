@@ -102,13 +102,7 @@
         })
 		//region 제품 담기
 		$("#cartBtn").click(function () {
-			if (itemType != "daily") {
-				// 택배배송
-				var qty = parseInt($('.box-qty').text());
-				addCart("box", itemCode, {qty, eventIdx});
-				return;
-			}
-
+			
 			// 매일배송
 			var input = $('input[name=r1]:checked');
 			if (input.hasClass('none-package')) {
@@ -117,15 +111,18 @@
 				if (checkedDay.length === 0) {
 					return alert("배송요일을 선택해주세요");
 				}
-				console.log(checkedDay)
+// 				console.log(checkedDay)
 				const selectedDays = checkedDay.map(function (i, x) {
 					return parseInt($(x).val()) - 1;
 				}).toArray();
 				const dayQty = days.map(function (x, i) {
 					return selectedDays.includes(i) ? 1 : 0;
 				});
-
-				addCart("daily", itemCode, {dayQty, eventIdx});
+			axios.get('/cart/'+itemType+'/save?products_no='+ itemCode+'&item='+dayQty).then(function ({data}) {      
+				confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
+    		}).catch(function (e) {
+      			alert("서버와 연결이 올바르지 않습니다.");
+    		});
 			} else {
 				// 추천 패키지 선택 시
 				var itemCodes = [];
@@ -321,11 +318,12 @@
       if (!item.itemCode) continue;
       codes.push(item.itemCode);
     }
-
+console.log(args);
+console.log(nowArgs);
     $("#orderModal ul").html("");
     $("#orderModal").addClass("loading").modal("show");
     
-    location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
+//     location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
     $("#orderModal").modal("hide").removeClass("loading");
   }
   $(document).on("click", "#orderModal button", function (e) {
@@ -577,6 +575,7 @@
 					</c:choose>
 					<!-- 품절용 가이드 추가 -->
 					<button id="cartBtn" class="button-fix black">장바구니</button>
+					<%-- 					<button type="button" data-cart-id="${list[0].products_no }" data-cart-type="daily" data-cart-event="" class="button-fix black">장바구니</button> --%>
 					<button id="orderBtn" class="button-fix primary">바로구매</button>
 				</div>
 			</div>

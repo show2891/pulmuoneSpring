@@ -91,16 +91,25 @@ public class CartController {
   }
 
   @RequestMapping("daily/save")
-  public String dailycartsave(@RequestParam(value = "products_no", required = false) String products_no, CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
-	log.info("dailycartsave : " + products_no);
+  public String dailycartsave(@RequestParam(value = "products_no", required = false) String products_no
+	  ,@RequestParam(name = "item") String itemsStr
+	  , CartVO vo, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+	log.warn("dailycartsave : " + products_no);
+	log.warn("itemsStr : " + itemsStr);
 	int count = 0;
 	String[] products_nos = products_no.split(",");
 	vo.setMember_id(principal.getName());
-	vo.setMon_cnt(1);
-	vo.setTue_cnt(1);
-	vo.setWed_cnt(1);
-	vo.setThu_cnt(1);
-	vo.setFir_cnt(1);
+	  String[] itemsStrs = itemsStr.split(",");
+	  int[] intArray = new int[itemsStrs.length];
+	  for(int i = 0; i < itemsStrs.length; i++){
+	    intArray[i] = Integer.parseInt(itemsStrs[i]);
+	}
+		vo.setMon_cnt(intArray[0]);
+		vo.setTue_cnt(intArray[1]);
+		vo.setWed_cnt(intArray[2]);
+		vo.setThu_cnt(intArray[3]);
+		vo.setFir_cnt(intArray[4]);	
+	
 	for (int i = 0; i < products_nos.length; i++) {
 	  vo.setProducts_no(products_nos[i]);
 	  this.cartMapper.dailycartdelete(vo);

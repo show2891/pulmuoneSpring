@@ -7,7 +7,7 @@
 			<span>상품 판매가 (4주기준)</span>
 			<b>
 				<div class="now-price">
-					<b data-price-view="origin">58,000</b> <span>원</span>
+					<b data-price-view="origin">0</b> <span>원</span>
 				</div>
 			</b>
 		</dt>
@@ -16,7 +16,7 @@
 			<span>상품 할인 판매가</span>
 			<b>
 				<div class="now-price">
-					<b data-price-view="sale" class="">58,000</b> <span>원</span>
+					<b data-price-view="sale" class="">0</b> <span>원</span>
 				</div>
 			</b>
 		</dd>
@@ -25,7 +25,7 @@
 			<span>4주 예상 금액</span>
 			<b>
 				<div class="now-price">
-					<b data-price-view="payment">58,000</b> <span>원</span>
+					<b data-price-view="payment">0</b> <span>원</span>
 				</div>
 			</b>
 		</dd>
