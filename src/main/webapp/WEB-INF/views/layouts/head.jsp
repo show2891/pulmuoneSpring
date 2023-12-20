@@ -42,6 +42,7 @@ window.is_signed = true;
 window.kakaoSimpleData = {"memberId":"<sec:authentication property='principal.member.memberId' />","name":"<sec:authentication property='principal.member.name' />","recommenderCode":"XQNGV"};
 </sec:authorize>
 </script>
+
 <script>
 	window.dataLayer = window.dataLayer || [];
 
