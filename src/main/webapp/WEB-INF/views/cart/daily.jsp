@@ -199,16 +199,15 @@
          var eventIdx = $(this).attr("data-event-idx");
          var itemCode = $(this).attr("data-itemcode");
          confirmDesign("", "삭제하시겠습니까?", function () {         
-            axios.get('/cart/daily/delete?products_no='+ itemCode).then(function ({data}) {      
-                 alert("삭제되었습니다.");
+        	 $.get('/cart/daily/delete?products_no='+ itemCode).done(function (data) {      
+                 alert('삭제되었습니다.');
                  parent.remove();
                calculateTotalPrice();
-             }).catch(function (e) {
-               alert("서버와 연결이 올바르지 않습니다.");
-             });
+             }).fail(function(data){
+				  alert('잘못된 요청입니다.');
+			  })
          });
       });
-
 
       $(".deleteAll").click(function () {
          var param = [];
@@ -222,13 +221,14 @@
          }
 
          confirmDesign("", "삭제하시겠습니까?", function () {
-            axios.get('/cart/daily/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
-                 alert("삭제되었습니다.");
+            $.get('/cart/daily/delete?products_no='+ encodeURIComponent(param.join(","))).done(function ({data}) {      
+                 alert('삭제되었습니다.');
+                 console.log("asdasdsadsad");
                  $(".order-item-list>*:has([name='cartIdx']:checked)").remove();
                calculateTotalPrice();
-             }).catch(function (e) {
-               alert("서버와 연결이 올바르지 않습니다.");
-             });            
+             }).fail(function(data){
+				  alert('잘못된 요청입니다.');
+			  })            
          });
       });
 
@@ -476,6 +476,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
+	</div>	
 </main>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>

@@ -443,13 +443,13 @@ let timer;
     }
 if (type == "daily"){
     axios.get('/cart/'+type+'/save?products_no='+ id+'&item=1,1,1,1,1').then(function ({data}) {      
-        confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
+        confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
     }).catch(function (e) {
       alert("서버와 연결이 올바르지 않습니다.");
     })
   }else{
   axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
-        confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
+        confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
     }).catch(function (e) {
       alert("서버와 연결이 올바르지 않습니다.");
     })

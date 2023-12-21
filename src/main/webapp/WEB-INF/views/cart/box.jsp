@@ -558,3 +558,4 @@
 		</div>
 	</div>
 </main>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>

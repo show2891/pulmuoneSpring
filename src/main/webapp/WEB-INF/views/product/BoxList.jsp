@@ -362,3 +362,4 @@
 		</form>
 	</div>
 </main>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
