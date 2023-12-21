@@ -13,14 +13,6 @@
     sessionStorage.removeItem('req2');
     sessionStorage.removeItem('req3');
     
-    window.onpageshow = function(event) {
-        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-        // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
-        alert("발생!");
-        location.href='/customer/product/step1';
-      }
-  }
-
     function getItems(lbl) {
       var items = {};
       $("input[name='itemCode']").each(function (i, item) {
@@ -74,8 +66,8 @@
 		for (var i = 0; i < orderItems.length; i++) {
 	 		param.push(Object.values(orderItems)[i].itemCode);	
 		}
-	    axios.get('/cart/daily/save?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
-	        alert("제품이 담겼습니다.");
+	    axios.get('/cart/daily/save?products_no='+ encodeURIComponent(param.join(","))+'&item=1,1,1,1,1' ).then(function ({data}) {      
+	    	 confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
 	    }).catch(function (e) {
 	      alert("서버와 연결이 올바르지 않습니다.");
 	    })   
