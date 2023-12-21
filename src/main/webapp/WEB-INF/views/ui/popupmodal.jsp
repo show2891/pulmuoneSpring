@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script type="text/javascript">
+	$().ready(
+			function() {
+				$("body").on("click",
+						".ui-dialog-titlebar-close, .ui-icon-closethick",
+						function() {
+							$(this).closest(".dialogContent").html("");
+						});
+			});
+</script>
 <div tabindex="-1" role="dialog"
 	class="ui-widget ui-widget-content ui-front ui-resizable ui-dialog"
 	aria-describedby="ui-id-5" aria-labelledby="ui-id-6"

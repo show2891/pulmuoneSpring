@@ -36801,11 +36801,13 @@ input::-webkit-calendar-picker-indicator {
 }
 
 #alertModal,
-#confirmModal {
+#confirmModal,
+#confirmDesignModal {
   padding: 0px 10px !important;
 }
 
-#confirmModal {
+#confirmModal,
+#confirmDesignModal {
   z-index: 1049 !important;
 }
 
@@ -36830,18 +36832,21 @@ input::-webkit-calendar-picker-indicator {
 }
 
 #alertModal .modal-dialog,
-#confirmModal .modal-dialog {
+#confirmModal .modal-dialog,
+#confirmDesignModal .modal-dialog {
   max-width: 350px;
 }
 
 #alertModal .modal-header,
-#confirmModal .modal-header {
+#confirmModal .modal-header,
+#confirmDesignModal .modal-header {
   border-bottom: 0px;
   padding: 20px 20px 0px;
 }
 
 #alertModal .modal-body,
-#confirmModal .modal-body {
+#confirmModal .modal-body,
+#confirmDesignModal .modal-body {
   text-align: center;
   font-family: "Noto Sans KR";
   font-size: 16px;
@@ -36877,13 +36882,15 @@ input::-webkit-calendar-picker-indicator {
   background-color: grey;
 }
 
-#confirmModal .modal-footer {
+#confirmModal .modal-footer,
+#confirmDesignModal .modal-footer {
   display: flex;
   flex-direction: row;
   padding: 0px;
 }
 
-#confirmModal .modal-footer > * {
+#confirmModal .modal-footer > *,
+#confirmDesignModal .modal-footer > * {
   flex: 1;
   font-family: "Noto Sans KR";
   font-size: 15px;
@@ -36898,13 +36905,15 @@ input::-webkit-calendar-picker-indicator {
   margin: 0px;
 }
 
-#confirmModal .modal-footer .confirm {
+#confirmModal .modal-footer .confirm,
+#confirmDesignModal .modal-footer .confirm {
   border-bottom-right-radius: 26px;
   background: #7acc12;
   color: #fff;
 }
 
-#confirmModal .modal-footer .cancel {
+#confirmModal .modal-footer .cancel,
+#confirmDesignModal .modal-footer .cancel  {
   border-bottom-left-radius: 26px;
   background: #333333;
   color: #fff;
