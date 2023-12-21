@@ -293,7 +293,6 @@ public class MypageController {
 	
 	@RequestMapping("mypage/action/review")
 	public String review(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {
-		log.info("reviewlist" );		
 		dto.setMember_id( principal.getName() );
 		List<ProductsDTO> reviewlist = this.mapper.reviewlist(dto);
 		model.addAttribute("reviewlist",reviewlist);
@@ -301,11 +300,27 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage/action/review/myWriteReview")
-	public String myWriteReview(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {
-		log.info("myreviewlist" );		
+	public String myWriteReview(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {	
 		dto.setMember_id( principal.getName() );
 		List<ProductsDTO> myreviewlist = this.mapper.myreviewlist(dto);
 		model.addAttribute("myreviewlist",myreviewlist);
+		return "mypage/review/writelist.tiles";
+	}
+	
+	@GetMapping("mypage/action/review/modify")
+	public String reviewmodify(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {		
+		dto.setMember_id( principal.getName() );
+		List<ProductsDTO> myreviewlist = this.mapper.myreviewlist(dto);
+		model.addAttribute("myreviewlist",myreviewlist);
+		return "mypage/review/list.tiles";
+	}
+	
+	@RequestMapping("mypage/action/review/delete/{idx}")
+	public String reviewdelete(ProductsDTO dto, Model model, Principal principal,@PathVariable String idx) throws ClassNotFoundException, SQLException {		
+		dto.setMember_id( principal.getName() );
+		dto.setReview_no(idx);
+		int count = this.mapper.reviewdelete(dto);
+		model.addAttribute("count",count);
 		return "mypage/review/writelist.tiles";
 	}
 	

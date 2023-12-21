@@ -24,7 +24,9 @@ public interface ProductMapper {
   //  찜 조회
   List<ProductsDTO> wishlist(ProductsDTO dto);
 
-  //  리뷰 조회
+  //  리뷰
   List<ProductsDTO> reviewlist(ProductsDTO dto);
   List<ProductsDTO> myreviewlist(ProductsDTO dto);
+  int reviewupdate(ProductsDTO dto);
+  int reviewdelete(ProductsDTO dto);
 }
