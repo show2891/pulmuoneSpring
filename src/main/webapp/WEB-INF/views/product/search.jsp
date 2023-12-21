@@ -176,5 +176,3 @@
 		location.replace(location.pathname + "?pageNo=" + aparam);		
 	});
 </script>
-</html>
-

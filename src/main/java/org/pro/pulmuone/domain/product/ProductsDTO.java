@@ -47,4 +47,7 @@ public class ProductsDTO {
 	   private String count;
 	   private String member_id;
 	   private boolean classname;
+	   private String review_no;
+	   private String recommendKeyword;
+	   private String searchKeyword;
 }

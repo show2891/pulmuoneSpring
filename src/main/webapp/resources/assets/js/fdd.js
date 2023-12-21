@@ -417,15 +417,15 @@ let timer;
         title: !message ? '' : title,
       content: !message ? title : message,
     };
-    $("#confirmModal .modal-title").html(body.title);
-    $("#confirmModal .modal-body").html(body.content);
-    $("#confirmModal").modal('show');
+    $("#confirmDesignmModal .modal-title").html(body.title);
+    $("#confirmDesignModal .modal-body").html(body.content);
+    $("#confirmDesignModal").modal('show');
 
     if (callback&& typeof callback =='function') {
-      $("#confirmModal .confirm").on("click", function () {
+      $("#confirmDesignModal .confirm").on("click", function () {
         callback()
-        $("#confirmModal .confirm").off("click")
-        $("#confirmModal").modal('hide');
+        $("#confirmDesignModal .confirm").off("click")
+        $("#confirmDesignModal").modal('hide');
       })
     }
   };
@@ -435,7 +435,12 @@ let timer;
     var type = that.attr("data-cart-type");
     var id = that.attr("data-cart-id");
     var eventIdx = that.attr("data-cart-event");
-
+    if (!window.is_signed) {
+      alert("로그인 후 찜한상품으로 담을 수 있습니다.", function () {
+        location.href = "/member/login?redirectUrl=" + encodeURIComponent(location.href);
+      });
+      return false;
+    }
 if (type == "daily"){
     axios.get('/cart/'+type+'/save?products_no='+ id+'&item=1,1,1,1,1').then(function ({data}) {      
         confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
