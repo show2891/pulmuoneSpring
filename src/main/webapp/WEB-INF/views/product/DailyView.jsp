@@ -579,5 +579,3 @@
 		</div>
 	</main>
 </div>
-</html>
-
