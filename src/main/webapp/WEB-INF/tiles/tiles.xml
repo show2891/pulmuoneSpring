@@ -33,11 +33,14 @@
    
   
    <!-- forum/ -->
-    <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
+   <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
-   		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
 	    <put-attribute name="aside" value="/WEB-INF/views/layouts/forum/aside.jsp" /> 
+   		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+	    <put-attribute name="footermodal" value="/WEB-INF/views/layouts/footermodal.jsp" />
+	    <put-attribute name="alertModal" value="/WEB-INF/views/ui/alertmodal.jsp" />
+	    <put-attribute name="confirmModal" value="/WEB-INF/views/ui/confirmmodal.jsp" />
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />    		
 		<put-attribute name="page" value="{1}"></put-attribute>
    </definition>
@@ -57,6 +60,7 @@
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
    		<put-attribute name="footermodal" value="/WEB-INF/views/layouts/footermodal.jsp" />
+   		 <put-attribute name="confirmModal" value="/WEB-INF/views/ui/confirmmodal.jsp" />
     	<put-attribute name="aside" value="/WEB-INF/views/layouts/mypage/aside.jsp" />    
    </definition>
     
