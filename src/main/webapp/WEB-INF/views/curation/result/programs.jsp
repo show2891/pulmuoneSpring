@@ -237,11 +237,8 @@ $(document).on("click", "#orderModal button", function (e) {
 		</div>
 	</div>
 
-	<div class="modal show" id="productPreviewModal" tabindex="-1" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-			<div class="modal-content modal-product">
-			</div>
-		</div>
-	</div>
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 
 </main>

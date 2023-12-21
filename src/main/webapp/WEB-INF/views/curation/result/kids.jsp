@@ -154,43 +154,6 @@
   })
 </script>
 
-		<textarea id="orderPosLi" style="display: none">    &lt;li&gt;
-        &lt;label class="item-wrapper"&gt;
-            &lt;input name="custnum" type="radio" value="{custnumber}" data-prtn-id="{prtnId}" /&gt;
-            &lt;div class="item"&gt;
-                &lt;div class="contents"&gt;
-                    &lt;p class="name"&gt;
-                        {nickname} &lt;span style="margin-left: 0;"&gt;{custnumber}&lt;/span&gt;
-                    &lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/label&gt;
-    &lt;/li&gt;
-</textarea>
-
-
-		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header" style="padding-bottom: 8px;">
-						<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body select-wrapper">
-						<ul class="product-content-list order">
-
-						</ul>
-					</div>
-					<div class="button-set">
-						<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
-						<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
-					</div>
-				</div>
-			</div>
-
-
-		</div>
-
 		<div class="breadcrumb-style">
 			<div class="container">
 				<ul>
@@ -281,9 +244,8 @@
 
 	</div>
 
-	<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-modal="true">
-		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-			<div class="modal-content modal-product"></div>
-		</div>
-	</div>
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/kakaomodal.jsp"%>
 </main>

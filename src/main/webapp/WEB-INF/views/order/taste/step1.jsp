@@ -370,10 +370,8 @@
                                 </b>
                             </dd>
                         </dl>
-                        
-                            
-
-                        <div class="checkbox chk-type4">
+                 
+                       <div class="checkbox chk-type4">
                             <input type="checkbox" id="agree" value="true">
                             <label for="agree">구매조건 확인 및 결제진행 동의</label>
                         </div>
@@ -383,3 +381,4 @@
             </div>
         </div>
     </div>
+    <%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
