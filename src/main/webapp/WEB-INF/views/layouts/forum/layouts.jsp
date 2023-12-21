@@ -35,8 +35,11 @@
 	</main>
   	<!-- footer -->
   	<tiles:insertAttribute name="footer" />
+  	<tiles:insertAttribute name="footermodal" />
 </div>
-<%@ include file="/WEB-INF/views/ui/modal.jsp" %>
+<!-- modal -->
+<tiles:insertAttribute name="alertModal" />
+<tiles:insertAttribute name="confirmModal" />
 
 
 <script>
