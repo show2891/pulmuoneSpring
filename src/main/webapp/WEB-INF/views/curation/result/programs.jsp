@@ -245,4 +245,3 @@ $(document).on("click", "#orderModal button", function (e) {
 	</div>
 
 </main>
-</html>
