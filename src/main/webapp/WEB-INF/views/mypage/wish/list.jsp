@@ -22,7 +22,7 @@
 			const tag = $(this).data('tag');
 			const el = $(this)
 			
-			confirmDesign("","찜한상품을 삭제하시겠습니까?",function(){
+			confirm("","찜한상품을 삭제하시겠습니까?",function(){
 			  $.get("/mypage/product/delete?tag="+tag,) 						
 			  .done(function(data){
 				  alert('목록에서 삭제되었습니다', () => location.reload())
@@ -40,7 +40,7 @@
 			const idx = checked.map((i, v) => $(v).closest('li').data('idx')).toArray();
 			const tag = checked.map((i, v) => $(v).closest('li').data('tag')).toArray();
 			
-			confirmDesign("","찜한상품을 삭제하시겠습니까?",function(){
+			confirm("","찜한상품을 삭제하시겠습니까?",function(){
 				  $.get("/mypage/product/delete?tag="+encodeURIComponent(tag.join(",")),) 						
 				  .done(function(data){
 					  alert('목록에서 삭제되었습니다', () => location.reload())
@@ -121,17 +121,4 @@
 			</div>
 		</div>
 	</main>
-	<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="alertModalLabel"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">선택된 상품이 없습니다.</div>
-				<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>

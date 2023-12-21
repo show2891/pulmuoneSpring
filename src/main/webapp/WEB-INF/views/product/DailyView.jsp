@@ -579,4 +579,5 @@
 		</div>
 	</main>
 </div>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

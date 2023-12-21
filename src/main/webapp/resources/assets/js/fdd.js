@@ -390,6 +390,10 @@ let timer;
       });
   }
   window.confirm = function (message, callback, okBtnText) {
+  const body = {
+        title: !message ? '' : title,
+      content: !message ? title : message,
+    };
     $("#confirmModalLabel").html("");
     $("#confirmModal .modal-body").html(message);
     $("#confirmModal").modal('show');
