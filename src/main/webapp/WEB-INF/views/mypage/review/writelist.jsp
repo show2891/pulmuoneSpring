@@ -2,7 +2,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="wrapper">	
+<script>
+    $(function () {
+        $(document).on('click','.item',function (){
+			let reviewImage = $(this).data("image");
+	        const modal  =$('#reviewModal');
+            $("#titlePlace").text($(this).data("title"));
+			console.log(reviewImage)
+            modal.find('img').attr('src','/file/download'+$(this).data("image"))
+	        $("#contentsPlace").text($(this).data("review"));
+	        modal.find('.span-tie span:last').text($(this).data("regdate"));
+	        modal.find('.foot-case').data('idx',$(this).data("idx"));
+			modal.modal('show');
+        })
+	    $('.modify').click(function (){
+            location.href = '/mypage/action/review/modify/'+$(this).parent().data('idx');
+	    })
+	    $('.delete').click(function (){
+			const idx  =$(this).parent().data('idx');
+			$("#reviewModal").css('z-index',1049);
+			confirmDesign("", "리뷰를 삭제하시겠습니까?",function(){				
+				post({url:'/mypage/action/review/delete/'+idx},function (response){
+					$('#reviewModal').modal('hide')
+					if(response.RESULT_MSG){
+						alert('삭제되었습니다.',()=>location.reload())
+					}else {
+						alert('잘못된 요청입니다..',()=>location.reload())
+					}
+				})
+			})
+
+	    })
+    })
+</script>
+<div class="wrapper">
 	<main class="page forum">
 		<div class="breadcrumb-style">
 			<div class="container">
@@ -32,7 +65,7 @@
 				<div class="review-list">
 					<ul id="pagable-list" data-list-object="append">
 						<c:forEach items="${myreviewlist }" var="dto">
-							<li style="cursor: pointer" class="item" data-idx="695" data-regdate="${dto.reg_date }" data-review="${dto.content }" data-image="/product/${system_name }" data-title="${dto.products_name }" id="detailReview">
+							<li style="cursor: pointer" class="item" data-idx="${dto.review_no }" data-regdate="${dto.reg_date }" data-review="${dto.content }" data-image="/product/${dto.system_name }" data-title="${dto.products_name }" id="detailReview">
 								<div class="thumb">
 									<img src="/file/download/product/${dto.system_name }" onerror="this.src='/resources/assets/images/common/no_img.png'">
 								</div>
@@ -49,7 +82,6 @@
 				</div>
 			</div>
 		</div>
-</div>
 </main>
 </div>
 </html>

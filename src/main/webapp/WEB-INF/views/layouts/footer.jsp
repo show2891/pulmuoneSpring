@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/layouts/quick_menu.jsp"%>
-<!-- footer -->
 <div class="page-footer">
 	<div class="container">
 		<ul class="quick-menu">

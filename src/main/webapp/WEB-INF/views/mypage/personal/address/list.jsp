@@ -26,7 +26,13 @@
 					</div>
 					<a href="/mypage/personal/address/write" class="rect-button primary">주소록 등록</a>
 				</div>
-					
+				<c:if test="${ dtoCount == 0 }">
+					<div class="caution-unit page">
+						<span class="mark"></span>
+						<p>등록된 주소록이 없습니다.</p>
+					</div>
+				</c:if>
+				
 				<div class="drinking-list">
 
 				</div>
@@ -43,8 +49,7 @@
     var search = ${ pagingInfo };
 	$(function (){
         //region render data
-//         var search = {"memberNo":${ memberNo },"endNum":10,"startNum":1};
-//         var search = ${ pagingInfo };
+
         const rootEl = $('.drinking-list');
         
         var data = { "data" : ${dtoList} }.data;
@@ -176,6 +181,9 @@
             if (rootEl.children().length >= ${dtoCount}) {
                 $('#moreBtn').remove();
             }
+        }
+        if (${dtoCount} == 0) {
+            $('#moreBtn').remove();
         }
 
             

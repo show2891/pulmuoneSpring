@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<script type="text/javascript">
+	$(document).on("click", ".productMove", function(e) {
+		let idx = $(this).data('idx')
+		let goodType = $(this).data('goodtype')
+			location.href = '/product/' + goodType + "/" + idx;
+	})
+</script>
 <div class="wrapper">
 	<main class="page forum">
 		<div class="breadcrumb-style">
@@ -33,7 +41,7 @@
 					<div class="drinkchange-list review">
 						<ul>
 							<c:forEach items="${reviewlist }" var="dto">
-								<li><a class="item productMove" data-idx="316" data-goodtype="daily" data-issale="Y" style="cursor: pointer">
+								<li><a class="item productMove" data-idx="${dto.products_tag }" data-goodtype="${dto.delivery_type }" data-issale="Y" style="cursor: pointer">
 										<div class="thumb">
 											<img src="/file/download/product/${dto.system_name }" onerror="this.src='/resources/assets/images/common/no_img.png'" alt="">
 										</div>
@@ -44,7 +52,7 @@
 										</div>
 								</a>
 									<div class="button-area">
-										<a href="" class="btn-default write btn-white">리뷰작성</a>
+										<a href="/mypage/action/review/write/${dto.products_no }" class="btn-default write btn-white">리뷰작성</a>
 									</div></li>
 							</c:forEach>
 						</ul>
