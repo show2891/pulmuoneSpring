@@ -79,23 +79,6 @@
 		</div>
 	</div>
 </div>
-
-
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="confirmModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body"></div>
-			<div class="modal-footer">
-				<button type="button" class="cancel" data-dismiss="modal">취소</button>
-				<button type="button" class="confirm">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="modal" id="shareModal" tabindex="-1" aria-labelledby="shareModal" aria-hidden="true">
 	<input type="text" style="opacity: 0" id="share_url_input" value="https://greenjuice.pulmuone.com/info/foundation">
 	<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
@@ -112,13 +95,53 @@
 		</div>
 	</div>
 </div>
-
+<div class="modal show fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModal" aria-hidden="true">
+	<div class="modal-dialog modal-review modal-dialog-centered">
+		<div class="modal-content" style="border-radius: 40px;">
+			<div class="modal-body horizontal-layer">
+				<div class="thumb-area" id="imagePlace">
+					<img onerror="this.src='/resources/assets/images/common/no_img.png'" alt="">
+				</div>
+				<div class="review-contents-area">
+					<div class="modal-header" style="border: 0;">
+						<h4 id="titlePlace"></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="scrollable" style="padding-top: 0;">
+						<p id="contentsPlace"></p>
+						<div class="span-tie">
+							<span></span> <span id="datePlace"></span>
+						</div>
+						<div class="foot-case">
+							<button class="modify rounded-button">수정</button>
+							<button class="delete rounded-button">삭제</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal" id="productPreviewModal" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
 		<div class="modal-content modal-product"></div>
 	</div>
 </div>
-
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="confirmModalLabel"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" class="cancel" data-dismiss="modal">취소</button>
+				<button type="button" class="confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
 <button id="top_move_pointer" class="top-nav">
 	<img src="/resources/assets/images/ui/left_short_arrow.png">
 	<p>TOP</p>

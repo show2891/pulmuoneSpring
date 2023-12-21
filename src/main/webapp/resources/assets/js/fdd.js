@@ -522,22 +522,6 @@ if (type == "daily"){
     e.preventDefault();
     return false;
   });
-  
-    $(document).on("click", "[data-review]", function (e) {
-    var that = $(this);
-    var id = parseInt(that.attr("data-product-preview"), 10);
-	console.log(id);
-    if (id) {
-      $("#productPreviewModal .modal-content").html("");
-      $("#productPreviewModal").addClass("loading").modal('show');
-
-      $("#productPreviewModal .modal-content").load("/modal/file/download?products_no=" + id, function () {
-        $("#productPreviewModal").removeClass("loading");
-      });
-    }
-    e.preventDefault();
-    return false;
-  });
 
   window.shareToKakao = function (title, uri) {	
     if (window.kakaoShareData) {	
