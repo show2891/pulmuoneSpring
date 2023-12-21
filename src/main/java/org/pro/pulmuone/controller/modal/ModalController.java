@@ -33,6 +33,6 @@ public class ModalController {
 		return "modal/modalview.modal";
 	}
 
-
+	
 
 }
