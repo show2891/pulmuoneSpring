@@ -24,7 +24,7 @@
 ## Environment
 
 #### Skills
-- JDK-11 (JAVA)
+- jdk-11.0.19 (JAVA)
 - Tomcat server 8.5v
 - Oracle 11g
 - ojdbc6
