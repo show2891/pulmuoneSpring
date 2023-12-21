@@ -7,6 +7,8 @@ import org.pro.pulmuone.domain.product.ProductsDTO;
 public interface ModalMapper {
 //	시음선물 모달 
 	List<ProductsDTO> modalview(ProductsDTO dto);
+	
+	List<ProductsDTO> reviewmodalview(ProductsDTO dto);
 
 	
 }

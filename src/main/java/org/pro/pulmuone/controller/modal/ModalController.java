@@ -32,6 +32,17 @@ public class ModalController {
 				
 		return "modal/modalview.modal";
 	}
+	
+	@RequestMapping("file/download")
+	public String reviewmodalview(ProductsDTO dto, Model model						
+			, @RequestParam(value = "num") String num) throws ClassNotFoundException, SQLException {
+		log.info("modalview" );
+		dto.setProducts_tag(num);
+		List<ProductsDTO> list = this.mapper.modalview(dto);
+		model.addAttribute("list",list);
+				
+		return "modal/reviewmodalview.modal";
+	}
 
 
 

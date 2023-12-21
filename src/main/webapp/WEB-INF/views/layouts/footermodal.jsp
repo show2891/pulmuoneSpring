@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
-	$(function(){
-		$('#myModal').on('shown.bs.modal', function () {
+	$(function() {
+		$('#myModal').on('shown.bs.modal', function() {
 			$('#myInput').trigger('focus')
 		});
-		$(".confirm").click(function(){			
-			if(location.pathname.indexOf('box') != -1){
-				location.href = '/cart/box'   	
-			}else{
-				location.href = '/cart/daily'  
-			}					
+		$(".confirm").click(function() {
+			if (location.pathname.indexOf('box') != -1) {
+				location.href = '/cart/box'
+			} else {
+				location.href = '/cart/daily'
+			}
 		});
-	});	
-	
+	});
 </script>
 <!-- Modal -->
 <div class="modal fade" id="emailPolicy" tabindex="-1" aria-labelledby="emailPolicy" aria-hidden="true">
@@ -46,11 +45,14 @@
 	</div>
 </div>
 <script type="text/javascript">
-	$().ready(function() {
-		$("body").on("click", ".ui-dialog-titlebar-close, .ui-icon-closethick", function() {
-			$(this).closest(".dialogContent").html("");
-		});
-	});
+	$().ready(
+			function() {
+				$("body").on("click",
+						".ui-dialog-titlebar-close, .ui-icon-closethick",
+						function() {
+							$(this).closest(".dialogContent").html("");
+						});
+			});
 </script>
 <form action="https://info.sweettracker.co.kr/tracking/5" target="_blank" style="display: none" id="sweet" method="post">
 	<div class="form-group">
@@ -94,8 +96,6 @@
 		</div>
 	</div>
 </div>
-
-
 <div class="modal" id="shareModal" tabindex="-1" aria-labelledby="shareModal" aria-hidden="true">
 	<input type="text" style="opacity: 0" id="share_url_input" value="https://greenjuice.pulmuone.com/info/foundation">
 	<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
@@ -125,23 +125,21 @@
 </button>
 
 <script>
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > 0) {
-      if (!$("#top_move_pointer").hasClass("st")) {
-        $("#top_move_pointer").addClass("st");
-      }
-    } else {
-      if ($("#top_move_pointer").hasClass("st")) {
-        $("#top_move_pointer").removeClass("st");
-      }
-    }
-  })
+	$(window).scroll(function() {
+		if ($(window).scrollTop() > 0) {
+			if (!$("#top_move_pointer").hasClass("st")) {
+				$("#top_move_pointer").addClass("st");
+			}
+		} else {
+			if ($("#top_move_pointer").hasClass("st")) {
+				$("#top_move_pointer").removeClass("st");
+			}
+		}
+	})
 
-
-  $(document).on("click", "#top_move_pointer", function() {
-    $(document).scrollTop(0);
-  });
-
+	$(document).on("click", "#top_move_pointer", function() {
+		$(document).scrollTop(0);
+	});
 </script>
 
 <div class="modal fade" id="privacyPolicy" tabindex="-1" aria-labelledby="privacyPolicy" aria-hidden="true">
@@ -222,23 +220,26 @@
 }
 </style>
 					<script>
-    $(function () {
-            $('.pop-content').click(function (e) {
-                e.preventDefault()
-                if ($(this).hasClass('prtn')) {
-                    $('#alertModal2').find('.modal-body').html(prtn)
-                } else {
-                    $('#alertModal2').find('.modal-body').html(consumerCorp)
-                }
-                $('#alertModal2').modal('show');
-            })
-            $('#alertModalClose').click(function () {
+						$(function() {
+							$('.pop-content').click(
+									function(e) {
+										e.preventDefault()
+										if ($(this).hasClass('prtn')) {
+											$('#alertModal2').find(
+													'.modal-body').html(prtn)
+										} else {
+											$('#alertModal2').find(
+													'.modal-body').html(
+													consumerCorp)
+										}
+										$('#alertModal2').modal('show');
+									})
+							$('#alertModalClose').click(function() {
 
-                $('#alertModal2').modal('hide');
-            })
-        }
-    )
-</script>
+								$('#alertModal2').modal('hide');
+							})
+						})
+					</script>
 					<div class="" style="padding: 0 30px 30px">
 						<div class="agree-wrap">
 							<div class="agree-cont">
@@ -647,23 +648,26 @@ a.pop-content.hover {
 }
 </style>
 					<script>
-    $(function () {
-            $('.pop-content').click(function (e) {
-                e.preventDefault()
-                if ($(this).hasClass('prtn')) {
-                    $('#alertModal2').find('.modal-body').html(prtn)
-                } else {
-                    $('#alertModal2').find('.modal-body').html(consumerCorp)
-                }
-                $('#alertModal2').modal('show');
-            })
-            $('#alertModalClose').click(function () {
+						$(function() {
+							$('.pop-content').click(
+									function(e) {
+										e.preventDefault()
+										if ($(this).hasClass('prtn')) {
+											$('#alertModal2').find(
+													'.modal-body').html(prtn)
+										} else {
+											$('#alertModal2').find(
+													'.modal-body').html(
+													consumerCorp)
+										}
+										$('#alertModal2').modal('show');
+									})
+							$('#alertModalClose').click(function() {
 
-                $('#alertModal2').modal('hide');
-            })
-        }
-    )
-</script>
+								$('#alertModal2').modal('hide');
+							})
+						})
+					</script>
 
 					<div class="" style="padding: 0 30px 30px">
 						<div class="agree-wrap">
@@ -1754,19 +1758,19 @@ a.pop-content.hover {
 </div>
 
 <script>
-  $(function(){
-    $('.dropdown-item').click(function(){
-      const idx = $(this).data('idx')
-      if($(this).hasClass('privacy')){
+	$(function() {
+		$('.dropdown-item').click(function() {
+			const idx = $(this).data('idx')
+			if ($(this).hasClass('privacy')) {
 
-        $('.privacyPolicy').hide();
-        $(`.privacyPolicy[data-idx=${idx}]`).show()
-      }else {
-        $('.terms').hide();
-        $(`.terms[data-idx=${idx}]`).show()
-      }
-    })
-  })
+				$('.privacyPolicy').hide();
+				$(`.privacyPolicy[data-idx=${idx}]`).show()
+			} else {
+				$('.terms').hide();
+				$(`.terms[data-idx=${idx}]`).show()
+			}
+		})
+	})
 </script>
 
 <div class="modal fade" id="personalInfo" tabindex="-1" aria-labelledby="personalInfo" aria-hidden="true">
@@ -1779,11 +1783,11 @@ a.pop-content.hover {
 			<div class="modal-body">
 
 				<script type="text/javascript">
-	$().ready(function() {
-		// header - 공유버튼 숨김
-		$(".sns-share").hide();
-	});
-</script>
+					$().ready(function() {
+						// header - 공유버튼 숨김
+						$(".sns-share").hide();
+					});
+				</script>
 
 				<style>
 .agreement-wrap th, td {
@@ -1869,11 +1873,11 @@ a.pop-content.hover {
 			<div class="modal-body">
 
 				<script type="text/javascript">
-	$().ready(function() {
-		// header - 공유버튼 숨김
-		$(".sns-share").hide();
-	});
-</script>
+					$().ready(function() {
+						// header - 공유버튼 숨김
+						$(".sns-share").hide();
+					});
+				</script>
 
 				<style>
 .agreement-wrap th, td {
@@ -1935,11 +1939,11 @@ a.pop-content.hover {
 			<div class="modal-body">
 
 				<script type="text/javascript">
-	$().ready(function() {
-		// header - 공유버튼 숨김
-		$(".sns-share").hide();
-	});
-</script>
+					$().ready(function() {
+						// header - 공유버튼 숨김
+						$(".sns-share").hide();
+					});
+				</script>
 
 				<style>
 .agreement-wrap th, td {

@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="wrapper">	
+<script>
+
+</script>
+<div class="wrapper">
 	<main class="page forum">
 		<div class="breadcrumb-style">
 			<div class="container">
@@ -32,7 +35,7 @@
 				<div class="review-list">
 					<ul id="pagable-list" data-list-object="append">
 						<c:forEach items="${myreviewlist }" var="dto">
-							<li style="cursor: pointer" class="item" data-idx="695" data-regdate="${dto.reg_date }" data-review="${dto.content }" data-image="/product/${system_name }" data-title="${dto.products_name }" id="detailReview">
+							<li style="cursor: pointer" class="item" data-idx="695" data-product-preview="${dto.products_no}" data-regdate="${dto.reg_date }" data-review="${dto.content }" data-image="${dto.system_name }" data-title="${dto.products_name }" id="detailReview">
 								<div class="thumb">
 									<img src="/file/download/product/${dto.system_name }" onerror="this.src='/resources/assets/images/common/no_img.png'">
 								</div>
@@ -49,7 +52,6 @@
 				</div>
 			</div>
 		</div>
-</div>
 </main>
 </div>
 </html>
