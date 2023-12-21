@@ -434,10 +434,6 @@ public class MypageController {
 		model.addAttribute("count",count);
 		return "mypage/review/writelist.tiles";
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> refs/heads/dev/order
 
 	private int getMemberNo(Authentication authentication) {
 		String username = "";
