@@ -2532,7 +2532,7 @@
 
 			</div>
 		</main>
-		<%@ include file="/WEB-INF/views/modal/popupmodal.jsp"%>
+		<%@ include file="/WEB-INF/views/ui/popupmodal.jsp"%>
 	</div>
 
 </html>

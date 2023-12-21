@@ -417,15 +417,15 @@ let timer;
         title: !message ? '' : title,
       content: !message ? title : message,
     };
-    $("#confirmModal .modal-title").html(body.title);
-    $("#confirmModal .modal-body").html(body.content);
-    $("#confirmModal").modal('show');
+    $("#confirmDesignmModal .modal-title").html(body.title);
+    $("#confirmDesignModal .modal-body").html(body.content);
+    $("#confirmDesignModal").modal('show');
 
     if (callback&& typeof callback =='function') {
-      $("#confirmModal .confirm").on("click", function () {
+      $("#confirmDesignModal .confirm").on("click", function () {
         callback()
-        $("#confirmModal .confirm").off("click")
-        $("#confirmModal").modal('hide');
+        $("#confirmDesignModal .confirm").off("click")
+        $("#confirmDesignModal").modal('hide');
       })
     }
   };

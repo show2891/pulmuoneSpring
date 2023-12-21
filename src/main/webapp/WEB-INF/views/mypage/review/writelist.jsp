@@ -7,8 +7,7 @@
         $(document).on('click','.item',function (){
 			let reviewImage = $(this).data("image");
 	        const modal  =$('#reviewModal');
-            $("#titlePlace").text($(this).data("title"));
-			console.log(reviewImage)
+            $("#titlePlace").text($(this).data("title"));			
             modal.find('img').attr('src','/file/download'+$(this).data("image"))
 	        $("#contentsPlace").text($(this).data("review"));
 	        modal.find('.span-tie span:last').text($(this).data("regdate"));
@@ -20,6 +19,7 @@
 	    })
 	    $('.delete').click(function (){
 			const idx  =$(this).parent().data('idx');
+			console.log(idx);
 			$("#reviewModal").css('z-index',1049);
 			confirmDesign("", "리뷰를 삭제하시겠습니까?",function(){				
 				post({url:'/mypage/action/review/delete/'+idx},function (response){
