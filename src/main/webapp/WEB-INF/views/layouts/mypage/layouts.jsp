@@ -24,7 +24,9 @@
   	<tiles:insertAttribute name="footer" />
   	<tiles:insertAttribute name="footermodal" />
 </div>
+<!-- modal -->
+<tiles:insertAttribute name="confirmModal" />
+
 
 </body>
-
 </html>
