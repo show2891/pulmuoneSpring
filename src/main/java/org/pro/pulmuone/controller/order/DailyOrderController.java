@@ -55,23 +55,10 @@ public class DailyOrderController {
 	public String step1(@RequestParam(name = "item") String itemsStr , Model model) {
 		log.info("> DailyOrderController.step1 ...");
 		
-		// 1. 사용자 정보 출력
+		// >> member_no 가져오기 <<
 		// 현재 사용자의 인증 정보 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		String username = "";
-		// 사용자 id 가져오기
-		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			username = userDetails.getUsername();
-		} // if
-
-		// 사용자 정보 전달
-		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		model.addAttribute("member", member);
-		
-		// 2. member_no 가져오기
-		int member_no = member.getMember_no();
+		int member_no = getMemberNo(authentication);
 		
 		// 1. 파라미터로 넘어온 상품 정보 출력
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -115,21 +102,10 @@ public class DailyOrderController {
  							, DrkShipDTO drkShipDTO, String saveAddrChk, DrkPayDTO drkPayDTO, CardInfoDTO cardInfoDTO, AcntInfoDTO acntInfoDTO) {
 		log.info("> BoxOrderController.step2 ...");
 		
-		// 1. member_no 가져오기
+		// >> member_no 가져오기 <<
 		// 현재 사용자의 인증 정보 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				
-		String username = "";
-		// 사용자 id 가져오기
-		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		    username = userDetails.getUsername();
-		} // if
-			    
-		// member_no 저장
-		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		int member_no = member.getMember_no();
-		
+		int member_no = getMemberNo(authentication);
 		
 		// 2. drk_order 테이블 insert
 		// 음용 name 구해오기
@@ -149,10 +125,12 @@ public class DailyOrderController {
 		
 		if (payMethod == 0) {
 			cardInfoDTO.setMember_no(member_no);
+			cardInfoDTO.setDrk_order_no(drkOrderNo);
 			dailyOrderServiceImpl.cardInfoInsert(cardInfoDTO);
 			drkPayDTO.setPay_info_no(cardInfoDTO.getCard_info_no());
 		} else if (payMethod == 1) {
 			acntInfoDTO.setMember_no(member_no);
+			acntInfoDTO.setDrk_order_no(drkOrderNo);
 			dailyOrderServiceImpl.acntInfoInsert(acntInfoDTO);
 			drkPayDTO.setPay_info_no(acntInfoDTO.getAcnt_info_no());
 		} else {
@@ -325,5 +303,18 @@ public class DailyOrderController {
 		
 		return start_date;
 	} // getStartDate
+	
+	private int getMemberNo(Authentication authentication) {
+		String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+				        
+        // member_no 가져오기
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		return member.getMember_no();
+	} // getMemberNo()
 
 }

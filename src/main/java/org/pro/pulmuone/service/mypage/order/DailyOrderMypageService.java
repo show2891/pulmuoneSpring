@@ -3,7 +3,10 @@ package org.pro.pulmuone.service.mypage.order;
 import java.util.List;
 
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
+import org.pro.pulmuone.domain.order.daily.CardInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 
 public interface DailyOrderMypageService {
@@ -18,6 +21,16 @@ public interface DailyOrderMypageService {
 	DrkShipDTO selectDrinkShip(int drk_order_no);
 
 	List<List<BoxOrderMypageProductsDTO>> selectNextWeekDrink(int drk_order_no);
+
+	int changeDrkOrderName(int drk_order_no, String drk_order_name);
+
+	List<DrkOrderBillDTO> selectDrinkBills(int member_no, String searchDate);
+
+	DrkOrderBillDTO selectDrinkBill(int drk_order_no);
+
+	AcntInfoDTO selectAcntInfo(int pay_info_no);
+
+	int getNowPrice(int drk_order_no);
 
 	
 }

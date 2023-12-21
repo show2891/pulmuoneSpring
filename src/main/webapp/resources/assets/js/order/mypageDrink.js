@@ -19,6 +19,33 @@ function caculateTotalCnt(index) {
 	$(".total_cnt").eq(index).text(cnt);
 }
 
+function getStopDay(startDate){
+	let date = new Date(startDate);
+	date.setDate(date.getDate()+3);
+		
+	let year = date.getFullYear();
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+	
+	day = getWeekDay(day);
+
+	// 월과 일을 2자리로 만듦
+	month = month < 10 ? '0' + month : month;
+	day = day < 10 ? '0' + day : day;
+	
+	// "YYYY. MM. DD" 형식으로 출력
+	let formattedDate = year + '. ' + month + '. ' + day;
+	$("#startDate").val(formattedDate);
+}
+
+function getWeekDay(date){
+	let dayOfWeek = date.getDay();
+	if (dayOfWeek == 6) date.setDate(date.getDate()+2);
+	else if (dayOfWeek == 0) date.setDate(date.getDate()+1);
+	
+	return date;
+}
+
 
 // 달력 출력 -> 나중에
 /*
