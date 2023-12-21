@@ -43,8 +43,8 @@
 		</div>
 		
 		<div class="button-wrapper" style="padding-top:4px;">
-			<button data-toggle="modal" data-target="#nicknameModal" class="rounded-button">애칭수정</button>
-			<a href="#" data-default="Y" data-custno="230000234094" data-nickname="음용1" onclick="smartDetail(this)" class="rounded-button">스마트청구서</a>
+			<button data-toggle="modal" data-target="#nicknameModal" class="rounded-button" id="changeName">애칭수정</button>
+			<a href="/mypage/drink/bill" class="rounded-button">스마트청구서</a>
 		</div>
 	</div>
 	
@@ -54,8 +54,8 @@
 		<div class="title">
 			<h2>음용스케쥴</h2>
 			<div class="button-set">
-				<a style="cursor: pointer" href="/mypage/order/daily/changeHistory.do?orderNo=1" class="rounded-button">홈페이지 변경내역</a>
-				<a href="/mypage/order/daily/change.do?orderNo=1" class="rounded-button primary">음용상품변경</a>
+				<a style="cursor: pointer" href="/mypage/order/daily/changeHistory/${ drkOrderMypageDTO.drk_order_no }" class="rounded-button">홈페이지 변경내역</a>
+				<a href="/mypage/order/daily/change/${ drkOrderMypageDTO.drk_order_no }" class="rounded-button primary">음용상품변경</a>
 				<button type="button" id="changeDayBtn" class="rounded-button black">배송일정변경</button>
 			</div>
 		</div>
@@ -77,11 +77,55 @@
 	
 </div>
 
+<%@ include file="/WEB-INF/views/layouts/mypage/order/drkModal.jsp"%>
+
 <script>
 	$(function () {
+		// 요일별 수량 계산
 		for (var i = 0; i <= 4; i++) {
 			caculateTotalCnt(i);
 		} // for
-		buildCalendar();
+		
+		// buildCalendar();
+		
+		// 애칭 수정
+		$("#changeName").on("click", function () {
+			$("#nicknameModal").modal("show");
+		});
+		
+		let drk_order_no = ${drkOrderMypageDTO.drk_order_no};
+		
+		$("#nickname-edit-btn").on("click", function(){
+			let drk_order_name = $("#nickname-edit").val();
+			
+			let header = '${_csrf.headerName}';
+			let token = '${_csrf.token}';
+			
+			$.ajax({
+				url:"/mypage/drink/drinks/"+drk_order_no
+				, data: JSON.stringify({ drk_order_name : drk_order_name })
+				, dataType:"json"
+				, contentType: "application/json"
+				, type:"POST"
+				, cache:false
+				, beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+				}
+				, success: function (data){
+					if (data == "1") {
+						$("#nicknameModal").modal("hide");
+						location.reload();
+					} // if
+				}
+				, error : function (e){
+					console.log(e);
+				}
+			});
+		});
+		
+		// 배송 일정 변경 버튼
+		$("#changeDayBtn").on("click", function () {
+			location.href="/mypage/drink/drink/pause/"+drk_order_no;
+		});
 	})
 </script>

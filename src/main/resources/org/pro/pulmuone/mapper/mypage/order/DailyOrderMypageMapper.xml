@@ -59,4 +59,44 @@
 		WHERE drk_order_no = #{drk_order_no} AND drk_date = NEXT_DAY(TRUNC(SYSDATE), '월') + #{plusDay} AND origin_name != 'View.png'
 	</select>
 	
+	<!-- int changeDrkOrderName(int drk_order_no, String drk_order_name); -->
+	<update id="changeDrkOrderName">
+		UPDATE drk_order
+		SET drk_order_name = #{drk_order_name}
+		WHERE drk_order_no = #{drk_order_no}
+	</update>
+	
+	<!-- List<DrkOrderBillDTO> selectDailyBills(@Param("member_no") int member_no, @Param("year") int year, @Param("month") int month); -->
+	<select id="selectDailyBills" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO">
+		SELECT h.drk_order_no, drk_order_name, SUM(price) drk_month_price
+		FROM drk_history h JOIN products p ON h.products_no = p.products_no
+		                   	 	JOIN drk_order o ON h.drk_order_no = o.drk_order_no
+		WHERE member_no = ${member_no} AND EXTRACT(YEAR FROM drk_date) = #{year} AND EXTRACT(MONTH FROM drk_date) = #{month}
+		GROUP BY h.drk_order_no, drk_order_name
+	</select>
+	
+	<!-- DrkOrderBillDTO selectDailyBill(int drk_order_no); -->
+	<select id="selectDailyBill" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO">
+		SELECT h.drk_order_no, drk_order_name, drk_pay_no, drk_pay_method, pay_info_no, fc_name, fc_tel, fc_phone, SUM(price) drk_month_price
+		FROM drk_history h JOIN products p ON h.products_no = p.products_no
+			                    JOIN drk_order o ON h.drk_order_no = o.drk_order_no
+			                    JOIN drk_pay p ON h.drk_order_no = p.drk_order_no
+			                    JOIN franchise f ON o.fc_no = f.fc_no
+		WHERE h.drk_order_no = 1 AND EXTRACT(YEAR FROM drk_date) = 2023 AND EXTRACT(MONTH FROM drk_date) = 12
+		GROUP BY h.drk_order_no, drk_order_name, drk_pay_no, drk_pay_method, pay_info_no, fc_name, fc_tel, fc_phone
+	</select>
+	
+	<!-- AcntInfoDTO selectAcntInfo(int pay_info_no); -->
+	<select id="selectAcntInfo" resultType="org.pro.pulmuone.domain.order.daily.AcntInfoDTO">
+		SELECT acnt_holder, bank_name
+		FROM acnt_info a JOIN bank b ON a.bank_no = b.bank_no
+	</select>
+	
+	<!-- int getNowPrice(int drk_order_no); -->
+	<select id="getNowPrice" resultType="Integer">
+		SELECT SUM(price)
+		FROM drk_history h JOIN products p ON h.products_no = p.products_no
+		WHERE h.drk_order_no = 1 AND drk_date BETWEEN TRUNC(SYSDATE, 'MM') AND SYSDATE
+	</select>
+	
 </mapper>
