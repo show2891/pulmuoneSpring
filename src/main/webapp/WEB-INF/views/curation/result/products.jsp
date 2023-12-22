@@ -239,50 +239,9 @@ $(document).on("click", "#orderModal button", function (e) {
 			</div>
 		</div>
 	</div>
-	<div class="modal show" id="productPreviewModal" tabindex="-1" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-			<div class="modal-content modal-product">
 
-
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-					<div class="thumb-normal">
-
-
-
-						<c:forEach var="dto" items="${list }">
-							<img src="/file/download/product/${dto.system_name }">
-						</c:forEach>
-
-
-					</div>
-				</div>
-				<div class="modal-body">
-					<div class="info-area">
-						<c:forEach var="dto" items="${list }">
-							<h2>${dto.products_name }</h2>
-							<p>${dto.products_sub_name }</p>
-							<div class="product-addiction" style="border-bottom: none">
-								<div class="price-item">
-
-									<p>${dto.price }<span>원</span>
-									</p>
-									<span>(${dto.products_size })</span>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-					<div class="button-set">
-						<c:forEach var="dto" items="${list }">
-							<a href="${dto.products_tag }" class="button-basic primary">상세보기</a>
-						</c:forEach>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 
 </main>
-</html>

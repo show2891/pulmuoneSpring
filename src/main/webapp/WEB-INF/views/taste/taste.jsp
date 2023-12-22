@@ -488,6 +488,10 @@
 						$('#myInput').trigger('focus')
 					});
 				});
+				
+				$(".btn-default").on("click",function(){
+				 	location.href='/taste/order/step1';
+				})
 			</script>
 		</div>
 	</main>

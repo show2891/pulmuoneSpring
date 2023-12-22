@@ -485,5 +485,3 @@ window.orderProcess = function (args) {
 	</div>
 
 </main>
-</html>
-

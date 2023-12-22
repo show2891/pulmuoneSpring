@@ -95,8 +95,11 @@ public class ProductController {
   }
 
   @GetMapping("search")
-  public String search(ProductsDTO dto, Model model, @RequestParam(value = "pageNo", defaultValue = "1", required = false) String num) throws ClassNotFoundException, SQLException {
-	log.info("search" + num);
+  public String search(ProductsDTO dto, Model model, @RequestParam(value = "pageNo", defaultValue = "1", required = false) String num
+	  ,@RequestParam(value = "recommendKeyword", required = false) String recommendKeyword
+	  ,@RequestParam(value = "searchKeyword", required = false) String searchKeyword ) throws ClassNotFoundException, SQLException {
+	log.warn("검색 키워드 : " + searchKeyword);
+	log.warn("태그 키워드 : " + recommendKeyword);
 	int begin = Integer.parseInt(num);
 	if (begin == 2) {
 	  begin = 13;
@@ -116,6 +119,8 @@ public class ProductController {
 	  begin = 97;
 	}
 	int end = begin + 11;
+	dto.setRecommendKeyword(recommendKeyword);
+	dto.setSearchKeyword(searchKeyword);
 	dto.setPageNo(Integer.toString(begin));
 	dto.setPageNo2(Integer.toString(end));
 	List<ProductsDTO> list = this.mapper.search(dto);

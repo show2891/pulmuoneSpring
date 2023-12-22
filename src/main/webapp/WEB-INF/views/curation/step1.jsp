@@ -1,8 +1,5 @@
 <%@ page trimDirectiveWhitespaces="true" language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-
 <body>
 
 	<div class="wrapper">
@@ -140,63 +137,39 @@
 							<span style="margin-top: 12px; display: block; text-align: center;" class="description">키와 몸무게 정보는 큐레이션에만 활용되며 별도 저장되지 않습니다.</span>
 						</div>
 					</form>
+					
 					<div class="button-set">
-						<button class="submit button-basic primary wide" id="nextPage">
-							<!--              <a href="/customer/product/step2.do"></a> -->
-							다음으로
-						</button>
+						<button class="submit button-basic primary wide" id="nextPage">다음으로</button>
 					</div>
-
-
-
-					<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" style="display: none;">
-						<div class="modal-dialog modal-dialog-centered">
-							<div id="modal" class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="alertModalLabel"></h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">1개 이상의 목표를 선택해 주세요</div>
-								<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
 
 				<script type="text/javascript">
-
-
-//체크박스 선택 없으면 모달창
-$("#nextPage").on("click", function() {
-
-   if($("input:checkbox:checked").is(":checked") == true){
-      var data = $("input:checkbox:checked").val();
-      var score = 0;
-       const requestBody = $('form').serializeObject();       
-      $(".checkGoal:checked").each(function(){
-         score +=   Number($(this).val());            
-      });
-      $("input[name=score]").val(score);      
-      if (data.length > 0) {
-         $(this).attr("checked", true);
-      }
-      $("#alertModal").hide();
-       sessionStorage.setItem('req1',JSON.stringify(requestBody));       
-      location.href= "/customer/product/step2"
-   }else{       
-      alert('1개 이상의 목표를 선택해 주세요');
-   }   
-
-})
-
-</script>
-
+				
+				//체크박스 선택 없으면 모달창
+				$("#nextPage").on("click", function() {
+				
+				   if($("input:checkbox:checked").is(":checked") == true){
+				      var data = $("input:checkbox:checked").val();
+				      var score = 0;
+				       const requestBody = $('form').serializeObject();       
+				      $(".checkGoal:checked").each(function(){
+				         score +=   Number($(this).val());            
+				      });
+				      $("input[name=score]").val(score);      
+				      if (data.length > 0) {
+				         $(this).attr("checked", true);
+				      }
+				      $("#alertModal").hide();
+				       sessionStorage.setItem('req1',JSON.stringify(requestBody));       
+				      location.href= "/customer/product/step2"
+				   }else{       
+				      alert('1개 이상의 목표를 선택해 주세요');
+				   }   
+				
+				})
+				
+				</script>
 			</div>
-
-
 		</main>
 	</div>
 </body>
-</html>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>

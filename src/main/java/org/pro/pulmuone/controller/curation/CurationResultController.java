@@ -88,8 +88,6 @@ public class CurationResultController {
      return "curation/result/products.tiles";
    }
    
-
-
   }
 }
 
