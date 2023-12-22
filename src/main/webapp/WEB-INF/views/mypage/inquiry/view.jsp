@@ -115,6 +115,7 @@
 		
 		$(".deleteBtn").on("click", function(){
 			$("#confirmModal").modal();
+			$(".modal-body").text("삭제하시겠습니까?");
 		})
 		$(".confirm").on("click", function(e){
 			let seq = $(":input[name=seq]").val();

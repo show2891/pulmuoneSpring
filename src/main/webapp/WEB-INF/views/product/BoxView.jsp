@@ -142,12 +142,11 @@
         })
 		//region 제품 담기
 		$("#cartBtn").click(function () {
-			if (itemType != "daily") {
-				// 택배배송
-				var qty = parseInt($('.box-qty').text());
-				addCart("box", itemCode, {qty, eventIdx});
-				return;
-			}
+			axios.get('/cart/'+itemType+'/save?products_no='+ itemCode).then(function ({data}) {      
+				confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
+    		}).catch(function (e) {
+      			alert("서버와 연결이 올바르지 않습니다.");
+    		});
 
 			// 매일배송
 			var input = $('input[name=r1]:checked');
@@ -477,11 +476,12 @@ window.orderProcess = function (args) {
 					</c:otherwise>
 				</c:choose>
 				<!-- 품절용 가이드 추가 -->
-				<!-- 				<button id="cartBtn" class="button-fix black">장바구니</button> -->
-				<button type="button" data-cart-id="${list[0].products_no }" data-cart-type="box" data-cart-event="" class="button-fix black">장바구니</button>
+				<button id="cartBtn" class="button-fix black">장바구니</button>
 				<button id="orderBtn" class="button-fix primary">바로구매</button>
 			</div>
 		</div>
 	</div>
-
 </main>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

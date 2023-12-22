@@ -26,11 +26,17 @@
 						$("#tasting-tab1").addClass("active show");
 					}
 
+					$(".btn-default").on("click",function(){
+					 	location.href='/taste/order/step1?pkgIdx=' + pkgIdx
+					})
+					s
 					$("#myTab-area a").click(function(e) {
 						var href = $(this).attr("href");
 						history.replaceState({}, '', href);
 					})
 				});
+				
+				
 			</script>
 			<div class="tasting-gift-area">
 				<div class="cont-title-area">
@@ -480,26 +486,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<script>
-				$(function() {
-					$('#myModal').on('shown.bs.modal', function() {
-
-						$('#myInput').trigger('focus')
-					});
-				});
-				
-				$(".btn-default").on("click",function(){
-				 	location.href='/taste/order/step1';
-				})
-			</script>
+			</div>			
 		</div>
 	</main>
 </div>
-<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-		<div class="modal-content modal-product"></div>
-	</div>
-</div>
-</html>
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
 

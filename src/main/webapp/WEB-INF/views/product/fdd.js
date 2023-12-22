@@ -67,7 +67,6 @@ function showNotAvailModal(fails, onOk, onCancel) {
   $("#noAvailModal").modal("show");
 }
 
-
 function addCartToServer(type, data, eventIdx) {
   var codes = [];
   for (var item of data) {
@@ -75,13 +74,12 @@ function addCartToServer(type, data, eventIdx) {
     codes.push(item.itemCode);
   }
 
-  axios.get('/product/available', { ids: codes }).then(function (r) {
+  axios.post(`/product_available`, { ids: codes }).then(function (r) {
     var o = r.data.RESULT_MSG;
-	
     var lockIds = o.fails.map(x => x.itemCode);
-    var target = data.filter(x => lockIds.indexOf(x.itemCode) < 0);         
+    var target = data.filter(x => lockIds.indexOf(x.itemCode) < 0);
 
-    axios.get('/cart/save', {[type]: target, eventIdx}).then(function ({data}) {
+    axios.post('/cart/save', {[type]: target, eventIdx}).then(function ({data}) {
       if (o.fails.length) {
         var nextDisabled = o.fails.length >= codes.length;
         showNotAvailModal(o.fails, nextDisabled ? undefined : function () {
@@ -169,7 +167,7 @@ function addLike(type, itemCode, options) {
       if (elem.is("input")) {
         if (elem.data("listener")) return;
 
-//        console.log("!!!! ", el);
+        console.log("!!!! ", el);
 
         var clone = elem.clone();
         clone.attr("name", "_x_" + clone.attr("name"));
@@ -355,6 +353,13 @@ function addLike(type, itemCode, options) {
     }
   })
 
+  $(document).on("click", "[data-require-login]", function (e) {
+    if (!window.is_signed) {
+      e.preventDefault();
+      location.href = "/member/login?redirectUrl=" + $(this).attr("href")
+    }
+  })
+
   $(document).on("click", "#ftc_link", function (e) {
     var h = $(this).attr("href");
     var p = window.open(h, 'ftc_link', 'width=750,height=700');
@@ -364,8 +369,6 @@ function addLike(type, itemCode, options) {
     return false;
   })
 
-
-let timer;
   window.alert = function (message, callback, okBtnText) {
     $("#alertModalLabel").html("");
     $("#alertModal .modal-body").html(message);
@@ -374,61 +377,43 @@ let timer;
       $("#alertModal").find('.modal-footer').text(okBtnText);
     }
     if (callback && typeof callback == 'function') {
-      $("#alertModal .modal-footer").on("click", function () {        
+      $("#alertModal .modal-footer").on("click", function () {
         $("#alertModal").find('.modal-footer').text('확인');
         callback();
         $("#alertModal .modal-footer").off("click")
 
       });
-    }    
+    }
       $("#alertModal").on("hide.bs.modal", function () {
         $('#alertModal .modal-footer').removeClass('disabled')
         $('#alertModal .modal-footer').prop('disabled',false);
-        $("#alertModal .modal-footer").off("click")        
+        $("#alertModal .modal-footer").off("click")
         $("#alertModal").find('.modal-footer').text('확인');
         clearTimeout(timer)
       });
   }
-  window.confirm = function (title, message, callback, okBtnText, option) {
-  const body = {
-        title: !message ? '' : title,
-      content: !message ? title : message,
-    };
-    $("#confirmModalLabel").html("");
-    $("#confirmModal .modal-body").html(message);
-    $("#confirmModal").modal('show');
-    if (okBtnText) {
-      $("#confirmModal").find('.modal-footer').text(okBtnText);
-    }
-    if (callback && typeof callback == 'function') {
-      $("#confirmModal .modal-footer").on("click", function () {
-        $("#confirmModal").find('.modal-footer').text('취소');
-        $("#confirmModal").find('.modal-footer').text('확인');
-        callback();
-        $("#confirmModal .modal-footer").off("click")
-      });
-    }        
-  }
+
   window.alertWithRedirect = function (message, uri) {
     window.alert(message, function () {
       location.href = uri;
     })
   };
 
-  window.confirmDesign = function (title, message, callback, option) {	
+  window.confirmDesign = function (title, message, callback, option) {
     const body = {
         title: !message ? '' : title,
       content: !message ? title : message,
     };
-    $("#confirmDesignmModal .modal-title").html(body.title);
-    $("#confirmDesignModal .modal-body").html(body.content);
-    $("#confirmDesignModal").modal('show');
+
+    $("#confirmModal .modal-title").html(body.title);
+    $("#confirmModal .modal-body").html(body.content);
+    $("#confirmModal").modal('show');
 
     if (callback&& typeof callback =='function') {
-      $("#confirmDesignModal .confirm").on("click", function () {
+      $("#confirmModal .confirm").on("click", function () {
         callback()
-        $("#confirmDesignModal .confirm").off("click")
-        $("#confirmDesignModal").modal('hide');
+        $("#confirmModal .confirm").off("click")
+        $("#confirmModal").modal('hide');
       })
     }
   };
@@ -438,24 +423,8 @@ let timer;
     var type = that.attr("data-cart-type");
     var id = that.attr("data-cart-id");
     var eventIdx = that.attr("data-cart-event");
-    if (!window.is_signed) {
-      alert("로그인 후 장바구니로 담을 수 있습니다.", function () {
-        location.href = "/member/login?redirectUrl=" + encodeURIComponent(location.href);
-      });
-      return false;
-    }
-if (type == "daily"){
-    axios.get('/cart/'+type+'/save?products_no='+ id+'&item=1,1,1,1,1').then(function ({data}) {      
-        confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
-    }).catch(function (e) {
-      alert("서버와 연결이 올바르지 않습니다.");
-    })
-  }else{
-  axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
-        confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
-    }).catch(function (e) {
-      alert("서버와 연결이 올바르지 않습니다.");
-    })
+    if (id && type) {
+      addCart(type, id, { eventIdx });
     }
     e.preventDefault();
     return false;
@@ -468,7 +437,7 @@ if (type == "daily"){
     var eventIdx = that.attr("data-buy-event");
 
     var args = { item: [{itemCode, qty: "1", eventIdx }] };
-    location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
+    location.href = "/order/box/step1?item=" + encodeURIComponent(JSON.stringify(args));
 
     e.preventDefault();
     return false;
@@ -486,12 +455,11 @@ if (type == "daily"){
       return false;
     }
 
-    axios.get('/product/' + type + '/interest/' + id+'?classname='+that.hasClass("active")).then(function ({data}) {
-	
-//      if (!data.ok) {
-//        return;
-//      }	
-
+    axios.post('/product/' + type + '/interest/' + id).then(function ({data}) {
+      if (!data.ok) {
+        return;
+      }
+      console.log(that, that.hasClass("active"))
       if (!that.hasClass("active")) {
         $("[data-wish-type][data-wish-id='" + id + "']").addClass('active');
         alert("찜한상품에 담겼습니다.");
@@ -513,12 +481,10 @@ if (type == "daily"){
   $(document).on("click", "[data-product-preview]", function (e) {
     var that = $(this);
     var id = parseInt(that.attr("data-product-preview"), 10);
-	
     if (id) {
       $("#productPreviewModal .modal-content").html("");
       $("#productPreviewModal").addClass("loading").modal('show');
-
-      $("#productPreviewModal .modal-content").load("/modal/preview/modalview?num=" + id, function () {
+      $("#productPreviewModal .modal-content").load("/product/preview/" + id, function () {
         $("#productPreviewModal").removeClass("loading");
       });
     }
@@ -526,10 +492,8 @@ if (type == "daily"){
     return false;
   });
 
-  window.shareToKakao = function (title, uri) {	
-    if (window.kakaoShareData) {	
-		console.log(window.kakaoShareData.key);
-	console.log(window.kakaoShareData.data);		
+  window.shareToKakao = function (title, uri) {
+    if (window.kakaoShareData) {
       Kakao.Share.sendCustom({
         templateId: window.kakaoShareData.key,
         templateArgs: window.kakaoShareData.data,
@@ -594,7 +558,6 @@ if (type == "daily"){
       var items = result.find(selector + " > *");
 
       var pagination = result.find("[data-pagination]");
-
       if (pagination.length > 0) {
         // 페이지네이션일때
         that.parents("[data-pagination]").html(pagination.get(0).innerHTML);
@@ -602,20 +565,12 @@ if (type == "daily"){
       else {
         // 더보기 일때
         var moreNext = result.find("[data-list-more]");
-		if (items.length!=12) {          
-          that.remove();
-        } else {          
-			that.attr("data-param", Number(nextPage)+1);
-        }
-//        if (!moreNext.length) {
-		if (nextPage==4) {
+        if (!moreNext.length) {
           // 다음페이지가 빈거라면
           that.remove();
         } else {
           // 다음페이지 파라미터 가져다 붙이기
-//          that.attr("data-param", moreNext.attr("data-param"));
-			that.attr("data-param", Number(nextPage)+1);
-
+          that.attr("data-param", moreNext.attr("data-param"));
         }
       }
 
