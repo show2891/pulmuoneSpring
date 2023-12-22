@@ -1,4 +1,4 @@
-package org.pro.pulmuone.controller.order;
+package org.pro.pulmuone.controller.taste;
 
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.service.order.DailyOrderService;
