@@ -67,7 +67,7 @@
 	 		param.push(Object.values(orderItems)[i].itemCode);	
 		}
 	    axios.get('/cart/daily/save?products_no='+ encodeURIComponent(param.join(","))+'&item=1,1,1,1,1' ).then(function ({data}) {      
-	    	 confirm("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
+	    	confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
 	    }).catch(function (e) {
 	      alert("서버와 연결이 올바르지 않습니다.");
 	    })   
@@ -236,13 +236,8 @@ $(document).on("click", "#orderModal button", function (e) {
 			</div>
 		</div>
 	</div>
-
-	<div class="modal show" id="productPreviewModal" tabindex="-1" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-			<div class="modal-content modal-product">
-			</div>
-		</div>
-	</div>
-
 </main>
-</html>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
