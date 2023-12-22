@@ -202,11 +202,9 @@
     function togglePromotion(el){
       const parent = el.parents(".order-item");
 
-      const eidx= parent.data('event-idx');
-      console.log(eidx)
+      const eidx= parent.data('event-idx');      
       if(eidx=='2458'){
-        const qty = parseInt(parent.find('[data-itemcount-view]').text())
-        console.log(qty)
+        const qty = parseInt(parent.find('[data-itemcount-view]').text())        
 
         const showFreeB = qty>1;
 

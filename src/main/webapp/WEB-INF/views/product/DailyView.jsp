@@ -61,8 +61,7 @@
                 a+=discountPrice;
                 return a;
             },0)
-            console.log(totalDiscountPrice)
-            console.log(currentAmt)
+            
             if(currentAmt<0){
                 return alert('실시간 금액보다 할인 금액이 클 수 없습니다.',()=>{
                     $(this).removeAttr('checked');
@@ -111,7 +110,7 @@
 				if (checkedDay.length === 0) {
 					return alert("배송요일을 선택해주세요");
 				}
-// 				console.log(checkedDay)
+
 				const selectedDays = checkedDay.map(function (i, x) {
 					return parseInt($(x).val()) - 1;
 				}).toArray();

@@ -80,10 +80,9 @@
       const parent = el.parents(".order-item");
 
       const eidx= parent.data('event-idx');
-      console.log(eidx)
+      
       if(eidx=='2458'){
-        const qty = parseInt(parent.find('[data-itemcount-view]').text())
-        console.log(qty)
+        const qty = parseInt(parent.find('[data-itemcount-view]').text())      
 
         const showFreeB = qty>1;
 
@@ -112,8 +111,7 @@
       if (container.is("[data-delivery-per]")) {
          var per = parseInt(container.attr("data-delivery-per"), 10);
          var price = parseInt(container.attr("data-delivery-one-price"), 10);
-         console.log(per)
-         console.log(price)
+         
          if (price > 0) {
             var dp = Math.max(Math.ceil(size[0] / per), 1) * price;
             container.attr("data-delivery-price", dp);
@@ -222,8 +220,7 @@
 
          confirmDesign("", "삭제하시겠습니까?", function () {
         	 axios.get('/cart/daily/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {            	
-                 alert('삭제되었습니다.');
-                 console.log("asdasdsadsad");
+                 alert('삭제되었습니다.');                 
                  $(".order-item-list>*:has([name='cartIdx']:checked)").remove();
                calculateTotalPrice();
              }).catch(function (e) {
