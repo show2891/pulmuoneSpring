@@ -16,9 +16,10 @@ public class TasteController {
 	
 	@RequestMapping("taste")
 	public String taste(Model model) throws ClassNotFoundException, SQLException {
-		log.info("taste" );		
-		
+		log.info("taste" );
+
 		return "taste/taste.tiles";
 	}
+
 
 }
