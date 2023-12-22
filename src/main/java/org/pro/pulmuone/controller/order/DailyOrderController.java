@@ -58,7 +58,17 @@ public class DailyOrderController {
 		// >> member_no 가져오기 <<
 		// 현재 사용자의 인증 정보 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = "";
+        // 사용자 id 가져오기
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        } // if
+				        
+        // member_no 가져오기
+        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		int member_no = member.getMember_no();
+		model.addAttribute("member", member);
 		
 		// 1. 파라미터로 넘어온 상품 정보 출력
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -91,7 +101,6 @@ public class DailyOrderController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		} // try
-
 
 		return "order/daily/step1.tiles";
 	}

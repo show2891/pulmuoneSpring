@@ -24,6 +24,8 @@
 	
 </div>
 
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+
 <script>
 	$(function () {
 		// 택배 조회 api key

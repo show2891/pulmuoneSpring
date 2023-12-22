@@ -8,6 +8,7 @@ import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
+import org.pro.pulmuone.domain.order.daily.DrkOrderDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.mapper.mypage.order.DailyOrderMypageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,14 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 	public int getNowPrice(int drk_order_no) {
 		log.info("DailyOrderMypageServiceImpl.getNowPrice()...");
 		return dailyOrderMypageMapper.getNowPrice(drk_order_no);
+	}
+
+	@Override
+	public int stopOrder(int drk_order_no, DrkOrderDTO drkOrderDTO) {
+		log.info("DailyOrderMypageServiceImpl.stopOrder()...");
+		// int rowCnt = dailyOrderMypageMapper.stopOrder(drk_order_no);
+		
+		return 1;
 	}
 	
 }

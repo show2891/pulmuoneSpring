@@ -111,7 +111,6 @@ public class BoxOrderController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}  
-		
 
 		// 4. 쿠폰 리스트 전달
 		List<CouponDTO> couponList = boxOrderServiceImpl.getCouponList(member.getMember_no(), total_price);
