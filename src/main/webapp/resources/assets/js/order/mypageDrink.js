@@ -27,7 +27,7 @@ function getStopDay(startDate){
 	let month = date.getMonth() + 1;
 	let day = date.getDate();
 	
-	day = getWeekDay(day);
+	day = getWeekDay(date);
 
 	// 월과 일을 2자리로 만듦
 	month = month < 10 ? '0' + month : month;
@@ -35,7 +35,7 @@ function getStopDay(startDate){
 	
 	// "YYYY. MM. DD" 형식으로 출력
 	let formattedDate = year + '. ' + month + '. ' + day;
-	$("#startDate").val(formattedDate);
+	return formattedDate;
 }
 
 function getWeekDay(date){
@@ -43,7 +43,7 @@ function getWeekDay(date){
 	if (dayOfWeek == 6) date.setDate(date.getDate()+2);
 	else if (dayOfWeek == 0) date.setDate(date.getDate()+1);
 	
-	return date;
+	return date.getDate();
 }
 
 

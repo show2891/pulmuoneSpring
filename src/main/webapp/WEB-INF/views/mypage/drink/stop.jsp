@@ -131,21 +131,52 @@
 	</div>
 </div>
 
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
+
 <script>
 	
 	$(function () {
 		let startDate = "${ drkOrderMypageDTO.drk_start_date }";
-		getStopDay(startDate);
+		let stopDay = getStopDay(startDate);
+		$("#startDate").val(stopDay);
 
 		$('input[name="reasonCode"]').on('click', function(){
 			if ($(this).val() === "r5") $('input[name="reasonDtl"]').prop('disabled', false);
 	        else $('input[name="reasonDtl"]').prop('disabled', true);
 	    });
 		
-		/*
-		$("requestBtn").on("click", function(){
-			음용 중지 완료 화면이 나와야 되나?
-		})
-		*/
+		$("#requestBtn").on("click", function(){
+			let header = '${_csrf.headerName}';
+			let token = '${_csrf.token}';
+			let drk_order_no = ${ drkOrderMypageDTO.drk_order_no };
+			let dateParts = stopDay.split(".");
+			let drk_end_date = new Date(+dateParts[0], dateParts[1] - 1, +dateParts[2]);
+			console.log(drk_end_date);
+			
+	        confirmDesign("",'음용상품을 중지하시겠습니까?', function (){
+	            $.ajax({
+	                url: "/mypage/drink/drink/stop/"+drk_order_no
+	                , contentType: "application/json"
+	                , data: JSON.stringify({ drk_end_date: drk_end_date })
+	                , dataType:"json"
+	                , type:"POST"
+	                , cache:false
+	                , beforeSend: function(xhr){
+	                	xhr.setRequestHeader(header, token);
+	                }
+	                , success: function (response){
+	                	/*
+	                	alert( '음용중지가 신청되었습니다', function() {
+		                    location.href="/mypage/drink/drink";
+		                });
+	                	*/
+	                	 location.href="/mypage/drink/drink";
+					}
+					, error : function (e){
+						console.log(e);
+					}
+	            });
+	        })
+		});
 	})
 </script>

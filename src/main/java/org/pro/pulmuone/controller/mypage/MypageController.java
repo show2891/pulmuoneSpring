@@ -3,7 +3,6 @@ package org.pro.pulmuone.controller.mypage;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +16,8 @@ import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.box.BoxPayDTO;
 import org.pro.pulmuone.domain.order.box.BoxShipDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
-import org.pro.pulmuone.domain.order.daily.CardInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DrkOrderDTO;
+import org.pro.pulmuone.domain.order.daily.DrkScheduleDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
@@ -41,7 +40,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.log4j.Log4j;
 
@@ -155,7 +153,7 @@ public class MypageController {
 		return "mypage/drink/pause.tiles";
 	}
 	
-	@RequestMapping("/mypage/order/daily/stop/{drk_order_no}")
+	@GetMapping("/mypage/order/daily/stop/{drk_order_no}")
 	public String dailyStop(Model model, @PathVariable int drk_order_no) {
 		log.info("> MypageController dailyStop()...");
 		
@@ -169,6 +167,24 @@ public class MypageController {
 		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
 		
 		return "mypage/drink/stop.tiles";
+	}
+	
+	@PostMapping(value="/mypage/drink/drink/stop/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Integer> dailyStoped(Model model, @PathVariable int drk_order_no, @RequestBody DrkScheduleDTO drkScheduleDTO) {
+		log.info("> MypageController dailyStoped()...");
+		
+		// >> member_no 가져오기 <<
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		int member_no = getMemberNo(authentication);
+		
+		// >> 음용 정보 수정 <<
+		System.out.println(drkScheduleDTO.getDrk_end_date());
+		int rowCnt = 1;
+		// int rowCnt = this.dailyOrderMypageServiceImpl.stopOrder(drk_order_no, drkOrderDTO);
+		
+		return rowCnt==1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
+				: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@RequestMapping("/mypage/order/daily/changeHistory/{drk_order_no}")

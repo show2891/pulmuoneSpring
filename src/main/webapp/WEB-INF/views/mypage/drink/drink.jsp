@@ -54,11 +54,13 @@
 			</c:when>
 									
 			<c:otherwise>
-				<c:forEach items="${ drkOrderMypageList }" var="list">
+				<c:forEach items="${ drkOrderMypageList }" var="list" varStatus="s">
 					<form class="item">
 						<div class="head">
 							<div class="nickname-format xxl">
-								<label>기본</label>
+								<c:if test="${ s.index eq 0 }">
+									<label class="default">기본</label>
+								</c:if>
 								<h5>${ list.drk_order_name }</h5>
 								<span>${ list.drk_order_no }</span>
 							</div>
