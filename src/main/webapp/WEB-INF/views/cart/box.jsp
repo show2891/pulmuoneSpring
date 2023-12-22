@@ -314,7 +314,6 @@
 				return;
 			}
 			
-			console.log(param);			
 			confirmDesign("", "삭제하시겠습니까?", function () {
 				axios.get('/cart/box/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
 			        alert("삭제되었습니다.");
@@ -558,3 +557,6 @@
 		</div>
 	</div>
 </main>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

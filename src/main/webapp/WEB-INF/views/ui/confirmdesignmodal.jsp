@@ -1,4 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script>
+	$(function() {
+		$(".confirm").click(
+				function() {
+					if (location.pathname.indexOf('box') != -1
+							&& location.pathname.indexOf('cart') == -1) {
+						location.href = '/cart/box'
+					}
+					if (location.pathname.indexOf('kid') != -1) {
+						if (location.pathname.indexOf('daily') != -1
+								|| location.pathname.indexOf('kid') != -1
+								|| location.pathname.indexOf('result') != -1
+								&& location.pathname.indexOf('cart') == -1) {
+							location.href = '/cart/daily'
+						}
+					} else {
+						if (location.pathname.indexOf('daily') != -1
+								&& location.pathname.indexOf('kid') != -1
+								|| location.pathname.indexOf('result') != -1
+								&& location.pathname.indexOf('cart') == -1) {
+							location.href = '/cart/daily'
+						}
+					}
+				});
+	});
+</script>
 <div class="modal fade" id="confirmDesignModal" tabindex="-1" aria-labelledby="confirmDesignModal" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
