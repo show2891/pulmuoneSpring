@@ -354,3 +354,6 @@
 		</div>
 	</form>
 </div>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
