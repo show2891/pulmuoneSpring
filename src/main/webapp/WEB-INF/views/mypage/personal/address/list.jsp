@@ -190,7 +190,7 @@
             
 
         $('#moreBtn').click(function () {
-        	console.log(search);
+
 			$.ajax({
 				url: "/ajax/mypage/personal/address/more" , 
 				contentType: "application/json; charset=utf-8",
@@ -215,8 +215,6 @@
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			});	
-        	
-        	console.log(search);
         
 //             more('/mypage/personal/address/more', search, function (response) {
 //                 response.data.forEach(v => addItem(v));
@@ -227,3 +225,20 @@
 	})
 </script>
 
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="confirmModalLabel"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				</button>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="cancel" data-dismiss="modal">취소</button>
+				<button type="button" class="confirm">확인</button>
+			</div>
+		</div>
+	</div>
+</div>

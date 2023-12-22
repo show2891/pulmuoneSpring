@@ -26,7 +26,8 @@
 </div>
 <!-- modal -->
 <tiles:insertAttribute name="confirmModal" />
-
+<%-- <tiles:insertAttribute name="confirmDesignModal" /> --%>
+<tiles:insertAttribute name="alertModal" />
 
 </body>
 </html>

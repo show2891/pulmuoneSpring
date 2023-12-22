@@ -181,6 +181,8 @@
             if(confirm('작업한 내용이 사라집니다. 취소 하시겠습니까?')){
                 location.href = '/mypage/personal/address'
             }
+
+
 		})
 		$('#register').click(function (message){
             const formArr = $('#addressForm').serializeArray();
