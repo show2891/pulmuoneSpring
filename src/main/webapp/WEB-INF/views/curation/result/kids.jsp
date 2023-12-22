@@ -72,7 +72,7 @@
 		 		param.push(Object.values(orderItems)[i].itemCode);	
 			}
     	    axios.get('/cart/kid/save?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
-    	        alert("제품이 담겼습니다.");
+    	    	confirmDesign("제품이 담겼습니다. 담은 제품을 확인하시겠습니까?");
     	    }).catch(function (e) {
     	      alert("서버와 연결이 올바르지 않습니다.");
     	    })    	        	        	   
@@ -280,11 +280,8 @@
 		</div>
 
 	</div>
-
-	<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-modal="true">
-		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-			<div class="modal-content modal-product"></div>
-		</div>
-	</div>
 </main>
-</html>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

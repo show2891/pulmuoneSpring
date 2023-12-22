@@ -480,22 +480,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<script>
-				$(function() {
-					$('#myModal').on('shown.bs.modal', function() {
-
-						$('#myInput').trigger('focus')
-					});
-				});
-			</script>
+			</div>			
 		</div>
 	</main>
 </div>
-<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-		<div class="modal-content modal-product"></div>
-	</div>
-</div>
-</html>
+<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
 

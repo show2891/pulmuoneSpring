@@ -21,7 +21,7 @@
 			const idx  =$(this).parent().data('idx');
 			console.log(idx);
 			$("#reviewModal").css('z-index',1049);
-			confirmDesign("", "리뷰를 삭제하시겠습니까?",function(){				
+			confirm("", "리뷰를 삭제하시겠습니까?",function(){				
 				post({url:'/mypage/action/review/delete/'+idx},function (response){
 					$('#reviewModal').modal('hide')
 					if(response.RESULT_MSG){
@@ -84,3 +84,5 @@
 		</div>
 </main>
 </div>
+<%@ include file="/WEB-INF/views/ui/reviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
