@@ -22,7 +22,7 @@
 			const tag = $(this).data('tag');
 			const el = $(this)
 			
-			confirm("","찜한상품을 삭제하시겠습니까?",function(){
+			confirmDesign("","찜한상품을 삭제하시겠습니까?",function(){
 			  $.get("/mypage/product/delete?tag="+tag,) 						
 			  .done(function(data){
 				  alert('목록에서 삭제되었습니다', () => location.reload())
@@ -40,7 +40,7 @@
 			const idx = checked.map((i, v) => $(v).closest('li').data('idx')).toArray();
 			const tag = checked.map((i, v) => $(v).closest('li').data('tag')).toArray();
 			
-			confirm("","찜한상품을 삭제하시겠습니까?",function(){
+			confirmDesign("","찜한상품을 삭제하시겠습니까?",function(){
 				  $.get("/mypage/product/delete?tag="+encodeURIComponent(tag.join(",")),) 						
 				  .done(function(data){
 					  alert('목록에서 삭제되었습니다', () => location.reload())
@@ -120,5 +120,8 @@
 				</div>
 			</div>
 		</div>
-	</main>
+	</main>	
+</div>
 <%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

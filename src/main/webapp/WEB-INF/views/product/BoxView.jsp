@@ -483,4 +483,5 @@ window.orderProcess = function (args) {
 	</div>
 </main>
 <%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
