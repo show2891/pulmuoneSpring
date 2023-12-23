@@ -53,11 +53,13 @@
 	<div class="box-partition title-sep title-btn" style="margin:22px 0 0;">
 		<div class="title">
 			<h2>음용스케쥴</h2>
-			<div class="button-set">
-				<a style="cursor: pointer" href="/mypage/order/daily/changeHistory/${ drkOrderMypageDTO.drk_order_no }" class="rounded-button">홈페이지 변경내역</a>
-				<a href="/mypage/order/daily/change/${ drkOrderMypageDTO.drk_order_no }" class="rounded-button primary">음용상품변경</a>
-				<button type="button" id="changeDayBtn" class="rounded-button black">배송일정변경</button>
-			</div>
+			<c:if test="${ drkOrderMypageDTO.drk_status eq 0 }">
+				<div class="button-set">
+					<a style="cursor: pointer" href="/mypage/order/daily/changeHistory/${ drkOrderMypageDTO.drk_order_no }" class="rounded-button">홈페이지 변경내역</a>
+					<a href="/mypage/order/daily/change/${ drkOrderMypageDTO.drk_order_no }" class="rounded-button primary">음용상품변경</a>
+					<button type="button" id="changeDayBtn" class="rounded-button black">배송일정변경</button>
+				</div>
+			</c:if>
 		</div>
 		
 		<div class="part-horizontal">

@@ -11,7 +11,7 @@
 		FROM (
 				    SELECT drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, COUNT (drk_order_no) OVER () total_count
 				    FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
-				    WHERE member_no = #{member_no} AND d.drk_status = 0
+				    WHERE member_no = #{member_no} AND d.drk_status IN (0, 1)
 				    ORDER BY drk_order_date DESC
 			    ) t
 		WHERE ROWNUM = 1
@@ -24,7 +24,7 @@
 								JOIN drk_pay p ON d.drk_order_no = p.drk_order_no
 		WHERE member_no = #{member_no}
 		<if test="drinkingType != null">
-			AND d.drk_status = #{drinkingType}
+			AND d.drk_status IN ( ${drinkingType} )
 		</if>
 		ORDER BY drk_order_date DESC
 	</select>
@@ -33,13 +33,13 @@
 	<select id="selectDrinks" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
 		SELECT drk_order_no, drk_order_name
 		FROM drk_order
-		WHERE member_no = #{member_no} AND drk_status = 0
+		WHERE member_no = #{member_no} AND drk_status IN (0, 1)
 		ORDER BY drk_order_date DESC
 	</select>
 	
 	<!-- DrkOrderMypageDTO selectDrinkInfo(int drk_order_no); -->
 	<select id="selectDrinkInfo" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
-		SELECT d.drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, drk_order_type, drk_start_date, drk_pay_method
+		SELECT d.drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, drk_order_type, drk_start_date, drk_pay_method, drk_status
 		FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
 								JOIN drk_pay p ON d.drk_order_no = p.drk_order_no
 		WHERE d.drk_order_no = #{drk_oder_no}
@@ -122,5 +122,14 @@
 			WHERE drk_order_no = #{drk_order_no} AND drk_date >= #{drk_end_date}
 		]]>
 	</delete>
+	
+	<!-- List<DrkOrderMypageProductsDTO> selectDrkOrderMypageProducts(int drk_order_no); -->
+	<select id="selectDrkOrderMypageProducts" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO">
+		SELECT s.products_no, products_name, products_size, price, img_path, system_name, drk_start_date, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt
+		FROM drk_schedule s JOIN products p ON s.products_no = p.products_no
+									JOIN products_img i ON p.products_no = i.products_no
+		WHERE drk_order_no = #{drk_order_no} AND origin_name != 'View.png'
+		ORDER BY drk_schedule_no
+	</select>
 	
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="/resources/assets/js/order/mypageDrink.js"></script>
 
 <div class="container">
@@ -40,67 +41,71 @@
 				
 	<div class="box-partition">
 		<ul class="drinkchange-list ch">
-	
-			<li class="">
-				<div class="item" href="/">
-					<div class="thumb">
-						<img src="/file/download/product/685a5aac-588c-4366-82c4-217f17b38067.jpg" alt="">
+			<c:forEach items="${ drkOrderMypageProducts }" var="p">
+				<li class="">
+					<div class="item" href="/">
+						<div class="thumb">
+							<img src="/${ p.img_path }/${ p.system_name }" alt="">
+						</div>
+						<div class="contents">
+							<span>10.05 부터 </span>
+							<p class="prd-title">${ p.products_name }<b style="font-size: 16px" class="pause"></b>
+							</p>
+							<b class="price">
+								<fmt:formatNumber value="${ p.price }" type="number" />
+								<span> 원(${ p.products_size })</span>
+							</b>
+						</div>
 					</div>
-					<div class="contents">
-						<span>10.05 부터 </span>
-						<p class="prd-title">핸디밀 그린샐러드 식이섬유플랜<b style="font-size: 16px" class="pause"></b>
-						</p>
-						<b class="price">3,300<span> 원(190ml)</span></b>
-					</div>
-				</div>
-							
-				<div class="select-group">
-					<div class="select-item">
-	                    <span>월</span>
-	                    <div class="unit">
-	                        <button type="button" class="plus"></button>
-	                        <em>0</em>
-	                        <button type="button" class="minus"></button>
-	                    </div>
-	                </div>
-	                <div class="select-item">
-	                    <span>화</span>
-	                    <div class="unit">
-	                        <button type="button" class="plus"></button>
-	                        <em>0</em>
-	                        <button type="button" class="minus"></button>
-	                    </div>
-	                </div>
-					<div class="select-item">
-				        <span>수</span>
-						<div class="unit">
-				            <button type="button" class="plus"></button>
-				            <em>0</em>
-				            <button type="button" class="minus"></button>
-				    	</div>
-				    </div>
-					<div class="select-item">
-						<span>목</span>
-						<div class="unit">
-							<button type="button" class="plus"></button>
-	                       	<em>0</em>
-	                        <button type="button" class="minus"></button>
-	                    </div>
-	                </div>
-	                <div class="select-item">
-	                    <span>금</span>
-	                    <div class="unit">
-	                        <button type="button" class="plus"></button>
-	                        <em>1</em>
-	                        <button type="button" class="minus"></button>
-	                    </div>
-	            	</div>
-	            </div>
-				<button type="button" class="btn-delete">
-					<i class="ico ico-prd-delete"></i>
-					<span class="hide">카트에서 삭제</span>
-				</button>
-			</li>
+								
+					<div class="select-group">
+						<div class="select-item">
+		                    <span>월</span>
+		                    <div class="unit">
+		                        <button type="button" class="plus"></button>
+		                        <em>${ p.mon_cnt }</em>
+		                        <button type="button" class="minus"></button>
+		                    </div>
+		                </div>
+		                <div class="select-item">
+		                    <span>화</span>
+		                    <div class="unit">
+		                        <button type="button" class="plus"></button>
+		                        <em>${ p.tue_cnt }</em>
+		                        <button type="button" class="minus"></button>
+		                    </div>
+		                </div>
+						<div class="select-item">
+					        <span>수</span>
+							<div class="unit">
+					            <button type="button" class="plus"></button>
+					            <em>${ p.wed_cnt }</em>
+					            <button type="button" class="minus"></button>
+					    	</div>
+					    </div>
+						<div class="select-item">
+							<span>목</span>
+							<div class="unit">
+								<button type="button" class="plus"></button>
+		                       	<em>${ p.thu_cnt }</em>
+		                        <button type="button" class="minus"></button>
+		                    </div>
+		                </div>
+		                <div class="select-item">
+		                    <span>금</span>
+		                    <div class="unit">
+		                        <button type="button" class="plus"></button>
+		                        <em>${ p.fri_cnt }</em>
+		                        <button type="button" class="minus"></button>
+		                    </div>
+		            	</div>
+		            </div>
+					<button type="button" class="btn-delete">
+						<i class="ico ico-prd-delete"></i>
+						<span class="hide">카트에서 삭제</span>
+					</button>
+				</li>
+			</c:forEach>
 		</ul>
 						
 		<div class="empty-area" style="padding: 160px 0; display: none">

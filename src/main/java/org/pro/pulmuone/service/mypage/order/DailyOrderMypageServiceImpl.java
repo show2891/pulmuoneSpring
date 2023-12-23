@@ -8,6 +8,7 @@ import java.util.List;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.mapper.mypage.order.DailyOrderMypageMapper;
@@ -117,6 +118,12 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 		dailyOrderMypageMapper.updateDrkOrderStatus(drk_order_no);
 		dailyOrderMypageMapper.updateDrkScheduleEndDate(drk_order_no, drk_end_date);
 		return dailyOrderMypageMapper.deleteDrkHistory(drk_order_no, drk_end_date);
+	}
+
+	@Override
+	public List<DrkOrderMypageProductsDTO> selectDrkOrderMypageProducts(int drk_order_no) {
+		log.info("DailyOrderMypageServiceImpl.stopOrder()...");
+		return dailyOrderMypageMapper.selectDrkOrderMypageProducts(drk_order_no);
 	}
 	
 }

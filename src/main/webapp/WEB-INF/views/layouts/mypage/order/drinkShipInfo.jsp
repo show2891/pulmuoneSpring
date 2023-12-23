@@ -75,7 +75,9 @@
 						회사/사무실
 					</c:otherwise>
 				</c:choose>) / ${ drkShipDTO.drk_tel } / ${ drkShipDTO.drk_addr } ${ drkShipDTO.drk_addr_detail } 
-				<a href="/mypage/order/daily/stop/${ drkOrderMypageDTO.drk_order_no }" class="button-text">음용중지</a>
+				<c:if test="${ drkOrderMypageDTO.drk_status eq 0 }">
+					<a href="/mypage/order/daily/stop/${ drkOrderMypageDTO.drk_order_no }" class="button-text">음용중지</a>
+				</c:if>
 			</td>
 		</tr>
 	</tbody>

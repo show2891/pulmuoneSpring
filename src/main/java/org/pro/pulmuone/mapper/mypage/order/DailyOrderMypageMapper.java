@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 
@@ -40,5 +41,7 @@ public interface DailyOrderMypageMapper {
 	int updateDrkScheduleEndDate(@Param("drk_order_no") int drk_order_no, @Param("drk_end_date") Date drk_end_date);
 
 	int deleteDrkHistory(@Param("drk_order_no") int drk_order_no, @Param("drk_end_date") Date drk_end_date);
+
+	List<DrkOrderMypageProductsDTO> selectDrkOrderMypageProducts(int drk_order_no);
 
 }

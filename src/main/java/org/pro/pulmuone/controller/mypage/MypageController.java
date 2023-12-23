@@ -11,6 +11,7 @@ import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.order.CouponDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.box.BoxPayDTO;
@@ -214,6 +215,10 @@ public class MypageController {
 		// >> 음용 정보 가져오기 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
 		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		// >> 음용 상품 리스트 가져오기 <<
+		List<DrkOrderMypageProductsDTO> drkOrderMypageProducts = this.dailyOrderMypageServiceImpl.selectDrkOrderMypageProducts(drk_order_no);
+		model.addAttribute("drkOrderMypageProducts", drkOrderMypageProducts);
 		
 		return "mypage/drink/change.tiles";
 	}

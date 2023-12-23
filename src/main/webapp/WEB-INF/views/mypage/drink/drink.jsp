@@ -32,8 +32,8 @@
 						<div class="dropdown">
 							<a id="searchText" class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">음용중</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" data-value="0">음용중</a>
-								<a class="dropdown-item" data-value="1">음용중지</a>
+								<a class="dropdown-item" data-value="0, 1">음용중</a>
+								<a class="dropdown-item" data-value="2">음용중지</a>
 							</div>
 						</div>
 					</dd>
