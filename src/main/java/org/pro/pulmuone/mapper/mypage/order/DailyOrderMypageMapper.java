@@ -1,5 +1,6 @@
 package org.pro.pulmuone.mapper.mypage.order;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -33,5 +34,11 @@ public interface DailyOrderMypageMapper {
 	AcntInfoDTO selectAcntInfo(int pay_info_no);
 
 	int getNowPrice(int drk_order_no);
+
+	int updateDrkOrderStatus(int drk_order_no);
+
+	int updateDrkScheduleEndDate(@Param("drk_order_no") int drk_order_no, @Param("drk_end_date") Date drk_end_date);
+
+	int deleteDrkHistory(@Param("drk_order_no") int drk_order_no, @Param("drk_end_date") Date drk_end_date);
 
 }

@@ -180,11 +180,10 @@ public class MypageController {
 		
 		// >> 음용 정보 수정 <<
 		System.out.println(drkScheduleDTO.getDrk_end_date());
-		int rowCnt = 1;
-		// int rowCnt = this.dailyOrderMypageServiceImpl.stopOrder(drk_order_no, drkOrderDTO);
+		int rowCnt = this.dailyOrderMypageServiceImpl.stopOrder(drk_order_no, drkScheduleDTO.getDrk_end_date());
 		
-		return rowCnt==1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
-				: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
+		return rowCnt >= 1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
+									: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@RequestMapping("/mypage/order/daily/changeHistory/{drk_order_no}")

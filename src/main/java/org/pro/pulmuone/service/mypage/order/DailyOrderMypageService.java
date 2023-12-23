@@ -1,13 +1,12 @@
 package org.pro.pulmuone.service.mypage.order;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
-import org.pro.pulmuone.domain.order.daily.CardInfoDTO;
-import org.pro.pulmuone.domain.order.daily.DrkOrderDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 
 public interface DailyOrderMypageService {
@@ -33,7 +32,7 @@ public interface DailyOrderMypageService {
 
 	int getNowPrice(int drk_order_no);
 
-	int stopOrder(int drk_order_no, DrkOrderDTO drkOrderDTO);
+	int stopOrder(int drk_order_no, Date drk_end_date);
 
 	
 }
