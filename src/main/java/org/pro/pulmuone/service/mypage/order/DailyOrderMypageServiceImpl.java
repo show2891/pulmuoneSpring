@@ -1,5 +1,6 @@
 package org.pro.pulmuone.service.mypage.order;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,6 @@ import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
-import org.pro.pulmuone.domain.order.daily.DrkOrderDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.mapper.mypage.order.DailyOrderMypageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,11 +112,11 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 	}
 
 	@Override
-	public int stopOrder(int drk_order_no, DrkOrderDTO drkOrderDTO) {
+	public int stopOrder(int drk_order_no, Date drk_end_date) {
 		log.info("DailyOrderMypageServiceImpl.stopOrder()...");
-		// int rowCnt = dailyOrderMypageMapper.stopOrder(drk_order_no);
-		
-		return 1;
+		dailyOrderMypageMapper.updateDrkOrderStatus(drk_order_no);
+		dailyOrderMypageMapper.updateDrkScheduleEndDate(drk_order_no, drk_end_date);
+		return dailyOrderMypageMapper.deleteDrkHistory(drk_order_no, drk_end_date);
 	}
 	
 }

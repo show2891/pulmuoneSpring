@@ -131,13 +131,14 @@
 	</div>
 </div>
 
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
 
 <script>
 	
 	$(function () {
-		let startDate = "${ drkOrderMypageDTO.drk_start_date }";
-		let stopDay = getStopDay(startDate);
+		let today = new Date();
+		let stopDay = getStopDay(today);
 		$("#startDate").val(stopDay);
 
 		$('input[name="reasonCode"]').on('click', function(){
@@ -165,12 +166,9 @@
 	                	xhr.setRequestHeader(header, token);
 	                }
 	                , success: function (response){
-	                	/*
 	                	alert( '음용중지가 신청되었습니다', function() {
 		                    location.href="/mypage/drink/drink";
 		                });
-	                	*/
-	                	 location.href="/mypage/drink/drink";
 					}
 					, error : function (e){
 						console.log(e);

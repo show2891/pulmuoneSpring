@@ -29,7 +29,7 @@
 		ORDER BY drk_order_date DESC
 	</select>
 	
-	<!-- List<DrkOrderMypageDTO> selectDrinkInfos(int member_no); -->
+	<!-- List<DrkOrderMypageDTO> selectDrinks(int member_no); -->
 	<select id="selectDrinks" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
 		SELECT drk_order_no, drk_order_name
 		FROM drk_order
@@ -100,5 +100,27 @@
 		FROM drk_history h JOIN products p ON h.products_no = p.products_no
 		WHERE h.drk_order_no = 1 AND drk_date BETWEEN TRUNC(SYSDATE, 'MM') AND SYSDATE
 	</select>
+	
+	<!-- int updateDrkOrderStatus(int drk_order_no); -->
+	<update id="updateDrkOrderStatus">
+		UPDATE drk_order
+		SET drk_status = 1
+		WHERE drk_order_no = #{drk_order_no}
+	</update>
+	
+	<!-- int updateDrkScheduleEndDate(int drk_order_no, Date drk_end_date); -->
+	<update id="updateDrkScheduleEndDate">
+		UPDATE drk_schedule
+		SET drk_end_date = #{drk_end_date}
+		WHERE drk_order_no = #{drk_order_no}
+	</update>
+	
+	<!-- int deleteDrkHistory(int drk_order_no, Date drk_end_date); -->
+	<delete id="deleteDrkHistory">
+		<![CDATA[
+			DELETE FROM drk_history
+			WHERE drk_order_no = #{drk_order_no} AND drk_date >= #{drk_end_date}
+		]]>
+	</delete>
 	
 </mapper>
