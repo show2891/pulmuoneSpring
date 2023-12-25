@@ -1,6 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="footer-wrapper">
+<button id="top_move_pointer" class="top-nav">
+	<img src="/resources/assets/images/ui/left_short_arrow.png">
+	<p>TOP</p>
+</button>
+<script>
+	$(window).scroll(function() {
+		if ($(window).scrollTop() > 0) {
+			if (!$("#top_move_pointer").hasClass("st")) {
+				$("#top_move_pointer").addClass("st");
+			}
+		} else {
+			if ($("#top_move_pointer").hasClass("st")) {
+				$("#top_move_pointer").removeClass("st");
+			}
+		}
+	})
+
+	$(document).on("click", "#top_move_pointer", function() {
+		$(document).scrollTop(0);
+	});
+</script>
 	<script>
 
 var windowRef = null;

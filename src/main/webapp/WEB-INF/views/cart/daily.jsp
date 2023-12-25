@@ -2,27 +2,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <main class="Cart">
-   <div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-         <div class="modal-content">
-            <div class="modal-header" style="padding-bottom: 8px;">
-               <h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body select-wrapper">
-               <ul class="product-content-list order">
+	<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header" style="padding-bottom: 8px;">
+					<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body select-wrapper">
+					<ul class="product-content-list order">
 
-               </ul>
-            </div>
-            <div class="button-set">
-               <button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
-               <button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
-            </div>
-         </div>
-      </div>
-   </div>
-   
-   <script type="text/javascript">
+					</ul>
+				</div>
+				<div class="button-set">
+					<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
+					<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
    var type = "daily";
    var gap = type == 'daily' ? 4 : 1;
 
@@ -199,16 +199,15 @@
          var eventIdx = $(this).attr("data-event-idx");
          var itemCode = $(this).attr("data-itemcode");
          confirmDesign("", "삭제하시겠습니까?", function () {         
-            axios.get('/cart/daily/delete?products_no='+ itemCode).then(function ({data}) {      
-                 alert("삭제되었습니다.");
+        	 axios.get('/cart/daily/delete?products_no='+ itemCode).then(function ({data}) {      
+                 alert('삭제되었습니다.');
                  parent.remove();
                calculateTotalPrice();
              }).catch(function (e) {
-               alert("서버와 연결이 올바르지 않습니다.");
-             });
+			      alert("서버와 연결이 올바르지 않습니다.");
+			    });
          });
       });
-
 
       $(".deleteAll").click(function () {
          var param = [];
@@ -222,13 +221,14 @@
          }
 
          confirmDesign("", "삭제하시겠습니까?", function () {
-            axios.get('/cart/daily/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
-                 alert("삭제되었습니다.");
+        	 axios.get('/cart/daily/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {            	
+                 alert('삭제되었습니다.');
+                 console.log("asdasdsadsad");
                  $(".order-item-list>*:has([name='cartIdx']:checked)").remove();
                calculateTotalPrice();
              }).catch(function (e) {
-               alert("서버와 연결이 올바르지 않습니다.");
-             });            
+			      alert("서버와 연결이 올바르지 않습니다.");
+			    });           
          });
       });
 
@@ -306,29 +306,29 @@
       calculateTotalPrice();
    })
 </script>
-   <div class="contents-area">
-      <div class="container">
-         <div class="location">
-            <a href="/">홈</a> <a href="/">장바구니</a>
-         </div>
-         <div class="cont-cart-area">
-            <div class="title-tab-area">
-               <h2 class="cont-title" style="font-weight: 400">장바구니</h2>
-               <ul class="nav nav-tabs nav-justified" id="myTab-area" role="tablist">
-                  <li class="nav-item" role="presentation"><a href="/cart/daily" class="nav-link active" style="padding-right: 4px; margin-bottom: 0px; height: 47px"> 매일배송 </a></li>
-                  <li class="nav-item" role="presentation"><a href="/cart/box" class="nav-link " style="margin-bottom: 0px; height: 47px"> 택배배송 </a></li>
-               </ul>
-            </div>
+	<div class="contents-area">
+		<div class="container">
+			<div class="location">
+				<a href="/">홈</a> <a href="/">장바구니</a>
+			</div>
+			<div class="cont-cart-area">
+				<div class="title-tab-area">
+					<h2 class="cont-title" style="font-weight: 400">장바구니</h2>
+					<ul class="nav nav-tabs nav-justified" id="myTab-area" role="tablist">
+						<li class="nav-item" role="presentation"><a href="/cart/daily" class="nav-link active" style="padding-right: 4px; margin-bottom: 0px; height: 47px"> 매일배송 </a></li>
+						<li class="nav-item" role="presentation"><a href="/cart/box" class="nav-link " style="margin-bottom: 0px; height: 47px"> 택배배송 </a></li>
+					</ul>
+				</div>
 
-            <div id="profile" role="tabpanel" aria-labelledby="profile-t">
-               <div class="prd-cart-area">
-                  <div class="prd-cart-list-area" style="padding-top: 15px;">
-                     <span>매일 아침 신선하게 배송됩니다.</span>
-                     <div data-empty-action="Y" style="display: none">
-                        <div class="empty-area" style="padding: 160px 0">
-                           <img src="/resources/assets/images/ui/ico-alert.png" alt="empty"> <b>장바구니가 비어있습니다.</b>
-                        </div>
-                     </div>
+				<div id="profile" role="tabpanel" aria-labelledby="profile-t">
+					<div class="prd-cart-area">
+						<div class="prd-cart-list-area" style="padding-top: 15px;">
+							<span>매일 아침 신선하게 배송됩니다.</span>
+							<div data-empty-action="Y" style="display: none">
+								<div class="empty-area" style="padding: 160px 0">
+									<img src="/resources/assets/images/ui/ico-alert.png" alt="empty"> <b>장바구니가 비어있습니다.</b>
+								</div>
+							</div>
 
 
 							<div data-empty-action="N">
@@ -469,14 +469,15 @@
 										</div>
 									</b>
 								</dd>
-							</dl>							
-								<button type="button" id="allOrderBtn" class="btn-default">주문신청</button>							
+							</dl>
+							<button type="button" id="allOrderBtn" class="btn-default">주문신청</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </main>
-</html>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

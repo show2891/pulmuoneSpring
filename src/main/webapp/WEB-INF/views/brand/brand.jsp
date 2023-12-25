@@ -6,14 +6,16 @@
 		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 		<script type="text/javascript" src="/resources/assets/js/common.ui.js"></script>
 		<script>
-	$(document).ready(function () {
-		if (!location.href.includes("pageNo=")) return;
-		if (!$(".tab-type02>.item:eq(0)").hasClass("is-active")) return;
+			$(document).ready(function() {
+				if (!location.href.includes("pageNo="))
+					return;
+				if (!$(".tab-type02>.item:eq(0)").hasClass("is-active"))
+					return;
 
-		var top = $("#tourtitle").offset().top;
-		window.scrollTo(0, top);
-	});
-</script>
+				var top = $("#tourtitle").offset().top;
+				window.scrollTo(0, top);
+			});
+		</script>
 		<div class="v1_content_body" style="padding-bottom: 120px">
 			<div class="breadcrumb-style">
 				<div class="container">
@@ -371,104 +373,8 @@
 
 						</div>
 					</div>
-					<!--S: top button-->
-
-
-					<!--E: top button-->
 				</div>
-				<!--E:cbody-->
-
-
 			</div>
-
 		</div>
-
-		<script>
-  var windowRef = null;
-  function openWindowPop(url, name){
-    var image = document.getElementById('guideImage');
-    var w = image.width;
-    var h = image.height;
-    var options = `width=${w},height=${h}, status=no, menubar=no, toolbar=no, resizable=no`;
-	if(windowRef===null|| windowRef.closed){
-
-    windowRef = window.open('', name, options);
-    windowRef.document.write(`<img src="${url}" width="${w}" maxWidth=100vw />`);
-    windowRef.document.body.style.margin=0;
-	}else {
-    windowRef.focus();
-	}
-
-  }
-  $(function(){
-
-    axios.get('/user_summary/default').then(function (response) {
-
-      const {info, customerVo} = response.data.RESULT_MSG;
-
-		const ec = ( !info.overEnd) && (info.complex||info.hasHp) && customerVo.phiCustomerVo.intfacId == '0' && customerVo.phiCustomerVo.dlvyCustYn==='Y'
-        if(ec&&customerVo){
-          $('#quickChangeDrink').attr('href', `/mypage/drink/drink/change/${customerVo.custnumber}/${customerVo.prtnId}`)
-          $('#quickChangeSchedule').attr('href', `/mypage/drink/drink/pause/${customerVo.custnumber}/${customerVo.prtnId}`)
-        }else {
-          $('#quickChangeDrink').attr('href', `/mypage?with=01`)
-          $('#quickChangeSchedule').attr('href', `/mypage?with=01`)
-        }
-        console.log(window.innerWidth)
-        if(window.innerWidth>1450){
-          $('#mini-side-nav').show();
-        }
-    }).catch(function (error) {
-      if(window.innerWidth>1450) {
-        $('#mini-side-nav').show()
-      }
-	});
-    window.addEventListener('resize', function(){
-	  if(window.innerWidth>1450){
-		$('#mini-side-nav').show();
-	  }else {
-		$('#mini-side-nav').hide();
-	  }
-	})
-
-  })
-</script>
 	</div>
-	<button id="top_move_pointer" class="top-nav">
-		<img src="/resources/assets/images/ui/left_short_arrow.png">
-		<p>TOP</p>
-	</button>
-	<script>
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > 0) {
-      if (!$("#top_move_pointer").hasClass("st")) {
-        $("#top_move_pointer").addClass("st");
-      }
-    } else {
-      if ($("#top_move_pointer").hasClass("st")) {
-        $("#top_move_pointer").removeClass("st");
-      }
-    }
-  })
-  $(document).on("click", "#top_move_pointer", function() {
-    $(document).scrollTop(0);
-  });
-</script>
-	<script>
-  $(function(){
-    $('.dropdown-item').click(function(){
-      const idx = $(this).data('idx')
-      if($(this).hasClass('privacy')){
-
-        $('.privacyPolicy').hide();
-        $(`.privacyPolicy[data-idx=${idx}]`).show()
-      }else {
-        $('.terms').hide();
-        $(`.terms[data-idx=${idx}]`).show()
-      }
-    })
-  })
-</script>
-
 </div>
-</html>

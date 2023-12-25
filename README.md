@@ -24,7 +24,7 @@
 ## Environment
 
 #### Skills
-- JDK-11 (JAVA)
+- jdk-11.0.19 (JAVA)
 - Tomcat server 8.5v
 - Oracle 11g
 - ojdbc6
@@ -34,7 +34,8 @@
 - html5 & css3
 
 #### Tools
-- Eclipse
+- STS 3.9.18.RELEASE
+- Platform: Eclipse 2021-09 (4.21.0)
 - exERD
 - Draw.io
 - Github

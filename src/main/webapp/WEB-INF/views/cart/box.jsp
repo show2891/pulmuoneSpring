@@ -314,7 +314,6 @@
 				return;
 			}
 			
-			console.log(param);			
 			confirmDesign("", "삭제하시겠습니까?", function () {
 				axios.get('/cart/box/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
 			        alert("삭제되었습니다.");
@@ -368,7 +367,7 @@
 					alertWithRedirect("로그인 후 이용가능합니다.", "/member/login?redirectUrl=" + location.href)
 					return;
 				}
-				console.log(order);
+
 				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(order));
 
 				return;
@@ -558,4 +557,6 @@
 		</div>
 	</div>
 </main>
-</html>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
