@@ -26,10 +26,6 @@
 						$("#tasting-tab1").addClass("active show");
 					}
 
-					$(".btn-default").on("click",function(){
-					 	location.href='/taste/order/step1?pkgIdx=' + pkgIdx
-					})
-					s
 					$("#myTab-area a").click(function(e) {
 						var href = $(this).attr("href");
 						history.replaceState({}, '', href);
