@@ -19,9 +19,9 @@
 	    })
 	    $('.delete').click(function (){
 			const idx  =$(this).parent().data('idx');
-			console.log(idx);
+			
 			$("#reviewModal").css('z-index',1049);
-			confirm("", "리뷰를 삭제하시겠습니까?",function(){				
+			confirmDesign("", "리뷰를 삭제하시겠습니까?",function(){				
 				post({url:'/mypage/action/review/delete/'+idx},function (response){
 					$('#reviewModal').modal('hide')
 					if(response.RESULT_MSG){
@@ -37,16 +37,6 @@
 </script>
 <div class="wrapper">
 	<main class="page forum">
-		<div class="breadcrumb-style">
-			<div class="container">
-				<ul>
-					<li><a href="/">홈</a></li>
-					<li><a href="/mypage">MY녹즙</a></li>
-					<li><a class="" href="/mypage/product/list">활동정보</a></li>
-					<li><a class="active" href="/mypage/action/review">리뷰</a></li>
-				</ul>
-			</div>
-		</div>
 		<div class="container aside-layout" style="padding-bottom: 120px;">
 			<div class="container">
 				<div class="border-wrapper">
@@ -85,4 +75,6 @@
 </main>
 </div>
 <%@ include file="/WEB-INF/views/ui/reviewmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
