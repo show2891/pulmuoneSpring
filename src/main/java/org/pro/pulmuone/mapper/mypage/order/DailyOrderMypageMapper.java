@@ -48,7 +48,7 @@ public interface DailyOrderMypageMapper {
 
 	List<DrkScheduleDTO> selectDrkScheduleList(int drk_order_no);
 
-	int stopDrkSchedule(@Param("drk_schedule_no") int drk_schedule_no, @Param("drk_start_date") String drk_start_date);
+	int changeDrkSchedule(DrkScheduleDTO newSchedule);
 
 	int insertDrkSchedule(@Param("newSchedule") DrkScheduleDTO newSchedule);
 

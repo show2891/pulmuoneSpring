@@ -1,11 +1,11 @@
 package org.pro.pulmuone.service.mypage.order;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -141,31 +141,31 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 		List<DrkScheduleDTO> drkOldScheduleList = dailyOrderMypageMapper.selectDrkScheduleList(drk_order_no);
 		
 		Iterator<DrkScheduleDTO> ir = drkOldScheduleList.iterator();
-		Iterator<DrkScheduleDTO> ir2 = drkNewScheduleList.iterator();
-		DrkScheduleDTO oldSchedule = new DrkScheduleDTO();
-		DrkScheduleDTO newSchedule = new DrkScheduleDTO();
+		DrkScheduleDTO oldSchedule = null;
+		DrkScheduleDTO newSchedule = null;
 		String productsNo = null;
-		int drk_schedule_no = 0;
-		String drk_start_date = null;
 		int oldCnt[] = new int [5];
 		int newCnt[] = new int [5];
-		int stopCnt = 0;
+		int changeCnt = 0;
 		LocalDate drk_date = null;
 		int prdCnt = 0;
 		LocalDate end_date = null;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 		DrkHistoryDTO drkHistoryDTO = null;
+		int drk_dayOfWeek = 0; 
+		
+		// 기존 스케줄 변경
 		while (ir.hasNext()) {
 			oldSchedule = (DrkScheduleDTO) ir.next();
 			productsNo = oldSchedule.getProducts_no();
 			
-			while (ir2.hasNext()) {
-				newSchedule = (DrkScheduleDTO) ir2.next();
+			for (int i = 0; i < drkNewScheduleList.size(); i++) {
+				newSchedule = drkNewScheduleList.get(i);
 				newSchedule.setDrk_end_date(oldSchedule.getDrk_end_date());	 // 기존 스케줄의 end_date 가져오기
 				
-				if (productsNo.equals(newSchedule.getProducts_no())) {
-					drk_schedule_no = oldSchedule.getDrk_schedule_no();
-					drk_start_date = newSchedule.getDrk_start_date().substring(0, 10);
+				// 같은 상품이라면?
+				if (newSchedule.getProducts_no().equals(productsNo)) {
+					newSchedule.setDrk_schedule_no(oldSchedule.getDrk_schedule_no());
 					
 					oldCnt[0] = oldSchedule.getMon_cnt();
 					oldCnt[1] = oldSchedule.getTue_cnt();
@@ -176,24 +176,24 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 					newCnt[1] = newSchedule.getTue_cnt();
 					newCnt[2] = newSchedule.getWed_cnt();
 					newCnt[3] = newSchedule.getThu_cnt();
-					
-					// 비교
-					for (int i = 0; i < 5; i++) {
+					newCnt[4] = newSchedule.getFri_cnt();
+				
+					changeCnt = 0;
+					for (int j = 0; j < 5; j++) {
 						// 카운드 수가 다르다면?
-						log.info(oldCnt[i] + " / " + newCnt[i]);
-						if(oldCnt[i] != newCnt[i]) {
-							if (stopCnt == 0) {	// drk_schedule 수정 작업 한 번만 하기
-								stopCnt = dailyOrderMypageMapper.stopDrkSchedule(drk_schedule_no, drk_start_date); 	// 기존 스케줄의 end_date 변경
-								dailyOrderMypageMapper.insertDrkSchedule(newSchedule);			// 새 스케줄 insert
+						if(oldCnt[j] != newCnt[j]) {
+							if (changeCnt == 0) {	// drk_schedule 수정 작업 한 번만 하기
+								changeCnt = dailyOrderMypageMapper.changeDrkSchedule(newSchedule); 	// 기존 스케줄 변경
 							} // if
-
+	
 							dailyOrderMypageMapper.changeDrkHistory(newSchedule);	// 기존 drk_history 삭제
 							
 							// 새 drk_history 추가
 							end_date = oldSchedule.getDrk_end_date().toLocalDate();
 							drk_date = LocalDate.parse(newSchedule.getDrk_start_date(), formatter);
 							while (drk_date.isBefore(end_date) || drk_date.isEqual(end_date)) {		// start_date 부터 end_date까지 반복
-								switch (i+1) {
+								drk_dayOfWeek = drk_date.getDayOfWeek().getValue();
+								switch (drk_dayOfWeek) {
 								case 1:
 									prdCnt = newSchedule.getMon_cnt();
 									break;
@@ -209,16 +209,17 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 								case 5:
 									prdCnt = newSchedule.getFri_cnt();
 									break;
-								case 6:			// 주말일 때는 빠져나가기
+								case 6:
+									// 주말일 때는 빠져나가기
 									drk_date = drk_date.plusDays(2);
 									continue;
-								default :
 								} // switch
-								
+	
+								// 수량이 0일 때는 빠져나가기
 								if (prdCnt == 0) {
 									drk_date = drk_date.plusDays(1);
-									continue;	// 수량이 0일 때는 빠져나가기
-								}
+									continue;
+								} // if
 								
 								drkHistoryDTO = DrkHistoryDTO.builder()
 																			.drk_schedule_no(newSchedule.getDrk_schedule_no())
@@ -232,18 +233,29 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 								dailyOrderMypageMapper.insertDrkHistory(drkHistoryDTO);		// 새 drk_history 추가
 								
 								drk_date = drk_date.plusDays(1);
-							} // while
+							} // while history
 							rowCnt += dailyOrderMypageMapper.insertDrkChanges(newSchedule); 	// drk 변경 내역 추가
-						} // if
-					} // for
-				} else {
-					// 추가
-					dailyOrderMypageMapper.insertDrkSchedule(newSchedule);
-					// dailyOrderMypageMapper.insertDrkHistory(newSchedule);
-					rowCnt += dailyOrderMypageMapper.insertDrkChanges(newSchedule);
-				} // if
-			} // while
+						} // if 카운트 수가 다르다면?
+					} // for cnt
+
+		            // newScheduleList에서 제거
+		            drkNewScheduleList.remove(i);
+		            // 루프를 빠져나감
+		            break;
+		            
+				} // if 같은 상품이라면?
+			} // for new
+		} // while old
+		
+		// 새 상품이 남아있다면 추가
+		Iterator<DrkScheduleDTO> ir2 = drkNewScheduleList.iterator();
+		while (ir2.hasNext()) {
+			newSchedule = ir2.next();
+			dailyOrderMypageMapper.insertDrkSchedule(newSchedule);
+			// dailyOrderMypageMapper.insertDrkHistory(newSchedule);
+			rowCnt += dailyOrderMypageMapper.insertDrkChanges(newSchedule);
 		} // while
+		
 		return rowCnt;
 	}
 	

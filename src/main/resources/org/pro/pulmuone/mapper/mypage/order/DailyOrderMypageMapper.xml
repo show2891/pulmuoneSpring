@@ -141,10 +141,10 @@
 		]]> 
 	</select>
 	
-	<!-- int stopDrkSchedule(@Param("drk_schedule_no") int drk_schedule_no, @Param("drk_start_date") String drk_start_date); -->
-	<update id="stopDrkSchedule">
+	<!-- int changeDrkSchedule(DrkScheduleDTO newSchedule); -->
+	<update id="changeDrkSchedule">
 		UPDATE drk_schedule
-		SET drk_end_date = #{ drk_start_date }
+		SET reg_date = #{reg_date}, mon_cnt = ${mon_cnt}, tue_cnt = ${tue_cnt}, wed_cnt = ${wed_cnt}, thu_cnt = ${thu_cnt}, fri_cnt = ${fri_cnt}
 		WHERE drk_schedule_no = #{ drk_schedule_no }
 	</update>
 	
@@ -176,8 +176,8 @@
 	
 	<!-- int insertDrkChanges(DrkScheduleDTO newSchedule); -->
 	<insert id="insertDrkChanges">
-		INSERT INTO drk_history (changes_no, drk_schedule_no, drk_order_no, change_type, change_date, change_start_date, change_end_date)
-		VALUES (seq_drk_changes.NEXTVAL, #{drk_schedule_no}, #{drk_order_no}, 1, SYSDATE, TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD'), #{drk_end_date})
+		INSERT INTO drk_changes (changes_no, drk_schedule_no, drk_order_no, change_type, change_date, change_start_date, change_end_date, change_period)
+		VALUES (seq_drk_changes.NEXTVAL, #{drk_schedule_no}, #{drk_order_no}, 1, SYSDATE, TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD'), #{drk_end_date}, #{drk_end_date}-TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD'))
 	</insert>
 	
 </mapper>
