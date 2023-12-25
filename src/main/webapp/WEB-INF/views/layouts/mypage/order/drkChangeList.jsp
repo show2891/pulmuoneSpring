@@ -5,7 +5,7 @@
 <div class="box-partition">
 	<ul class="drinkchange-list ch">
 		<c:forEach items="${ drkOrderMypageProducts }" var="p">
-			<li class="origin prd-list" data-prd-no=${ p.products_no }>
+			<li class="product_list" data-prd-no=${ p.products_no }>
 				<div class="item" href="/">
 					<div class="thumb">
 						<img src="/${ p.img_path }/${ p.system_name }" alt="">

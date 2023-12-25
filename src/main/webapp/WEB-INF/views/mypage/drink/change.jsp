@@ -139,7 +139,7 @@
 			// 상품 list
 			let drkScheduleList = [];
 			
-			$(".prd-list").each(function () {
+			$(".product_list").each(function () {
 				let prdNo = $(this).data("prd-no");
 				let monCnt = parseInt($(this).find("em").eq(0).text());
 				let tueCnt = parseInt($(this).find("em").eq(1).text());

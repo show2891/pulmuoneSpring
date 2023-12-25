@@ -84,10 +84,15 @@
 <script>
 	$(function () {
 		// 요일별 수량 계산
-		for (var i = 0; i <= 4; i++) {
-			caculateTotalCnt(i);
-		} // for
-		
+		let totalCnt = [0,0,0,0,0];
+		$(".eachCnt").each(function () {
+			let index = $(".eachCnt").index($(this));
+			let cnt = $(this).data("cnt");
+			if (cnt == 0) return;
+			$(".total_cnt").eq(index % 5).addClass("active");
+			totalCnt[index%5] += cnt;
+			$(".total_cnt").eq(index % 5).text(totalCnt[index%5]);
+		});
 		// buildCalendar();
 		
 		// 애칭 수정

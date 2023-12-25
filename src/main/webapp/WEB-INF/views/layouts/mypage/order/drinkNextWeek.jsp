@@ -35,7 +35,7 @@
 			    <li>
 			        <c:forEach items="${pList}" var="p">
 			            <div class="item">
-			                <span class="number cnt" data-cnt="${ p.products_cnt }">${ p.products_cnt }</span>
+			                <span class="number eachCnt" data-cnt="${ p.products_cnt }">${ p.products_cnt }</span>
 			                <div class="thumb">
 			                    <img src="/${ p.img_path }/${ p.system_name }" alt="">
 			                </div>

@@ -14,13 +14,6 @@ function getDrinkingType() {
 	else $("#searchText").text("음용중");
 }
 
-function caculateTotalCnt(index) {
-	let cnt = $(".cnt").eq(index).data("cnt");
-	if (cnt == 0) return;
-	$(".total_cnt").eq(index).addClass("active");
-	$(".total_cnt").eq(index).text(cnt);
-}
-
 function getStopDay(startDate){
 	let date = new Date(startDate);
 	date.setDate(date.getDate()+3);
@@ -171,7 +164,7 @@ function appendPrd(prd){
 	
 	let tpl = null;
 	
-	tpl = `<li class="">`;
+	tpl = `<li class="product_list" data-prd-no=${ products_no }>`;
 		tpl += `<div class="item" href="/">`;
 			tpl += `<div class="thumb">`;
 				tpl += `<img src="/${ img_path }/${ system_name }" alt="">`;

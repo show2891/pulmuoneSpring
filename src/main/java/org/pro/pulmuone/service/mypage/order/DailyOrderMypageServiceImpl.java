@@ -251,8 +251,56 @@ public class DailyOrderMypageServiceImpl implements DailyOrderMypageService {
 		Iterator<DrkScheduleDTO> ir2 = drkNewScheduleList.iterator();
 		while (ir2.hasNext()) {
 			newSchedule = ir2.next();
+			newSchedule.setDrk_end_date(oldSchedule.getDrk_end_date());	 // 기존 스케줄의 end_date 가져오기
 			dailyOrderMypageMapper.insertDrkSchedule(newSchedule);
-			// dailyOrderMypageMapper.insertDrkHistory(newSchedule);
+			
+			// 새 drk_history 추가
+			end_date = oldSchedule.getDrk_end_date().toLocalDate();
+			drk_date = LocalDate.parse(newSchedule.getDrk_start_date(), formatter);
+			while (drk_date.isBefore(end_date) || drk_date.isEqual(end_date)) {		// start_date 부터 end_date까지 반복
+				drk_dayOfWeek = drk_date.getDayOfWeek().getValue();
+				switch (drk_dayOfWeek) {
+				case 1:
+					prdCnt = newSchedule.getMon_cnt();
+					break;
+				case 2:
+					prdCnt = newSchedule.getTue_cnt();
+					break;
+				case 3:
+					prdCnt = newSchedule.getWed_cnt();
+					break;
+				case 4:
+					prdCnt = newSchedule.getThu_cnt();
+					break;
+				case 5:
+					prdCnt = newSchedule.getFri_cnt();
+					break;
+				case 6:
+					// 주말일 때는 빠져나가기
+					drk_date = drk_date.plusDays(2);
+					continue;
+				} // switch
+
+				// 수량이 0일 때는 빠져나가기
+				if (prdCnt == 0) {
+					drk_date = drk_date.plusDays(1);
+					continue;
+				} // if
+				
+				drkHistoryDTO = DrkHistoryDTO.builder()
+															.drk_schedule_no(newSchedule.getDrk_schedule_no())
+															.drk_order_no(drk_order_no)
+															.products_no(newSchedule.getProducts_no())
+															.products_cnt(prdCnt)
+															.drk_complete(0)
+															.drk_date(Date.valueOf(drk_date))
+															.drk_day(drk_dayOfWeek)
+															.build();
+				dailyOrderMypageMapper.insertDrkHistory(drkHistoryDTO);		// 새 drk_history 추가
+				
+				drk_date = drk_date.plusDays(1);
+			} // while history
+			
 			rowCnt += dailyOrderMypageMapper.insertDrkChanges(newSchedule);
 		} // while
 		
