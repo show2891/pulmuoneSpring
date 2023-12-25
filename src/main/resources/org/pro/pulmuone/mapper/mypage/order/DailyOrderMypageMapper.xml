@@ -132,4 +132,52 @@
 		ORDER BY drk_schedule_no
 	</select>
 	
+	<!-- List<DrkScheduleDTO> selectDrkScheduleList(int drk_order_no); -->
+	<select id="selectDrkScheduleList" resultType="org.pro.pulmuone.domain.order.daily.DrkScheduleDTO">
+		<![CDATA[
+			SELECT drk_schedule_no, reg_date, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt, drk_start_date, drk_end_date
+			FROM drk_schedule
+			WHERE drk_order_no = #{ drk_order_no } AND drk_end_date >= SYSDATE
+		]]> 
+	</select>
+	
+	<!-- int stopDrkSchedule(@Param("drk_schedule_no") int drk_schedule_no, @Param("drk_start_date") String drk_start_date); -->
+	<update id="stopDrkSchedule">
+		UPDATE drk_schedule
+		SET drk_end_date = #{ drk_start_date }
+		WHERE drk_schedule_no = #{ drk_schedule_no }
+	</update>
+	
+	<!-- int insertDrkSchedule(DrkScheduleDTO newSchedule); -->
+	<insert id="insertDrkSchedule">
+		<selectKey keyProperty="newSchedule.drk_schedule_no" resultType="Integer" order="BEFORE">
+     		SELECT seq_drk_schedule.NEXTVAL
+     		FROM dual
+     	</selectKey>
+		INSERT INTO drk_schedule (drk_schedule_no, drk_order_no, reg_date, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt, drk_start_date, drk_end_date)
+		VALUES (#{newSchedule.drk_schedule_no}, #{newSchedule.drk_order_no}, #{newSchedule.reg_date}
+				, #{newSchedule.products_no}, #{newSchedule.mon_cnt}, #{newSchedule.tue_cnt}, #{newSchedule.wed_cnt}
+				, #{newSchedule.thu_cnt}, #{newSchedule.fri_cnt}, TO_DATE(SUBSTR(#{newSchedule.drk_start_date}, 1, 10), 'YYYY-MM-DD'), #{newSchedule.drk_end_date})
+	</insert>
+	
+	<!-- int changeDrkHistory(DrkScheduleDTO newSchedule); -->
+	<delete id="changeDrkHistory">
+		<![CDATA[
+			DELETE FROM drk_history
+			WHERE drk_order_no = #{drk_order_no} AND products_no = #{products_no} AND drk_date >= TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD')
+		]]> 
+	</delete>
+	
+	<!-- int insertDrkHistory(DrkHistoryDTO drkHistoryDTO); -->
+	<insert id="insertDrkHistory">
+		INSERT INTO drk_history (drk_history_no, drk_schedule_no, drk_order_no, products_no, products_cnt, drk_date, drk_day, drk_complete)
+		VALUES (seq_drk_history.NEXTVAL, #{drk_schedule_no}, #{drk_order_no}, #{products_no}, #{products_cnt}, #{drk_date}, #{drk_day}, #{drk_complete})
+	</insert>
+	
+	<!-- int insertDrkChanges(DrkScheduleDTO newSchedule); -->
+	<insert id="insertDrkChanges">
+		INSERT INTO drk_history (changes_no, drk_schedule_no, drk_order_no, change_type, change_date, change_start_date, change_end_date)
+		VALUES (seq_drk_changes.NEXTVAL, #{drk_schedule_no}, #{drk_order_no}, 1, SYSDATE, TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD'), #{drk_end_date})
+	</insert>
+	
 </mapper>

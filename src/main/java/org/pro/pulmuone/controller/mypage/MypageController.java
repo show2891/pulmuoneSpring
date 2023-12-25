@@ -142,11 +142,6 @@ public class MypageController {
 	public String dailyPause(Model model, @PathVariable int drk_order_no) {
 		log.info("> MypageController dailyPause()...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
-		
 		// >> 음용 정보 가져오기 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
 		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
@@ -158,11 +153,6 @@ public class MypageController {
 	public String dailyStop(Model model, @PathVariable int drk_order_no) {
 		log.info("> MypageController dailyStop()...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
-		
 		// >> 음용 정보 가져오기 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
 		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
@@ -173,11 +163,6 @@ public class MypageController {
 	@PostMapping(value="/mypage/drink/drink/stop/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Integer> dailyStoped(Model model, @PathVariable int drk_order_no, @RequestBody DrkScheduleDTO drkScheduleDTO) {
 		log.info("> MypageController dailyStoped()...");
-		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
 		
 		// >> 음용 정보 수정 <<
 		System.out.println(drkScheduleDTO.getDrk_end_date());
@@ -191,11 +176,6 @@ public class MypageController {
 	public String dailyChangeHistory(Model model, @PathVariable int drk_order_no) {
 		log.info("> MypageController dailyChangeHistory()...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
-		
 		// >> 음용 정보 가져오기 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
 		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
@@ -203,14 +183,9 @@ public class MypageController {
 		return "mypage/drink/changeHistory.tiles";
 	}
 	
-	@RequestMapping("/mypage/order/daily/change/{drk_order_no}")
+	@GetMapping("/mypage/order/daily/change/{drk_order_no}")
 	public String dailyChange(Model model, @PathVariable int drk_order_no) {
 		log.info("> MypageController dailyChange()...");
-		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
 		
 		// >> 음용 정보 가져오기 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
@@ -221,6 +196,17 @@ public class MypageController {
 		model.addAttribute("drkOrderMypageProducts", drkOrderMypageProducts);
 		
 		return "mypage/drink/change.tiles";
+	}
+	
+	@PostMapping(value="/mypage/order/daily/change/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Integer> dailyChanged(Model model, @PathVariable int drk_order_no, @RequestBody List<DrkScheduleDTO> drkScheduleList) {
+		log.info("> MypageController dailyChanged()...");
+		
+		// >> 음용 정보 수정 <<
+		int rowCnt = this.dailyOrderMypageServiceImpl.updateDrkOrder(drk_order_no, drkScheduleList);
+		
+		return rowCnt >= 1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
+									: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@PostMapping(value="/mypage/drink/drinks/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -282,7 +268,7 @@ public class MypageController {
 														, @RequestParam(name = "askMn", required = false) String askMn) {
 		log.info("> MypageController drinkBillDetail()...");
 		
-		// >> member_no 가져오기 <<
+		// >> member 정보 가져오기 <<
 		// 현재 사용자의 인증 정보 가져오기
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = "";
@@ -292,9 +278,7 @@ public class MypageController {
             username = userDetails.getUsername();
         } // if
 				        
-        // member_no 가져오기
         OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		int member_no = member.getMember_no();
 		
 		// >> 영수증 가져오기 <<
 		DrkOrderBillDTO drkOrderBillDTO = this.dailyOrderMypageServiceImpl.selectDrinkBill(orderNo);

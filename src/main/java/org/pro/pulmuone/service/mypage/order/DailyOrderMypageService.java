@@ -8,6 +8,7 @@ import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
+import org.pro.pulmuone.domain.order.daily.DrkScheduleDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 
 public interface DailyOrderMypageService {
@@ -36,6 +37,8 @@ public interface DailyOrderMypageService {
 	int stopOrder(int drk_order_no, Date drk_end_date);
 
 	List<DrkOrderMypageProductsDTO> selectDrkOrderMypageProducts(int drk_order_no);
+
+	int updateDrkOrder(int drk_order_no, List<DrkScheduleDTO> drkScheduleList);
 
 	
 }

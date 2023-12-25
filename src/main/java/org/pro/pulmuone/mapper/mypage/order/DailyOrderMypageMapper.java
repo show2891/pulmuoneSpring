@@ -10,6 +10,8 @@ import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
+import org.pro.pulmuone.domain.order.daily.DrkHistoryDTO;
+import org.pro.pulmuone.domain.order.daily.DrkScheduleDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 
 @Mapper
@@ -43,5 +45,17 @@ public interface DailyOrderMypageMapper {
 	int deleteDrkHistory(@Param("drk_order_no") int drk_order_no, @Param("drk_end_date") Date drk_end_date);
 
 	List<DrkOrderMypageProductsDTO> selectDrkOrderMypageProducts(int drk_order_no);
+
+	List<DrkScheduleDTO> selectDrkScheduleList(int drk_order_no);
+
+	int stopDrkSchedule(@Param("drk_schedule_no") int drk_schedule_no, @Param("drk_start_date") String drk_start_date);
+
+	int insertDrkSchedule(@Param("newSchedule") DrkScheduleDTO newSchedule);
+
+	int changeDrkHistory(DrkScheduleDTO newSchedule);
+
+	int insertDrkHistory(DrkHistoryDTO drkHistoryDTO);
+
+	int insertDrkChanges(DrkScheduleDTO newSchedule);
 
 }

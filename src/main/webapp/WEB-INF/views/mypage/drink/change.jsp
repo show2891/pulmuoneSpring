@@ -38,145 +38,25 @@
 		</div>
 		<button class="rect-button primary" style="width:120px; padding: 0" type="button" id="addProduct">상품추가하기</button>
 	</div>
-				
-	<div class="box-partition">
-		<ul class="drinkchange-list ch">
-			<c:forEach items="${ drkOrderMypageProducts }" var="p">
-				<li class="">
-					<div class="item" href="/">
-						<div class="thumb">
-							<img src="/${ p.img_path }/${ p.system_name }" alt="">
-						</div>
-						<div class="contents">
-							<span>10.05 부터 </span>
-							<p class="prd-title">${ p.products_name }<b style="font-size: 16px" class="pause"></b>
-							</p>
-							<b class="price">
-								<fmt:formatNumber value="${ p.price }" type="number" />
-								<span> 원(${ p.products_size })</span>
-							</b>
-						</div>
-					</div>
-								
-					<div class="select-group">
-						<div class="select-item">
-		                    <span>월</span>
-		                    <div class="unit">
-		                        <button type="button" class="plus"></button>
-		                        <em>${ p.mon_cnt }</em>
-		                        <button type="button" class="minus"></button>
-		                    </div>
-		                </div>
-		                <div class="select-item">
-		                    <span>화</span>
-		                    <div class="unit">
-		                        <button type="button" class="plus"></button>
-		                        <em>${ p.tue_cnt }</em>
-		                        <button type="button" class="minus"></button>
-		                    </div>
-		                </div>
-						<div class="select-item">
-					        <span>수</span>
-							<div class="unit">
-					            <button type="button" class="plus"></button>
-					            <em>${ p.wed_cnt }</em>
-					            <button type="button" class="minus"></button>
-					    	</div>
-					    </div>
-						<div class="select-item">
-							<span>목</span>
-							<div class="unit">
-								<button type="button" class="plus"></button>
-		                       	<em>${ p.thu_cnt }</em>
-		                        <button type="button" class="minus"></button>
-		                    </div>
-		                </div>
-		                <div class="select-item">
-		                    <span>금</span>
-		                    <div class="unit">
-		                        <button type="button" class="plus"></button>
-		                        <em>${ p.fri_cnt }</em>
-		                        <button type="button" class="minus"></button>
-		                    </div>
-		            	</div>
-		            </div>
-					<button type="button" class="btn-delete">
-						<i class="ico ico-prd-delete"></i>
-						<span class="hide">카트에서 삭제</span>
-					</button>
-				</li>
-			</c:forEach>
-		</ul>
-						
-		<div class="empty-area" style="padding: 160px 0; display: none">
-			<img src="/resources/images/ui/ico-alert.png" alt="empty">
-			<b>변경할 상품이 없습니다.</b>
-		</div>
-	</div>
-					
+	
+	<%@ include file="/WEB-INF/views/layouts/mypage/order/drkChangeList.jsp"%>
+	
 	<div class="form-input period" style="margin-top:10px; margin-bottom:16px;">
 		<dl class="date">
 			<dt style="padding-left:20px; margin-right:30px;">
 				<label>변경배송 시작일</label>
-				<button class="btn-question" data-toggle="modal" data-target="#tooltipModal"><i class="ico ico-question"></i><span class="hide">자세한 내용 보기</span>
+				<button class="btn-question" data-toggle="modal" data-target="#tooltipModal">
+					<i class="ico ico-question"></i>
+					<span class="hide">자세한 내용 보기</span>
 				</button>
 			</dt>
 			<dd style="min-width:153px;">
-				<input type="text" name="datepicker" data-placeholder="날짜를 입력하세요.">
+				<input type="text" id="datepicker" name="datepicker" data-placeholder="날짜를 입력하세요.">
 			</dd>
 		</dl>
 	</div>
 				
-	<div class="dual-layout">
-		<div>
-			<table class="doc-style-table h40">
-				<tbody>
-					<tr>
-						<th>총 상품금액 (4주 기준)</th>
-						<td class="np">
-							<div class="price-tag xs right">
-								<p class="value total">80,000</p>
-								<span class="unit" style="font-weight:300; color:#333;">원</span>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>총 할인금액</th>
-						<td class="np">
-							<div class="price-tag xs right">
-								<p class="value">0</p>
-								<span class="unit" style="font-weight:300; color:#333;">원</span>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div>
-			<table class="doc-style-table h40">
-				<tbody>
-					<tr>
-						<th>배송비</th>
-						<td class="np">
-							<div class="price-tag xs right">
-								<p class="value">0</p>
-								<span class="unit" style="font-weight:300; color:#333;">원</span>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th class="bigger">최종결제금액</th>
-						<td class="np">
-							<div class="price-tag  sm right">
-								<p class="value final" style="color:#333">80,000</p>
-								<span class="unit" style="font-size:20px;font-weight:300; color:#333;">원</span>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+	<%@ include file="/WEB-INF/views/layouts/mypage/order/drkChangeReceipt.jsp"%>
 						
 	<div class="addiction-foot" style="margin-top:26px;">
 		<p class="foot-copy">※ 변경시작일로부터 4주 기준 예상 음용대금으로 실제 월 청구금액과 상이할 수 있습니다.</p>
@@ -186,10 +66,122 @@
 		</div>
 	</div>
 </div>					
-	
+
+<%@ include file="/WEB-INF/views/layouts/order/modal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
 
 <script>
 	$(function () {
+		// 영수증 계산
+		calculatePrice();
 		
+		// 상품 추가하기 버튼
+		$("#addProduct").on("click", function () {
+			addProduct(null, 1);
+		})
+		
+		// 상품 +, - 버튼
+		$(".box-partition").on("click", ".plus", function() {
+			let em = $(this).next("em");
+			let cnt = parseInt(em.text())+1;
+			em.text(cnt);
+			calculatePrice();
+			let li = $(this).parent().parent().parent().parent();
+			informStop(li);
+		}).on("click", ".minus", function() {
+			let em = $(this).prev("em")
+			let cnt = parseInt(em.text())-1;
+			if (cnt == -1) return;
+			em.text(cnt);
+			calculatePrice();
+			let li = $(this).parent().parent().parent().parent();
+			informStop(li);
+		});
+		
+		// 변경 배송 시작일
+		let minDate = new Date();
+		let maxDate = new Date();
+		
+		minDate.setDate(minDate.getDate()+3);
+		minDate.setDate(getWeekDay(minDate));
+		maxDate.setDate(minDate.getDate()+30);
+		maxDate.setDate(getWeekDay(maxDate));
+		
+		$("#datepicker").daterangepicker({
+			singleDatePicker: true
+			, minDate: minDate
+			, maxDate: maxDate
+			, regional: "ko"
+		}).on('change', function() {
+		    $(this).attr('value', $(this).val());
+		});
+		
+		// 상품 삭제 버튼 클릭
+		$(".box-partition").on("click", ".btn-stop", function() {
+			let li = $(this).parent();
+			li.find("em").text(0);
+			calculatePrice();
+			informStop(li);
+		}).on("click", ".btn-remove", function() {
+			$(this).parent().remove();
+			calculatePrice();
+		});
+		
+		// 음용 상품 변경 신청
+		$("#changeProductBtn").on("click", function(){
+			let header = '${_csrf.headerName}';
+			let token = '${_csrf.token}';
+			// 주문 번호
+			let drk_order_no = ${ drkOrderMypageDTO.drk_order_no };
+			// 변경 배송 시작일
+			let dateParts = $("#datepicker").val().split(".");
+			let drk_start_date = new Date(+dateParts[0], dateParts[1] - 1, +dateParts[2]);
+			// 상품 list
+			let drkScheduleList = [];
+			
+			$(".prd-list").each(function () {
+				let prdNo = $(this).data("prd-no");
+				let monCnt = parseInt($(this).find("em").eq(0).text());
+				let tueCnt = parseInt($(this).find("em").eq(1).text());
+				let wedCnt = parseInt($(this).find("em").eq(2).text());
+				let thuCnt = parseInt($(this).find("em").eq(3).text());
+				let friCnt = parseInt($(this).find("em").eq(4).text());
+				
+				let drkSchedule = {
+					drk_order_no: drk_order_no
+					, reg_date: new Date()
+					, products_no: prdNo
+					, mon_cnt: monCnt
+					, tue_cnt: tueCnt
+					, wed_cnt: wedCnt
+					, thu_cnt: thuCnt
+					, fri_cnt: friCnt
+					, drk_start_date: drk_start_date
+				};
+				drkScheduleList.push(drkSchedule);
+			});
+			
+	        confirmDesign("",'음용상품을 변경하시겠습니까?', function (){
+	            $.ajax({
+	                url: "/mypage/order/daily/change/"+drk_order_no
+	                , contentType: "application/json"
+	                , data: JSON.stringify(drkScheduleList)
+	                , dataType:"json"
+	                , type:"POST"
+	                , cache:false
+	                , beforeSend: function(xhr){
+	                	xhr.setRequestHeader(header, token);
+	                }
+	                , success: function (response){
+	                	alert( '음용상품 변경이 신청되었습니다', function() {
+		                    location.href="/mypage/drink/drink";
+		                });
+					}
+					, error : function (e){
+						console.log(e);
+					}
+	            });
+	        })
+		});
 	})
 </script>

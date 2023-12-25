@@ -1,3 +1,5 @@
+const weekDays = ['월','화','수','목','금'];
+
 function getUrlParams() {
 	let params = {};
 	window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
@@ -45,6 +47,177 @@ function getWeekDay(date){
 	
 	return date.getDate();
 }
+
+
+function calculatePrice() {
+	let totalPrice = 0;
+	$(".price").each(function () {
+		let price = $(this).data("price");
+		$(this).parent().parent().next().find("em").each(function () {
+			let cnt = parseInt($(this).text());
+			totalPrice += price*cnt;
+		});
+	});
+	totalPrice*=4;
+	$(".total").text(totalPrice.toLocaleString());
+		
+	let finalPrice = totalPrice;
+	let discount = parseInt($(".discount").text());
+	let shippingFee = parseInt($(".shipping-fee").text());
+	finalPrice -= discount;
+	finalPrice += shippingFee;
+	$(".final").text(finalPrice.toLocaleString());
+};
+
+// 만약 모든 cnt가 0이면 음용 중지 예정 문구 출력, 아니면 삭제
+function informStop(li){
+	let allCnt = 0;
+	li.find("em").each(function () {
+		allCnt += parseInt($(this).text());
+	});
+	let title = li.find(".prd-title");
+	if (allCnt >= 1) {
+		title.find("b").remove();
+	}
+	if (allCnt == 0){
+		let bTag = `<b style="font-size: 16px" class="pause">(음용중지예정)</b>`;
+		let prdName = title.text();
+		title.html(prdName+bTag);
+	} // if
+}
+
+
+
+// 상품 추가하기 버튼
+function addProduct(searchKeyword, pageNo){
+	console.log("addProduct()... 키워드 : "+searchKeyword+", pageNo : "+pageNo);
+	
+	$("#addProductModal").addClass("loading");
+	
+	let root = $('.product-content-list');
+	
+	if(searchKeyword != null) {
+		root.children().remove();
+	}
+	
+	$.ajax({
+		url:"/order/productList"
+		, method: "GET"
+		, data: { searchKeyword : searchKeyword, pageNo : pageNo }
+		, dataType: "json"
+		, cache: false
+		, success: function(data, callback, xhr) {
+				let tpl = null;
+				
+				$.each(data, function(i, prd){
+					tpl = `<li class="product-add" style="cursor:pointer;" data-available="null" data-products-no="${prd.products_no}" data-price="${prd.price}" data-img-path="${prd.img_path}" data-system-name="${prd.system_name}" data-products-name="${prd.products_name}" data-products-size="${prd.products_size}">`;
+						tpl += `<div class="thumb"><img src="/${ prd.img_path }/${ prd.system_name }" alt=""></div>`;
+							tpl += `<div class="contents">`;
+								tpl += `<p class="name">${ prd.products_name }<span>(${prd.products_size})</span></p>`
+								tpl += `<div class="info">`
+								tpl += `<span class="price"><b>${ prd.price.toLocaleString() }</b> 원</span>`
+							tpl += `</div>`
+						tpl += `</div>`
+					tpl += `</li>`;
+					
+					root.append(tpl);
+				}); // each
+				
+				$("#addProductModal").modal('show');
+				
+				root.off("click", ".product-add");
+				root.on("click", ".product-add", function (e) {
+					e.stopPropagation();
+					$("#addProductModal").modal('hide');
+					appendPrd($(this));
+				});
+				
+				root.next().off("click");
+				let hasNext = data[0].total_count > $("#addProductModal").find('.product-add').length;
+				if (hasNext) {
+					root.next().show().click(function () {
+						addProduct(searchKeyword, pageNo + 1);
+					});
+				} else {
+					root.next().hide();
+				} // if
+				
+			$("#addProductModal").removeClass("loading");
+			
+		} // success
+		, error: function(xhr, errorType){
+			console.log(errorType);
+		} // error
+	});
+};
+
+// 선택한 상품 추가
+function appendPrd(prd){
+	let products_no = prd.data("products-no");
+	let price = prd.data("price")
+	let img_path = prd.data("img-path");
+	let system_name = prd.data("system-name");
+	let products_name = prd.data("products-name");
+	let products_size = prd.data("products-size");
+	
+	let date = new Date();
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+	if(month < 10) month = '0' + month;
+	if(day < 10) day = '0' + day;
+	
+	let drk_start_date = month+"."+day;
+	 
+	
+	let tpl = null;
+	
+	tpl = `<li class="">`;
+		tpl += `<div class="item" href="/">`;
+			tpl += `<div class="thumb">`;
+				tpl += `<img src="/${ img_path }/${ system_name }" alt="">`;
+			tpl += `</div>`;
+			tpl += `<div class="contents">`;
+				tpl += `<span></span>`;
+				tpl += `<p class="prd-title">${ products_name }<b style="font-size: 16px" class="pause"></b></p>`;
+				tpl += `<b class="price" data-price="${ price }">`;
+					tpl += `${ price.toLocaleString() }`;
+					tpl += `<span> 원(${ products_size })</span>`;
+				tpl += `</b>`;
+			tpl += `</div>`;
+		tpl += `</div>`;
+		tpl += `<div class="select-group">`;
+		for(let i = 0; i<5; i++) {
+			tpl += '<div class="select-item">'
+				tpl += '<span>'+weekDays[i]+'</span>'
+				tpl += '<div class="unit">'
+					tpl += '<button type="button" class="plus"></button>'
+					tpl += '<em>1</em>'
+					tpl += '<button type="button" class="minus"></button>'
+				tpl += '</div>'
+			tpl += '</div>'
+		} // for
+		tpl += `</div>`;
+		tpl += `<button type="button" class="btn-delete btn-remove">`;
+			tpl += `<i class="ico ico-prd-delete"></i>`;
+			tpl += `<span class="hide">카트에서 삭제</span>`;
+		tpl += `</button>`;
+	tpl += `</li>`;
+	
+	let root = $(".drinkchange-list");
+	root.append(tpl);
+	
+	calculatePrice();
+};
+
+
+
+
+
+
+
+
+
+
 
 
 // 달력 출력 -> 나중에
