@@ -23,5 +23,6 @@ public class HaveCouponDTO {
 	private int drk_pay_no;
 	
 	private List<HaveCouponDTO> haveCouponList;
+	private CouponDTO couponInfo;
 	
 }
