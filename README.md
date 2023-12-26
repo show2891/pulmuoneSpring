@@ -53,144 +53,205 @@
 
 ## 폴더구조
 ```
-└─main
-    ├─java
-    │  ├─auth
-    │  ├─filter
-    │  ├─jdbc
-    │  │  └─connection
-    │  ├─mvc
-    │  │  ├─command
-    │  │  └─controller
-    │  └─servlets
-    │      ├─cart
-    │      │  ├─command
-    │      │  ├─domain
-    │      │  ├─persistence
-    │      │  └─service
-    │      ├─curation
-    │      │  ├─command
-    │      │  ├─controller
-    │      │  ├─domain
-    │      │  ├─persistence
-    │      │  └─service
-    │      ├─etc
-    │      │  └─command
-    │      ├─event
-    │      │  ├─command
-    │      │  ├─domain
-    │      │  ├─persistence
-    │      │  └─service
-    │      ├─faq
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─model
-    │      │  └─service
-    │      ├─franchiseSearch
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─model
-    │      │  └─service
-    │      ├─info
-    │      │  └─command
-    │      ├─inquiry
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─model
-    │      │  └─service
-    │      ├─member
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─dto
-    │      │  └─service
-    │      ├─mypage
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─dto
-    │      │  └─service
-    │      ├─notice
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─model
-    │      │  └─service
-    │      ├─order
-    │      │  ├─command
-    │      │  ├─domain
-    │      │  ├─persistence
-    │      │  └─service
+├─java
+│  └─org
+│      └─pro
+│          └─pulmuone
+│              ├─controller
+│              │  ├─brand
+│              │  ├─cart
+│              │  ├─coupon
+│              │  ├─curation
+│              │  ├─etc
+│              │  ├─event
+│              │  ├─faq
+│              │  ├─franchiseSearch
+│              │  ├─info
+│              │  ├─inquiry
+│              │  ├─member
+│              │  ├─modal
+│              │  ├─mypage
+│              │  │  ├─drink
+│              │  │  │  └─payMethod
+│              │  │  └─personal
+│              │  │      ├─address
+│              │  │      ├─info
+│              │  │      └─refund
+│              │  ├─notice
+│              │  ├─order
+│              │  ├─product
+│              │  ├─taste
+│              │  └─upload
+│              ├─domain
+│              │  ├─auth
+│              │  ├─cart
+│              │  ├─coupon
+│              │  ├─curation
+│              │  ├─deregist
+│              │  ├─event
+│              │  ├─faq
+│              │  ├─franchiseSearch
+│              │  ├─inquiry
+│              │  ├─member
+│              │  ├─mypage
+│              │  │  ├─drink
+│              │  │  │  └─payMethod
+│              │  │  ├─order
+│              │  │  └─personal
+│              │  │      ├─address
+│              │  │      └─refund
+│              │  ├─notice
+│              │  ├─order
+│              │  │  ├─box
+│              │  │  └─daily
+│              │  └─product
+│              ├─mapper
+│              │  ├─cart
+│              │  ├─coupon
+│              │  ├─curation
+│              │  ├─deregist
+│              │  ├─event
+│              │  ├─faq
+│              │  ├─franchiseSearch
+│              │  ├─inquiry
+│              │  ├─main
+│              │  ├─member
+│              │  ├─modal
+│              │  ├─mypage
+│              │  │  ├─drink
+│              │  │  │  └─payMethod
+│              │  │  ├─order
+│              │  │  └─personal
+│              │  │      ├─address
+│              │  │      └─refund
+│              │  ├─notice
+│              │  ├─order
+│              │  └─product
+│              ├─security
+│              │  └─domain
+│              └─service
+│                  ├─coupon
+│                  ├─event
+│                  ├─faq
+│                  ├─franchiseSearch
+│                  ├─inquiry
+│                  ├─member
+│                  ├─mypage
+│                  │  ├─drink
+│                  │  │  └─payMethod
+│                  │  ├─order
+│                  │  └─personal
+│                  │      ├─address
+│                  │      ├─info
+│                  │      └─refund
+│                  ├─notice
+│                  └─order
+├─resources
+│  ├─META-INF
+│  └─org
+│      └─pro
+│          └─pulmuone
+│              └─mapper
+│                  ├─cart
+│                  ├─coupon
+│                  ├─curation
+│                  ├─deregist
+│                  ├─event
+│                  ├─faq
+│                  ├─franchiseSearch
+│                  ├─inquiry
+│                  ├─main
+│                  ├─member
+│                  ├─modal
+│                  ├─mypage
+│                  │  ├─drink
+│                  │  │  └─payMethod
+│                  │  ├─order
+│                  │  └─personal
+│                  │      ├─address
+│                  │      └─refund
+│                  ├─notice
+│                  ├─order
+│                  └─product
+└─webapp
+    ├─file
+    │  └─download
+    │      ├─banner
+    │      ├─brand
     │      ├─product
-    │      │  ├─command
-    │      │  ├─domain
-    │      │  ├─persistence
-    │      │  └─service
-    │      ├─refund
-    │      │  ├─command
-    │      │  ├─dao
-    │      │  ├─dto
-    │      │  └─service
-    │      ├─reivew
-    │      │  └─command
-    │      ├─search
-    │      │  └─command
-    │      ├─taste
-    │      │  └─command
-    │      └─utils
-    └─webapp
-        ├─file
-        │  └─download
-        │      ├─banner
-        │      └─product
-        ├─META-INF
-        ├─resources
-        │  └─assets
-        │      ├─css
-        │      ├─images
-        │      │  ├─common
-        │      │  ├─contents
-        │      │  ├─event
-        │      │  │  ├─thumbnail
-        │      │  │  └─view
-        │      │  └─ui
-        │      └─js
-        │          └─build
-        └─WEB-INF
-            ├─inc
-            ├─lib
-            ├─tags
-            └─views
-                ├─cart
-                ├─curation
-                │  └─result
-                ├─etc
-                ├─event
-                │  └─end
-                ├─faq
-                ├─franchiseSearch
-                ├─info
-                ├─inquiry
-                ├─layouts
-                │  ├─event
-                │  ├─forum
-                │  └─mypage
-                ├─member
-                │  ├─find
-                │  └─regist
-                ├─mypage
-                │  ├─order
-                │  │  └─box
-                │  └─personal
-                │      ├─info
-                │      └─refund
-                ├─notice
-                ├─order
-                │  ├─box
-                │  ├─daily
-                │  ├─inicis
-                │  └─taste
-                ├─product
-                ├─review
-                ├─taste
-                └─ui
+    │      └─tour
+    ├─images
+    ├─META-INF
+    ├─resources
+    │  └─assets
+    │      ├─css
+    │      ├─images
+    │      │  ├─common
+    │      │  ├─contents
+    │      │  ├─event
+    │      │  │  ├─thumbnail
+    │      │  │  └─view
+    │      │  ├─gift
+    │      │  └─ui
+    │      └─js
+    │          ├─build
+    │          └─order
+    ├─upload
+    └─WEB-INF
+        ├─classes
+        ├─spring
+        │  └─appServlet
+        ├─tiles
+        └─views
+            ├─brand
+            ├─cart
+            ├─common
+            ├─curation
+            │  └─result
+            ├─etc
+            ├─event
+            ├─faq
+            ├─franchiseSearch
+            ├─info
+            ├─inquiry
+            ├─layouts
+            │  ├─event
+            │  │  └─content
+            │  ├─forum
+            │  ├─member
+            │  │  ├─login
+            │  │  ├─quit
+            │  │  └─regist
+            │  ├─mypage
+            │  │  └─order
+            │  └─order
+            │      ├─box
+            │      └─daily
+            ├─member
+            │  ├─find
+            │  └─regist
+            ├─modal
+            ├─mypage
+            │  ├─benefit
+            │  ├─drink
+            │  │  └─paymethod
+            │  ├─home
+            │  ├─inquiry
+            │  ├─order
+            │  ├─personal
+            │  │  ├─address
+            │  │  ├─info
+            │  │  └─refund
+            │  ├─review
+            │  └─wish
+            ├─notice
+            ├─order
+            │  ├─box
+            │  └─daily
+            ├─product
+            ├─taste
+            ├─temp
+            └─ui
 ```
 
 
