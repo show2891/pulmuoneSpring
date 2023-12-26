@@ -205,7 +205,7 @@
 	$().ready(function () {
 		
 
-	    $(".payMethod").text("${ dto.drkPayMethod == 0 ? '카드 자동결제' : v.drkPayMethod == 1 ? '계좌 자동이체' : '현장결제'}");
+	    $(".payMethod").text("${ dto.drkPayMethod == 0 ? '카드 자동결제' : dto.drkPayMethod == 1 ? '계좌 자동이체' : '현장결제'}");
 		
 		
 		
