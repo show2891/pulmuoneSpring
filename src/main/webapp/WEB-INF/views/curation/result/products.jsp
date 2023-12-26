@@ -80,9 +80,7 @@
 </script>
 
 
-<script>
-
-
+		<script>
 var singleYn = "Y" == 'Y';
 var title = "${list[0].program_name }";
 var itemCode = "${list[0].products_no}";
@@ -118,6 +116,7 @@ function sendKakao() {
 }
 
 </script>
+
 		<script type="text/javascript">
 		  var nowArgs = undefined;
 		  window.orderProcess = function (args) {
@@ -139,18 +138,19 @@ function sendKakao() {
 		   location.href = "/daily/order/step1?item="+ encodeURIComponent(JSON.stringify(nowArgs));    
 		   $("#orderModal").modal("hide").removeClass("loading");
 		  }
-$(document).on("click", "#orderModal button", function (e) {
-  var type = $(this).attr("data-type");
-  var p = encodeURIComponent(JSON.stringify(nowArgs));;
-  if (type === "new") {
-    location.href = "/daily/order/step1?item=" + p
-  } else if (type === "continue") {
-    var c = $("input[name='custnum']:checked");
-    var custNumber = c.val();
-    var prtnId = c.attr("data-prtn-id");
-    location.href = "/mypage/drink/drink/change/" + custNumber + "/" + prtnId + "?item=" + p;
-  }
-})
+		  
+			$(document).on("click", "#orderModal button", function (e) {
+			  var type = $(this).attr("data-type");
+			  var p = encodeURIComponent(JSON.stringify(nowArgs));;
+			  if (type === "new") {
+			    location.href = "/daily/order/step1?item=" + p
+			  } else if (type === "continue") {
+			    var c = $("input[name='custnum']:checked");
+			    var custNumber = c.val();
+			    var prtnId = c.attr("data-prtn-id");
+			    location.href = "/mypage/drink/drink/change/" + custNumber + "/" + prtnId + "?item=" + p;
+			  }
+			})
 </script>
 
 		<div class="breadcrumb-style">
@@ -239,8 +239,6 @@ $(document).on("click", "#orderModal button", function (e) {
 			</div>
 		</div>
 	</div>
+
 </main>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

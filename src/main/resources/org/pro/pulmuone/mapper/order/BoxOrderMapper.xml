@@ -11,7 +11,7 @@
      	FROM (
 		     	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name, member_no, cart_no, products_tag
 		     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
-		     							LEFT JOIN cart_box c ON p.products_no = c.products_no
+		     							LEFT JOIN cart_box c ON p.products_no = c.products_no AND member_no = #{member_no}
 		     	<where>
 			     	<foreach collection="items" item="item" open="p.products_no IN (" separator="," close=")">
 			     		#{item.itemCode}
@@ -19,7 +19,6 @@
 			     	AND origin_name != 'View.png'
 			    </where>
 	    		) b
-	    WHERE member_no IS NULL OR member_no = #{ member_no }
 	    ORDER BY cart_no
      </select>
      

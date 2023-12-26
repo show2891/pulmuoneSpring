@@ -54,9 +54,11 @@
         
         var data = { "data" : ${dtoList} }.data;
 
-        data.forEach((v, i) => {
-            addItem(v);
-        })
+		if(data != null) {
+	        data.forEach((v, i) => {
+	            addItem(v);
+	        })
+		}
         
         
     	var header = '${_csrf.headerName}';
@@ -190,7 +192,7 @@
             
 
         $('#moreBtn').click(function () {
-        	console.log(search);
+
 			$.ajax({
 				url: "/ajax/mypage/personal/address/more" , 
 				contentType: "application/json; charset=utf-8",
@@ -215,8 +217,6 @@
 					console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 				}
 			});	
-        	
-        	console.log(search);
         
 //             more('/mypage/personal/address/more', search, function (response) {
 //                 response.data.forEach(v => addItem(v));
@@ -226,4 +226,3 @@
         //    endregion
 	})
 </script>
-

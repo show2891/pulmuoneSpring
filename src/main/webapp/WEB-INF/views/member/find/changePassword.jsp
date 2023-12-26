@@ -180,46 +180,8 @@
 </script>
 
 
-<div class="modal" id="loading" tabindex="-1" aria-labelledby="loading" aria-hidden="true" data-keyboard="false"
-     data-backdrop="static">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="alertModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
-			</div>
-			<div class="modal-body">
-			</div>
-			<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-		</div>
-	</div>
-</div>
-
-
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="confirmModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="cancel" data-dismiss="modal">취소</button>
-				<button type="button" class="confirm">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
+<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
+<%@ include file="/WEB-INF/views/ui/loading.jsp"%>
 
 

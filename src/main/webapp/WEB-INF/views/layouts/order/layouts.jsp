@@ -53,12 +53,6 @@
 			let tel = $("#tel").val();
 			chkCheck(name, tel);
 			
-			// 주소록 가져오기
-			let member_no = ${ member.member_no };
-			$("#addressBtn").on("click", function(){
-				showAddress(member_no, 1);
-			})
-			
 			// 가맹점
 			$(".radio-area").on("change", function(){
 				// 위도, 경도값 가져오기
@@ -70,7 +64,7 @@
 				let fc_type = $(this).find(":checked").val();
 				
 				// 가맹점 정보 가져오기
-				getFranchise(addressInfo.x, addressInfo.y, fc_type);
+				getFranchise(addressInfo.y, addressInfo.x, fc_type);
 			});
 			
 			// datepicker

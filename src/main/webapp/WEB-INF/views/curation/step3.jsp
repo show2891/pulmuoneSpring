@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html lang="ko">
 
 <style>
 .question-section>div {
@@ -12,7 +10,6 @@
 	display: block;
 }
 </style>
-<body>
 
 <script>
    function getBmi (w,h){
@@ -350,45 +347,8 @@ window.onpageshow = function(event) {
 						<button class="prev-btn button-basic border" type="button" id="prevPage">이전으로</button>
 						<button class="next-btn button-basic primary" type="button" id="nextPage">다음으로</button>
 					</div>
-
-
-
-					<div class="modal fade show" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-modal="true" role="dialog" style="display: hidden;">
-						<div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="alertModalLabel"></h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">예, 아니오 중 선택해 주세요.</div>
-								<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-							</div>
-						</div>
-					</div>
-
-
-
-					<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="confirmModalLabel"></h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body"></div>
-								<div class="modal-footer">
-									<button type="button" class="cancel" data-dismiss="modal">취소</button>
-									<button type="button" class="confirm">확인</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
 				</div>
 			</form>
 
 		</main>
 	</div>
-</body>
-</html>
