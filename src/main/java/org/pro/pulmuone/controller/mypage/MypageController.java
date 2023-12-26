@@ -458,7 +458,8 @@ public class MypageController {
 	public String reviewdelete(ProductsDTO dto, Model model, Principal principal,@PathVariable String idx) throws ClassNotFoundException, SQLException {		
 		dto.setMember_id( principal.getName() );
 		dto.setReview_no(idx);
-		int count = this.mapper.reviewdelete(dto);
+		this.mapper.reviewimgdelete(dto);
+		int count = this.mapper.reviewdelete(dto);		
 		model.addAttribute("count",count);
 		return "mypage/review/writelist.tiles";
 	}

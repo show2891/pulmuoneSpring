@@ -262,22 +262,7 @@
 				thumbnail: location.origin+ "/file/download"+'/product/${list[0].system_name}',
 				price: "<fmt:formatNumber value="${list[0].price }" pattern="#,###" />",
 			}	
-		};
-
-
-		//    region reviewPopup
-		$(document).on('click', '.review-item', function () {
-			const title = $(this).find('.title').text();
-			const content = $(this).find('.title').next().text();
-			const thumbnail = $(this).find('.thumb img').attr('src')
-			const nameAndDateEl = $(this).find('.span-tie')
-
-			const reviewModal = $('#reviewModal')
-			reviewModal.find('.header h4').text(title)
-			reviewModal.find('.thumb-area img').attr('src', thumbnail)
-			reviewModal.find('.scrollable p').text(content)
-			reviewModal.find('.scrollable .span-tie').replaceWith(nameAndDateEl.clone())
-		})		
+		};	
 
 </script>
 <script type="text/javascript">
