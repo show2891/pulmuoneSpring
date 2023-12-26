@@ -11,7 +11,7 @@
      	FROM (
 		     	SELECT p.products_no, products_name, products_size, price, event_price, img_path, system_name, member_no, cart_no, products_tag
 		     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
-		     							LEFT JOIN cart_box c ON p.products_no = c.products_no
+		     							LEFT JOIN cart_box c ON p.products_no = c.products_no AND c.member_no = #{member_no}
 		     	<where>
 			     	<foreach collection="items" item="item" open="p.products_no IN (" separator="," close=")">
 			     		#{item.itemCode}
@@ -19,7 +19,6 @@
 			     	AND origin_name != 'View.png'
 			    </where>
 		    	) d
-		WHERE member_no IS NULL OR member_no = #{ member_no }
 		ORDER BY cart_no
      </select>
      
@@ -50,8 +49,8 @@
 	        SELECT seq_card_info.NEXTVAL
 	        FROM dual
 	    </selectKey>
-     	INSERT INTO card_info(card_info_no, member_no, card_num, expiry_date, birth_date)
-     	VALUES(#{cardInfoDTO.card_info_no}, #{cardInfoDTO.member_no}, #{cardInfoDTO.card_num}, #{cardInfoDTO.expiry_date}, #{cardInfoDTO.birth_date})
+     	INSERT INTO card_info(card_info_no, drk_order_no, member_no, card_num, expiry_date, birth_date)
+     	VALUES(#{cardInfoDTO.card_info_no}, #{cardInfoDTO.drk_order_no}, #{cardInfoDTO.member_no}, #{cardInfoDTO.card_num}, #{cardInfoDTO.expiry_date}, #{cardInfoDTO.birth_date})
      </insert>
      
      
@@ -61,8 +60,8 @@
 	        SELECT seq_acnt_info.NEXTVAL
 	        FROM dual
 	    </selectKey>
-     	INSERT INTO acnt_info(acnt_info_no, member_no, acnt_holder, bank_no, acnt_num)
-     	VALUES(#{acntInfoDTO.acnt_info_no}, #{acntInfoDTO.member_no}, #{acntInfoDTO.acnt_holder}, ${acntInfoDTO.bank_no}, ${acntInfoDTO.acnt_num})
+     	INSERT INTO acnt_info(acnt_info_no, drk_order_no, member_no, acnt_holder, bank_no, acnt_num)
+     	VALUES(#{acntInfoDTO.acnt_info_no}, #{acntInfoDTO.drk_order_no}, #{acntInfoDTO.member_no}, #{acntInfoDTO.acnt_holder}, ${acntInfoDTO.bank_no}, ${acntInfoDTO.acnt_num})
      </insert>
      
      

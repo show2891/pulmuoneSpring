@@ -10,7 +10,6 @@
 	display: block;
 }
 </style>
-<body>
 
 <script>
    function getBmi (w,h){
@@ -353,7 +352,3 @@ window.onpageshow = function(event) {
 
 		</main>
 	</div>
-	<%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
-</body>

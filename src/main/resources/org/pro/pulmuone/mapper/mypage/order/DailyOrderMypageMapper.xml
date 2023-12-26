@@ -11,7 +11,7 @@
 		FROM (
 				    SELECT drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, COUNT (drk_order_no) OVER () total_count
 				    FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
-				    WHERE member_no = #{member_no} AND d.drk_status = 0
+				    WHERE member_no = #{member_no} AND d.drk_status IN (0, 1)
 				    ORDER BY drk_order_date DESC
 			    ) t
 		WHERE ROWNUM = 1
@@ -24,9 +24,160 @@
 								JOIN drk_pay p ON d.drk_order_no = p.drk_order_no
 		WHERE member_no = #{member_no}
 		<if test="drinkingType != null">
-			AND d.drk_status = #{drinkingType}
+			AND d.drk_status IN ( ${drinkingType} )
 		</if>
 		ORDER BY drk_order_date DESC
 	</select>
+	
+	<!-- List<DrkOrderMypageDTO> selectDrinks(int member_no); -->
+	<select id="selectDrinks" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
+		SELECT drk_order_no, drk_order_name
+		FROM drk_order
+		WHERE member_no = #{member_no} AND drk_status IN (0, 1)
+		ORDER BY drk_order_date DESC
+	</select>
+	
+	<!-- DrkOrderMypageDTO selectDrinkInfo(int drk_order_no); -->
+	<select id="selectDrinkInfo" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO">
+		SELECT d.drk_order_no, drk_order_name, fc_name, fc_tel, fc_phone, drk_order_type, drk_start_date, drk_pay_method, drk_status
+		FROM drk_order d JOIN franchise f ON d.fc_no = f.fc_no
+								JOIN drk_pay p ON d.drk_order_no = p.drk_order_no
+		WHERE d.drk_order_no = #{drk_oder_no}
+	</select>
+	
+	<!-- DrkShipDTO selectDrinkShip(int drk_order_no); -->
+	<select id="selectDrinkShip" resultType="org.pro.pulmuone.domain.order.daily.DrkShipDTO">
+		SELECT drk_receiver, drk_tel, drk_addr, drk_addr_detail, drk_ship_loc
+		FROM drk_ship
+		WHERE drk_order_no = #{drk_order_no}
+	</select>
+	
+	<!-- List<BoxOrderMypageProductsDTO> selectNextWeekDrink(int drk_order_no, int plusDay); -->
+	<select id="selectNextWeekDrink" resultType="org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO">
+		SELECT products_cnt, img_path, system_name
+		FROM drk_history h JOIN products_img i ON h.products_no = i.products_no
+		WHERE drk_order_no = #{drk_order_no} AND drk_date = NEXT_DAY(TRUNC(SYSDATE), '월') + #{plusDay} AND origin_name != 'View.png'
+	</select>
+	
+	<!-- int changeDrkOrderName(int drk_order_no, String drk_order_name); -->
+	<update id="changeDrkOrderName">
+		UPDATE drk_order
+		SET drk_order_name = #{drk_order_name}
+		WHERE drk_order_no = #{drk_order_no}
+	</update>
+	
+	<!-- List<DrkOrderBillDTO> selectDailyBills(@Param("member_no") int member_no, @Param("year") int year, @Param("month") int month); -->
+	<select id="selectDailyBills" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO">
+		SELECT h.drk_order_no, drk_order_name, SUM(price) drk_month_price, o.drk_order_date
+		FROM drk_history h JOIN products p ON h.products_no = p.products_no
+		                   	 	JOIN drk_order o ON h.drk_order_no = o.drk_order_no
+		WHERE member_no = ${member_no} AND EXTRACT(YEAR FROM drk_date) = #{year} AND EXTRACT(MONTH FROM drk_date) = #{month}
+		GROUP BY h.drk_order_no, drk_order_name, o.drk_order_date
+		ORDER BY o.drk_order_date DESC
+	</select>
+	
+	<!-- DrkOrderBillDTO selectDailyBill(@Param("drk_order_no") int drk_order_no, @Param("year") int year, @Param("month") int month); -->
+	<select id="selectDailyBill" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO">
+		SELECT h.drk_order_no, drk_order_name, drk_pay_no, drk_pay_method, pay_info_no, fc_name, fc_tel, fc_phone, SUM(price) drk_month_price
+		FROM drk_history h JOIN products p ON h.products_no = p.products_no
+			                    JOIN drk_order o ON h.drk_order_no = o.drk_order_no
+			                    JOIN drk_pay p ON h.drk_order_no = p.drk_order_no
+			                    JOIN franchise f ON o.fc_no = f.fc_no
+		WHERE h.drk_order_no = #{drk_order_no} AND EXTRACT(YEAR FROM drk_date) = #{year} AND EXTRACT(MONTH FROM drk_date) = #{month}
+		GROUP BY h.drk_order_no, drk_order_name, drk_pay_no, drk_pay_method, pay_info_no, fc_name, fc_tel, fc_phone
+	</select>
+	
+	<!-- AcntInfoDTO selectAcntInfo(int pay_info_no); -->
+	<select id="selectAcntInfo" resultType="org.pro.pulmuone.domain.order.daily.AcntInfoDTO">
+		SELECT acnt_holder, bank_name
+		FROM acnt_info a JOIN bank b ON a.bank_no = b.bank_no
+		WHERE acnt_info_no = #{pay_info_no}
+	</select>
+	
+	<!-- int getNowPrice(int drk_order_no); -->
+	<select id="getNowPrice" resultType="Integer">
+		SELECT SUM(price)
+		FROM drk_history h JOIN products p ON h.products_no = p.products_no
+		WHERE h.drk_order_no = 1 AND drk_date BETWEEN TRUNC(SYSDATE, 'MM') AND SYSDATE
+	</select>
+	
+	<!-- int updateDrkOrderStatus(int drk_order_no); -->
+	<update id="updateDrkOrderStatus">
+		UPDATE drk_order
+		SET drk_status = 1
+		WHERE drk_order_no = #{drk_order_no}
+	</update>
+	
+	<!-- int updateDrkScheduleEndDate(int drk_order_no, Date drk_end_date); -->
+	<update id="updateDrkScheduleEndDate">
+		UPDATE drk_schedule
+		SET drk_end_date = #{drk_end_date}
+		WHERE drk_order_no = #{drk_order_no}
+	</update>
+	
+	<!-- int deleteDrkHistory(int drk_order_no, Date drk_end_date); -->
+	<delete id="deleteDrkHistory">
+		<![CDATA[
+			DELETE FROM drk_history
+			WHERE drk_order_no = #{drk_order_no} AND drk_date >= #{drk_end_date}
+		]]>
+	</delete>
+	
+	<!-- List<DrkOrderMypageProductsDTO> selectDrkOrderMypageProducts(int drk_order_no); -->
+	<select id="selectDrkOrderMypageProducts" resultType="org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO">
+		SELECT s.products_no, products_name, products_size, price, img_path, system_name, drk_start_date, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt
+		FROM drk_schedule s JOIN products p ON s.products_no = p.products_no
+									JOIN products_img i ON p.products_no = i.products_no
+		WHERE drk_order_no = #{drk_order_no} AND origin_name != 'View.png'
+		ORDER BY drk_schedule_no
+	</select>
+	
+	<!-- List<DrkScheduleDTO> selectDrkScheduleList(int drk_order_no); -->
+	<select id="selectDrkScheduleList" resultType="org.pro.pulmuone.domain.order.daily.DrkScheduleDTO">
+		<![CDATA[
+			SELECT drk_schedule_no, reg_date, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt, drk_start_date, drk_end_date
+			FROM drk_schedule
+			WHERE drk_order_no = #{ drk_order_no } AND drk_end_date >= SYSDATE
+		]]> 
+	</select>
+	
+	<!-- int changeDrkSchedule(DrkScheduleDTO newSchedule); -->
+	<update id="changeDrkSchedule">
+		UPDATE drk_schedule
+		SET reg_date = #{reg_date}, mon_cnt = ${mon_cnt}, tue_cnt = ${tue_cnt}, wed_cnt = ${wed_cnt}, thu_cnt = ${thu_cnt}, fri_cnt = ${fri_cnt}
+		WHERE drk_schedule_no = #{ drk_schedule_no }
+	</update>
+	
+	<!-- int insertDrkSchedule(DrkScheduleDTO newSchedule); -->
+	<insert id="insertDrkSchedule">
+		<selectKey keyProperty="newSchedule.drk_schedule_no" resultType="Integer" order="BEFORE">
+     		SELECT seq_drk_schedule.NEXTVAL
+     		FROM dual
+     	</selectKey>
+		INSERT INTO drk_schedule (drk_schedule_no, drk_order_no, reg_date, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fri_cnt, drk_start_date, drk_end_date)
+		VALUES (#{newSchedule.drk_schedule_no}, #{newSchedule.drk_order_no}, #{newSchedule.reg_date}
+				, #{newSchedule.products_no}, #{newSchedule.mon_cnt}, #{newSchedule.tue_cnt}, #{newSchedule.wed_cnt}
+				, #{newSchedule.thu_cnt}, #{newSchedule.fri_cnt}, TO_DATE(SUBSTR(#{newSchedule.drk_start_date}, 1, 10), 'YYYY-MM-DD'), #{newSchedule.drk_end_date})
+	</insert>
+	
+	<!-- int changeDrkHistory(DrkScheduleDTO newSchedule); -->
+	<delete id="changeDrkHistory">
+		<![CDATA[
+			DELETE FROM drk_history
+			WHERE drk_order_no = #{drk_order_no} AND products_no = #{products_no} AND drk_date >= TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD')
+		]]> 
+	</delete>
+	
+	<!-- int insertDrkHistory(DrkHistoryDTO drkHistoryDTO); -->
+	<insert id="insertDrkHistory">
+		INSERT INTO drk_history (drk_history_no, drk_schedule_no, drk_order_no, products_no, products_cnt, drk_date, drk_day, drk_complete)
+		VALUES (seq_drk_history.NEXTVAL, #{drk_schedule_no}, #{drk_order_no}, #{products_no}, #{products_cnt}, #{drk_date}, #{drk_day}, #{drk_complete})
+	</insert>
+	
+	<!-- int insertDrkChanges(DrkScheduleDTO newSchedule); -->
+	<insert id="insertDrkChanges">
+		INSERT INTO drk_changes (changes_no, drk_schedule_no, drk_order_no, change_type, change_date, change_start_date, change_end_date, change_period)
+		VALUES (seq_drk_changes.NEXTVAL, #{drk_schedule_no}, #{drk_order_no}, 1, SYSDATE, TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD'), #{drk_end_date}, #{drk_end_date}-TO_DATE(SUBSTR(#{drk_start_date}, 1, 10), 'YYYY-MM-DD'))
+	</insert>
 	
 </mapper>
