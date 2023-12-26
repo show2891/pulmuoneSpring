@@ -4,7 +4,7 @@
 	$(function() {
 		$(".confirm").click(
 				function() {
-					if (location.pathname.indexOf('refund') != -1 || location.pathname.indexOf('product/list') != -1 || location.pathname.indexOf('review') != -1 || location.pathname.indexOf('address') != -1  ){
+					if (location.pathname.indexOf('refund') != -1 || location.pathname.indexOf('product/list') != -1 || location.pathname.indexOf('inquiry/view') != -1 || location.pathname.indexOf('review') != -1 || location.pathname.indexOf('address') != -1  ){
 						
 					}else{						
 						if (location.pathname.indexOf('box') != -1
