@@ -15,8 +15,11 @@
   	<tiles:insertAttribute name="main" />
   	<!-- footer -->
   	<tiles:insertAttribute name="footer" />
-  	<tiles:insertAttribute name="footermodal" />
+  	<tiles:insertAttribute name="footermodal" />  	
 </div>
-
+<!-- modal -->
+<tiles:insertAttribute name="alertModal" />
+<tiles:insertAttribute name="confirmModal" />
+<tiles:insertAttribute name="confirmDesignModal" />
 </body>
 </html>

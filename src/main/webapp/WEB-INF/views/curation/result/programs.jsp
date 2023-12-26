@@ -201,7 +201,7 @@ $(document).on("click", "#orderModal button", function (e) {
 					</div>
 				</div>
 				<div class="result-text">${list[0].program_content}</div>
-				
+
 				<div class="alert-area">
 					<h4>생활습관 바꾸기</h4>
 					<ul>
@@ -238,8 +238,4 @@ $(document).on("click", "#orderModal button", function (e) {
 	</div>
 
 </main>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
-
