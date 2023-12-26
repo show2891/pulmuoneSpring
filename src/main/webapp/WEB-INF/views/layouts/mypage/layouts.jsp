@@ -25,8 +25,10 @@
   	<tiles:insertAttribute name="footermodal" />
 </div>
 <!-- modal -->
+<tiles:insertAttribute name="alertModal" />
 <tiles:insertAttribute name="confirmModal" />
-
+<tiles:insertAttribute name="confirmDesignModal" />
+<tiles:insertAttribute name="loading" />
 
 </body>
 </html>
