@@ -136,8 +136,7 @@
 
     function checkForm() {
       const accountForm = $('#accountForm').serializeObject();
-//       accountForm.insttCode = $('#bankCode').data('value')
-//       accountForm.insttCode = $('#bankCode').data('value')
+      accountForm.insttCode = $('#bankCode').data('value')
 
       if (!accountForm.insttCode) {
         alert('은행명을 선택하세요')
