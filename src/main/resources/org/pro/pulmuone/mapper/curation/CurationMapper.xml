@@ -16,16 +16,6 @@
       ORDER BY kids_product_no
    </select>
 
-   <!-- 모달창 -->
-   <select id="modal" resultType="org.pro.pulmuone.domain.curation.KidsVO">
-      SELECT products_tag, products_name, img_no, system_name, price, products_size, products_sub_name
-      FROM products_img pi JOIN products p ON p.products_no = pi.products_no
-      WHERE products_tag = #{products_tag}
-      AND
-      origin_name like 'View%'
-      ORDER BY img_no asc
-   </select>
-
    <!-- 큐레이션 결과-상품 -->
    <select id="selectPD" resultType="org.pro.pulmuone.domain.curation.CurationVO">
       SELECT curation_no, program_no,program_name, pi.img_no, dayweek, pi.products_no, p.products_name, program_content, products_tag,
