@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="part">
 	<div class="part-head" style="margin-bottom:17px;">
-		<a href="/mypage/order/daily.do?drinkingType=Y">매일배송 음용정보</a>
+		<a href="/mypage/drink/drink">매일배송 음용정보</a>
 	</div>
 			
 	<div class="box-layout" style="margin-bottom:6px;">

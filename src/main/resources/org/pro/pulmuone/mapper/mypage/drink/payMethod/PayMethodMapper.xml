@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.mypage.drink.payMethod.PayMethodMapper">
+
+	<resultMap type="org.pro.pulmuone.domain.mypage.drink.payMethod.PayMethodDTO" id="payMethodMap">
+		<result property="memberNo" column="member_no"></result>
+		<result property="drkOrderNo" column="drk_order_no"></result>
+		<result property="drkOrderName" column="drk_order_name"></result>
+		<result property="drkStatus" column="drk_status"></result>
+		<result property="fcNo" column="fc_no"></result>
+		<result property="fcName" column="fc_name"></result>
+		<result property="fcTel" column="fc_tel"></result>
+		<result property="fcPhone" column="fc_phone"></result>
+		<result property="drkPayStatus" column="drk_pay_status"></result>
+		<result property="drkPayMethod" column="drk_pay_method"></result>
+		<result property="payInfoNo" column="pay_info_no"></result>
+		<result property="cardNum" column="card_num"></result>
+		<result property="expiryDate" column="expiry_date"></result>
+		<result property="cardBirthDate" column="birth_date"></result>
+		<result property="acntHolder" column="acnt_holder"></result>
+		<result property="bankNo" column="bank_no"></result>
+		<result property="acntNum" column="acnt_num"></result>
+		<result property="bankName" column="bank_name"></result>
+	</resultMap>
+
+
+	<select id="selectPayMethodList" resultMap="payMethodMap">
+		SELECT o.member_no, o.drk_order_no, drk_status, drk_order_name, f.fc_no, fc_name, fc_tel, fc_phone, drk_pay_status, drk_pay_method, pay_info_no, card_num, expiry_date, birth_date, acnt_holder, a.bank_no, acnt_num, b.bank_name
+		FROM drk_order o 
+		    LEFT JOIN drk_pay p ON o.drk_order_no = p.drk_order_no
+		    LEFT JOIN franchise f ON o.fc_no = f.fc_no
+		    LEFT JOIN card_info c ON p.pay_info_no = c.card_info_no
+		    LEFT JOIN acnt_info a ON p.pay_info_no = a.acnt_info_no
+		    LEFT JOIN bank b ON a.bank_no = b.bank_no
+		WHERE o.member_no = #{memberNo} AND drk_status = 0
+	</select>
+
+
+	<select id="selectPayMethod" resultMap="payMethodMap">
+		SELECT o.member_no, o.drk_order_no, drk_status, drk_order_name, f.fc_no, fc_name, fc_tel, fc_phone, drk_pay_status, drk_pay_method, pay_info_no, card_num, expiry_date, birth_date, acnt_holder, a.bank_no, acnt_num, b.bank_name
+		FROM drk_order o 
+		    LEFT JOIN drk_pay p ON o.drk_order_no = p.drk_order_no
+		    LEFT JOIN franchise f ON o.fc_no = f.fc_no
+		    LEFT JOIN card_info c ON p.pay_info_no = c.card_info_no
+		    LEFT JOIN acnt_info a ON p.pay_info_no = a.acnt_info_no
+		    LEFT JOIN bank b ON a.bank_no = b.bank_no
+		WHERE o.drk_order_no = #{drkOrderNo}
+	</select>
+
+	<delete id="deletePayInfoNo">
+		DELETE FROM 
+		<choose>
+			<when test="dto.drkPayMethod == 0">
+				card_info
+				WHERE card_info_no = #{dto.payInfoNo}
+			</when>
+			<when test="dto.drkPayMethod == 1">
+				acnt_info
+				WHERE acnt_info_no = #{dto.payInfoNo}
+			</when>
+		</choose>
+	</delete>
+
+	<insert id="insertPayInfoNo">
+		INSERT INTO
+		<choose>
+			<when test="dto.drkPayMethod == 0">
+				card_info
+				VALUES ( seq_card_info.NEXTVAL, #{dto.memberNo}, #{dto.cardNum}, #{dto.expiryDate}, #{dto.cardBirthDate}, #{dto.drkOrderNo} )
+
+			</when>
+			<when test="dto.drkPayMethod == 1">
+				acnt_info
+				VALUES ( seq_acnt_info.NEXTVAL, #{dto.memberNo}, #{dto.acntHolder}, #{dto.bankNo}, #{dto.acntNum}, #{dto.drkOrderNo} )
+			</when>
+		</choose>
+	</insert>
+
+
+	<update id="updateDrkPay">
+		UPDATE drk_pay 
+		SET drk_pay_method = #{dto.drkPayMethod}, pay_info_no = 
+		<choose>
+			<when test="dto.drkPayMethod == 0">
+				(SELECT card_info_no FROM card_info WHERE drk_order_no = #{dto.drkOrderNo})
+			</when>
+			<when test="dto.drkPayMethod == 1">
+				(SELECT acnt_info_no FROM acnt_info WHERE drk_order_no = #{dto.drkOrderNo})
+			</when>
+			<when test="dto.drkPayMethod == 2">
+				''
+			</when>
+		</choose>
+		WHERE drk_order_no = #{dto.drkOrderNo}
+	</update>
+
+
+</mapper>

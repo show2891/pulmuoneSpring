@@ -42,9 +42,11 @@ public class AddressController {
 		List<AddrBookDTO> allAddrBookDtoList = this.addressService.getList(memberNo);
 		int dtoCount = allAddrBookDtoList.size();
 
-		List<AddrBookDTO> addrBookDtoList = null;
+		List<AddrBookDTO> addrBookDtoList;
 		if (dtoCount >= endNum) {
-			addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, endNum); 			
+			addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, endNum); 
+		} else if(dtoCount == 0) {
+			addrBookDtoList = null; 
 		} else {
 			addrBookDtoList = allAddrBookDtoList.subList(startNum - 1, dtoCount); 
 		}

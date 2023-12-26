@@ -37,6 +37,7 @@
 <tiles:insertAttribute name="alertModal" />
 <tiles:insertAttribute name="confirmModal" />
 <tiles:insertAttribute name="confirmDesignModal" />
+<tiles:insertAttribute name="loading" />
 <script>
 $(function(){
 	let li_len = $(".lnb-style li.active").length;
@@ -58,6 +59,9 @@ $(function(){
 		
 		
 </script>
+
+
+
 
 </body>
 </html>
