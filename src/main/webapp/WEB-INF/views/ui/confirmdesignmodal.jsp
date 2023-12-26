@@ -1,28 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
+
 	$(function() {
 		$(".confirm").click(
 				function() {
-					if (location.pathname.indexOf('box') != -1
-							&& location.pathname.indexOf('cart') == -1) {
-						location.href = '/cart/box'
-					}else{
-					if (location.pathname.indexOf('kid') != -1) {
-						if (location.pathname.indexOf('daily') != -1
-								|| location.pathname.indexOf('kid') != -1
-								|| location.pathname.indexOf('result') != -1
-								&& location.pathname.indexOf('cart') == -1) {
-							location.href = '/cart/daily'
+					if (location.pathname.indexOf('refund') != -1 || location.pathname.indexOf('product/list') != -1 ){
+						
+					}else{						
+						if (location.pathname.indexOf('box') != -1
+								&& location.pathname.indexOf('cart') == -1) {						
+							location.href = '/cart/box'
 						}
-					} else {
-						if (location.pathname.indexOf('daily') != -1
+						 if (location.pathname.indexOf('kid') != -1) {
+							if (location.pathname.indexOf('daily') != -1
+									|| location.pathname.indexOf('kid') != -1
+									|| location.pathname.indexOf('result') != -1
+									&& location.pathname.indexOf('cart') == -1
+									&& location.pathname.indexOf('box') == -1) {							
+								location.href = '/cart/daily'
+							}
+						}
+						 if (location.pathname.indexOf('daily') != -1
 								&& location.pathname.indexOf('kid') != -1
 								|| location.pathname.indexOf('result') != -1
-								|| location.pathname.indexOf('cart') == -1) {
+								|| location.pathname.indexOf('cart') == -1
+								&& location.pathname.indexOf('box') == -1) {					
 							location.href = '/cart/daily'
 						}
 					}
-				}
+
 				});
 	});
 </script>
