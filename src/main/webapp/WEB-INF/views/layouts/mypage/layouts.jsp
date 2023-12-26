@@ -34,7 +34,9 @@
   	<tiles:insertAttribute name="footermodal" />
 </div>
 <!-- modal -->
+<tiles:insertAttribute name="alertModal" />
 <tiles:insertAttribute name="confirmModal" />
+<tiles:insertAttribute name="confirmDesignModal" />
 <script>
 $(function(){
 	let li_len = $(".lnb-style li.active").length;

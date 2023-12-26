@@ -6,7 +6,7 @@
 					if (location.pathname.indexOf('box') != -1
 							&& location.pathname.indexOf('cart') == -1) {
 						location.href = '/cart/box'
-					}
+					}else{
 					if (location.pathname.indexOf('kid') != -1) {
 						if (location.pathname.indexOf('daily') != -1
 								|| location.pathname.indexOf('kid') != -1
@@ -18,10 +18,11 @@
 						if (location.pathname.indexOf('daily') != -1
 								&& location.pathname.indexOf('kid') != -1
 								|| location.pathname.indexOf('result') != -1
-								&& location.pathname.indexOf('cart') == -1) {
+								|| location.pathname.indexOf('cart') == -1) {
 							location.href = '/cart/daily'
 						}
 					}
+				}
 				});
 	});
 </script>
