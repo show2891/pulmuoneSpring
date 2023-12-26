@@ -61,8 +61,7 @@
                 a+=discountPrice;
                 return a;
             },0)
-            console.log(totalDiscountPrice)
-            console.log(currentAmt)
+            
             if(currentAmt<0){
                 return alert('실시간 금액보다 할인 금액이 클 수 없습니다.',()=>{
                     $(this).removeAttr('checked');
@@ -111,7 +110,7 @@
 				if (checkedDay.length === 0) {
 					return alert("배송요일을 선택해주세요");
 				}
-// 				console.log(checkedDay)
+
 				const selectedDays = checkedDay.map(function (i, x) {
 					return parseInt($(x).val()) - 1;
 				}).toArray();
@@ -412,126 +411,7 @@
 											<p>배송을 원하는 날짜를 선택하세요</p>
 										</div>
 									</label>
-								</div>
-								<h5>추천패키지 상품</h5>
-								<div class="select-package">
-									<label class="radio-item package-item item-of-0"> <input data-total-price="20600" name="r1" type="radio">
-										<div class="item">
-											<h6>추천패키지 1</h6>
-											<div class="product-set">
-												<button data-itemcode="0071928" data-product-preview="307" type="button" class="product-item">
-													<span>월</span>
-													<div class="thumb">
-														<img src="/file/download/product/6c0a390a-2fa7-49b7-9ec3-138d7afbe665.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>산이내린녹용과삼의힘</p>
-													</div>
-												</button>
-												<button data-itemcode="0070604" data-product-preview="277" type="button" class="product-item">
-													<span>화</span>
-													<div class="thumb">
-														<img src="/file/download/product/83dc1b40-d2da-4fba-9853-0bef12bc65f7.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>돌미나리와민들레</p>
-													</div>
-												</button>
-												<button data-itemcode="0071928" data-product-preview="307" type="button" class="product-item">
-													<span>수</span>
-													<div class="thumb">
-														<img src="/file/download/product/6c0a390a-2fa7-49b7-9ec3-138d7afbe665.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>산이내린녹용과삼의힘</p>
-													</div>
-												</button>
-												<button data-itemcode="0070604" data-product-preview="277" type="button" class="product-item">
-													<span>목</span>
-													<div class="thumb">
-														<img src="/file/download/product/83dc1b40-d2da-4fba-9853-0bef12bc65f7.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>돌미나리와민들레</p>
-													</div>
-												</button>
-												<button data-itemcode="0071928" data-product-preview="307" type="button" class="product-item">
-													<span>금</span>
-													<div class="thumb">
-														<img src="/file/download/product/6c0a390a-2fa7-49b7-9ec3-138d7afbe665.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>산이내린녹용과삼의힘</p>
-													</div>
-												</button>
-
-											</div>
-										</div>
-									</label> <label class="radio-item package-item item-of-1"> <input data-total-price="20400" name="r1" type="radio">
-										<div class="item">
-											<h6>추천패키지 2</h6>
-											<div class="product-set">
-												<button data-itemcode="0071928" data-product-preview="307" type="button" class="product-item">
-													<span>월</span>
-													<div class="thumb">
-														<img src="/file/download/product/6c0a390a-2fa7-49b7-9ec3-138d7afbe665.jpg" alt="">
-													</div>
-													<div class="txt">
-														<p>산이내린녹용과삼의힘</p>
-													</div>
-												</button>
-												<button data-itemcode="0072348" data-product-preview="273" type="button" class="product-item">
-													<span>화</span>
-													<div class="thumb">
-														<img src="/file/download/product/a5e4ffc9-e98f-49a2-9371-2f2b9952dd9c.jpg" alt="">
-													</div>
-													<div class="txt">
-														<p>오! 생즙</p>
-													</div>
-												</button>
-												<button data-itemcode="0071928" data-product-preview="307" type="button" class="product-item">
-													<span>수</span>
-													<div class="thumb">
-														<img src="/file/download/product/6c0a390a-2fa7-49b7-9ec3-138d7afbe665.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>산이내린녹용과삼의힘</p>
-													</div>
-												</button>
-												<button data-itemcode="0072348" data-product-preview="273" type="button" class="product-item">
-													<span>목</span>
-													<div class="thumb">
-														<img src="/file/download/product/a5e4ffc9-e98f-49a2-9371-2f2b9952dd9c.jpg" alt="">
-
-													</div>
-													<div class="txt">
-														<p>오! 생즙</p>
-													</div>
-												</button>
-												<button data-itemcode="0071928" data-product-preview="307" type="button" class="product-item">
-													<span>금</span>
-													<div class="thumb">
-
-														<img src="/file/download/product/6c0a390a-2fa7-49b7-9ec3-138d7afbe665.jpg" alt="">
-													</div>
-													<div class="txt">
-														<p>산이내린녹용과삼의힘</p>
-													</div>
-												</button>
-
-											</div>
-										</div>
-									</label>
-									<div class="button-set b0">
-										<button style="width: 100%;" class="button-basic border package-more">더보기</button>
-									</div>
-								</div>
+								</div>								
 							</div>
 						</div>
 					</div>
@@ -580,6 +460,3 @@
 		</div>
 	</main>
 </div>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

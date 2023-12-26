@@ -31,6 +31,8 @@
 						history.replaceState({}, '', href);
 					})
 				});
+				
+				
 			</script>
 			<div class="tasting-gift-area">
 				<div class="cont-title-area">

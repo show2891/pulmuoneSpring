@@ -1,0 +1,42 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.coupon.CouponMapper">
+
+	<resultMap id="CouponResultMap" type="org.pro.pulmuone.domain.order.HaveCouponDTO">
+	    <id property="coupon_no" column="coupon_no"/>
+	    <result property="member_no" column="member_no"/>
+	    <result property="issue_date" column="issue_date"/>
+	    <result property="expiry_date" column="expiry_date"/>
+	    <result property="used" column="used"/>
+	    <result property="box_pay_no" column="box_pay_no"/>
+	    <result property="drk_pay_no" column="drk_pay_no"/>
+	
+	    <association property="couponInfo" javaType="org.pro.pulmuone.domain.order.CouponDTO">
+	        <id property="coupon_no" column="coupon_no"/>
+	        <result property="coupon_name" column="coupon_name"/>
+	        <result property="discount" column="discount"/>
+	        <result property="delivery_type" column="delivery_type"/>
+	        <result property="duplication" column="duplication"/>
+	        <result property="use_month" column="use_month"/>
+	        <result property="min_price" column="min_price"/>
+	        <result property="max_discount" column="max_discount"/>
+	    </association>
+	</resultMap>
+	
+
+	<select id="findCouponsByUserNo" resultMap="CouponResultMap">
+	    SELECT  hc.*, c.coupon_name, c.discount, c.delivery_type, c.duplication, c.use_month, c.min_price, c.max_discount 
+	    FROM have_coupon hc JOIN coupon c ON hc.coupon_no = c.coupon_no 
+	    WHERE hc.member_no = #{memberNo} 
+	    ORDER BY hc.used ASC
+	</select>
+    	
+	<select id="getMemberInfo" resultType="int" parameterType="string">
+	    SELECT member_no FROM member WHERE member_id = #{memberId}
+	</select>
+
+	<select id="getUserName" resultType="string" parameterType="int">
+	    SELECT name FROM member WHERE member_no = #{memberNo}
+	</select>
+    
+</mapper>

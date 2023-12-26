@@ -202,11 +202,9 @@
     function togglePromotion(el){
       const parent = el.parents(".order-item");
 
-      const eidx= parent.data('event-idx');
-      console.log(eidx)
+      const eidx= parent.data('event-idx');      
       if(eidx=='2458'){
-        const qty = parseInt(parent.find('[data-itemcount-view]').text())
-        console.log(qty)
+        const qty = parseInt(parent.find('[data-itemcount-view]').text())        
 
         const showFreeB = qty>1;
 
@@ -309,7 +307,7 @@
 				var itemCode = $(this).attr("data-itemcode");				
 				param.push(itemCode)
 			});
-			if (!param) {
+			 if (param.length === 0 ) {
 				alert("선택된 상품이 없습니다.");
 				return;
 			}
@@ -557,6 +555,3 @@
 		</div>
 	</div>
 </main>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
