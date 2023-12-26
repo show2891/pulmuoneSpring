@@ -32,8 +32,8 @@
 						<div class="dropdown">
 							<a id="searchText" class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">음용중</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" data-value="0">음용중</a>
-								<a class="dropdown-item" data-value="1">음용중지</a>
+								<a class="dropdown-item" data-value="0, 1">음용중</a>
+								<a class="dropdown-item" data-value="2">음용중지</a>
 							</div>
 						</div>
 					</dd>
@@ -54,11 +54,13 @@
 			</c:when>
 									
 			<c:otherwise>
-				<c:forEach items="${ drkOrderMypageList }" var="list">
+				<c:forEach items="${ drkOrderMypageList }" var="list" varStatus="s">
 					<form class="item">
 						<div class="head">
 							<div class="nickname-format xxl">
-								<label>기본</label>
+								<c:if test="${ s.index eq 0 }">
+									<label class="default">기본</label>
+								</c:if>
 								<h5>${ list.drk_order_name }</h5>
 								<span>${ list.drk_order_no }</span>
 							</div>

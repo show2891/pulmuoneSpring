@@ -3,18 +3,23 @@ package org.pro.pulmuone.controller.mypage;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageDTO;
 import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageListDTO;
+import org.pro.pulmuone.domain.mypage.order.BoxOrderMypageProductsDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderBillDTO;
 import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageDTO;
+import org.pro.pulmuone.domain.mypage.order.DrkOrderMypageProductsDTO;
 import org.pro.pulmuone.domain.order.CouponDTO;
-import org.pro.pulmuone.domain.order.HaveCouponDTO;
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.box.BoxPayDTO;
 import org.pro.pulmuone.domain.order.box.BoxShipDTO;
+import org.pro.pulmuone.domain.order.daily.AcntInfoDTO;
+import org.pro.pulmuone.domain.order.daily.DrkOrderDTO;
+import org.pro.pulmuone.domain.order.daily.DrkScheduleDTO;
+import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
 import org.pro.pulmuone.service.inquiry.InquiryService;
@@ -22,6 +27,9 @@ import org.pro.pulmuone.service.mypage.order.BoxOrderMypageServiceImpl;
 import org.pro.pulmuone.service.mypage.order.DailyOrderMypageServiceImpl;
 import org.pro.pulmuone.service.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,25 +79,18 @@ public class MypageController {
 		 request.setAttribute("totalCount", totalCount);
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-		        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
 		int member_no = member.getMember_no();
-		
 		
 		// >> 매일배송 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = dailyOrderMypageServiceImpl.selectDailyOrder(member_no);
 		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
-		
 		
 		// >> 택배배송 <<
 		List<Integer> boxOrderStatus = boxOrderMypageServiceImpl.getBoxOrderStatus(member_no);
@@ -96,7 +98,6 @@ public class MypageController {
 		
 		List<BoxOrderMypageDTO> boxOrderMypageList = boxOrderMypageServiceImpl.selectBoxOrder(member_no);
 		model.addAttribute("boxOrderMypageList", boxOrderMypageList);
-		
 		
 		return "mypage/home/userSummmary.tiles";
 	}
@@ -126,22 +127,17 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage/drink/drink")
-	public String orderDaily(Model model, @RequestParam(name = "drinkingType", required = false) String drinkingType) {
+	public String orderDaily(Model model, @RequestParam(name = "drinkingType", required = false) String drinkingType, Principal principal) {
 		log.info("> MypageController orderDaily()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
 		int member_no = member.getMember_no();
 		
 		// >> 음용 정보 가져오기 <<
@@ -151,36 +147,210 @@ public class MypageController {
 		return "mypage/drink/drink.tiles";
 	}
 	
-	@RequestMapping("/mypage/drink/drinks/${drk_order_no}")
-	public String orderDailyView(Model model, @PathVariable int drk_order_no) {
-		log.info("> MypageController orderDailyView()...");
+	@RequestMapping("/mypage/drink/drink/pause/{drk_order_no}")
+	public String dailyPause(Model model, @PathVariable int drk_order_no) {
+		log.info("> MypageController dailyPause()...");
 		
 		// >> 음용 정보 가져오기 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
 		
+		return "mypage/drink/pause.tiles";
+	}
+	
+	@GetMapping("/mypage/order/daily/stop/{drk_order_no}")
+	public String dailyStop(Model model, @PathVariable int drk_order_no) {
+		log.info("> MypageController dailyStop()...");
+		
+		// >> 음용 정보 가져오기 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		return "mypage/drink/stop.tiles";
+	}
+	
+	@PostMapping(value="/mypage/drink/drink/stop/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Integer> dailyStoped(Model model, @PathVariable int drk_order_no, @RequestBody DrkScheduleDTO drkScheduleDTO) {
+		log.info("> MypageController dailyStoped()...");
+		
+		// >> 음용 정보 수정 <<
+		System.out.println(drkScheduleDTO.getDrk_end_date());
+		int rowCnt = this.dailyOrderMypageServiceImpl.stopOrder(drk_order_no, drkScheduleDTO.getDrk_end_date());
+		
+		return rowCnt >= 1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
+									: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@RequestMapping("/mypage/order/daily/changeHistory/{drk_order_no}")
+	public String dailyChangeHistory(Model model, @PathVariable int drk_order_no) {
+		log.info("> MypageController dailyChangeHistory()...");
+		
+		// >> 음용 정보 가져오기 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		return "mypage/drink/changeHistory.tiles";
+	}
+	
+	@GetMapping("/mypage/order/daily/change/{drk_order_no}")
+	public String dailyChange(Model model, @PathVariable int drk_order_no) {
+		log.info("> MypageController dailyChange()...");
+		
+		// >> 음용 정보 가져오기 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		// >> 음용 상품 리스트 가져오기 <<
+		List<DrkOrderMypageProductsDTO> drkOrderMypageProducts = this.dailyOrderMypageServiceImpl.selectDrkOrderMypageProducts(drk_order_no);
+		model.addAttribute("drkOrderMypageProducts", drkOrderMypageProducts);
+		
+		return "mypage/drink/change.tiles";
+	}
+	
+	@PostMapping(value="/mypage/order/daily/change/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Integer> dailyChanged(Model model, @PathVariable int drk_order_no, @RequestBody List<DrkScheduleDTO> drkScheduleList) {
+		log.info("> MypageController dailyChanged()...");
+		
+		// >> 음용 정보 수정 <<
+		int rowCnt = this.dailyOrderMypageServiceImpl.updateDrkOrder(drk_order_no, drkScheduleList);
+		
+		return rowCnt >= 1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
+									: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@PostMapping(value="/mypage/drink/drinks/{drk_order_no}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Integer> orderDailyChangeName(Model model, @PathVariable int drk_order_no, @RequestBody DrkOrderDTO drkOrderDTO) {
+		log.info("> MypageController orderDailyChangeName()...");
+		int rowCnt = this.dailyOrderMypageServiceImpl.changeDrkOrderName(drk_order_no, drkOrderDTO.getDrk_order_name());
+		return rowCnt==1 ? new ResponseEntity<Integer>(rowCnt, HttpStatus.OK)
+				: new ResponseEntity<Integer>(rowCnt, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@GetMapping("/mypage/drink/drinks/{drk_order_no}")
+	public String orderDailyView(Model model, @PathVariable int drk_order_no, Principal principal) {
+		log.info("> MypageController orderDailyView()...");
+		
+		// >> member_no 가져오기 <<
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
+
+		// >> 음용 리스트 가져오기 <<
+		List<DrkOrderMypageDTO> drkOrderMypageList = this.dailyOrderMypageServiceImpl.selectDrinkInfos(member_no);
+		model.addAttribute("drkOrderMypageList", drkOrderMypageList);
+		
+		// >> 음용 정보 가져오기 <<
+		DrkOrderMypageDTO drkOrderMypageDTO = this.dailyOrderMypageServiceImpl.selectDrinkInfo(drk_order_no);
+		model.addAttribute("drkOrderMypageDTO", drkOrderMypageDTO);
+		
+		// >> 배송지 정보 가져오기 <<
+		DrkShipDTO drkShipDTO = this.dailyOrderMypageServiceImpl.selectDrinkShip(drk_order_no);
+		model.addAttribute("drkShipDTO", drkShipDTO);
+		
+		// >> 다음주 음용 상품 가져오기 <<
+		List<List<BoxOrderMypageProductsDTO>> boxOrderMypageProductsList = this.dailyOrderMypageServiceImpl.selectNextWeekDrink(drk_order_no);
+		model.addAttribute("productsList", boxOrderMypageProductsList);
 		
 		return "mypage/drink/drinks.tiles";
 	}
+	
+	@RequestMapping("/mypage/drink/bill")
+	public String drinkBill(Model model, @RequestParam(name = "searchDate", required = false) String searchDate, Principal principal) {
+		log.info("> MypageController drinkBill()...");
+		
+		// >> member_no 가져오기 <<
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
+		
+		// >> 영수증 List 가져오기 <<
+		List<DrkOrderBillDTO> drkOrderBillList = this.dailyOrderMypageServiceImpl.selectDrinkBills(member_no, searchDate);
+		model.addAttribute("drkOrderBillList", drkOrderBillList);
+		
+		model.addAttribute("searchDate", searchDate);
+		
+		return "mypage/drink/bill.tiles";
+	}
+	
+	@RequestMapping("/mypage/drink/bill/detail")
+	public String drinkBillDetail(Model model, @RequestParam(name = "orderNo", required = false) Integer orderNo
+														, @RequestParam(name = "askMn", required = false) String askMn, Principal principal) {
+		log.info("> MypageController drinkBillDetail()...");
+		
+		// >> member 가져오기 <<
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// >> 영수증 가져오기 <<
+		DrkOrderBillDTO drkOrderBillDTO = this.dailyOrderMypageServiceImpl.selectDrinkBill(orderNo);
+		model.addAttribute("drkOrderBillDTO", drkOrderBillDTO);
+		
+		// >> 결제 정보 가져오기 <<
+		int payMethod = drkOrderBillDTO.getDrk_pay_method();
+		int pay_info_no = drkOrderBillDTO.getPay_info_no();
+		AcntInfoDTO acntInfoDTO = null;
+		if (payMethod == 1) acntInfoDTO = this.dailyOrderMypageServiceImpl.selectAcntInfo(pay_info_no);
+		model.addAttribute("acntInfoDTO", acntInfoDTO);
+		model.addAttribute("name", member.getName());
+		
+		// >> 실시간 금액 가져오기 <<
+		int nowPrice = this.dailyOrderMypageServiceImpl.getNowPrice(orderNo);
+		model.addAttribute("nowPrice", nowPrice);
+		
+		return "mypage/drink/billDetail.tiles";
+	}
+	
+	@RequestMapping("/mypage/drink/bill/cash")
+	public String drinkBillCash(Model model, @RequestParam(name = "searchDate", required = false) String searchDate, Principal principal) {
+		log.info("> MypageController drinkBillCash()...");
+		
+		// >> member_no 가져오기 <<
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
+		
+		// >> 영수증 List 가져오기 <<
+		List<DrkOrderBillDTO> drkOrderBillList = this.dailyOrderMypageServiceImpl.selectDrinkBills(member_no, searchDate);
+		model.addAttribute("drkOrderBillList", drkOrderBillList);
+		
+		model.addAttribute("searchDate", searchDate);
+		
+		return "mypage/drink/billCash.tiles";
+	}
 
 	@RequestMapping("/mypage/order/box")
-	public String orderBox(Model model
+	public String orderBox(Model model, Principal principal
 								, @RequestParam(name = "startSearchDate", required = false) String startSearchDate
 								, @RequestParam(name = "endSearchDate", required = false) String endSearchDate
 								, @RequestParam(name = "searchMonth", required = false) String searchMonth) {
 		log.info("> MypageController orderBox()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
 		int member_no = member.getMember_no();
 		
 		// >> 음용 정보 가져오기 <<
@@ -261,6 +431,7 @@ public class MypageController {
 	
 	@RequestMapping("mypage/action/review")
 	public String review(ProductsDTO dto, Model model, Principal principal) throws ClassNotFoundException, SQLException {
+		log.info("reviewlist" );		
 		dto.setMember_id( principal.getName() );
 		List<ProductsDTO> reviewlist = this.mapper.reviewlist(dto);
 		model.addAttribute("reviewlist",reviewlist);
