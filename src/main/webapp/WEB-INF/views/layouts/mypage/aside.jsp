@@ -23,18 +23,18 @@
         <li class="indepth">
             <a>활동정보</a>
             <ul class="sub-navigation">
-                <li><a href="/mypage/product/list">찜한상품</a></li>
-                <li><a href="/mypage/inquiry/list">1:1 문의</a></li>
-                <li><a href="/mypage/action/review">리뷰</a></li>
+                <li data-page="one"><a href="/mypage/product/list">찜한상품</a></li>
+                <li data-page="two"><a href="/mypage/inquiry/list">1:1 문의</a></li>
+                <li data-page="three"><a href="/mypage/action/review">리뷰</a></li>
             </ul>
         </li>
         <li class="indepth">
             <a>개인정보</a>
             <ul class="sub-navigation">
-                <li><a href="/mypage/personal/address">주소록</a></li>
-                <li><a href="/mypage/personal/info">개인정보 변경</a></li>
-                <li><a href="/mypage/drink/paymethod">결제수단 관리</a></li>
-                <li><a href="/mypage/personal/refund">환불계좌 관리</a></li>
+                <li data-page="four"><a href="/mypage/personal/address">주소록</a></li>
+                <li data-page="five"><a href="/mypage/personal/info">개인정보 변경</a></li>
+                <li data-page="six"><a href="/mypage/drink/paymethod">결제수단 관리</a></li>
+                <li data-page="seven"><a href="/mypage/personal/refund">환불계좌 관리</a></li>
             </ul>
         </li>
     </ul>
@@ -42,6 +42,13 @@
 
 
 <script>
+
+let link = location.href;
+$(".sub-navigation li").each(function(){
+	if( link.includes($(this).data("page")) ) {
+		$(this).addClass("active");
+	}		
+})
 
 $(document).on("click", "#mypage_lnb .indepth>a", function (e) {
     var parent = $(this).parents("li");  

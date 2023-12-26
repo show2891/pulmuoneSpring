@@ -80,7 +80,7 @@
 </script>
 
 
-<script>
+		<script>
 var singleYn = "Y" == 'Y';
 var title = "${list[0].program_name }";
 var itemCode = "${list[0].products_no}";
@@ -117,7 +117,7 @@ function sendKakao() {
 
 </script>
 
-<script type="text/javascript">
+		<script type="text/javascript">
 		  var nowArgs = undefined;
 		  window.orderProcess = function (args) {
 		    if (!window.is_signed) {
@@ -241,8 +241,4 @@ function sendKakao() {
 	</div>
 
 </main>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
 <%@ include file="/WEB-INF/views/ui/productpreviewmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
-

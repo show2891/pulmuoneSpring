@@ -10,6 +10,9 @@
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
    		<put-attribute name="footermodal" value="/WEB-INF/views/layouts/footermodal.jsp" />
+   		<put-attribute name="alertModal" value="/WEB-INF/views/ui/alertmodal.jsp" />
+	    <put-attribute name="confirmModal" value="/WEB-INF/views/ui/confirmmodal.jsp" />
+	    <put-attribute name="confirmDesignModal" value="/WEB-INF/views/ui/confirmdesignmodal.jsp" />
     </definition>    
   <!--  메인 화면 -->
     <definition name="home.*" extends="base">
