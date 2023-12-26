@@ -3,7 +3,6 @@
 <script src="/resources/assets/js/order/mypageDrink.js"></script>
 
 <div class="container">
-	
 	<div class="border-wrapper">
 		<h2 class="container-title">영수증조회</h2>
 		<div class="page-tab">
