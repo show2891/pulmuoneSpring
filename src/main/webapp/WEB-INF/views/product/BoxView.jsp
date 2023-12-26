@@ -414,14 +414,32 @@ window.orderProcess = function (args) {
 						</button>
 					</div>
 					<div class="product-addiction">
-						<div class="price-item">
-							<span style="padding-right: 12px; font-size: 22px;"> (원산지 :상품상세 참조) </span>
-							<p>
-								<fmt:formatNumber value="${list[0].price }" pattern="#,###" />
-								<span>원</span>
-							</p>
-							<span>(${list[0].products_size })</span>
-						</div>
+						<c:choose>
+							<c:when test="${list[0].event_price ne null and list[0].event_price ne '' }">
+								<div class="price-item">
+									<span style="padding-right: 12px; font-size: 22px;"> (원산지 :상품상세 참조) </span>
+									<p class="before-price big" style="margin-right: 10px;">
+										<fmt:formatNumber value="${list[0].price }" pattern="#,###" />
+										<span>원</span>
+									</p>
+									<p>
+										<fmt:formatNumber value="${list[0].event_price }" pattern="#,###" />
+										<span>원</span>
+									</p>
+									<span>(100ml X 30포)</span>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="price-item">
+									<span style="padding-right: 12px; font-size: 22px;"> (원산지 :상품상세 참조) </span>
+									<p>
+										<fmt:formatNumber value="${list[0].price }" pattern="#,###" />
+										<span>원</span>
+									</p>
+									<span>(${list[0].products_size })</span>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 					<div class="buy-option"></div>
