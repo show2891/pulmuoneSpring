@@ -155,7 +155,8 @@
 			if (itemType != "daily") {
 				// 택배배송
 				var args = { item: [{itemCode, qty: ($('.box-qty').text()) || "1", eventIdx: ""}] };
-				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
+				console.log(args);
+				window.orderProcess(args);
 				return;
 			}
 

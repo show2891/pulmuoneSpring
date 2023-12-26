@@ -199,7 +199,7 @@
 				// 택배배송
 				var args = { item: [{itemCode, qty: ($('.box-qty').text()) || "1", eventIdx: ""}] };
 				console.log(args);
-				location.href = "/box/order/step1?item=" + encodeURIComponent(JSON.stringify(args));
+				window.orderProcess(args);
 				return;
 			}
 			// 매일배송
