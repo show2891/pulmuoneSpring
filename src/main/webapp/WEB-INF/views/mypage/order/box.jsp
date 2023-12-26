@@ -22,7 +22,7 @@
 	$(function () {
 		// 택배 조회 api key
 
-		$(".t_key").val(trackingKey);
+// 		$(".t_key").val(trackingKey);
 
 		// 최근 n 개월 날짜 검색
         $('.dropdown-item').click(function () {
