@@ -21,7 +21,7 @@
 	  	</div>
 	  	
 </div>
-<%@ include file="/WEB-INF/views/ui/modal.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/ui/modal.jsp" %> --%>
 </body>
 
 </html>

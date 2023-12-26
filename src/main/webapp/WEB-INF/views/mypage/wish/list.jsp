@@ -66,21 +66,12 @@
 
 </script>
 <div class="wrapper">
-	<main class="page forum">
-		<div class="breadcrumb-style">
-			<div class="container">
-				<ul>
-					<li><a href="/">홈</a></li>
-					<li><a href="/mypage">MY녹즙</a></li>
-					<li><a class="" href="">활동정보</a></li>
-					<li><a class="active" href="">찜한상품</a></li>
-				</ul>
-			</div>
-		</div>
+	<main class="page forum">		
 		<div class="container aside-layout" style="padding-bottom: 120px;">
 			<div class="container">
 				<div class="border-wrapper">
 					<h2 class="container-title">찜한 상품</h2>
+				
 				</div>
 				<div class="page-addiction-wrapper" style="align-items: center; margin-bottom: 17px;">
 					<div class="info-copy description" style="margin-top: 7px;">
@@ -122,6 +113,3 @@
 		</div>
 	</main>	
 </div>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>

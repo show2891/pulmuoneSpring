@@ -12,16 +12,6 @@
 </script>
 <div class="wrapper">
 	<main class="page forum">
-		<div class="breadcrumb-style">
-			<div class="container">
-				<ul>
-					<li><a href="/">홈</a></li>
-					<li><a href="/mypage">MY녹즙</a></li>
-					<li><a class="" href="/mypage/product/list">활동정보</a></li>
-					<li><a class="active" href="/mypage/action/review">리뷰</a></li>
-				</ul>
-			</div>
-		</div>
 		<div class="container aside-layout" style="padding-bottom: 120px;">
 			<div class="container">
 				<div class="border-wrapper">
