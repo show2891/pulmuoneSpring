@@ -26,6 +26,7 @@ import org.pro.pulmuone.domain.order.daily.DrkScheduleDTO;
 import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.domain.product.ProductsDTO;
 import org.pro.pulmuone.mapper.product.ProductMapper;
+import org.pro.pulmuone.service.coupon.CouponService;
 import org.pro.pulmuone.service.inquiry.InquiryService;
 import org.pro.pulmuone.service.mypage.order.BoxOrderMypageServiceImpl;
 import org.pro.pulmuone.service.mypage.order.DailyOrderMypageServiceImpl;
@@ -65,6 +66,9 @@ public class MypageController {
 	@Autowired
 	private OrderServiceImpl orderServiceImpl;
 	
+	@Autowired
+	private CouponService couponService;
+	
 	@GetMapping("mypage")
 	public String summary(HttpServletRequest request, Model model, ProductsDTO dto, Principal principal) throws SQLException {
 		log.warn("> MypageController mypage()...");
@@ -99,6 +103,10 @@ public class MypageController {
 		
 		List<BoxOrderMypageDTO> boxOrderMypageList = boxOrderMypageServiceImpl.selectBoxOrder(member_no);
 		model.addAttribute("boxOrderMypageList", boxOrderMypageList);
+		
+		// 사용가능한 쿠폰 갯수
+	    int unusedCoupon = couponService.getUnusedCoupon(member_no);
+	    model.addAttribute("unusedCoupon", unusedCoupon);
 		
 		return "mypage/home/userSummmary.tiles";
 	}
@@ -478,7 +486,8 @@ public class MypageController {
 	public String reviewdelete(ProductsDTO dto, Model model, Principal principal,@PathVariable String idx) throws ClassNotFoundException, SQLException {		
 		dto.setMember_id( principal.getName() );
 		dto.setReview_no(idx);
-		int count = this.mapper.reviewdelete(dto);
+		this.mapper.reviewimgdelete(dto);
+		int count = this.mapper.reviewdelete(dto);		
 		model.addAttribute("count",count);
 		return "mypage/review/writelist.tiles";
 	}

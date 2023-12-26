@@ -12,5 +12,7 @@ public interface CouponMapper {
     
 	String getUserName(int memberNo);
 	
+	int getUnusedCouponCount(int memberNo);
+	
 }
 

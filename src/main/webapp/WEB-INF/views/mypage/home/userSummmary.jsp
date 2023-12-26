@@ -7,6 +7,14 @@
 
 
 <div class="container">
+<!-- 		<div class="breadcrumb-style"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<ul> -->
+<!-- 					<li><a href="/">홈</a></li> -->
+<!-- 					<li><a class="active">MY녹즙</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 	<h2 class="container-title light">
 		<b><sec:authentication property="principal.member.name"/></b>님 안녕하세요
 	</h2>
@@ -31,9 +39,16 @@
 			</a>
 		</li>
 		<li>
-			<a href="/event/event/view?event_no=2" class="item">
+			<a href="#" id="coupon-link" class="item">
 				<label>쿠폰</label>
-				<span class="blank_copy">친구초대하고 쿠폰받으세요</span>
+				<c:choose>
+					<c:when test="${unusedCoupon > 0}">
+						<span>${unusedCoupon}</span>
+					</c:when>
+					<c:otherwise>
+						<span class="blank_copy">친구초대하고 쿠폰받으세요</span>
+					</c:otherwise>
+				</c:choose>
 			</a>
 		</li>
 		<li>
@@ -83,4 +98,14 @@
 	        } // if
 	    });
 	})
+</script>
+<script>
+	document.getElementById('coupon-link').addEventListener('click', function(e) {
+		e.preventDefault(); // 기본 이벤트를 막음
+		if (${unusedCoupon > 0}) {
+			window.location.href = "/mypage/benefit/coupon";
+		} else {
+			window.location.href = "/event/event/view?event_no=2";
+		}
+	});
 </script>

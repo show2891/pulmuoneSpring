@@ -28,5 +28,10 @@ public class CouponServiceImpl implements CouponService {
     public String getUserName(int memberNo) {
         return couponMapper.getUserName(memberNo);
     }
+
+	@Override
+	public int getUnusedCoupon(int memberNo) {
+		return couponMapper.getUnusedCouponCount(memberNo);
+	}
     
 }

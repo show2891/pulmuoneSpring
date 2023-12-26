@@ -3,7 +3,11 @@
 <script src="/resources/assets/js/order/mypageDrink.js"></script>
 
 <div class="container">
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> branch 'develop' of https://github.com/dhl1031/pulmuoneSpring.git
 	<div class="border-wrapper">
 		<h2 class="container-title">영수증조회</h2>
 		<div class="page-tab">

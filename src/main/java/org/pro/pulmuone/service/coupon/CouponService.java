@@ -11,4 +11,6 @@ public interface CouponService {
 	int getMemberInfo(String memberId);
 	
 	String getUserName(int memberNo);
+	
+	int getUnusedCoupon(int memberNo);
 }

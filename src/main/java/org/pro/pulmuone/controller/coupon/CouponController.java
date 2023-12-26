@@ -42,6 +42,10 @@ public class CouponController {
 	    String name = couponService.getUserName(memberNo);
 	    System.out.println("name result:" + name);
 	    model.addAttribute("name", name);
+	    
+	    // »ç¿ë°¡´ÉÇÑ ÄíÆù °¹¼ö
+	    int unusedCoupon = couponService.getUnusedCoupon(memberNo);
+	    model.addAttribute("unusedCoupon", unusedCoupon);
 
 	    return "mypage/benefit/coupon.tiles";
 	}

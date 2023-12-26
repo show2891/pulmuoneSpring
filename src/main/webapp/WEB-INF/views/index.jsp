@@ -297,7 +297,7 @@
 				<div class="notice-cont">
 					<h2 class="sub-h2">공지사항</h2>
 					<ul>
-						<li><a href="/forum/notice/view?seq=1" title="해당 게시글로 가기">'명일엽' 원료 공급 부족으로 인한 제품 배송 지연 안내</a></li>
+						<li><a href="/forum/notice/view?seq=${noticelist[0].notice_no }" title="해당 게시글로 가기">${ noticelist[0].title }</a></li>
 					</ul>
 				</div>
 				<a href="/forum/notice/list" class="btn-more" title="해당 페이지로 가기"> <i class="ico ico-more"></i>
@@ -306,6 +306,3 @@
 		</div>
 	</div>
 </main>
-<%@ include file="/WEB-INF/views/ui/alertmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmmodal.jsp"%>
-<%@ include file="/WEB-INF/views/ui/confirmdesignmodal.jsp"%>
