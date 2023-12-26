@@ -4,17 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<!-- 		<div class="breadcrumb-style"> -->
-<!-- 			<div class="container"> -->
-<!-- 				<ul> -->
-<!-- 					<li><a href="/">홈</a></li> -->
-<!-- 					<li><a class="active">MY녹즙</a></li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 
 
 <div class="container">
+		<div class="breadcrumb-style">
+			<div class="container">
+				<ul>
+					<li><a href="/">홈</a></li>
+					<li><a class="active">MY녹즙</a></li>
+				</ul>
+			</div>
+		</div>
 	<h2 class="container-title light">
 		<b><sec:authentication property="principal.member.name"/></b>님 안녕하세요
 	</h2>
