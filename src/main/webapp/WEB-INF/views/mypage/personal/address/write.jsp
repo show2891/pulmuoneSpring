@@ -178,9 +178,10 @@
 
 
 		$('#cancel').click(function (){
-            if(confirm('작업한 내용이 사라집니다. 취소 하시겠습니까?')){
+			confirmDesign("", '작업한 내용이 사라집니다. 취소 하시겠습니까?', function() {
                 location.href = '/mypage/personal/address'
-            }
+			});
+
 		})
 		$('#register').click(function (message){
             const formArr = $('#addressForm').serializeArray();
@@ -299,15 +300,3 @@
 	})
 </script>
 
-<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-modal="true" role="dialog">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="alertModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body"></div>
-			<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-		</div>
-	</div>
-</div>
