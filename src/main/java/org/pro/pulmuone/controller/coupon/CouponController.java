@@ -1,10 +1,8 @@
 package org.pro.pulmuone.controller.coupon;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.pro.pulmuone.domain.coupon.CouponDTO;
 import org.pro.pulmuone.domain.order.HaveCouponDTO;
 import org.pro.pulmuone.service.coupon.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
