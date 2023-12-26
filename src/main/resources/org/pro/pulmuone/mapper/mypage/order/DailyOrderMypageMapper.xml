@@ -96,9 +96,9 @@
 	
 	<!-- int getNowPrice(int drk_order_no); -->
 	<select id="getNowPrice" resultType="Integer">
-		SELECT SUM(price)
+		SELECT NVL(SUM(price), 0)
 		FROM drk_history h JOIN products p ON h.products_no = p.products_no
-		WHERE h.drk_order_no = 1 AND drk_date BETWEEN TRUNC(SYSDATE, 'MM') AND SYSDATE
+		WHERE h.drk_order_no = #{drk_order_no} AND drk_date BETWEEN TRUNC(SYSDATE, 'MM') AND SYSDATE
 	</select>
 	
 	<!-- int updateDrkOrderStatus(int drk_order_no); -->
