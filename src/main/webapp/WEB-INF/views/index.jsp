@@ -116,12 +116,12 @@
 									<i class="ico ico-personal-01"></i>
 								</div> <span>음용내역보기</span>
 						</a></li>
-						<li class="item"><a href="/mypage/drink/drinks/{}/{}" data-require-login="">
+						<li class="item"><a href="/mypage/order/daily/change/153" data-require-login="">
 								<div class="cover">
 									<i class="ico ico-personal-02"></i>
 								</div> <span>음용상품변경</span>
 						</a></li>
-						<li class="item"><a href="/mypage/drink/drinks/{}/{}" data-require-login="">
+						<li class="item"><a href="/mypage/drink/drink/pause/153" data-require-login="">
 								<div class="cover">
 									<i class="ico ico-personal-03"></i>
 								</div> <span>배송일정변경</span>
