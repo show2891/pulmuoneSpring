@@ -4,7 +4,6 @@
 <script src="/resources/assets/js/order/mypageBox.js"></script>
 
 <div class="container">
-
 	
 	<div class="border-wrapper">
 		<h2 class="container-title">택배배송 주문내역</h2>
