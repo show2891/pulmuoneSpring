@@ -1,5 +1,6 @@
 package org.pro.pulmuone.controller.order;
 
+import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,9 +24,6 @@ import org.pro.pulmuone.domain.order.daily.DrkShipDTO;
 import org.pro.pulmuone.service.order.DailyOrderServiceImpl;
 import org.pro.pulmuone.service.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,22 +50,20 @@ public class DailyOrderController {
 	
 
 	@GetMapping("step1")
-	public String step1(@RequestParam(name = "item") String itemsStr , Model model) {
+	public String step1(@RequestParam(name = "item") String itemsStr , Model model, Principal principal) {
 		log.info("> DailyOrderController.step1 ...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		// 1. 사용자 정보 출력
+		String username = principal.getName();
+						
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+						
+		// 2. member_no 가져오기
 		int member_no = member.getMember_no();
+				        
+        // member 넘겨주기
 		model.addAttribute("member", member);
 		
 		// 1. 파라미터로 넘어온 상품 정보 출력
@@ -108,14 +104,19 @@ public class DailyOrderController {
 	
 	@PostMapping("step2")
  	public String step2(Model model, FranchiseDTO franchiseDTO, DrkOrderDTO drkOrderDTO, DrkScheduleDTO drkScheduleDTO, String drk_start_date
- 							, DrkShipDTO drkShipDTO, String saveAddrChk, DrkPayDTO drkPayDTO, CardInfoDTO cardInfoDTO, AcntInfoDTO acntInfoDTO) {
+ 							, DrkShipDTO drkShipDTO, String saveAddrChk, DrkPayDTO drkPayDTO, CardInfoDTO cardInfoDTO, AcntInfoDTO acntInfoDTO, Principal principal) {
 		log.info("> BoxOrderController.step2 ...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
-		
+		// 1. 사용자 정보 가져오기
+		String username = principal.getName();
+						
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+						
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
+				        
 		// 2. drk_order 테이블 insert
 		// 음용 name 구해오기
 		String drk_order_name = dailyOrderServiceImpl.getOrderName(member_no);
@@ -312,18 +313,5 @@ public class DailyOrderController {
 		
 		return start_date;
 	} // getStartDate
-	
-	private int getMemberNo(Authentication authentication) {
-		String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		return member.getMember_no();
-	} // getMemberNo()
 
 }

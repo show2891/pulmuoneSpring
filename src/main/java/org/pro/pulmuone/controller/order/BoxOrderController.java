@@ -1,5 +1,6 @@
 package org.pro.pulmuone.controller.order;
 
+import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -19,9 +20,6 @@ import org.pro.pulmuone.domain.order.box.BoxShipDTO;
 import org.pro.pulmuone.service.order.BoxOrderService;
 import org.pro.pulmuone.service.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,20 +46,12 @@ public class BoxOrderController {
 	
 	
 	@GetMapping("step1")
-	public String step1(@RequestParam(name = "item") String itemsStr, Model model) {
+	public String step1(@RequestParam(name = "item") String itemsStr, Model model, Principal principal) {
 		log.info("> BoxOrderController.step1 ...");
 		
 		// 1. 사용자 정보 출력
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-		        
+		String username = principal.getName();
+		
         // 사용자 정보 전달
         OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
 		model.addAttribute("member", member);
@@ -122,14 +112,18 @@ public class BoxOrderController {
 	
 	@PostMapping("step2")
  	public String step2(BoxPayDTO boxPayDTO, BoxOrderProductsDTO boxOrderProductsDTO, BoxShipDTO boxShipDTO, String saveAddrChk
- 							, HaveCouponDTO haveCouponDTO, Model model) {
+ 							, HaveCouponDTO haveCouponDTO, Model model, Principal principal) {
 		log.info("> BoxOrderController.step2 ...");
 		
-		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
-		
+		// 1. 사용자 정보 출력
+		String username = principal.getName();
+				
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+				
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 		
 		// 결제 방식에 따른 주문 상태 설정
 		int box_order_status = 1;
@@ -141,7 +135,7 @@ public class BoxOrderController {
 		// 2. box_order 테이블 insert
 		Date today = Date.valueOf(LocalDate.now());
 		BoxOrderDTO boxOrderDTO = BoxOrderDTO.builder().member_no(member_no).box_order_status(box_order_status).box_order_date(today).build();
-		int insertBoxOrderRowCount = boxOrderServiceImpl.insertBoxOrder(boxOrderDTO);
+		boxOrderServiceImpl.insertBoxOrder(boxOrderDTO);
 		
 		
 		// 3. boxOrderNo 가져오기
@@ -149,7 +143,7 @@ public class BoxOrderController {
 		
 		// 4. box_order_products 테이블, box_pay 테이블, box_ship 테이블 insert
 		List<BoxOrderProductsDTO> boxOrderProductsList = boxOrderProductsDTO.getBoxOrderProductsList();
-		int insertBoxOrderTablesRowCount = boxOrderServiceImpl.insertBoxOrderTables(boxOrderProductsList, boxPayDTO, boxShipDTO, boxOrderNo);
+		boxOrderServiceImpl.insertBoxOrderTables(boxOrderProductsList, boxPayDTO, boxShipDTO, boxOrderNo);
 
 		// 5. box_pay_no 가져오기
 		int box_pay_no = boxPayDTO.getBox_pay_no();
@@ -174,7 +168,7 @@ public class BoxOrderController {
 		
 		// 7. 사용한 쿠폰 정보 update
 		if (haveCouponDTO.getHaveCouponList() != null) {
-			int updateHaveCoupon = boxOrderServiceImpl.updateHaveCoupon(haveCouponDTO.getHaveCouponList(), member_no, box_pay_no);
+			boxOrderServiceImpl.updateHaveCoupon(haveCouponDTO.getHaveCouponList(), member_no, box_pay_no);
 		}
 		
 		// 8. 주문 정보 넘겨주기
@@ -193,18 +187,5 @@ public class BoxOrderController {
 		
 		return "order/box/step2.tiles";
 	}
-	
-	private int getMemberNo(Authentication authentication) {
-		String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		return member.getMember_no();
-	} // getMemberNo()
 
 }

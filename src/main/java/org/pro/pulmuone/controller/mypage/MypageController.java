@@ -79,9 +79,14 @@ public class MypageController {
 		 request.setAttribute("totalCount", totalCount);
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 		
 		// >> 매일배송 <<
 		DrkOrderMypageDTO drkOrderMypageDTO = dailyOrderMypageServiceImpl.selectDailyOrder(member_no);
@@ -93,7 +98,6 @@ public class MypageController {
 		
 		List<BoxOrderMypageDTO> boxOrderMypageList = boxOrderMypageServiceImpl.selectBoxOrder(member_no);
 		model.addAttribute("boxOrderMypageList", boxOrderMypageList);
-		
 		
 		return "mypage/home/userSummmary.tiles";
 	}
@@ -123,13 +127,18 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage/drink/drink")
-	public String orderDaily(Model model, @RequestParam(name = "drinkingType", required = false) String drinkingType) {
+	public String orderDaily(Model model, @RequestParam(name = "drinkingType", required = false) String drinkingType, Principal principal) {
 		log.info("> MypageController orderDaily()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 		
 		// >> 음용 정보 가져오기 <<
 		List<DrkOrderMypageDTO> drkOrderMypageList = this.dailyOrderMypageServiceImpl.selectDrinkInfos(member_no, drinkingType);
@@ -218,13 +227,18 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage/drink/drinks/{drk_order_no}")
-	public String orderDailyView(Model model, @PathVariable int drk_order_no) {
+	public String orderDailyView(Model model, @PathVariable int drk_order_no, Principal principal) {
 		log.info("> MypageController orderDailyView()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 
 		// >> 음용 리스트 가져오기 <<
 		List<DrkOrderMypageDTO> drkOrderMypageList = this.dailyOrderMypageServiceImpl.selectDrinkInfos(member_no);
@@ -246,13 +260,18 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage/drink/bill")
-	public String drinkBill(Model model, @RequestParam(name = "searchDate", required = false) String searchDate) {
+	public String drinkBill(Model model, @RequestParam(name = "searchDate", required = false) String searchDate, Principal principal) {
 		log.info("> MypageController drinkBill()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 		
 		// >> 영수증 List 가져오기 <<
 		List<DrkOrderBillDTO> drkOrderBillList = this.dailyOrderMypageServiceImpl.selectDrinkBills(member_no, searchDate);
@@ -265,21 +284,16 @@ public class MypageController {
 	
 	@RequestMapping("/mypage/drink/bill/detail")
 	public String drinkBillDetail(Model model, @RequestParam(name = "orderNo", required = false) Integer orderNo
-														, @RequestParam(name = "askMn", required = false) String askMn) {
+														, @RequestParam(name = "askMn", required = false) String askMn, Principal principal) {
 		log.info("> MypageController drinkBillDetail()...");
 		
-		// >> member 정보 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		
+		// >> member 가져오기 <<
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
 		// >> 영수증 가져오기 <<
 		DrkOrderBillDTO drkOrderBillDTO = this.dailyOrderMypageServiceImpl.selectDrinkBill(orderNo);
 		model.addAttribute("drkOrderBillDTO", drkOrderBillDTO);
@@ -300,13 +314,18 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypage/drink/bill/cash")
-	public String drinkBillCash(Model model, @RequestParam(name = "searchDate", required = false) String searchDate) {
+	public String drinkBillCash(Model model, @RequestParam(name = "searchDate", required = false) String searchDate, Principal principal) {
 		log.info("> MypageController drinkBillCash()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 		
 		// >> 영수증 List 가져오기 <<
 		List<DrkOrderBillDTO> drkOrderBillList = this.dailyOrderMypageServiceImpl.selectDrinkBills(member_no, searchDate);
@@ -318,16 +337,21 @@ public class MypageController {
 	}
 
 	@RequestMapping("/mypage/order/box")
-	public String orderBox(Model model
+	public String orderBox(Model model, Principal principal
 								, @RequestParam(name = "startSearchDate", required = false) String startSearchDate
 								, @RequestParam(name = "endSearchDate", required = false) String endSearchDate
 								, @RequestParam(name = "searchMonth", required = false) String searchMonth) {
 		log.info("> MypageController orderBox()...");
 		
 		// >> member_no 가져오기 <<
-		// 현재 사용자의 인증 정보 가져오기
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		int member_no = getMemberNo(authentication);
+		String username = principal.getName();
+					
+		// 사용자 정보 전달
+		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+		model.addAttribute("member", member);
+					
+		// 2. member_no 가져오기
+		int member_no = member.getMember_no();
 		
 		// >> 음용 정보 가져오기 <<
 		List<BoxOrderMypageListDTO> boxOrderMypageList = this.boxOrderMypageServiceImpl.selectBoxInfos(member_no, startSearchDate, endSearchDate);
@@ -438,18 +462,5 @@ public class MypageController {
 		model.addAttribute("count",count);
 		return "mypage/review/writelist.tiles";
 	}
-
-	private int getMemberNo(Authentication authentication) {
-		String username = "";
-        // 사용자 id 가져오기
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        } // if
-				        
-        // member_no 가져오기
-        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
-		return member.getMember_no();
-	} // getMemberNo()
 	
 }
