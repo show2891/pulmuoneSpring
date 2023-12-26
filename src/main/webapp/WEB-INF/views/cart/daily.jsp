@@ -213,7 +213,7 @@
             var itemCode = $(this).attr("data-itemcode");            
             param.push(itemCode)
          });
-         if (!param) {
+         if (param.length === 0 ) {
             alert("선택된 상품이 없습니다.");
             return;
          }
