@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="part">
 	<div class="part-head" style="margin-bottom:17px;">
-		<a href="/mypage/order/daily.do?drinkingType=Y">매일배송 음용정보</a>
+		<a href="/mypage/drink/drink">매일배송 음용정보</a>
 	</div>
 			
 	<div class="box-layout" style="margin-bottom:6px;">
@@ -11,7 +11,7 @@
 				<h5>${ drkOrderMypageDTO.drk_order_name }</h5>
 				<span>${ drkOrderMypageDTO.drk_order_no }</span>
 			</div>
-			<a href="/mypage/order/dailyView.do?orderNo=${ drkOrderMypageDTO.drk_order_no }" class="rounded-button">상세보기</a>
+			<a href="/mypage/order/dailyView?orderNo=${ drkOrderMypageDTO.drk_order_no }" class="rounded-button">상세보기</a>
 		</div>
 		
 		<div style="padding:20px 25px 20px 0;">

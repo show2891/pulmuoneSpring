@@ -47,4 +47,9 @@
 		goStep2("daily");
 	});
 	
+	// 주소록 가져오기
+	let member_no = ${ member.member_no };
+	$("#addressBtn").on("click", function(){
+		showAddress(member_no, 1);
+	})
 </script>
