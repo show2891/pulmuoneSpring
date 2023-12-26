@@ -83,7 +83,8 @@
 				<div>
 					<span class="caution">등록된 쿠폰이 없습니다.</span>
 					<div style="margin-top: 10px">
-						<button class="rounded-button primary" onclick="javascript:openWindowPop('/resources/images/common/couponGuide.png','popup')" target="img">쿠폰사용가이드</button>
+						<button class="rounded-button primary" onclick="openWindowPop('/resources/assets/images/common/couponGuide.png','popup')" target="img">쿠폰사용가이드</button>
+						
 					</div>
 				</div>
 			</div>
@@ -210,7 +211,7 @@
 				<ul class="product-list">
 					<li>
 						<div class="thumb">
-							<img src="/file/download/product/20220310/4cf0398b-fb18-45f9-97c4-be8b5bd2edd6.jpg" alt="">
+							<img src="/file/download/product/4cf0398b-fb18-45f9-97c4-be8b5bd2edd6.jpg" alt="">
 						</div>
 						<div class="content">
 							<p>하트러브 엑스투</p>
@@ -243,3 +244,5 @@
 		
 	})
 </script>
+<img src="/resources/assets/images/common/couponGuide.png"
+			style="display: none" id="guideImage" alt="">
