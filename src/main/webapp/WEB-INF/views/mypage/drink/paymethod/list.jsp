@@ -53,10 +53,18 @@
             const rootEl = $('.drinking-list')
 //             var search ={"memberId":"show2891","endNum":10,"startNum":1,"drinkingType":"Y","orderNums":["18369285571027001056"]}
 
+            
+            
             var data ={"data": ${ dtoList } }.data
-            data.forEach((v, i) => {
-                addItem(v,i)
-            })
+			if(data != null) {
+	           data.forEach((v, i) => {
+	               addItem(v,i)
+	           })
+			}
+            
+//             data.forEach((v, i) => {
+//                 addItem(v,i)
+//             })
             
 	    	var header = '${_csrf.headerName}';
 			var token = '${_csrf.token}';

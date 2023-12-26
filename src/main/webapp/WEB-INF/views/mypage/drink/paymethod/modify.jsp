@@ -222,9 +222,9 @@
 		
 		//region cancel
 		$('#cancelChangeBtn').click(function () {
-			if (confirm('작업한 내용이 사라집니다. 취소 하시겠습니까?')) {
-				location.href = "/mypage/drink/paymethod";
-			}
+			confirmDesign('', '작업한 내용이 사라집니다. 취소 하시겠습니까?', function() {
+				location.href = "/mypage/drink/paymethod";				
+			});
 		});
 
 		$(".numberOnly").on("keyup", function () {
@@ -459,46 +459,4 @@
         });
 </script>
 
-
-<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="alertModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
-			</div>
-			<div class="modal-body"></div>
-			<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-		</div>
-	</div>
-</div>
-
-
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="confirmModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="cancel" data-dismiss="modal">취소</button>
-				<button type="button" class="confirm">확인</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<div class="modal" id="loading" tabindex="-1" aria-labelledby="loading" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-		</div>
-	</div>
-</div>
 
