@@ -51,10 +51,10 @@
 			
 								<div style="display: flex; flex-direction: row">
 									<label class="check-type">
-										<input type="checkbox"name="rememberUser" value="Y" /> <span id="auto-login">자동 로그인</span>
+										<input type="checkbox" name="remember-me" value="" /> <span id="auto-login">자동 로그인</span>
 									</label> 
 									<label class="check-type" style="margin-left: 25px">
-										<input type="checkbox" name="rememberId" id="rememberId" value="Y" /> <span>아이디 저장</span>
+										<input type="checkbox" name="rememberId" id="rememberId" value="" /> <span>아이디 저장</span>
 									</label>
 								</div>
 								<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">

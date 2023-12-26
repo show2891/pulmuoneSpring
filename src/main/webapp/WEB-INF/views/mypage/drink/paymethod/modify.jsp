@@ -20,16 +20,7 @@
 		
 
 		<div class="container">
-			<div class="breadcrumb-style">
-				<div class="container">
-					<ul>
-						<li><a href="/">홈</a></li>
-						<li><a href="/mypage">MY녹즙</a></li>
-						<li><a class="" href="/mypage/personal/address">개인정보</a></li>
-						<li><a class="active" href="/mypage/drink/paymethod">결제수단 관리</a></li>
-					</ul>
-				</div>
-			</div>
+
 			<div class="border-wrapper" style="margin-bottom:0;">
 				<h2 class="container-title">
 					결제수단 관리

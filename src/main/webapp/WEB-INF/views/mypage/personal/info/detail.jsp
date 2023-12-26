@@ -6,16 +6,6 @@
 		
 
 <div class="container">
-		<div class="breadcrumb-style">
-			<div class="container">
-				<ul>
-		            <li><a href="/">홈</a></li>
-		            <li><a href="/mypage">MY녹즙</a></li>
-		            <li><a class="" href="/mypage/personal/address">개인정보</a></li>
-		            <li><a class="active" href="/mypage/personal/info">개인정보관리</a></li>
-		        </ul>
-			</div>
-		</div>
 	<div class="border-wrapper">
 		<h2 class="container-title">
 			개인정보 변경

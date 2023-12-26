@@ -5,16 +5,6 @@
 
 				
 			<div class="container">
-				<div class="breadcrumb-style">
-					<div class="container">
-						<ul>
-						      <li><a href="/">홈</a></li>
-						      <li><a href="/mypage">MY녹즙</a></li>
-						      <li><a class="" href="/mypage/drink/drink">매일배송 음용내역</a></li>
-						      <li><a class="active" href="/mypage/drink/drink">음용내역</a></li>
-					   </ul>
-					</div>
-				</div>
 			
 		      <div class="border-wrapper">
 		        <h2 class="container-title">
