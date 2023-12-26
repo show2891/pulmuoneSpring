@@ -32,8 +32,8 @@
 	<div class="page-addiction-wrapper" style="align-items: center; margin-bottom: 2px;">
 		<div class="info-copy"></div>
 		<div class="price-tag coupon right">
-			<label>사용가능한 쿠폰</label>
-			<p class="value">${coupons.size()}</p>
+		    <label>사용가능한 쿠폰</label>
+		    <p class="value">${unusedCoupon}</p>
 		</div>
 	</div>
 
@@ -57,7 +57,7 @@
 								</div>
 								<div class="date">
 									<p>${haveCoupon.issue_date}~${haveCoupon.expiry_date}</p>
-									<span>${haveCoupon.expiry_date.toLocalDate().toEpochDay() - java.time.LocalDate.now().toEpochDay()}일 남음</span>
+									<span>${haveCoupon.expiry_date.toLocalDate().toEpochDay() - java.time.LocalDate.now().toEpochDay() - 19718 }일 남음</span>
 								</div>
 								<ul>
 									<li>${haveCoupon.couponInfo.duplication == 0 ? '중복사용가능' : '중복사용 불가능'}</li>

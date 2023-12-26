@@ -27,7 +27,7 @@
 	<select id="findCouponsByUserNo" resultMap="CouponResultMap">
 	    SELECT  hc.*, c.coupon_name, c.discount, c.delivery_type, c.duplication, c.use_month, c.min_price, c.max_discount 
 	    FROM have_coupon hc JOIN coupon c ON hc.coupon_no = c.coupon_no 
-	    WHERE hc.member_no = #{memberNo} 
+	    WHERE hc.member_no = #{memberNo} AND hc.expiry_date > SYSDATE
 	    ORDER BY hc.used ASC
 	</select>
     	
@@ -37,6 +37,12 @@
 
 	<select id="getUserName" resultType="string" parameterType="int">
 	    SELECT name FROM member WHERE member_no = #{memberNo}
+	</select>
+	
+	<select id="getUnusedCouponCount" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM have_coupon 
+	    WHERE member_no = #{memberNo} AND used = 0
 	</select>
     
 </mapper>
