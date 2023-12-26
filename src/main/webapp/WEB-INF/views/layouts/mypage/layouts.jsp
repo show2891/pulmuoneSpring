@@ -52,9 +52,6 @@ $(function(){
 		$(".breadcrumb-style .first").text(first_text);
 		$(".breadcrumb-style .second").text(second_text);	
 	}	
-	
-	
-
 })
 		
 		
