@@ -96,7 +96,7 @@
 												<i class="ico"></i> <span class="hide">고객번호 확인하기</span>
 											</button>
 											<div id="customer-num-view" class="customer-info" style="display: none;">
-												<em>고객번호</em> <span>230000234094</span> <a href="/mypage/drink/drink" class="button" type="button">변경</a>
+												<em>고객번호</em> <span>153</span> <a href="/mypage/drink/drink" class="button" type="button">변경</a>
 											</div>
 										</div>
 									</div>
