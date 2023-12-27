@@ -7,14 +7,7 @@
 
 
 <div class="container">
-<!-- 		<div class="breadcrumb-style"> -->
-<!-- 			<div class="container"> -->
-<!-- 				<ul> -->
-<!-- 					<li><a href="/">홈</a></li> -->
-<!-- 					<li><a class="active">MY녹즙</a></li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
+
 	<h2 class="container-title light">
 		<b><sec:authentication property="principal.member.name"/></b>님 안녕하세요
 	</h2>
@@ -108,4 +101,13 @@
 			window.location.href = "/event/event/view?event_no=2";
 		}
 	});
+</script>
+<script>
+$(function(){	
+	if("${param.with}" == "01"){
+		alert("정기주문시 이용할 수 있는 서비스입니다.");
+		history.replaceState({}, null, location.pathname);		
+	}
+});
+
 </script>
