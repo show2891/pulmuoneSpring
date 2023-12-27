@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- <script src="/resources/assets/js/order/apiKey.js"></script> -->
+<script src="/resources/assets/js/order/apiKey.js"></script>
 <script src="/resources/assets/js/order/mypageBox.js"></script>
 
 <div class="container">
@@ -21,7 +21,7 @@
 	$(function () {
 		// 택배 조회 api key
 
-// 		$(".t_key").val(trackingKey);
+		$(".t_key").val(trackingKey);
 
 		// 최근 n 개월 날짜 검색
         $('.dropdown-item').click(function () {
